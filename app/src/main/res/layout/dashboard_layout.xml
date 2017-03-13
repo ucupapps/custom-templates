@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center">
+
+<LinearLayout
+    android:id="@+id/home_root"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:gravity="center">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <ImageView
+                android:id="@+id/order_feeder"
+                android:src="@drawable/list_selector"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="5"
+                android:paddingBottom="10dp"
+                android:layout_centerInParent="true" />
+
+            <ImageView
+                android:id="@+id/tariff_simulation"
+                android:src="@drawable/list_selector"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="5"
+                android:paddingBottom="10dp"
+                android:layout_centerInParent="true" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:paddingBottom="20dp"
+                android:text="Order Feeder"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:paddingBottom="20dp"
+                android:text="Tarif Simulation"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="25dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+
+            <ImageView
+                android:id="@+id/delivery_tracking"
+                android:src="@drawable/user"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="5"
+                android:paddingBottom="10dp"
+                android:layout_centerInParent="true" />
+
+            <ImageView
+                android:id="@+id/data_reefer"
+                android:src="@drawable/list_selector"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="5"
+                android:paddingBottom="10dp"
+                android:layout_centerInParent="true" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:paddingBottom="20dp"
+                android:text="Container Tracking"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:paddingBottom="10dp"
+                android:text="Data Reefer"
+                android:textAlignment="center" />
+        </TableRow>
+
+    </TableLayout>
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:paddingBottom="20dp"-->
+        <!--android:text="Tariff Simulation" />-->
+
+
+    <!--  Memasukan fragmented dashboard -->
+    <!--<include layout="@layout/fragment_layout"/>-->
+
+    <!--  Memasukan footer -->
+    <!--<include layout="@layout/footer_layout"/>-->
+
+</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Folder Package -->
+<com.garudatekno.jemaah.activity.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#fff" >
+
+
+    <Button
+        android:id="@+id/btn_scan"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/list_selector"
+        android:text="" />
+
+    <!--  Tombol Acara -->
+    <!--<Button-->
+        <!--android:id="@+id/btn_acara"-->
+        <!--style="@style/DashboardButton"-->
+        <!--android:drawableTop="@drawable/btn_acara"-->
+        <!--android:text="Acara" />-->
+ <!-- -->
+    <!--&lt;!&ndash;  Tombol Foto &ndash;&gt;-->
+    <!--<Button-->
+        <!--android:id="@+id/btn_foto"-->
+        <!--style="@style/DashboardButton"-->
+        <!--android:drawableTop="@drawable/btn_foto"-->
+        <!--android:text="Foto" />-->
+ 
+</com.garudatekno.jemaah.activity.DashboardLayout>
