@@ -34,18 +34,13 @@ public class CustomList extends SimpleAdapter {
             vi = inflater.inflate(R.layout.list_item, null);
 
         HashMap<String, Object> data = (HashMap<String, Object>) getItem(position);
-//        TextView uid = (TextView)vi.findViewById(R.id.uid);
-        TextView from = (TextView)vi.findViewById(R.id.from);
-        TextView to = (TextView)vi.findViewById(R.id.to);
-        TextView date = (TextView)vi.findViewById(R.id.date);
-        String id = (String) data.get(AppConfig.KEY_ID);
-        String strFrom = (String) data.get(AppConfig.KEY_FROM);
-        String strTo = (String) data.get(AppConfig.KEY_TO);
-        String StrDate = (String) data.get(AppConfig.KEY_DATE);
-//        uid.setText(id);
-        from.setText(strFrom);
-        to.setText(strTo);
-        date.setText(StrDate);
+        TextView no = (TextView)vi.findViewById(R.id.txtNO);
+        TextView name = (TextView)vi.findViewById(R.id.txtNAME);
+
+        String strID = (String) data.get(AppConfig.KEY_ID);
+        String strName = (String) data.get(AppConfig.KEY_NAME);
+        no.setText(strID);
+        name.setText(strName);
 //        ImageView imageView = (ImageView) vi.findViewById(R.id.uid);
             // Set a background color for ListView regular row/item
 //        if (id.equals("1")) {

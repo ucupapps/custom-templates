@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+    <com.szugyi.circlemenu.view.CircleImageView
+        android:id="@+id/circle7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle"
+        android:elevation="2dp"
+        circle:name="DOA" />
+
+
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_reefer_img"-->
+        <!--android:layout_width="220dp"-->
+        <!--android:layout_height="115dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Data Refeer" />-->
+
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_vessel_img"-->
+        <!--android:layout_width="115dp"-->
+        <!--android:layout_height="220dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Vessel Schedule" />-->
+
+
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_tarif_img"-->
+        <!--android:layout_width="220dp"-->
+        <!--android:layout_height="115dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Tariff Simulation" />-->
+
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_order_img"-->
+        <!--android:layout_width="115dp"-->
+        <!--android:layout_height="220dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Order Feeder" />-->
+
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_order_img3"-->
+        <!--android:layout_width="115dp"-->
+        <!--android:layout_height="220dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Order Feeder" />-->
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_order_img4"-->
+        <!--android:layout_width="115dp"-->
+        <!--android:layout_height="220dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Order Feeder" />-->
+    <!--<com.szugyi.circlemenu.view.CircleImageView-->
+        <!--android:id="@+id/main_order_img5"-->
+        <!--android:layout_width="115dp"-->
+        <!--android:layout_height="220dp"-->
+        <!--android:elevation="2dp"-->
+        <!--android:src="@drawable/doa"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:padding="17dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--circle:name="Order Feeder" />-->
+
+</merge>

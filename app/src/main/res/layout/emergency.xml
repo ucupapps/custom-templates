@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.garudatekno.jemaah.menu.edit_profile">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <include layout="@layout/header"/>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.garudatekno.jemaah.menu.edit_profile" >
+
+        <include layout="@layout/footer"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/footer"
+            android:gravity="center" >
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="80dp"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".sample.input">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button">
+    <TableRow
+        android:layout_marginTop="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:padding="4dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textColor="#f12c2c"
+            android:textStyle="bold"
+            android:background="@drawable/button_white"
+            android:text="TOLONG !!!" />
+    </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="10"
+                android:padding="4dp"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:text="HUB / TEMUKAN SAYA DISINI" />
+        </TableRow>
+        <TableRow
+            android:layout_marginBottom="8dp">
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:map="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="0dp"
+                android:layout_weight="10"
+                android:padding="4dp"
+                android:layout_height="220dp"
+                tools:context=".menu.emergency" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="KIRIM"
+        android:textColor="#FFF"
+        android:background="@drawable/button"
+        android:id="@+id/buttonAdd" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:id="@+id/userid" />
+</LinearLayout>
+</ScrollView>
+        </RelativeLayout>
+        </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

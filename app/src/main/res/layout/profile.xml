@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.garudatekno.jemaah.menu.profile">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <include layout="@layout/header"/>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.garudatekno.jemaah.menu.profile" >
+
+        <include layout="@layout/footer"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/footer"
+            android:gravity="center" >
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="80dp"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".sample.input">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageProfile"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:paddingTop="5dp"
+        android:layout_gravity="center"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#e1e1e1"/>
+
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_silver">
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="match_parent"
+            android:text="Fullname" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="match_parent"
+            android:text=" "
+            android:id="@+id/name" />
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="No Passport"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/passport"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Mobile Phone"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/phone"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Address"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/address"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Town"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/town"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Province"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/province"/>
+    </TableRow>
+</TableLayout>
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:background="@drawable/button"
+        android:textColor="#FFF"
+        android:id="@+id/buttonAdd" />
+    <Button
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:background="@drawable/button"
+        android:textColor="#FFF"
+        android:id="@+id/buttonLogout" />
+
+</LinearLayout>
+</ScrollView>
+        </RelativeLayout>
+        </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

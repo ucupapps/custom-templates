@@ -238,7 +238,7 @@ public class input extends AppCompatActivity implements OnClickListener {
             txtTwon.setText(town);
 
           Picasso.with(this)
-            .load("http://192.168.43.31/uploads/profile/"+uid+"/images.jpg")
+            .load("http://192.168.0.2/uploads/profile/"+uid+"/images.jpg")
                     .into(imageView);
 
         } catch (JSONException e) {

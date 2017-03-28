@@ -5,65 +5,25 @@
     android:orientation="vertical"
     android:padding="10dip" >
 
-    <TextView
-        android:id="@+id/txtFrom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="From :"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
+    <TableLayout  android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
 
     <TextView
-        android:id="@+id/from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/txtFrom"
-        android:text="Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
+        android:id="@+id/txtNO"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:padding="4dp"
+        android:layout_height="match_parent"
+        android:text="No."/>
     <TextView
-        android:id="@+id/textTo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/txtFrom"
-        android:text="To : "
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:id="@+id/txtNAME"
+        android:layout_width="0dp"
+        android:layout_weight="9"
+        android:padding="4dp"
+        android:layout_height="match_parent"
+        android:text="Name" />
 
-    <TextView
-        android:id="@+id/to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textTo"
-        android:layout_alignBottom="@+id/textTo"
-        android:layout_toRightOf="@+id/textTo"
-        android:text="Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/textTo"
-        android:text="Date : "
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textDate"
-        android:layout_alignBottom="@+id/textDate"
-        android:layout_toRightOf="@+id/textDate"
-        android:text="Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

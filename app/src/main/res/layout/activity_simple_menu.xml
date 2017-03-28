@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.garudatekno.jemaah.activity.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+         <include layout="@layout/header"/>
+        </android.support.v7.widget.Toolbar>
+   </android.support.design.widget.AppBarLayout>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:circle="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.garudatekno.jemaah.activity.MainActivity" >
+
+    <include layout="@layout/footer"/>
+
+    <RelativeLayout
+        android:id="@+id/circle_menu"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/footer"
+        android:background="#e1f2bd"
+        android:gravity="center" >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/button_white">
+        <TableRow>
+        <TextView
+            android:id="@+id/menu1"
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:padding="4dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/line"
+            android:layout_height="30dp"
+            android:textSize="@dimen/default_text_size"
+            android:text="1. Menu"
+            />
+        </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/menu2"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:textSize="@dimen/default_text_size"
+                    android:padding="4dp"
+                    android:background="@drawable/line"
+                    android:layout_height="match_parent"
+                    android:text="2. Menu" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/menu3"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:padding="4dp"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/line"
+                    android:layout_height="match_parent"
+                    android:text="3. Menu" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/menu4"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:padding="4dp"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/line"
+                    android:layout_height="match_parent"
+                    android:text="4. Menu" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/menu5"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/line"
+                    android:padding="4dp"
+                    android:layout_height="match_parent"
+                    android:text="5. Menu" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/menu6"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:padding="4dp"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/line"
+                    android:layout_height="match_parent"
+                    android:text="6. Menu" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/menu7"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:padding="4dp"
+                    android:textSize="@dimen/default_text_size"
+                    android:background="@drawable/line"
+                    android:layout_height="match_parent"
+                    android:text="7. Menu"
+                    android:layout_marginBottom="10dp"/>
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BACK TO NORMAL VIEW"
+            android:background="@drawable/button"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:id="@+id/buttonSimple"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

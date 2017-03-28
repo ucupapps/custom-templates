@@ -23,9 +23,6 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -63,10 +60,35 @@
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.sample.input"
+            android:name="com.garudatekno.jemaah.menu.edit_profile"
             android:label="Profile"
             android:launchMode="singleTop">
         </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.activity.SimpleMenu"
+            android:label="Simple Menu"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.profile"
+            android:label="Profile"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.Doa"
+            android:label="Doa"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.emergency"
+            android:label="Emergency"
+            android:launchMode="singleTop">
+        </activity>
+
+            <activity
+                android:name=".activity.AndroidGPSTrackingActivity"
+                android:label="@string/app_name" >
+            </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -77,24 +99,16 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <meta-data
-            android:name="com.google.android.gms.version"
-
-            android:value="@integer/google_play_services_version" />
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDgOoAvRS9QFJ9kNc65DR0RHr3jFI8Z2OE" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <!--<meta-data-->
+            <!--android:name="com.google.android.maps.v2.API_KEY"-->
+            <!--android:value="AIzaSyCuVnGc4s77L0Yk8qIV91ll&#45;&#45;EI_FHQH74" />-->
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/arrow" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
 
         <service
             android:name="com.garudatekno.jemaah.gcm.MyFirebaseMessagingService">

@@ -3,12 +3,16 @@
     <item android:title="Menu">
         <menu>
             <item
+                android:id="@+id/nav_findme"
+                android:icon="@drawable/ic_help"
+                android:title="Find Me" />
+            <item
                 android:id="@+id/nav_order"
-                android:icon="@drawable/user"
+                android:icon="@drawable/profile"
                 android:title="My Profile" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/exit"
+                android:icon="@drawable/profile"
                 android:title="Logout" />
         </menu>
     </item>

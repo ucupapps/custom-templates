@@ -10,10 +10,14 @@ public class AppConfig {
 //	public static final String URL_ORDER_LIST = "http://192.168.0.8/api/driver/order-list?id=";
 //	public static final String URL_ORDER_HISTORY = "http://192.168.0.8/api/driver/order-history?id=";
 
-	public static String URL_LOGIN = "http://192.168.43.31/api/jemaah/login";
-	public static String URL_REGISTER = "http://192.168.43.31/api/jemaah/register";
-	public static String URL_PROFILE = "http://192.168.43.31/api/jemaah/profile";
-	public static String URL_GETPROFILE = "http://192.168.43.31/api/jemaah/get-profile?id=";
+	public static String URL_HOME = "http://103.27.207.92";
+	public static String URL_FINDME = "http://103.27.207.92/api/jemaah/Findme";
+	public static String URL_LOGIN = "http://103.27.207.92/api/jemaah/login";
+	public static String URL_REGISTER = "http://103.27.207.92/api/jemaah/register";
+	public static String URL_PROFILE = "http://103.27.207.92/api/jemaah/profile";
+	public static String URL_GETPROFILE = "http://103.27.207.92/api/jemaah/get-profile?id=";
+	public static String URL_GET_DOA = "http://103.27.207.92/api/jemaah/get-doa";
+	public static String URL_EMERGENCY = "http://103.27.207.92/api/jemaah/emergency";
 	public static final String URL_GET_SAMPLE = "http://apps.cikarangdryport.com/api/driver/get-task?id=";
 	public static final String URL_STATUS_START = "http://apps.cikarangdryport.com/api/driver/start?id=";
 	public static final String URL_STATUS_DONE = "http://apps.cikarangdryport.com/api/driver/done?id=";
@@ -33,6 +37,8 @@ public class AppConfig {
 	public static final String KEY_DATETIME = "datetime";
 	public static final String KEY_DATE = "date";
 	public static final String KEY_TIME = "time";
+	public static final String KEY_LAT = "lat";
+	public static final String KEY_LNG = "lng";
 
 	static final String KEY_CON_ID= "id";
 	public static final String KEY_CON_NO = "no";
