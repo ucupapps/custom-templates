@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -46,7 +47,7 @@ import static java.sql.Types.NULL;
 
 public class edit_profile extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
-    private EditText txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince;
+    private EditText txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txtfamily1,txtfamily2,txtfamily3;
     private Button buttonAdd, scanBtn;
     private Button buttonUpload;
     private CircleImageView imgProfile;
@@ -54,7 +55,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
-    String lat,lng,uid;
+    String created,email,uid,nama;
     private int PICK_IMAGE_REQUEST = 1;
     private Uri filePath;
     //user
@@ -125,6 +126,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         txtPassport = (EditText) findViewById(R.id.passport);
         txtProvince = (EditText) findViewById(R.id.province);
         txtTwon = (EditText) findViewById(R.id.town);
+        txtfamily1 = (EditText) findViewById(R.id.family1);
+        txtfamily2 = (EditText) findViewById(R.id.family2);
+        txtfamily3 = (EditText) findViewById(R.id.family3);
         editTextuser = (EditText) findViewById(R.id.userid);
         editTextuser.setVisibility(View.GONE);
 
@@ -137,6 +141,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
+        nama = user.get("name");
+        email = user.get("email");
+        created = user.get("created_at");
         //user
         getData();
         editTextuser.setText(uid);
@@ -166,6 +173,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             if(imgProfile.getDrawable() == null)
             {
                 Toast.makeText(this, "Image cannot null", Toast.LENGTH_SHORT).show();
+            }else if(txtfamily1.getText().toString().equals(""))
+            {
+                Toast.makeText(this, "Family Contact cannot null", Toast.LENGTH_SHORT).show();
             }else if(txtName.getText().toString().equals(""))
             {
                 Toast.makeText(this, "Name cannot null", Toast.LENGTH_SHORT).show();
@@ -221,6 +231,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             String phone = c.getString(AppConfig.KEY_PHONE);
             String province = c.getString(AppConfig.KEY_PROVINCE);
             String town = c.getString(AppConfig.KEY_TOWN);
+            String tfamily1 = c.getString(AppConfig.KEY_PHONE_FAMILY1);
+            String tfamily2 = c.getString(AppConfig.KEY_PHONE_FAMILY2);
+            String tfamily3 = c.getString(AppConfig.KEY_PHONE_FAMILY3);
 
             if(name.equals(NULL) || name.equals("")) {
                 imgProfile.setImageResource(R.drawable.profile);
@@ -237,6 +250,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             txtPhone.setText(phone);
             txtProvince.setText(province);
             txtTwon.setText(town);
+            txtfamily1.setText(tfamily1);
+            txtfamily2.setText(tfamily2);
+            txtfamily3.setText(tfamily3);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -278,6 +294,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         final String phone = txtPhone.getText().toString().trim();
         final String province = txtProvince.getText().toString().trim();
         final String town = txtTwon.getText().toString().trim();
+        final String family1 = txtfamily1.getText().toString().trim();
+        final String family2 = txtfamily2.getText().toString().trim();
+        final String family3 = txtfamily3.getText().toString().trim();
 //        final String radiovalue = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
 //        final Spinner spinner_house = (Spinner) findViewById(R.id.status);
 //        final String spinner_status = spinner_house.getSelectedItem().toString();
@@ -302,20 +321,28 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected String doInBackground(Bitmap... params) {
                 Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
 
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_USERID, idUser);
-                data.put(AppConfig.UPLOAD_KEY, uploadImage);
+                try{
+                    String uploadImage = getStringImage(bitmap);
+                    data.put(AppConfig.UPLOAD_KEY, uploadImage);
+                } catch (Exception ex) {
+                    data.put(AppConfig.UPLOAD_KEY, "");
+                    Log.i("Bitmap Error", "Tidak ada image");
+                }
+                db.deleteUsers();
+                db.addUser(uid,nama, email, created,family1+","+family2+","+family3);
+
                 data.put(AppConfig.KEY_NAME,name);
                 data.put(AppConfig.KEY_ADDRESS,address);
                 data.put(AppConfig.KEY_PASSPORT,passport);
                 data.put(AppConfig.KEY_PHONE,phone);
                 data.put(AppConfig.KEY_PROVINCE,province);
                 data.put(AppConfig.KEY_TOWN,town);
-//                data.put(AppConfig.KEY_DATE,date);
-//                data.put(AppConfig.KEY_TIME,time);
-//                data.put(AppConfig.KEY_OPTION,radiovalue);
+                data.put(AppConfig.KEY_PHONE_FAMILY1,family1);
+                data.put(AppConfig.KEY_PHONE_FAMILY2,family2);
+                data.put(AppConfig.KEY_PHONE_FAMILY3,family3);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(AppConfig.URL_PROFILE, data);

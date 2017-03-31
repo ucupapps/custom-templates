@@ -24,18 +24,18 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Doa;
 import com.garudatekno.jemaah.menu.emergency;
+import com.garudatekno.jemaah.menu.panduan;
 import com.garudatekno.jemaah.menu.profile;
-import com.garudatekno.jemaah.sample.Findme;
 import com.garudatekno.jemaah.sample.ViewData;
 import com.garudatekno.jemaah.sample.input;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
+import com.szugyi.circlemenu.view.CircleImageView;
 
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements ListView.OnItemClickListener {
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private String JSON_STRING;
 
     protected Location mCurrentLocation;
+    protected CircleImageView C_satu,C_dua,C_tiga,C_empat,C_lima,C_enam,C_tujuh;
 
     // UI Widgets.
     protected TextView mLatitudeTextView;
@@ -78,6 +79,13 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
+        menu_panduan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +100,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(i);
             }
         });
+
 
         //FOOTER
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
@@ -115,12 +124,19 @@ public class MainActivity extends AppCompatActivity
             logoutUser();
         }
 
+       //circle menu
+        C_satu =(CircleImageView) findViewById(R.id.circle1);
+        C_dua =(CircleImageView) findViewById(R.id.circle2);
+        C_tiga=(CircleImageView) findViewById(R.id.circle3);
+        C_empat=(CircleImageView) findViewById(R.id.circle4);
+        C_lima=(CircleImageView) findViewById(R.id.circle5);
+        C_enam=(CircleImageView) findViewById(R.id.circle6);
+        C_tujuh=(CircleImageView) findViewById(R.id.circle7);
         Button btnSimple =(Button) findViewById(R.id.buttonSimple);
         btnSimple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), SimpleMenu.class);
-                startActivity(i);
+                C_satu.setImageResource(R.drawable.circle);
             }
         });
 

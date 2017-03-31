@@ -45,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static java.sql.Types.NULL;
 
 public class profile extends AppCompatActivity implements OnClickListener {
-    private TextView txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince;
+    private TextView txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing;
     private Button buttonAdd, buttonLogout;
     private CircleImageView imgProfile;
     String lat,lng,uid;
@@ -98,12 +98,16 @@ public class profile extends AppCompatActivity implements OnClickListener {
                 startActivity(i);
             }
         });
-
+//CONTENT
         txtName = (TextView) findViewById(R.id.name);
         txtAddress = (TextView) findViewById(R.id.address);
         txtPhone = (TextView) findViewById(R.id.phone);
         txtPassport = (TextView) findViewById(R.id.passport);
         txtProvince = (TextView) findViewById(R.id.province);
+        txttravel = (TextView) findViewById(R.id.travel_agent);
+        txtmekkah = (TextView) findViewById(R.id.hotel_mekkah);
+        txtmadinah = (TextView) findViewById(R.id.hotel_madinah);
+        txtpembimbing = (TextView) findViewById(R.id.pembimbing);
         txtTwon = (TextView) findViewById(R.id.town);
         editTextuser = (TextView) findViewById(R.id.userid);
 
@@ -181,6 +185,10 @@ public class profile extends AppCompatActivity implements OnClickListener {
             String phone = c.getString(AppConfig.KEY_PHONE);
             String province = c.getString(AppConfig.KEY_PROVINCE);
             String town = c.getString(AppConfig.KEY_TOWN);
+            String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
+            String mekkah = c.getString(AppConfig.KEY_HOTEL_MEKKAH);
+            String madinah = c.getString(AppConfig.KEY_HOTEL_MADINAH);
+            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBING);
             if(name.equals(NULL) || name.equals("")) {
                 imgProfile.setImageResource(R.drawable.profile);
             }else{
@@ -189,12 +197,16 @@ public class profile extends AppCompatActivity implements OnClickListener {
                         .into(imgProfile);
             }
 
-            txtName.setText(": "+name);
-            txtAddress.setText(": "+address);
-            txtPassport.setText(": "+passport);
-            txtPhone.setText(": "+phone);
-            txtProvince.setText(": "+province);
-            txtTwon.setText(": "+town);
+            txtName.setText(name);
+            txtAddress.setText(address);
+            txtPassport.setText(passport);
+            txtPhone.setText(phone);
+            txtProvince.setText(province);
+            txtTwon.setText(town);
+            txttravel.setText(travel);
+            txtmekkah.setText(mekkah);
+            txtmadinah.setText(madinah);
+            txtpembimbing.setText(pembimbing);
 
         } catch (JSONException e) {
             e.printStackTrace();

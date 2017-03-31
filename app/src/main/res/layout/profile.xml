@@ -59,32 +59,27 @@
         app:civ_border_width="2dp"
         app:civ_border_color="#e1e1e1"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:id="@+id/name"
+        android:textSize="20dp"
+        android:layout_marginBottom="5dp"/>
+
 <TableLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/button_silver">
-    <TableRow android:layout_marginBottom="8dp">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:padding="4dp"
-            android:layout_height="match_parent"
-            android:text="Fullname" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
-            android:padding="4dp"
-            android:layout_height="match_parent"
-            android:text=" "
-            android:id="@+id/name" />
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+    android:layout_height="wrap_content">
+       <TableRow android:layout_marginBottom="8dp">
         <TextView
             android:layout_width="0dp"
             android:layout_weight="4"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="No Passport"/>
+            android:text="No. Passport:"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -99,7 +94,7 @@
             android:layout_weight="4"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Mobile Phone"/>
+            android:text="No. Ponsel:"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -114,7 +109,7 @@
             android:layout_weight="4"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Address"/>
+            android:text="Alamat:"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -129,7 +124,7 @@
             android:layout_weight="4"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Town"/>
+            android:text="Kota:"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -144,7 +139,7 @@
             android:layout_weight="4"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Province"/>
+            android:text="Provinsi:"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="6"
@@ -152,6 +147,66 @@
             android:layout_height="wrap_content"
             android:text=" "
             android:id="@+id/province"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Travel Agent:"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/travel_agent"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Hotel di Mekkah:"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/hotel_mekkah"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Hotel di Madinah:"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/hotel_madinah"/>
+    </TableRow>
+    <TableRow android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nama Pembimbing:"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/pembimbing"/>
     </TableRow>
 </TableLayout>
 

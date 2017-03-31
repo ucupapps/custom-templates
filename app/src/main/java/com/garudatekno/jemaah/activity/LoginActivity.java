@@ -144,12 +144,13 @@ public class LoginActivity extends Activity {
                         String uid = user.getString("id");
                         String name = user.getString("name");
                         String email = user.getString("email");
+                        String family_phone = user.getString("family_phone");
 //                        String token = refreshedToken;
                         String created_at = user
                                 .getString("created_at");
 
                         // Inserting row in users table
-                        db.addUser(uid,name, email, created_at);
+                        db.addUser(uid,name, email, created_at,family_phone);
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
