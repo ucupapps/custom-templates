@@ -123,6 +123,13 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 startActivity(i);
             }
         });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
 
         //FOOTER
         TextView txt_thowaf = (TextView) findViewById(R.id.txt_thowaf);

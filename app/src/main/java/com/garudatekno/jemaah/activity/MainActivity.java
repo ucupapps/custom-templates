@@ -24,6 +24,7 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Doa;
 import com.garudatekno.jemaah.menu.emergency;
+import com.garudatekno.jemaah.menu.inbox;
 import com.garudatekno.jemaah.menu.panduan;
 import com.garudatekno.jemaah.menu.profile;
 import com.garudatekno.jemaah.sample.ViewData;
@@ -97,6 +98,13 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), emergency.class);
+                startActivity(i);
+            }
+        });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
             }
         });

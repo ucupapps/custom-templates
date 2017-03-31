@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TableLayout  android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/balloon_incoming_normal">
+        <TableRow >
+
+    <TextView
+        android:id="@+id/txtNO"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:padding="4dp"
+        android:layout_height="match_parent"
+        android:text="id"/>
+    <TextView
+        android:id="@+id/txtMESSAGE"
+        android:layout_width="0dp"
+        android:layout_weight="8"
+        android:padding="4dp"
+        android:layout_marginLeft="12dp"
+        android:layout_height="match_parent"
+        android:text="MESSAGE" />
+
+        </TableRow>
+        <TableRow >
+            <TextView
+                android:id="@+id/txtTIME"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:gravity="right"
+                android:textSize="12dp"
+                android:textColor="#a6a3a3"
+                android:layout_height="match_parent"
+                android:text="time" />
+
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>

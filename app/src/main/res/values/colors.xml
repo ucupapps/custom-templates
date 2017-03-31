@@ -21,4 +21,5 @@
     <color name="accentColor">#448AFF</color>
     <color name="accentColorPressed">#ff2c73ff</color>
     <color name="primaryTextColor">#212121</color>
+    <color name="orange">@android:color/holo_blue_light</color>
 </resources>

@@ -3,6 +3,8 @@ package com.garudatekno.jemaah.menu;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,9 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
     private String JSON_STRING;
     private SQLiteHandler db;
+
+    MediaPlayer mMediaPlayer ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,20 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 startActivity(i);
             }
         });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
+        menu_doa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Doa.class);
+                startActivity(i);
+            }
+        });
 
         menu_emergency.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +108,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         db = new SQLiteHandler(getApplicationContext());
 
         getJSON();
-
     }
 
 

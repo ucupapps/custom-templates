@@ -78,6 +78,20 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
                 startActivity(i);
             }
         });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
+        menu_panduan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
         //FOOTER
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_go=(TextView) findViewById(R.id.txt_go);
