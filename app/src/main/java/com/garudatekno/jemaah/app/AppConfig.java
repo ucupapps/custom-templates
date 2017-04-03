@@ -2,24 +2,25 @@ package com.garudatekno.jemaah.app;
 
 public class AppConfig {
 	// Server user login url
-	public static String URL_HOME = "http://192.168.0.9";
-	public static String URL_LOGIN = "http://192.168.0.9/api/jemaah/login";
-	public static String URL_REGISTER = "http://192.168.0.9/api/jemaah/register";
-	public static String URL_PROFILE = "http://192.168.0.9/api/jemaah/profile";
-	public static String URL_GETPROFILE = "http://192.168.0.9/api/jemaah/get-profile?id=";
-	public static String URL_GET_INBOX = "http://192.168.0.9/api/jemaah/get-inbox?id=";
-	public static String URL_GET_DOA = "http://192.168.0.9/api/jemaah/get-doa";
-	public static String URL_EMERGENCY = "http://192.168.0.9/api/jemaah/emergency";
-	public static String URL_GET_FAMILY_PHONE = "http://192.168.0.9/api/jemaah/family-phone?id=";
+//	public static String URL_HOME = "http://192.168.0.8";
+//	public static String URL_LOGIN = "http://192.168.0.8/api/jemaah/login";
+//	public static String URL_REGISTER = "http://192.168.0.8/api/jemaah/register";
+//	public static String URL_PROFILE = "http://192.168.0.8/api/jemaah/profile";
+//	public static String URL_GETPROFILE = "http://192.168.0.8/api/jemaah/get-profile?id=";
+//	public static String URL_GET_DOA = "http://192.168.0.8/api/jemaah/get-doa";
+//	public static String URL_EMERGENCY = "http://192.168.0.8/api/jemaah/emergency";
+//	public static String URL_GET_FAMILY_PHONE = "http://192.168.0.8/api/jemaah/family-phone?id=";
+//	public static String URL_GET_INBOX = "http://192.168.0.8/api/jemaah/get-inbox?id=";
 
-//	public static String URL_HOME = "http://103.27.207.92";
-//	public static String URL_FINDME = "http://103.27.207.92/api/jemaah/Findme";
-//	public static String URL_LOGIN = "http://103.27.207.92/api/jemaah/login";
-//	public static String URL_REGISTER = "http://103.27.207.92/api/jemaah/register";
-//	public static String URL_PROFILE = "http://103.27.207.92/api/jemaah/profile";
-//	public static String URL_GETPROFILE = "http://103.27.207.92/api/jemaah/get-profile?id=";
-//	public static String URL_GET_DOA = "http://103.27.207.92/api/jemaah/get-doa";
-//	public static String URL_EMERGENCY = "http://103.27.207.92/api/jemaah/emergency";
+	public static String URL_HOME = "http://103.27.207.92";
+	public static String URL_LOGIN = "http://103.27.207.92/api/jemaah/login";
+	public static String URL_REGISTER = "http://103.27.207.92/api/jemaah/register";
+	public static String URL_PROFILE = "http://103.27.207.92/api/jemaah/profile";
+	public static String URL_GETPROFILE = "http://103.27.207.92/api/jemaah/get-profile?id=";
+	public static String URL_GET_DOA = "http://103.27.207.92/api/jemaah/get-doa";
+	public static String URL_EMERGENCY = "http://103.27.207.92/api/jemaah/emergency";
+	public static String URL_GET_FAMILY_PHONE = "http://103.27.207.92/api/jemaah/family-phone?id=";
+	public static String URL_GET_INBOX = "http://103.27.207.92/api/jemaah/get-inbox?id=";
 
 	public static final String URL_GET_SAMPLE = "http://apps.cikarangdryport.com/api/driver/get-task?id=";
 	public static final String URL_STATUS_START = "http://apps.cikarangdryport.com/api/driver/start?id=";

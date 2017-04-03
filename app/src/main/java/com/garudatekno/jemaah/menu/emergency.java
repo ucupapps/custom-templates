@@ -258,6 +258,9 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             }else if(txtphone.getText().toString().equals(""))
             {
                 Toast.makeText(this, "Family phone cannot null", Toast.LENGTH_SHORT).show();
+            }else if(txtlat.getText().toString().equals(""))
+            {
+                Toast.makeText(this, "Please click marker on map !", Toast.LENGTH_SHORT).show();
             }else {
 //            String phoneNumber = "082113150425,085229296292,081328280585";
                 String phoneNumber = txtphone.getText().toString();
@@ -273,6 +276,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         final String idUser = editTextuser.getText().toString().trim();
         final String lat = txtlat.getText().toString().trim();
         final String lng = txtlng.getText().toString().trim();
+        final String message = txtMessage.getText().toString().trim();
 
         class AddBarcode extends AsyncTask<Bitmap,Void,String> {
 
@@ -297,6 +301,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 data.put(AppConfig.KEY_USERID, idUser);
                 data.put(AppConfig.KEY_LAT, lat);
                 data.put(AppConfig.KEY_LNG, lng);
+                data.put(AppConfig.KEY_MESSAGE, message);
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(AppConfig.URL_EMERGENCY, data);
                 return res;
