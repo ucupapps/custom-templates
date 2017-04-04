@@ -59,10 +59,9 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        txt_doa.setTextColor(Color.WHITE);
-        menu_doa.setBackgroundResource(R.color.colorPrimary);
+        txt_doa.setTextColor(getResources().getColor(R.color.colorTextActive));
         ImageView img_doa=(ImageView) findViewById(R.id.img_doa);
-        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.doa_hover));
+        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.doa_active));
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

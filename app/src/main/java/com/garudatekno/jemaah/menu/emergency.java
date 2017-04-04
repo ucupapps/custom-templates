@@ -98,10 +98,9 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         TextView txt_profile = (TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox = (LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox = (TextView) findViewById(R.id.txt_inbox);
-        txt_emergency.setTextColor(Color.WHITE);
-        menu_emergency.setBackgroundResource(R.color.colorPrimary);
+        txt_emergency.setTextColor(getResources().getColor(R.color.colorTextActive));
         ImageView img_doa = (ImageView) findViewById(R.id.img_emergency);
-        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.emergency_hover));
+        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.emergency_active));
         menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

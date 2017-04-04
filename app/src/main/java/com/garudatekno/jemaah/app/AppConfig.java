@@ -12,15 +12,15 @@ public class AppConfig {
 //	public static String URL_GET_FAMILY_PHONE = "http://192.168.0.8/api/jemaah/family-phone?id=";
 //	public static String URL_GET_INBOX = "http://192.168.0.8/api/jemaah/get-inbox?id=";
 
-	public static String URL_HOME = "http://103.27.207.92";
-	public static String URL_LOGIN = "http://103.27.207.92/api/jemaah/login";
-	public static String URL_REGISTER = "http://103.27.207.92/api/jemaah/register";
-	public static String URL_PROFILE = "http://103.27.207.92/api/jemaah/profile";
-	public static String URL_GETPROFILE = "http://103.27.207.92/api/jemaah/get-profile?id=";
-	public static String URL_GET_DOA = "http://103.27.207.92/api/jemaah/get-doa";
-	public static String URL_EMERGENCY = "http://103.27.207.92/api/jemaah/emergency";
-	public static String URL_GET_FAMILY_PHONE = "http://103.27.207.92/api/jemaah/family-phone?id=";
-	public static String URL_GET_INBOX = "http://103.27.207.92/api/jemaah/get-inbox?id=";
+	public static String URL_HOME = "https://gohajj.id";
+	public static String URL_LOGIN = "https://gohajj.id/api/jemaah/login";
+	public static String URL_REGISTER = "https://gohajj.id/api/jemaah/register";
+	public static String URL_PROFILE = "https://gohajj.id/api/jemaah/profile";
+	public static String URL_GETPROFILE = "https://gohajj.id/api/jemaah/get-profile?id=";
+	public static String URL_GET_DOA = "https://gohajj.id/api/jemaah/get-doa";
+	public static String URL_EMERGENCY = "https://gohajj.id/api/jemaah/emergency";
+	public static String URL_GET_FAMILY_PHONE = "https://gohajj.id/api/jemaah/family-phone?id=";
+	public static String URL_GET_INBOX = "https://gohajj.id/api/jemaah/get-inbox?id=";
 
 	public static final String URL_GET_SAMPLE = "http://apps.cikarangdryport.com/api/driver/get-task?id=";
 	public static final String URL_STATUS_START = "http://apps.cikarangdryport.com/api/driver/start?id=";

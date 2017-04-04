@@ -55,10 +55,9 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        txt_inbox.setTextColor(Color.WHITE);
-        menu_inbox.setBackgroundResource(R.color.colorPrimary);
+        txt_inbox.setTextColor(getResources().getColor(R.color.colorTextActive));
         ImageView img_inbox=(ImageView) findViewById(R.id.img_inbox);
-        img_inbox.setImageDrawable(getResources().getDrawable(R.drawable.inbox_hover));
+        img_inbox.setImageDrawable(getResources().getDrawable(R.drawable.inbox_active));
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,10 +119,12 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
                 String id = jo.getString(AppConfig.KEY_ID);
                 String message = jo.getString(AppConfig.KEY_MESSAGE);
                 String time = jo.getString(AppConfig.KEY_TIME);
+                String from = jo.getString(AppConfig.KEY_FROM);
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_ID,id);
                 data.put(AppConfig.KEY_MESSAGE,message);
                 data.put(AppConfig.KEY_TIME,time);
+                data.put(AppConfig.KEY_FROM,from);
                 list.add(data);
             }
 
@@ -132,8 +133,8 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         }
 
         CustomList adapter = new CustomList(this, list,
-                R.layout.list_chat, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME },
-                new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME });
+                R.layout.list_chat, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM },
+                new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME,R.id.txtFROM });
 
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();

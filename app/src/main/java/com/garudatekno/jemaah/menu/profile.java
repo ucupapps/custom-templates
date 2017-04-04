@@ -67,10 +67,9 @@ public class profile extends AppCompatActivity implements OnClickListener {
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        txt_profile.setTextColor(Color.WHITE);
-        menu_profile.setBackgroundResource(R.color.colorPrimary);
+        txt_profile.setTextColor(getResources().getColor(R.color.colorTextActive));
         ImageView img_doa=(ImageView) findViewById(R.id.img_profile);
-        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.profile_hover));
+        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.profile_active));
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

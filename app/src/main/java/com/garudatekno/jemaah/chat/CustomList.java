@@ -37,14 +37,17 @@ public class CustomList extends SimpleAdapter {
         TextView no = (TextView)vi.findViewById(R.id.txtNO);
         TextView message = (TextView)vi.findViewById(R.id.txtMESSAGE);
         TextView time = (TextView)vi.findViewById(R.id.txtTIME);
+        TextView from = (TextView)vi.findViewById(R.id.txtFROM);
 
         String strID = (String) data.get(AppConfig.KEY_ID);
         String strMessage = (String) data.get(AppConfig.KEY_MESSAGE);
         String strTime = (String) data.get(AppConfig.KEY_TIME);
+        String strFrom = (String) data.get(AppConfig.KEY_FROM);
         no.setText(strID);
         no.setVisibility(View.GONE);;
         message.setText(strMessage);
         time.setText(strTime);
+        from.setText(strFrom);
 //        ImageView imageView = (ImageView) vi.findViewById(R.id.uid);
             // Set a background color for ListView regular row/item
 //        if (id.equals("1")) {
