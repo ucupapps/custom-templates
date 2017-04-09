@@ -1,30 +1,28 @@
 package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
-import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.telephony.SmsManager;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -33,42 +31,28 @@ import android.widget.Toast;
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.MainActivity;
-import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static java.sql.Types.NULL;
 
-public class emergency extends AppCompatActivity implements OnClickListener, OnMapReadyCallback  {
-    private EditText editTextuser,txtMessage,txtphone,txtlng,txtlat;
-    private Button buttonAdd;
+public class marker extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
+    private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
+    private Button btnbus, btnhotel, btnmeeting, btnpintu;
     private Bitmap bitmap;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
-    String lat, phone, uid;
+    String pesan, phone, uid;
     private int PICK_IMAGE_REQUEST = 1;
     private Uri filePath;
     //user
@@ -77,10 +61,12 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     private GoogleMap mMap;
     Location location;
 
+    private SQLiteDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.emergency);
+        setContentView(R.layout.marker);
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -105,9 +91,9 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         TextView txt_profile = (TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox = (LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox = (TextView) findViewById(R.id.txt_inbox);
-        txt_emergency.setTextColor(getResources().getColor(R.color.colorTextActive));
-        ImageView img_doa = (ImageView) findViewById(R.id.img_emergency);
-        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.emergency_active));
+//        txt_emergency.setTextColor(getResources().getColor(R.color.colorTextActive));
+//        ImageView img_doa = (ImageView) findViewById(R.id.img_emergency);
+//        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.emergency_active));
         menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,17 +108,24 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 startActivity(i);
             }
         });
-        menu_panduan.setOnClickListener(new View.OnClickListener() {
+        menu_panduan.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
             }
         });
-        menu_inbox.setOnClickListener(new View.OnClickListener() {
+        menu_inbox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
+        menu_emergency.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), emergency.class);
                 startActivity(i);
             }
         });
@@ -160,7 +153,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(emergency.this, txt_go);
+                PopupMenu popup = new PopupMenu(marker.this, txt_go);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
 
@@ -201,13 +194,13 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             }
         });
 
+
         editTextuser = (EditText) findViewById(R.id.userid);
-        txtphone = (EditText) findViewById(R.id.phone);
-        txtMessage = (EditText) findViewById(R.id.message);
+        txtMessage = (EditText) findViewById(R.id.pesan);
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
         editTextuser.setVisibility(View.GONE);
-        txtphone.setVisibility(View.GONE);
+        txtMessage.setVisibility(View.GONE);
         txtlat.setVisibility(View.GONE);
         txtlng.setVisibility(View.GONE);
 
@@ -216,6 +209,8 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             logoutUser();
         }
 
+        createDatabase();
+
         db = new SQLiteHandler(getApplicationContext());
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -223,10 +218,17 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         phone = user.get("family_phone");
         //user
         editTextuser.setText(uid);
-        txtphone.setText(phone);
+//        txtphone.setText(phone);
 
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
-        buttonAdd.setOnClickListener(this);
+        btnbus = (Button) findViewById(R.id.btnbus);
+        btnhotel = (Button) findViewById(R.id.btnhotel);
+        btnmeeting = (Button) findViewById(R.id.btnmeeting);
+        btnpintu = (Button) findViewById(R.id.btnpintu);
+        btnbus.setOnClickListener(this);
+        btnhotel.setOnClickListener(this);
+        btnmeeting.setOnClickListener(this);
+        btnpintu.setOnClickListener(this);
+
     }
 
     @Override
@@ -238,8 +240,12 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             // TODO: Consider calling
             return;
         }
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Log.d("Mylat", "lat: " + location);
         Double lat;
         Double lng;
+//        Double lat= -6.2268682;
+//        Double lng= 106.8289868;
         if (location != null) {
             lat=location.getLatitude(); lng=location.getLongitude();
             LatLng jakarta = new LatLng(lat,lng);
@@ -259,6 +265,23 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
 //                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
 //                }
 //            });
+
+//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    LatLng position = marker.getPosition();
+//                    Double latitude = position.latitude;
+//                    Double longitude = position.longitude;
+//                    txtlat.setText("" + latitude);
+//                    txtlng.setText("" + longitude);
+//                    Toast.makeText(
+//                            go.this,
+//                            "Lat " + position.latitude + " "
+//                                    + "Long " + position.longitude,
+//                            Toast.LENGTH_LONG).show();
+//                    return true;
+//                }
+//            });
 //        }
 
     }
@@ -268,13 +291,13 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         // get the last know location from your location manager.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            return;
+           return;
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         txtlat.setText("" + location.getLatitude());
-                    txtlng.setText("" + location.getLongitude());
+        txtlng.setText("" + location.getLongitude());
 //        Toast.makeText(
-//                emergency.this,
+//                go.this,
 //                "Lat " + location.getLatitude() + " "
 //                        + "Long " + location.getLongitude(),
 //                Toast.LENGTH_LONG).show();
@@ -286,92 +309,75 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         db.deleteUsers();
 
         // Launching the login activity
-        Intent intent = new Intent(emergency.this, LoginActivity.class);
+        Intent intent = new Intent(marker.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void sendSMS(String phoneNo, String msg) {
-        try {
-            String numbers[] = phoneNo.split(", *");
-            SmsManager smsManager = SmsManager.getDefault();
-            ArrayList<String> parts = smsManager.divideMessage(msg);
-
-            for(String number : numbers) {
-                smsManager.sendMultipartTextMessage(number, null, parts, null, null);
-            }
-            Toast.makeText(getApplicationContext(), "Message Sent",
-                    Toast.LENGTH_LONG).show();
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
-                    Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-        }
-    }
-
-    public void onClick(View v){
-        if(v == buttonAdd){
+    public void onClick(View v) {
+        if (v == btnbus) {
             getCurrentLocation();
-            if(txtMessage.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Message cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtphone.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Family phone cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtlat.getText().toString().equals(""))
+            if(txtlat.getText().toString().equals(""))
             {
                 Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
-            }else {
-//            String phoneNumber = "082113150425,085229296292,081328280585";
-                String phoneNumber = txtphone.getText().toString();
-                String message = txtMessage.getText().toString();
-                sendSMS(phoneNumber, message);
-                addBarcode();
             }
+            txtMessage.setText("BUS");insertIntoDB();
+        }
+        if (v == btnhotel) {
+            getCurrentLocation();
+            if(txtlat.getText().toString().equals(""))
+            {
+                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+            }
+            txtMessage.setText("HOTEL");insertIntoDB();
+        }
+        if (v == btnpintu) {
+            getCurrentLocation();
+            if(txtlat.getText().toString().equals(""))
+            {
+                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+            }
+            txtMessage.setText("NO PINTU MASJID");insertIntoDB();
+        }
+        if (v == btnmeeting) {
+            getCurrentLocation();
+            if(txtlat.getText().toString().equals(""))
+            {
+                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+            }
+            txtMessage.setText("MEETING POINT");insertIntoDB();
         }
     }
 
-    //Adding an addBarcode
-    private void addBarcode(){
+    protected void createDatabase(){
+        database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,lat VARCHAR,lng VARCHAR);");
+    }
+
+    protected void insertIntoDB(){
         final String idUser = editTextuser.getText().toString().trim();
         final String lat = txtlat.getText().toString().trim();
         final String lng = txtlng.getText().toString().trim();
-        final String message = txtMessage.getText().toString().trim();
+        final String name = txtMessage.getText().toString().trim();
 
-        class AddBarcode extends AsyncTask<Bitmap,Void,String> {
-
-            ProgressDialog loading;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(emergency.this,"Sending Message","...",false,false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(emergency.this, s, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                HashMap<String,String> data = new HashMap<>();
-                data.put(AppConfig.KEY_USERID, idUser);
-                data.put(AppConfig.KEY_LAT, lat);
-                data.put(AppConfig.KEY_LNG, lng);
-                data.put(AppConfig.KEY_MESSAGE, message);
-                RequestHandler rh = new RequestHandler();
-                String res = rh.sendPostRequest(AppConfig.URL_EMERGENCY, data);
-                return res;
-            }
+        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        if(count > 0) {
+            String query = "UPDATE locations SET lat='" + lat + "',lng='" + lng + "' WHERE name='" + name + "';";
+            database.execSQL(query);
+        }else {
+            String query = "INSERT INTO locations (name,lat,lng) VALUES('" + name + "', '" + lat + "', '" + lng + "');";
+            database.execSQL(query);
         }
+        Toast.makeText(getApplicationContext(),"Location "+name+ " Berhasil di simpan", Toast.LENGTH_LONG).show();
+        Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
 
-        AddBarcode ae = new AddBarcode();
-        ae.execute();
-
-        startActivity(new Intent(emergency.this, emergency.class));
+        c.moveToFirst();
+        String nama=c.getString(1);
+        String lats=c.getString(2);
+        String lngs=c.getString(3);
+        Log.d("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
     }
 
 }

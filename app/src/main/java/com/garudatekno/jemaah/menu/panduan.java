@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -22,7 +24,6 @@ import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,8 +94,8 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         });
         //FOOTER
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_go=(TextView) findViewById(R.id.txt_go);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +103,58 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 startActivity(i);
             }
         });
+        txt_sai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), sai.class);
+                startActivity(i);
+            }
+        });
+        txt_go.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(panduan.this, txt_go);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if(id == R.id.bus) {
+                            Intent i = new Intent(getApplicationContext(), go.class);
+                            i.putExtra(AppConfig.KEY_NAME,"BUS");
+                            startActivity(i);
+                        }
+                        if(id == R.id.hotel) {
+                            Intent i = new Intent(getApplicationContext(), go.class);
+                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
+                            startActivity(i);
+                        }
+                        if(id == R.id.pintu) {
+                            Intent i = new Intent(getApplicationContext(), go.class);
+                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
+                            startActivity(i);
+                        }
+                        if(id == R.id.meeting) {
+                            Intent i = new Intent(getApplicationContext(), go.class);
+                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
+                            startActivity(i);
+                        }
+                        if(id == R.id.pin) {
+                            Intent i = new Intent(getApplicationContext(), marker.class);
+                            startActivity(i);
+                        }
+
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
+            }
+        });
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
 

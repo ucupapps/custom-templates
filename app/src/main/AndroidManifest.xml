@@ -95,6 +95,21 @@
             android:label="Inbox"
             android:launchMode="singleTop">
         </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.go"
+            android:label="GO"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.marker"
+            android:label="MARKER"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.sai"
+            android:label="SAI"
+            android:launchMode="singleTop">
+        </activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

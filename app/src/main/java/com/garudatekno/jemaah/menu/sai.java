@@ -1,13 +1,10 @@
-package com.garudatekno.jemaah.activity;
+package com.garudatekno.jemaah.menu;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,45 +14,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.activity.BackgroundService;
+import com.garudatekno.jemaah.activity.LoginActivity;
+import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.garudatekno.jemaah.menu.Doa;
-import com.garudatekno.jemaah.menu.go;
-import com.garudatekno.jemaah.menu.emergency;
-import com.garudatekno.jemaah.menu.inbox;
-import com.garudatekno.jemaah.menu.marker;
-import com.garudatekno.jemaah.menu.panduan;
-import com.garudatekno.jemaah.menu.profile;
-import com.garudatekno.jemaah.menu.sai;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.squareup.picasso.Picasso;
-import com.szugyi.circlemenu.view.CircleImageView;
 
 import java.util.HashMap;
 
 
-public class MainActivity extends AppCompatActivity {
+public class sai extends AppCompatActivity {
 
     private SQLiteHandler db;
     private SessionManager session;
-    protected GoogleApiClient mGoogleApiClient;
-    //list
-    private ListView listView;
-    private String JSON_STRING;
 
-    protected Location mCurrentLocation;
     protected TextView C_1,C_2,C_3,C_4,C_5,C_6,C_7;
 
     private SQLiteDatabase database;
@@ -63,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.sai);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // HEADER
@@ -138,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(MainActivity.this, txt_go);
+                PopupMenu popup = new PopupMenu(sai.this, txt_go);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
 
@@ -146,30 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            startActivity(i);
-                        }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            startActivity(i);
-                        }
-//                        if(id == R.id.poi) {
-//                            Intent i = new Intent(getApplicationContext(), input.class);
-//                            startActivity(i);
-//                        }
+
                         if(id == R.id.pin) {
                             Intent i = new Intent(getApplicationContext(), marker.class);
                             startActivity(i);
@@ -257,117 +213,32 @@ public class MainActivity extends AppCompatActivity {
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
         String id = user.get("uid");
-        String name = user.get("name");
-        String email = user.get("email");
-        String image = user.get("image");
 
         //service
-        startService(new Intent(MainActivity.this, BackgroundService.class));
+        startService(new Intent(sai.this, BackgroundService.class));
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-//
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-//
-//        View header = navigationView.inflateHeaderView(R.layout.nav_header_main);
-//
-//        imgProfile = (CircleImageView) header.findViewById(R.id.imageProfile);
-//        txtEmail = (TextView) header.findViewById(R.id.email);
-//        txtName = (TextView) header.findViewById(R.id.name);
-//        txtNama = (TextView) findViewById(R.id.username);
-        // Displaying the user details on the screen
-//        txtNama.setText("Welcome "+ name);
-
-
-//        Picasso.with(this)
-//                    .load("http://192.168.43.31/uploads/profile/"+id+"/images.jpg")
-//                    .into(imgProfile);
-//        txtName.setText(name);
-//        txtEmail.setText(email);
-//        imgOrder = (ImageView) findViewById(R.id.img_order);
-//        imgOrder.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-                // Menampilkan screen berita
-//                Intent i = new Intent(getApplicationContext(), OrderList.class);
-//                startActivity(i);
-//            }
-//        });
-//        imgHistory = (ImageView) findViewById(R.id.img_history);
-//        imgHistory.setOnClickListener(new View.OnClickListener() {
-
-//            @Override
-//            public void onClick(View view) {
-                // Menampilkan screen berita
-//                Intent i = new Intent(getApplicationContext(), OrderHistory.class);
-//                startActivity(i);
-//            }
-//        });
-        //lat lang
-//        mLatitudeTextView = (TextView) findViewById(R.id.latitude_text);
-//        mLongitudeTextView = (TextView) findViewById(R.id.longitude_text);
-
-        // Create an instance of GoogleAPIClient.
-//        if (mGoogleApiClient == null) {
-//            mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                    .addConnectionCallbacks(this)
-//                    .addOnConnectionFailedListener(this)
-//                    .addApi(LocationServices.API)
-//                    .build();
-//        }
     }
 
-//    @Override
-//    public void onConnected(Bundle connectionHint) {
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//           return;
-//        }
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//             return;
-//        }
-//        mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-//    }
-
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//
-//    }
-
     protected void resetBackground(){
-        C_1.setBackgroundResource(R.drawable.circle);
+        C_1.setBackgroundResource(R.drawable.circle_sai);
         C_1.setTextColor(Color.BLACK);
-        C_2.setBackgroundResource(R.drawable.circle);
+        C_2.setBackgroundResource(R.drawable.circle_sai);
         C_2.setTextColor(Color.BLACK);
-        C_3.setBackgroundResource(R.drawable.circle);
+        C_3.setBackgroundResource(R.drawable.circle_sai);
         C_3.setTextColor(Color.BLACK);
-        C_4.setBackgroundResource(R.drawable.circle);
+        C_4.setBackgroundResource(R.drawable.circle_sai);
         C_4.setTextColor(Color.BLACK);
-        C_5.setBackgroundResource(R.drawable.circle);
+        C_5.setBackgroundResource(R.drawable.circle_sai);
         C_5.setTextColor(Color.BLACK);
-        C_6.setBackgroundResource(R.drawable.circle);
+        C_6.setBackgroundResource(R.drawable.circle_sai);
         C_6.setTextColor(Color.BLACK);
-        C_7.setBackgroundResource(R.drawable.circle);
+        C_7.setBackgroundResource(R.drawable.circle_sai);
         C_7.setTextColor(Color.BLACK);
     }
 
     protected void imgCenter(){
         resetBackground();
-        Cursor c = database.rawQuery("SELECT * FROM thowaf WHERE name='thawaf'", null);
+        Cursor c = database.rawQuery("SELECT * FROM sai WHERE name='sai'", null);
         c.moveToFirst();
         String stat=c.getString(2);
         if(stat.equals("1")){
@@ -391,28 +262,28 @@ public class MainActivity extends AppCompatActivity {
     }
     protected void createDatabase(){
         database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
-        database.execSQL("CREATE TABLE IF NOT EXISTS thowaf(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,status VARCHAR);");
-        Cursor mCount= database.rawQuery("select count(*) from thowaf where name='thawaf'", null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS sai(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,status VARCHAR);");
+        Cursor mCount= database.rawQuery("select count(*) from sai where name='sai'", null);
         mCount.moveToFirst();
         int count= mCount.getInt(0);
         if(count > 0) {
-            String query = "UPDATE thowaf SET status='0' WHERE name='thawaf';";
+            String query = "UPDATE sai SET status='0' WHERE name='sai';";
             database.execSQL(query);
         }else {
-            String query = "INSERT INTO thowaf (name,status) VALUES('thawaf', '0');";
+            String query = "INSERT INTO sai (name,status) VALUES('sai', '0');";
             database.execSQL(query);
         }
     }
 
     protected void insertIntoDB(String status,TextView circle){
-       String query = "UPDATE thowaf SET status='" + status + "' WHERE name='thawaf';";
+       String query = "UPDATE sai SET status='" + status + "' WHERE name='sai';";
        database.execSQL(query);
 
-        Cursor c = database.rawQuery("SELECT * FROM thowaf WHERE name='thawaf'", null);
+        Cursor c = database.rawQuery("SELECT * FROM sai WHERE name='sai'", null);
 
         c.moveToFirst();
         String stat=c.getString(2);
-        circle.setBackgroundResource(R.drawable.circle_hover);
+        circle.setBackgroundResource(R.drawable.circle_hover_sai);
         circle.setTextColor(Color.WHITE);
         Log.d("MyDataShow", "status: " + stat);
     }
@@ -423,53 +294,10 @@ public class MainActivity extends AppCompatActivity {
         db.deleteUsers();
 
         // Launching the login activity
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(sai.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_view, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if(id == R.id.nav_findme) {
-//            Intent i = new Intent(getApplicationContext(), AndroidGPSTrackingActivity.class);
-//            startActivity(i);
-//        }
-//        if(id == R.id.nav_order) {
-//            Intent i = new Intent(getApplicationContext(), input.class);
-//            startActivity(i);
-//        }
-//        if (id == R.id.nav_logout) {
-//            logoutUser();
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
-//    @Override
-//    public void onConnectionFailed(ConnectionResult connectionResult) {
-//
-//    }
 
 }

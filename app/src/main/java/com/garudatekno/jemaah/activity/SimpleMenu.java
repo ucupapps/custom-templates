@@ -21,7 +21,6 @@ import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Doa;
 import com.garudatekno.jemaah.menu.emergency;
 import com.garudatekno.jemaah.menu.profile;
-import com.garudatekno.jemaah.sample.ViewData;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.HashMap;
@@ -284,11 +283,11 @@ public class SimpleMenu extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ViewData.class);
-        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
-        String empId = map.get(AppConfig.TAG_ID).toString();
-        intent.putExtra(AppConfig.EMP_ID,empId);
-        startActivity(intent);
+//        Intent intent = new Intent(this, ViewData.class);
+//        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+//        String empId = map.get(AppConfig.TAG_ID).toString();
+//        intent.putExtra(AppConfig.EMP_ID,empId);
+//        startActivity(intent);
     }
 
 }

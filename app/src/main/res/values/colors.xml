@@ -9,7 +9,6 @@
     <color name="bg_login">#00c7c7</color>00c7c7
     <color name="bg_register">#26ae90</color>
     <color name="bg_main">#26ae90</color>
-    <color name="white">#ffffff</color>
     <color name="input_login">#222222</color>
     <color name="input_login_hint">#999999</color>
     <color name="input_register">#888888</color>
@@ -23,5 +22,21 @@
     <color name="accentColor">#448AFF</color>
     <color name="accentColorPressed">#ff2c73ff</color>
     <color name="primaryTextColor">#212121</color>
-    <color name="orange">@android:color/holo_blue_light</color>
+    <color name="white">#ffffffff</color>
+    <color name="red">#ffdc4b4e</color>
+    <color name="darker_red">#ff97373a</color>
+    <color name="orange">#ffdc8d3e</color>
+    <color name="darker_orange">#ff945e2a</color>
+    <color name="yellow">#ffdccf57</color>
+    <color name="darker_yellow">#ffa89b46</color>
+    <color name="green">#ff6bdc60</color>
+    <color name="darker_green">#ff4a9544</color>
+    <color name="blue">#ff6081dc</color>
+    <color name="darker_blue">#ff4a59a0</color>
+    <color name="indigo">#ffce8fdc</color>
+    <color name="darker_indigo">#ff8d6399</color>
+    <color name="violet">#ff865fdc</color>
+    <color name="darker_violet">#ff4d3980</color>
+    <color name="black">#000</color>
+
 </resources>

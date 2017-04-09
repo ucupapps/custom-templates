@@ -9,8 +9,9 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.app.AppConfig;
-import com.garudatekno.jemaah.sample.ViewData;
+import com.garudatekno.jemaah.menu.inbox;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -55,7 +56,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        Intent intent = new Intent(this, ViewData.class);
 //        intent.putExtra(AppConfig.EMP_ID,id);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Intent intent = new Intent(this, ViewData.class);
+        Intent intent = new Intent(this, inbox.class);
         intent.putExtra(AppConfig.EMP_ID,id);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

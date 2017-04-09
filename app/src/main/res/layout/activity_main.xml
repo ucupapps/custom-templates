@@ -28,15 +28,14 @@
     android:layout_height="match_parent"
     tools:context="com.garudatekno.jemaah.activity.MainActivity" >
 
-    <include layout="@layout/footer"/>
 
     <RelativeLayout
+        android:layout_alignBottom="@+id/footer"
         android:id="@+id/circle_menu"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/footer"
         android:gravity="center" >
-
         <com.szugyi.circlemenu.view.CircleLayout
             android:id="@+id/circle_layout"
             android:layout_width="match_parent"
@@ -55,27 +54,26 @@
             android:layout_centerInParent="true"
             android:scaleType="centerInside"
             android:background="@drawable/logo"
-            android:adjustViewBounds="true"
+            android:clickable="true"
             android:padding="17dp"
             tools:clickable="true"
-            android:contentDescription=""
             tools:ignore="ContentDescription" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CLICK FOR SIMPLE VIEW"
-            android:background="@drawable/button"
-            android:textAlignment="center"
-            android:textColor="#FFF"
-            android:id="@+id/buttonSimple"
-            android:layout_marginBottom="18dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
+        <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="CLICK FOR SIMPLE VIEW"-->
+            <!--android:background="@drawable/button"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="#FFF"-->
+            <!--android:id="@+id/buttonSimple"-->
+            <!--android:layout_marginBottom="18dp"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:layout_marginRight="40dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true" />-->
     </RelativeLayout>
 
+    <include layout="@layout/footer"/>
 </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -47,6 +47,7 @@ dependencies {
 //    compile 'com.google.android.gms:play-services-gcm:9.0.0'
     compile 'com.auth0.android:jwtdecode:1.1.0'
     compile 'com.github.szugyi:Android-CircleMenu:2.0.0'
+    compile 'com.jakewharton:butterknife:6.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
