@@ -51,6 +51,11 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/txtid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

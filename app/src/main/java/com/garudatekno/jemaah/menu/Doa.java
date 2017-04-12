@@ -207,7 +207,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Doa.this,"Fetching Data","Wait...",false,false);
+                loading = ProgressDialog.show(Doa.this,"","Wait...",false,false);
             }
 
             @Override

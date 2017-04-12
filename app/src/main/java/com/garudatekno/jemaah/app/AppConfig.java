@@ -7,7 +7,8 @@ public class AppConfig {
 //	public static String URL_REGISTER = "http://192.168.0.8/api/jemaah/register";
 //	public static String URL_PROFILE = "http://192.168.0.8/api/jemaah/profile";
 //	public static String URL_GETPROFILE = "http://192.168.0.8/api/jemaah/get-profile?id=";
-//	public static String URL_GET_DOA = "http://192.168.0.8/api/jemaah/get-doa";
+//	public static String URL_GET_DOA = "http://192.168.0.10/api/jemaah/get-doa?id=";
+//	public static String URL_DOA = "http://192.168.0.10/api/jemaah/doa";
 //	public static String URL_EMERGENCY = "http://192.168.0.8/api/jemaah/emergency";
 //	public static String URL_GET_FAMILY_PHONE = "http://192.168.0.8/api/jemaah/family-phone?id=";
 //	public static String URL_GET_INBOX = "http://192.168.0.8/api/jemaah/get-inbox?id=";
@@ -18,7 +19,8 @@ public class AppConfig {
 	public static String URL_REGISTER = "https://gohajj.id/api/jemaah/register";
 	public static String URL_PROFILE = "https://gohajj.id/api/jemaah/profile";
 	public static String URL_GETPROFILE = "https://gohajj.id/api/jemaah/get-profile?id=";
-	public static String URL_GET_DOA = "https://gohajj.id/api/jemaah/get-doa";
+	public static String URL_GET_DOA = "https://gohajj.id/api/jemaah/get-doa?id=";
+	public static String URL_DOA = "https://gohajj.id/api/jemaah/doa";
 	public static String URL_EMERGENCY = "https://gohajj.id/api/jemaah/emergency";
 	public static String URL_GET_FAMILY_PHONE = "https://gohajj.id/api/jemaah/family-phone?id=";
 	public static String URL_GET_INBOX = "https://gohajj.id/api/jemaah/get-inbox?id=";
@@ -44,6 +46,7 @@ public class AppConfig {
 	public static final String KEY_TIME = "time";
 	public static final String KEY_LAT = "lat";
 	public static final String KEY_LNG = "lng";
+	public static final String KEY_DESCRIPTION = "description";
 
 	static final String KEY_CON_ID= "id";
 	public static final String KEY_CON_NO = "no";

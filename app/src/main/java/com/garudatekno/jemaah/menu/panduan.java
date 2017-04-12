@@ -1,5 +1,6 @@
 package com.garudatekno.jemaah.menu;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,17 +10,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.activity.CustomList;
+import com.garudatekno.jemaah.activity.CustomListPanduan;
 import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
@@ -28,19 +32,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
+
 
 public class panduan extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private static final String TAG = "MyUser";
 
     private ListView listView;
-
+    private TextView txtid;
     private String JSON_STRING;
     private SQLiteHandler db;
 
     MediaPlayer mMediaPlayer ;
+    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +65,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         setContentView(R.layout.panduan);
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
-
+        txtid=(TextView) findViewById(R.id.txtid);
         //header
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
@@ -182,19 +199,9 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             e.printStackTrace();
         }
 
-        CustomList adapter = new CustomList(this, list,
-                R.layout.list_item, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME },
+        CustomListPanduan adapter = new CustomListPanduan(this, list,
+                R.layout.list_panduan, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME },
                 new int[] { R.id.txtNO,R.id.txtNAME });
-//                R.layout.list_item, new String[] { AppConfig.UPLOAD_KEY, AppConfig.KEY_VALUE, AppConfig.KEY_BARCODE },
-//                new int[] { R.id.userIcon, R.id.username, R.id.usertext });
-
-//        ListAdapter adapter = new SimpleAdapter(
-//                ViewAll.this, list, R.layout.list_item,
-////                new String[]{Config.TAG_ID,Config.TAG_NAME},
-////                new int[]{R.id.id, R.id.name});
-//                new String[]{AppConfig.KEY_VALUE,AppConfig.KEY_BARCODE,AppConfig.UPLOAD_KEY},
-//                new int[]{ R.id.title,R.id.text,R.id.icon});
-
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
@@ -221,7 +228,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_GET_DOA);
+                String s = rh.sendGetRequest(AppConfig.URL_DOA);
                 return s;
             }
         }
@@ -229,13 +236,128 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         gj.execute();
     }
 
-
+    private void startDownload(String id) {
+        String url = URL_HOME+"/uploads/doa/"+id+".mp3";
+        new DownloadFileAsync().execute(url);
+    }
     @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DIALOG_DOWNLOAD_PROGRESS:
+                mProgressDialog = new ProgressDialog(this);
+                mProgressDialog.setMessage("Downloading file..");
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+                return mProgressDialog;
+            default:
+                return null;
+        }
+    }
+
+    class DownloadFileAsync extends AsyncTask<String, String, String> {
+        final String id = txtid.getText().toString().trim();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+        }
+
+        @Override
+        protected String doInBackground(String... aurl) {
+            int count;
+
+            try {
+
+                URL url = new URL(aurl[0]);
+                URLConnection conexion = url.openConnection();
+                conexion.connect();
+
+                int lenghtOfFile = conexion.getContentLength();
+                Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
+
+                InputStream input = new BufferedInputStream(url.openStream());
+                OutputStream output = new FileOutputStream("/sdcard/android/data/com.garudatekno.jemaah/"+id+".mp3");
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress(""+(int)((total*100)/lenghtOfFile));
+                    output.write(data, 0, count);
+                }
+
+                output.flush();
+                output.close();
+                input.close();
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                finish();
+                startActivity(i);
+            } catch (Exception e) {}
+            return null;
+
+        }
+        protected void onProgressUpdate(String... progress) {
+            Log.d("ANDRO_ASYNC",progress[0]);
+            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String unused) {
+            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
+        }
+    }
+
+//    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Intent intent = new Intent(this, ViewData.class);
-//        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
-//        String empId = map.get(AppConfig.TAG_ID).toString();
-//        intent.putExtra(AppConfig.EMP_ID,empId);
-//        startActivity(intent);
+        View vi=view;
+        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+        final String strID = map.get(AppConfig.TAG_ID).toString();
+        final TextView txtaudio = (TextView)view.findViewById(R.id.txtAudio);
+        final String audio = txtaudio.getText().toString().trim();
+//        Toast.makeText(getApplicationContext(),audio, Toast.LENGTH_LONG).show();
+        if(audio.equals("FALSE")){
+            txtid.setText(strID);
+            startDownload(strID);
+        }else{
+            Intent intent = new Intent(this, ViewPanduan.class);
+            intent.putExtra(AppConfig.EMP_ID,strID);
+            startActivity(intent);
+        }
+//        final TextView play = (TextView)vi.findViewById(R.id.txtPlay);
+//        final TextView download = (TextView)vi.findViewById(R.id.txtDownload);
+//
+//        final MediaPlayer mp = new MediaPlayer();
+//        try {
+//            mp.setDataSource("/sdcard/android/data/com.garudatekno.jemaah/" + strID + ".mp3");
+//            mp.prepare();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        download.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Toast.makeText(getApplicationContext(),"Download "+strID, Toast.LENGTH_LONG).show();
+//                    txtid.setText(strID);
+//                    startDownload(strID);
+//                }
+//            });
+//
+//        play.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(mp.isPlaying()){
+//                    mp.pause();
+//                    play.setText("Play");
+//                } else {
+//                    mp.start();
+//                    play.setText("Pause");
+//                }
+//            }
+//
+//        });
+
     }
 }

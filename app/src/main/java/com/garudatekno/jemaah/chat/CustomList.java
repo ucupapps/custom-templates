@@ -48,29 +48,7 @@ public class CustomList extends SimpleAdapter {
         message.setText(strMessage);
         time.setText(strTime);
         from.setText(strFrom);
-//        ImageView imageView = (ImageView) vi.findViewById(R.id.uid);
-            // Set a background color for ListView regular row/item
-//        if (id.equals("1")) {
-//            imageView.setImageResource(R.drawable.ok);
-//            text.setClickable(true);
-//            imageView.setClickable(true);
-//            text.setTextColor(Color.BLACK);
-//        } else if (id.equals("2")) {
-//            imageView.setImageResource(R.drawable.arrow);
-//            text.setClickable(false);
-//            imageView.setClickable(true);
-//            text.setTextColor(Color.BLACK);
-//        } else {
-//            imageView.setImageResource(R.drawable.gradient_bg);
-//            text.setClickable(true);
-//            imageView.setClickable(true);
-//        }
-//        TextView text2 = (TextView)vi.findViewById(R.id.usertext);
-//        String code = (String) data.get(AppConfig.KEY_BARCODE);
-//        text2.setText(code);
-//        ImageView image=(ImageView)vi.findViewById(R.id.userIcon);
-//        String img = (String) data.get(AppConfig.UPLOAD_KEY);
-//        Picasso.with(mContext).load(img).into(image);
+
         return vi;
     }
 }

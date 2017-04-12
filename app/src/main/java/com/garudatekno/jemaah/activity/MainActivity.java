@@ -30,6 +30,7 @@ import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Doa;
+import com.garudatekno.jemaah.menu.download;
 import com.garudatekno.jemaah.menu.go;
 import com.garudatekno.jemaah.menu.emergency;
 import com.garudatekno.jemaah.menu.inbox;

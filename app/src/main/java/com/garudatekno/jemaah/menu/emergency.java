@@ -238,6 +238,8 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             // TODO: Consider calling
             return;
         }
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Log.d("Mylat", "lat: " + location);
         Double lat;
         Double lng;
         if (location != null) {

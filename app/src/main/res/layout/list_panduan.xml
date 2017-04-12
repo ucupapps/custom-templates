@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TableLayout  android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow>
+
+    <TextView
+        android:id="@+id/txtNO"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:padding="4dp"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:text="No."/>
+    <TextView
+        android:id="@+id/txtNAME"
+        android:layout_width="0dp"
+        android:layout_weight="9"
+        android:padding="4dp"
+        android:layout_height="match_parent"
+        android:text="Name" />
+
+            <TextView
+                android:id="@+id/txtAudio"
+                android:layout_width="0dp"
+                android:layout_weight="9"
+                android:padding="4dp"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:text="Play" />
+
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>
