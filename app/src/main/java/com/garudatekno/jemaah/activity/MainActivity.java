@@ -1,13 +1,10 @@
 package com.garudatekno.jemaah.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,32 +14,24 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Doa;
-import com.garudatekno.jemaah.menu.download;
 import com.garudatekno.jemaah.menu.go;
 import com.garudatekno.jemaah.menu.emergency;
 import com.garudatekno.jemaah.menu.inbox;
-import com.garudatekno.jemaah.menu.marker;
+import com.garudatekno.jemaah.menu.navigasi;
 import com.garudatekno.jemaah.menu.panduan;
 import com.garudatekno.jemaah.menu.profile;
 import com.garudatekno.jemaah.menu.sai;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.squareup.picasso.Picasso;
-import com.szugyi.circlemenu.view.CircleImageView;
 
 import java.util.HashMap;
 
@@ -65,15 +54,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // HEADER
+        createDatabase();
+        //HEADER
+        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
+        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
+        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+        txt_sai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), sai.class);
+                startActivity(i);
+            }
+        });
+        txt_emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), emergency.class);
+                startActivity(i);
+            }
+        });
+
+        // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
         TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_emergency);
-        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
         LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
@@ -100,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        menu_emergency.setOnClickListener(new View.OnClickListener() {
+        menu_navigasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
+                Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
             }
         });
@@ -115,67 +129,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        createDatabase();
-        //FOOTER
-        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
-        txt_thowaf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
-        txt_sai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), sai.class);
-                startActivity(i);
-            }
-        });
-        txt_go.setOnClickListener(new View.OnClickListener() {
-
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(MainActivity.this, txt_go);
+                PopupMenu popup = new PopupMenu(MainActivity.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            startActivity(i);
-                        }
-//                        if(id == R.id.poi) {
-//                            Intent i = new Intent(getApplicationContext(), input.class);
-//                            startActivity(i);
-//                        }
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
-                        }
-
                         return true;
                     }
                 });
@@ -202,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         C_5=(TextView) findViewById(R.id.circle5);
         C_6=(TextView) findViewById(R.id.circle6);
         C_7=(TextView) findViewById(R.id.circle7);
-        ImageView img_center =(ImageView) findViewById(R.id.img_center);
+        ImageView img_center =(ImageView) findViewById(R.id.img_center_thawaf);
 
         img_center.setOnClickListener(new View.OnClickListener() {
             @Override

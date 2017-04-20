@@ -1,15 +1,11 @@
 package com.garudatekno.jemaah.menu;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -21,26 +17,22 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import com.garudatekno.jemaah.R;
+import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.helper.SQLiteHandler;
+import com.garudatekno.jemaah.helper.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -51,13 +43,15 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
     private TextView txtData,txtid,info, state;
     private Button buttonStart,buttonStop;
 
-    private String id;
+    private String id,msg;
     private SeekBar timeLine;
     LinearLayout timeFrame;
     TextView timePos, timeDur;
     final static int RQS_OPEN_AUDIO_MP3 = 1;
 
     MediaPlayer mediaPlayer;
+    private SQLiteHandler db;
+    private SessionManager session;
     String srcPath = null;
     enum MP_State {
         Idle, Initialized, Prepared, Started, Paused,
@@ -76,20 +70,44 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_panduan);
 
-        // HEADER
+        //HEADER
+        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
+        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
+        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), thawaf.class);
+                startActivity(i);
+            }
+        });
+        txt_sai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), sai.class);
+                startActivity(i);
+            }
+        });
+        txt_emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), emergency.class);
+                startActivity(i);
+            }
+        });
+
+        // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
         TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_emergency);
-        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
         LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        txt_panduan.setTextColor(getResources().getColor(R.color.colorTextActive));
-        ImageView img_panduan=(ImageView) findViewById(R.id.img_panduan);
-        img_panduan.setImageDrawable(getResources().getDrawable(R.drawable.panduan_active));
+
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,10 +129,10 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
                 startActivity(i);
             }
         });
-        menu_emergency.setOnClickListener(new View.OnClickListener() {
+        menu_navigasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
+                Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
             }
         });
@@ -126,66 +144,29 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-        //FOOTER
-        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
-        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        img_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
             }
         });
-        txt_sai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), sai.class);
-                startActivity(i);
-            }
-        });
-        txt_go.setOnClickListener(new View.OnClickListener() {
-
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(ViewPanduan.this, txt_go);
+                PopupMenu popup = new PopupMenu(ViewPanduan.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            startActivity(i);
-                        }
-//                        if(id == R.id.poi) {
-//                            Intent i = new Intent(getApplicationContext(), input.class);
-//                            startActivity(i);
-//                        }
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
-                        }
-
                         return true;
                     }
                 });
@@ -194,8 +175,14 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
             }
         });
 
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
         Intent intent = getIntent();
         id = intent.getStringExtra(AppConfig.EMP_ID);
+        msg = intent.getStringExtra(AppConfig.KEY_MESSAGE);
         state = (TextView)findViewById(R.id.state);
 
         txtData = (TextView) findViewById(R.id.data);
@@ -230,10 +217,21 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        srcPath="/sdcard/android/data/com.garudatekno.jemaah/"+id+".mp3";
+        srcPath="/sdcard/android/data/com.garudatekno.jemaah/panduan"+msg+"/"+id+".mp3";
         cmdReset();
         cmdSetDataSource(srcPath);
 
+    }
+
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(ViewPanduan.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     Handler monitorHandler = new Handler(){
@@ -298,22 +296,22 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
                 mediaPlayer.setDataSource(path);
                 mediaPlayerState = MP_State.Initialized;
             } catch (IllegalArgumentException e) {
-                Toast.makeText(ViewPanduan.this,
-                        e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
             } catch (IllegalStateException e) {
-                Toast.makeText(ViewPanduan.this,
-                        e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
             } catch (IOException e) {
-                Toast.makeText(ViewPanduan.this,
-                        e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
             }
         }else{
-            Toast.makeText(ViewPanduan.this,
-                    "Invalid State@cmdSetDataSource - skip",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(ViewPanduan.this,
+//                    "Invalid State@cmdSetDataSource - skip",
+//                    Toast.LENGTH_LONG).show();
         }
 
         showMediaPlayerState();
@@ -331,9 +329,9 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
                         e.toString(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } catch (IOException e) {
-                Toast.makeText(ViewPanduan.this,
-                        e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
             }
         }else{
 //            Toast.makeText(ViewPanduan.this,
@@ -429,23 +427,6 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == RQS_OPEN_AUDIO_MP3) {
-//                Uri audioFileUri = data.getData();
-//
-//                srcPath = audioFileUri.getPath();
-//                buttonStart.setText(srcPath);
-//
-//                cmdReset();
-//                cmdSetDataSource(srcPath);
-//
-//            }
-//        }
-//    }
-
-
     private void getData(){
         class GetData extends AsyncTask<Void,Void,String>{
             ProgressDialog loading;
@@ -474,15 +455,6 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         ge.execute();
     }
 
-//    private void PlayAudio(){
-//        if(mp.isPlaying()){
-//                    mp.pause();
-//            buttonStart.setText("PLAY");
-//                } else {
-//                    mp.start();
-//            buttonStart.setText("STOP");
-//                }
-//    }
     private void showData(String json){
         try {
             JSONObject jsonObject = new JSONObject(json);

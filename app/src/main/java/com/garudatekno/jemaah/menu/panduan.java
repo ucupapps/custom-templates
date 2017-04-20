@@ -3,11 +3,14 @@ package com.garudatekno.jemaah.menu;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -15,33 +18,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.activity.CustomListPanduan;
-import com.garudatekno.jemaah.activity.MainActivity;
+import com.garudatekno.jemaah.activity.CustomListPanduan3;
+import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.gcm.weather;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
+import com.garudatekno.jemaah.helper.SessionManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 
@@ -54,69 +63,28 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private TextView txtid;
     private String JSON_STRING;
     private SQLiteHandler db;
+    private SessionManager session;
 
     MediaPlayer mMediaPlayer ;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private ProgressDialog mProgressDialog;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setOnItemClickListener(this);
-        txtid=(TextView) findViewById(R.id.txtid);
-        //header
-        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
-        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
-        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
-        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_emergency);
+//        listView = (ListView) findViewById(R.id.listView);
+//        listView.setOnItemClickListener(this);
+        //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
-        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
-        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
-        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        txt_panduan.setTextColor(getResources().getColor(R.color.colorTextActive));
-        ImageView img_panduan=(ImageView) findViewById(R.id.img_panduan);
-        img_panduan.setImageDrawable(getResources().getDrawable(R.drawable.panduan_active));
-        menu_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), profile.class);
-                startActivity(i);
-            }
-        });
-        menu_inbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), inbox.class);
-                startActivity(i);
-            }
-        });
-        menu_doa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
-                startActivity(i);
-            }
-        });
-
-        menu_emergency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
-                startActivity(i);
-            }
-        });
-        //FOOTER
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
             }
         });
@@ -127,44 +95,91 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 startActivity(i);
             }
         });
-        txt_go.setOnClickListener(new View.OnClickListener() {
+        txt_emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), emergency.class);
+                startActivity(i);
+            }
+        });
 
+        // FOOTER
+        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
+        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
+        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
+        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
+        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
+        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
+        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
+        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
+
+        ImageView img = (ImageView) findViewById(R.id.img_panduan);
+        img.setBackgroundResource(R.drawable.circle_green_active);
+        img.setPadding(22,22,22,22);
+        img.setImageDrawable(getResources().getDrawable(R.drawable.panduan_active));
+
+        menu_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), profile.class);
+                startActivity(i);
+            }
+        });
+        menu_panduan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        menu_doa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Doa.class);
+                startActivity(i);
+            }
+        });
+        menu_navigasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), navigasi.class);
+                startActivity(i);
+            }
+        });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
+
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        img_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(panduan.this, txt_go);
+                PopupMenu popup = new PopupMenu(panduan.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
-                        }
-
                         return true;
                     }
                 });
@@ -172,12 +187,125 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 popup.show();//showing popup menu
             }
         });
+
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
-        getJSON();
+//        getJSON();
+
+        //jakarta
+        final TextView jak_degree=(TextView) findViewById(R.id.jak_degree);
+        final TextView jak_cuaca=(TextView) findViewById(R.id.jak_cuaca);
+        TextView jak_date=(TextView) findViewById(R.id.jak_date);
+        TextView jak_time=(TextView) findViewById(R.id.jak_time);
+
+        Calendar cal_jak = Calendar.getInstance(TimeZone.getTimeZone("GMT+7"));
+        Date currentLocalTimejak = cal_jak.getTime();
+        DateFormat date_jak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
+        date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        DateFormat time_jak = new SimpleDateFormat("HH:mm");
+        date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        String j_date = date_jak.format(currentLocalTimejak);
+        String j_time = time_jak.format(currentLocalTimejak);
+
+        jak_date.setText("" + j_date);
+        jak_time.setText("" + j_time);
+
+        //mekkah
+        final TextView mek_degree=(TextView) findViewById(R.id.mek_degree);
+        final TextView mek_cuaca=(TextView) findViewById(R.id.mek_cuaca);
+        TextView mek_date=(TextView) findViewById(R.id.mek_date);
+        TextView mek_time=(TextView) findViewById(R.id.mek_time);
+
+        Calendar cal_mek = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
+        Date currentLocalTimemak = cal_mek.getTime();
+        DateFormat date_mak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
+        date_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        DateFormat time_mak = new SimpleDateFormat("HH:mm");
+        time_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        String m_date = date_mak.format(currentLocalTimemak);
+        String m_time = time_mak.format(currentLocalTimemak);
+
+        mek_date.setText("" + m_date);
+        mek_time.setText("" + m_time);
+
+        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+//                cityField.setText(weather_city);
+//                updatedField.setText(weather_updatedOn);
+                jak_cuaca.setText(weather_description);
+                jak_degree.setText(weather_temperature);
+//                humidity_field.setText("Humidity: "+weather_humidity);
+//                pressure_field.setText("Pressure: "+weather_pressure);
+//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
+
+        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+//                cityField.setText(weather_city);
+//                updatedField.setText(weather_updatedOn);
+                mek_cuaca.setText(weather_description);
+                mek_degree.setText(weather_temperature);
+//                humidity_field.setText("Humidity: "+weather_humidity);
+//                pressure_field.setText("Pressure: "+weather_pressure);
+//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask2.execute("21.4267", "39.8261");
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new OneFragment(), "Sebelum Umrah");
+        adapter.addFragment(new TwoFragment(), "Saat Umrah");
+        adapter.addFragment(new ThreeFragment(), "Setelah Umrah");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 
     private void showData(){
         JSONObject jsonObject = null;
@@ -199,7 +327,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             e.printStackTrace();
         }
 
-        CustomListPanduan adapter = new CustomListPanduan(this, list,
+        CustomListPanduan3 adapter = new CustomListPanduan3(this, list,
                 R.layout.list_panduan, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME },
                 new int[] { R.id.txtNO,R.id.txtNAME });
         listView.setAdapter(adapter);
@@ -308,6 +436,17 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         protected void onPostExecute(String unused) {
             dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
         }
+    }
+
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(panduan.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 //    @Override

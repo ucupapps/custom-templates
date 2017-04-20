@@ -2,14 +2,10 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,10 +17,12 @@ import android.widget.TextView;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.CustomList;
+import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
+import com.garudatekno.jemaah.helper.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +39,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
 
     private String JSON_STRING;
     private SQLiteHandler db;
+    private SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,57 +47,14 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        //header
-        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
-        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
-        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
-        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_emergency);
+        //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
-        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
-        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
-        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        txt_doa.setTextColor(getResources().getColor(R.color.colorTextActive));
-        ImageView img_doa=(ImageView) findViewById(R.id.img_doa);
-        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.doa_active));
-        menu_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), profile.class);
-                startActivity(i);
-            }
-        });
-
-        menu_emergency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
-                startActivity(i);
-            }
-        });
-        menu_inbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), inbox.class);
-                startActivity(i);
-            }
-        });
-        menu_panduan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), panduan.class);
-                startActivity(i);
-            }
-        });
-        //FOOTER
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
             }
         });
@@ -109,44 +65,90 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
                 startActivity(i);
             }
         });
-        txt_go.setOnClickListener(new View.OnClickListener() {
+        txt_emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), emergency.class);
+                startActivity(i);
+            }
+        });
 
+        // FOOTER
+        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
+        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
+        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
+        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
+        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
+        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
+        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
+        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
+        ImageView img = (ImageView) findViewById(R.id.img_doa);
+        img.setBackgroundResource(R.drawable.circle_green_active);
+        img.setPadding(22,22,22,22);
+        img.setImageDrawable(getResources().getDrawable(R.drawable.doa_active));
+
+        menu_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), profile.class);
+                startActivity(i);
+            }
+        });
+        menu_panduan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        menu_doa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Doa.class);
+                startActivity(i);
+            }
+        });
+        menu_navigasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), navigasi.class);
+                startActivity(i);
+            }
+        });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
+
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        img_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(Doa.this, txt_go);
+                PopupMenu popup = new PopupMenu(Doa.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
-                        }
-
                         return true;
                     }
                 });
@@ -154,6 +156,12 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
                 popup.show();//showing popup menu
             }
         });
+
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
 
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -200,6 +208,17 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
 
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(Doa.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void getJSON(){
         class GetJSON extends AsyncTask<Void,Void,String>{
 
@@ -221,7 +240,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_GET_DOA);
+                String s = rh.sendGetRequest(AppConfig.URL_DOA);
                 return s;
             }
         }

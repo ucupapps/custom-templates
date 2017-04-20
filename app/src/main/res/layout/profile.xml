@@ -10,15 +10,10 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
             <include layout="@layout/header"/>
-        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,11 +39,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="80dp"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".sample.input">
-
+    android:layout_height="match_parent"
+    android:paddingTop="110dp"
+    tools:context=".sample.input">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:background="@color/colorSilver"
+    android:orientation="vertical">
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageProfile"
@@ -56,8 +55,7 @@
         android:layout_height="110dp"
         android:paddingTop="5dp"
         android:layout_gravity="center"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#e1e1e1"/>
+        android:background="@drawable/circle_green"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -69,164 +67,228 @@
         android:id="@+id/name"
         android:textSize="20dp"
         android:layout_marginBottom="5dp"/>
+</LinearLayout>
 
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-       <TableRow android:layout_marginBottom="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="No. Passport:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
+            android:textSize="18dp"
             android:layout_height="wrap_content"
             android:text=" "
             android:id="@+id/passport"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="No. Ponsel:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/phone"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Alamat:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/address"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Kota:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/town"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Provinsi:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/province"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Travel Agent:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/travel_agent"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Hotel di Mekkah:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/hotel_mekkah"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Hotel di Madinah:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/hotel_madinah"/>
-    </TableRow>
-    <TableRow android:layout_marginBottom="8dp">
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Nama Pembimbing:"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
+            android:textSize="18dp"
             android:id="@+id/pembimbing"/>
-    </TableRow>
-</TableLayout>
-
-    <Button
-        android:layout_marginTop="20dp"
+   </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edit Profile"
-        android:background="@drawable/button"
-        android:textColor="#FFF"
-        android:id="@+id/buttonAdd" />
-    <Button
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:background="@drawable/button"
-        android:textColor="#FFF"
-        android:id="@+id/buttonLogout" />
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:text="Ubah"
+            android:background="@drawable/button"
+            android:textColor="#FFF"
+            android:id="@+id/buttonAdd" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_margin="20dp"
+            android:layout_height="40dp"
+            android:text="Logout"
+            android:background="@drawable/button_red"
+            android:textColor="#FFF"
+            android:id="@+id/buttonLogout" />
 
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>
         </RelativeLayout>

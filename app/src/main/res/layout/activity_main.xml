@@ -10,15 +10,10 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
          <include layout="@layout/header"/>
-        </android.support.v7.widget.Toolbar>
    </android.support.design.widget.AppBarLayout>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,12 +43,12 @@
         </com.szugyi.circlemenu.view.CircleLayout>
 
         <ImageView
-            android:id="@+id/img_center"
+            android:id="@+id/img_center_thawaf"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_centerInParent="true"
             android:scaleType="centerInside"
-            android:background="@drawable/logo"
+            android:background="@drawable/logo_apps"
             android:clickable="true"
             android:padding="17dp"
             tools:clickable="true"

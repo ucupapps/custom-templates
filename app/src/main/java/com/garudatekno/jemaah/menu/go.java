@@ -13,18 +13,16 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -32,7 +30,6 @@ import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.GMapV2Direction;
-import com.garudatekno.jemaah.activity.GMapV2DirectionAsyncTask;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.app.AppConfig;
@@ -40,13 +37,10 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.w3c.dom.Document;
@@ -125,64 +119,14 @@ public class go extends AppCompatActivity {
 
         }
 
-
-        LinearLayout menu_panduan = (LinearLayout) findViewById(R.id.menu_panduan);
-        TextView txt_panduan = (TextView) findViewById(R.id.txt_panduan);
-        LinearLayout menu_doa = (LinearLayout) findViewById(R.id.menu_doa);
-        TextView txt_doa = (TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency = (LinearLayout) findViewById(R.id.menu_emergency);
-        TextView txt_emergency = (TextView) findViewById(R.id.txt_emergency);
-        LinearLayout menu_profile = (LinearLayout) findViewById(R.id.menu_profile);
-        TextView txt_profile = (TextView) findViewById(R.id.txt_profile);
-        LinearLayout menu_inbox = (LinearLayout) findViewById(R.id.menu_inbox);
-        TextView txt_inbox = (TextView) findViewById(R.id.txt_inbox);
-//        txt_emergency.setTextColor(getResources().getColor(R.color.colorTextActive));
-//        ImageView img_doa = (ImageView) findViewById(R.id.img_emergency);
-//        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.emergency_active));
-        menu_profile.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), profile.class);
-                startActivity(i);
-            }
-        });
-        menu_doa.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
-                startActivity(i);
-            }
-        });
-        menu_panduan.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), panduan.class);
-                startActivity(i);
-            }
-        });
-        menu_inbox.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), inbox.class);
-                startActivity(i);
-            }
-        });
-        menu_emergency.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
-                startActivity(i);
-            }
-        });
-
-        //FOOTER
-        TextView txt_thowaf = (TextView) findViewById(R.id.txt_thowaf);
+//HEADER
+        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
+        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
             }
         });
@@ -193,49 +137,85 @@ public class go extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        txt_go.setOnClickListener(new View.OnClickListener() {
+        txt_emergency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), emergency.class);
+                startActivity(i);
+            }
+        });
 
+        // FOOTER
+        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
+        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
+        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
+        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
+        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
+        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
+        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
+        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
+        menu_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), profile.class);
+                startActivity(i);
+            }
+        });
+        menu_panduan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        menu_doa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Doa.class);
+                startActivity(i);
+            }
+        });
+        menu_navigasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), navigasi.class);
+                startActivity(i);
+            }
+        });
+        menu_inbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), inbox.class);
+                startActivity(i);
+            }
+        });
+
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        img_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(go.this, txt_go);
+                PopupMenu popup = new PopupMenu(go.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            finish();
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            finish();
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            finish();
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            finish();
-                            startActivity(i);
-                        }
-
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
-                        }
-
                         return true;
                     }
                 });
@@ -243,7 +223,6 @@ public class go extends AppCompatActivity {
                 popup.show();//showing popup menu
             }
         });
-
 
         editTextuser = (EditText) findViewById(R.id.userid);
         txtMessage = (EditText) findViewById(R.id.pesan);

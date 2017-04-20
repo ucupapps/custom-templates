@@ -5,19 +5,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.telephony.SmsManager;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,29 +34,14 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static java.sql.Types.NULL;
 
 public class emergency extends AppCompatActivity implements OnClickListener, OnMapReadyCallback  {
     private EditText editTextuser,txtMessage,txtphone,txtlng,txtlat;
@@ -95,30 +77,48 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         }
 
 
-        LinearLayout menu_panduan = (LinearLayout) findViewById(R.id.menu_panduan);
-        TextView txt_panduan = (TextView) findViewById(R.id.txt_panduan);
-        LinearLayout menu_doa = (LinearLayout) findViewById(R.id.menu_doa);
-        TextView txt_doa = (TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency = (LinearLayout) findViewById(R.id.menu_emergency);
-        TextView txt_emergency = (TextView) findViewById(R.id.txt_emergency);
-        LinearLayout menu_profile = (LinearLayout) findViewById(R.id.menu_profile);
-        TextView txt_profile = (TextView) findViewById(R.id.txt_profile);
-        LinearLayout menu_inbox = (LinearLayout) findViewById(R.id.menu_inbox);
-        TextView txt_inbox = (TextView) findViewById(R.id.txt_inbox);
-        txt_emergency.setTextColor(getResources().getColor(R.color.colorTextActive));
-        ImageView img_doa = (ImageView) findViewById(R.id.img_emergency);
-        img_doa.setImageDrawable(getResources().getDrawable(R.drawable.emergency_active));
-        menu_profile.setOnClickListener(new OnClickListener() {
+        //HEADER
+//        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
+//        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
+//        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+//        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(i);
+//            }
+//        });
+//        txt_sai.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(), sai.class);
+//                startActivity(i);
+//            }
+//        });
+//        txt_emergency.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(), emergency.class);
+//                startActivity(i);
+//            }
+//        });
+
+        // FOOTER
+        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
+        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
+        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
+        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
+        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
+        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
+        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
+        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
+        menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
-                startActivity(i);
-            }
-        });
-        menu_doa.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
                 startActivity(i);
             }
         });
@@ -126,6 +126,20 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
+                startActivity(i);
+            }
+        });
+        menu_doa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Doa.class);
+                startActivity(i);
+            }
+        });
+        menu_navigasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
             }
         });
@@ -137,62 +151,36 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             }
         });
 
-        //FOOTER
-        TextView txt_thowaf = (TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
-        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        img_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
             }
         });
-        txt_sai.setOnClickListener(new View.OnClickListener() {
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), sai.class);
+                Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
             }
         });
-        txt_go.setOnClickListener(new View.OnClickListener() {
-
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(emergency.this, txt_go);
+                PopupMenu popup = new PopupMenu(emergency.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.bus) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"BUS");
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-                        if(id == R.id.hotel) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"HOTEL");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pintu) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
-                            startActivity(i);
-                        }
-                        if(id == R.id.meeting) {
-                            Intent i = new Intent(getApplicationContext(), go.class);
-                            i.putExtra(AppConfig.KEY_NAME,"MEETING POINT");
-                            startActivity(i);
-                        }
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
-                        }
-
                         return true;
                     }
                 });

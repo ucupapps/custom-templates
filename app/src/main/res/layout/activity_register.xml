@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:weightSum="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="1">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -21,40 +20,32 @@
             android:layout_weight="0.31"
             android:weightSum="1">
             <ImageView
-                android:src="@drawable/logo"
-                android:layout_gravity="center"
-                android:layout_width="350dp"
-                android:layout_height="200dp"
-                android:paddingBottom="30dp"
-                android:layout_centerInParent="true" />
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:padding="30dp"
+                android:src="@drawable/logo"/>
+
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Registration"
+                android:text="Registrasi"
                 android:gravity="center"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#FFF"
                 android:layout_marginBottom="20dp"
                 android:textSize="30dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Username" />
+
             <EditText
                 android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
+                android:background="@color/white"
+                android:hint="Username"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Email" />
             <EditText
                 android:id="@+id/email"
                 android:layout_width="fill_parent"
@@ -62,21 +53,20 @@
                 android:layout_marginBottom="10dp"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
+                android:background="@color/white"
+                android:hint="Email"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Password" />
             <EditText
                 android:id="@+id/password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:inputType="textPassword"
+                android:background="@color/white"
+                android:hint="Password"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
@@ -103,9 +93,9 @@
                 android:text="@string/btn_link_to_login"
                 android:textAllCaps="false"
                 android:background="@null"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#FFF"
                 android:textSize="15dp" />
         </LinearLayout>
 
-    </LinearLayout>
 </ScrollView>
+</LinearLayout>

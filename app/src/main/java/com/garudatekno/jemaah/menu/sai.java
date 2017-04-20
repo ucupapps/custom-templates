@@ -1,23 +1,30 @@
 package com.garudatekno.jemaah.menu;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.location.Location;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.BackgroundService;
@@ -25,9 +32,18 @@ import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.HashMap;
+
+import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 
 
 public class sai extends AppCompatActivity {
@@ -35,102 +51,56 @@ public class sai extends AppCompatActivity {
     private SQLiteHandler db;
     private SessionManager session;
 
-    protected TextView C_1,C_2,C_3,C_4,C_5,C_6,C_7;
+    protected TextView CC,C_1,C_2,C_3,C_4,C_5,C_6,C_7,T_1,T_2,T_3,T_4,T_5,T_6,T_7,state;
 
     private SQLiteDatabase database;
+
+    private Button btnplay;
+    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
+    private ProgressDialog mProgressDialog;
+    private TextView txtid;
+
+    String srcPath = null;
+    enum MP_State {
+        Idle, Initialized, Prepared, Started, Paused,
+        Stopped, PlaybackCompleted, End, Error, Preparing}
+
+    sai.MP_State mediaPlayerState;
+    private String id;
+    private SeekBar timeLine;
+    LinearLayout timeFrame;
+    TextView timePos, timeDur;
+    final static int RQS_OPEN_AUDIO_MP3 = 1;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sai);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // HEADER
-        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
-        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
-        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
-        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_emergency);
-        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
-        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
-        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
-        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
 
-        menu_profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), profile.class);
-                startActivity(i);
-            }
-        });
-        menu_panduan.setOnClickListener(new View.OnClickListener() {
+        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        img_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
             }
         });
-        menu_doa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
-                startActivity(i);
-            }
-        });
-        menu_emergency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
-                startActivity(i);
-            }
-        });
-        menu_inbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), inbox.class);
-                startActivity(i);
-            }
-        });
-
-        createDatabase();
-        //FOOTER
-        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        final TextView txt_go=(TextView) findViewById(R.id.txt_go);
-        txt_thowaf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(i);
-            }
-        });
-        txt_sai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), sai.class);
-                startActivity(i);
-            }
-        });
-        txt_go.setOnClickListener(new View.OnClickListener() {
-
+        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(sai.this, txt_go);
+                PopupMenu popup = new PopupMenu(sai.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-
-                        if(id == R.id.pin) {
-                            Intent i = new Intent(getApplicationContext(), marker.class);
-                            startActivity(i);
+                        if(id == R.id.logout) {
+                            logoutUser();
                         }
-
                         return true;
                     }
                 });
@@ -139,6 +109,7 @@ public class sai extends AppCompatActivity {
             }
         });
 
+        state = (TextView)findViewById(R.id.state);
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
 
@@ -150,6 +121,7 @@ public class sai extends AppCompatActivity {
         }
 
        //circle menu
+        CC =(TextView) findViewById(R.id.circle);
         C_1 =(TextView) findViewById(R.id.circle1);
         C_2 =(TextView) findViewById(R.id.circle2);
         C_3=(TextView) findViewById(R.id.circle3);
@@ -157,9 +129,14 @@ public class sai extends AppCompatActivity {
         C_5=(TextView) findViewById(R.id.circle5);
         C_6=(TextView) findViewById(R.id.circle6);
         C_7=(TextView) findViewById(R.id.circle7);
-        ImageView img_center =(ImageView) findViewById(R.id.img_center);
 
-        img_center.setOnClickListener(new View.OnClickListener() {
+        //triangle
+        T_1 =(TextView) findViewById(R.id.triangle_circle1);
+        T_2 =(TextView) findViewById(R.id.triangle_circle2);
+
+        ImageView img_click =(ImageView) findViewById(R.id.img_sai_klik);
+
+        img_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imgCenter();
@@ -170,43 +147,43 @@ public class sai extends AppCompatActivity {
         C_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("1",C_1);
+                resetBackground(); insertIntoDB("1",C_1,T_1);
             }
         });
         C_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("2",C_2);
+                resetBackground(); insertIntoDB("2",C_2,T_2);
             }
         });
         C_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("3",C_3);
+                resetBackground(); insertIntoDB("3",C_3,T_1);
             }
         });
         C_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("4",C_4);
+                resetBackground(); insertIntoDB("4",C_4,T_2);
             }
         });
         C_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("5",C_5);
+                resetBackground(); insertIntoDB("5",C_5,T_1);
             }
         });
         C_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("6",C_6);
+                resetBackground(); insertIntoDB("6",C_6,T_2);
             }
         });
         C_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetBackground(); insertIntoDB("7",C_7);
+                resetBackground(); insertIntoDB("7",C_7,T_1);
             }
         });
 
@@ -217,23 +194,57 @@ public class sai extends AppCompatActivity {
         //service
         startService(new Intent(sai.this, BackgroundService.class));
 
+        btnplay = (Button) findViewById(R.id.btnplay);
+        createDatabase();
+
+        btnplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String ids = CC.getText().toString().trim();
+                final String str = btnplay.getText().toString().trim();
+
+                srcPath="/sdcard/android/data/com.garudatekno.jemaah/sai/"+ids+".mp3";
+                cmdReset();
+                cmdSetDataSource(srcPath);
+
+                if(str.equals("Download")){
+                    //make dir
+                    File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/sai");
+                    boolean success = true;
+                    if (!folder.exists()) {
+                        folder.mkdirs();
+                    }
+                    startDownload(ids);
+                }else if(str.equals("Stop")) {
+                    cmdStop();
+                    btnplay.setText("Putar Audio");
+                }else if(str.equals("Putar Audio")) {
+                    cmdPrepare();
+                    cmdStart();
+                    btnplay.setText("Stop");
+                }
+            }
+        });
     }
 
     protected void resetBackground(){
         C_1.setBackgroundResource(R.drawable.circle_sai);
-        C_1.setTextColor(Color.BLACK);
+        C_1.setTextColor(Color.WHITE);
         C_2.setBackgroundResource(R.drawable.circle_sai);
-        C_2.setTextColor(Color.BLACK);
+        C_2.setTextColor(Color.WHITE);
         C_3.setBackgroundResource(R.drawable.circle_sai);
-        C_3.setTextColor(Color.BLACK);
+        C_3.setTextColor(Color.WHITE);
         C_4.setBackgroundResource(R.drawable.circle_sai);
-        C_4.setTextColor(Color.BLACK);
+        C_4.setTextColor(Color.WHITE);
         C_5.setBackgroundResource(R.drawable.circle_sai);
-        C_5.setTextColor(Color.BLACK);
+        C_5.setTextColor(Color.WHITE);
         C_6.setBackgroundResource(R.drawable.circle_sai);
-        C_6.setTextColor(Color.BLACK);
+        C_6.setTextColor(Color.WHITE);
         C_7.setBackgroundResource(R.drawable.circle_sai);
-        C_7.setTextColor(Color.BLACK);
+        C_7.setTextColor(Color.WHITE);
+
+        T_1.setBackgroundResource(R.drawable.triangle_clear);
+        T_2.setBackgroundResource(R.drawable.triangle_clear);
     }
 
     protected void imgCenter(){
@@ -242,24 +253,25 @@ public class sai extends AppCompatActivity {
         c.moveToFirst();
         String stat=c.getString(2);
         if(stat.equals("1")){
-            insertIntoDB("2",C_2);
+            insertIntoDB("2",C_2,T_2);
         }else if(stat.equals("2")){
-            insertIntoDB("3",C_3);
+            insertIntoDB("3",C_3,T_1);
         }else if(stat.equals("3")){
-            insertIntoDB("4",C_4);
+            insertIntoDB("4",C_4,T_2);
         }else if(stat.equals("4")){
-            insertIntoDB("5",C_5);
+            insertIntoDB("5",C_5,T_1);
         }else if(stat.equals("5")){
-            insertIntoDB("6",C_6);
+            insertIntoDB("6",C_6,T_2);
         }else if(stat.equals("6")){
-            insertIntoDB("7",C_7);
+            insertIntoDB("7",C_7,T_1);
         }else if(stat.equals("7")){
-            insertIntoDB("1",C_1);
+            insertIntoDB("1",C_1,T_1);
         }else{
-            insertIntoDB("1",C_1);
+            insertIntoDB("1",C_1,T_1);
         }
 
     }
+
     protected void createDatabase(){
         database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS sai(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,status VARCHAR);");
@@ -267,15 +279,15 @@ public class sai extends AppCompatActivity {
         mCount.moveToFirst();
         int count= mCount.getInt(0);
         if(count > 0) {
-            String query = "UPDATE sai SET status='0' WHERE name='sai';";
-            database.execSQL(query);
+            insertIntoDB("1",C_1,T_1);
         }else {
-            String query = "INSERT INTO sai (name,status) VALUES('sai', '0');";
+            String query = "INSERT INTO sai (name,status) VALUES('sai', '1');";
             database.execSQL(query);
+            insertIntoDB("1",C_1,T_1);
         }
     }
 
-    protected void insertIntoDB(String status,TextView circle){
+    protected void insertIntoDB(String status,TextView circle,TextView triangle){
        String query = "UPDATE sai SET status='" + status + "' WHERE name='sai';";
        database.execSQL(query);
 
@@ -283,11 +295,56 @@ public class sai extends AppCompatActivity {
 
         c.moveToFirst();
         String stat=c.getString(2);
-        circle.setBackgroundResource(R.drawable.circle_hover_sai);
-        circle.setTextColor(Color.WHITE);
         Log.d("MyDataShow", "status: " + stat);
-    }
+        history(stat);
+        CC.setText(stat);
+        triangle.setBackgroundResource(R.drawable.triangle);
+        circle.setBackgroundResource(R.drawable.circle_sai_blue);
+        circle.setTextColor(Color.WHITE);
 
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/sai/"+stat+".mp3");
+
+        if (!file.exists()) {
+            btnplay.setText("Download");
+            btnplay.setBackgroundResource(R.drawable.button_blue);
+        }else{
+            btnplay.setText("Putar Audio");
+            btnplay.setBackgroundResource(R.drawable.button);
+        }
+
+    }
+    protected void history(String stat){
+        if(stat.equals("1")){
+//            insertIntoDB("2",C_2,T_2);
+        }else if(stat.equals("2")){
+           C_1.setBackgroundResource(R.drawable.circle_sai_green);
+        }else if(stat.equals("3")){
+            C_1.setBackgroundResource(R.drawable.circle_sai_green);
+            C_2.setBackgroundResource(R.drawable.circle_sai_green);
+        }else if(stat.equals("4")){
+            C_1.setBackgroundResource(R.drawable.circle_sai_green);
+            C_2.setBackgroundResource(R.drawable.circle_sai_green);
+            C_3.setBackgroundResource(R.drawable.circle_sai_green);
+        }else if(stat.equals("5")){
+            C_1.setBackgroundResource(R.drawable.circle_sai_green);
+            C_2.setBackgroundResource(R.drawable.circle_sai_green);
+            C_3.setBackgroundResource(R.drawable.circle_sai_green);
+            C_4.setBackgroundResource(R.drawable.circle_sai_green);
+        }else if(stat.equals("6")){
+            C_1.setBackgroundResource(R.drawable.circle_sai_green);
+            C_2.setBackgroundResource(R.drawable.circle_sai_green);
+            C_3.setBackgroundResource(R.drawable.circle_sai_green);
+            C_4.setBackgroundResource(R.drawable.circle_sai_green);
+            C_5.setBackgroundResource(R.drawable.circle_sai_green);
+        }else if(stat.equals("7")){
+            C_1.setBackgroundResource(R.drawable.circle_sai_green);
+            C_2.setBackgroundResource(R.drawable.circle_sai_green);
+            C_3.setBackgroundResource(R.drawable.circle_sai_green);
+            C_4.setBackgroundResource(R.drawable.circle_sai_green);
+            C_5.setBackgroundResource(R.drawable.circle_sai_green);
+            C_6.setBackgroundResource(R.drawable.circle_sai_green);
+        }
+    }
     private void logoutUser() {
         session.setLogin(false);
 
@@ -299,5 +356,272 @@ public class sai extends AppCompatActivity {
         finish();
     }
 
+    private void startDownload(String id) {
+        String url = URL_HOME+"/uploads/doa/"+id+".mp3";
+        new sai.DownloadFileAsync().execute(url);
+    }
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DIALOG_DOWNLOAD_PROGRESS:
+                mProgressDialog = new ProgressDialog(this);
+                mProgressDialog.setMessage("Downloading file..");
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(false);
+                mProgressDialog.show();
+                return mProgressDialog;
+            default:
+                return null;
+        }
+    }
+
+    class DownloadFileAsync extends AsyncTask<String, String, String> {
+        final String id = CC.getText().toString().trim();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+        }
+
+        @Override
+        protected String doInBackground(String... aurl) {
+            int count;
+
+            try {
+
+                URL url = new URL(aurl[0]);
+                URLConnection conexion = url.openConnection();
+                conexion.connect();
+
+                int lenghtOfFile = conexion.getContentLength();
+                Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
+
+                InputStream input = new BufferedInputStream(url.openStream());
+
+                //save file
+                OutputStream output = new FileOutputStream("/sdcard/android/data/com.garudatekno.jemaah/sai/"+id+".mp3");
+
+                byte data[] = new byte[1024];
+
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress(""+(int)((total*100)/lenghtOfFile));
+                    output.write(data, 0, count);
+                }
+
+                output.flush();
+                output.close();
+                input.close();
+                Intent i = new Intent(getApplicationContext(), sai.class);
+                finish();
+                startActivity(i);
+            } catch (Exception e) {}
+            return null;
+
+        }
+        protected void onProgressUpdate(String... progress) {
+            Log.d("ANDRO_ASYNC",progress[0]);
+            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String unused) {
+            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
+        }
+    }
+
+    //play
+    Handler monitorHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+            mediaPlayerMonitor();
+        }
+    };
+
+    private void mediaPlayerMonitor(){
+        if (mediaPlayer == null){
+            timeLine.setVisibility(View.INVISIBLE);
+            timeFrame.setVisibility(View.INVISIBLE);
+        }else{
+            if(mediaPlayer.isPlaying()){
+                timeLine.setVisibility(View.VISIBLE);
+                timeFrame.setVisibility(View.VISIBLE);
+
+                int mediaDuration = mediaPlayer.getDuration();
+                int mediaPosition = mediaPlayer.getCurrentPosition();
+                timeLine.setMax(mediaDuration);
+                timeLine.setProgress(mediaPosition);
+                timePos.setText(String.valueOf((float)mediaPosition/1000) + "s");
+                timeDur.setText(String.valueOf((float)mediaDuration/1000) + "s");
+            }else{
+                timeLine.setVisibility(View.INVISIBLE);
+                timeFrame.setVisibility(View.INVISIBLE);
+            }
+        }
+    }
+
+    MediaPlayer.OnErrorListener mediaPlayerOnErrorListener
+            = new MediaPlayer.OnErrorListener(){
+
+        @Override
+        public boolean onError(MediaPlayer mp, int what, int extra) {
+            // TODO Auto-generated method stub
+
+            mediaPlayerState = sai.MP_State.Error;
+            showMediaPlayerState();
+
+            return false;
+        }};
+
+
+    private void cmdReset(){
+        if (mediaPlayer == null){
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnErrorListener(mediaPlayerOnErrorListener);
+        }
+        mediaPlayer.reset();
+        mediaPlayerState = sai.MP_State.Idle;
+        showMediaPlayerState();
+    }
+
+    private void cmdSetDataSource(String path){
+        if(mediaPlayerState == sai.MP_State.Idle){
+            try {
+                mediaPlayer.setDataSource(path);
+                mediaPlayerState = sai.MP_State.Initialized;
+            } catch (IllegalArgumentException e) {
+//                Toast.makeText(sai.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+            } catch (IllegalStateException e) {
+//                Toast.makeText(sai.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+            } catch (IOException e) {
+//                Toast.makeText(sai.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+            }
+        }else{
+//            Toast.makeText(sai.this,
+//                    "Invalid State@cmdSetDataSource - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+
+        showMediaPlayerState();
+    }
+
+    private void cmdPrepare(){
+
+        if(mediaPlayerState == sai.MP_State.Initialized
+                ||mediaPlayerState == sai.MP_State.Stopped){
+            try {
+                mediaPlayer.prepare();
+                mediaPlayerState = sai.MP_State.Prepared;
+            } catch (IllegalStateException e) {
+                Toast.makeText(sai.this,
+                        e.toString(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            } catch (IOException e) {
+                Toast.makeText(sai.this,
+                        e.toString(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+        }else{
+//            Toast.makeText(sai.this,
+//                    "Invalid State@cmdPrepare() - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+
+        showMediaPlayerState();
+    }
+
+    private void cmdStart(){
+        if(mediaPlayerState == sai.MP_State.Prepared
+                ||mediaPlayerState == sai.MP_State.Started
+                ||mediaPlayerState == sai.MP_State.Paused
+                ||mediaPlayerState == sai.MP_State.PlaybackCompleted){
+            mediaPlayer.start();
+            mediaPlayerState = sai.MP_State.Started;
+        }else{
+//            Toast.makeText(sai.this,
+//                    "Invalid State@cmdStart() - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+
+        showMediaPlayerState();
+    }
+
+    private void cmdPause(){
+        if(mediaPlayerState == sai.MP_State.Started
+                ||mediaPlayerState == sai.MP_State.Paused){
+            mediaPlayer.pause();
+            mediaPlayerState = sai.MP_State.Paused;
+        }else{
+//            Toast.makeText(sai.this,
+//                    "Invalid State@cmdPause() - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+        showMediaPlayerState();
+    }
+
+    private void cmdStop(){
+
+        if(mediaPlayerState == sai.MP_State.Prepared
+                ||mediaPlayerState == sai.MP_State.Started
+                ||mediaPlayerState == sai.MP_State.Stopped
+                ||mediaPlayerState == sai.MP_State.Paused
+                ||mediaPlayerState == sai.MP_State.PlaybackCompleted){
+            mediaPlayer.stop();
+            mediaPlayerState = sai.MP_State.Stopped;
+        }else{
+//            Toast.makeText(sai.this,
+//                    "Invalid State@cmdStop() - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+        showMediaPlayerState();
+
+    }
+
+    private void showMediaPlayerState(){
+
+        switch(mediaPlayerState){
+            case Idle:
+                state.setText("Idle");
+                break;
+            case Initialized:
+                state.setText("Initialized");
+                break;
+            case Prepared:
+                state.setText("Prepared");
+                break;
+            case Started:
+                state.setText("Started");
+                break;
+            case Paused:
+                state.setText("Paused");
+                break;
+            case Stopped:
+                state.setText("Stopped");
+                break;
+            case PlaybackCompleted:
+                state.setText("PlaybackCompleted");
+                break;
+            case End:
+                state.setText("End");
+                break;
+            case Error:
+                state.setText("Error");
+                break;
+            case Preparing:
+                state.setText("Preparing");
+                break;
+            default:
+                state.setText("Unknown!");
+        }
+    }
 
 }

@@ -10,21 +10,17 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
-         <include layout="@layout/header"/>
-        </android.support.v7.widget.Toolbar>
+         <include layout="@layout/header2"/>
    </android.support.design.widget.AppBarLayout>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:circle="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorSilver"
     android:layout_height="match_parent"
     tools:context="com.garudatekno.jemaah.activity.MainActivity" >
 
@@ -37,106 +33,264 @@
         android:layout_above="@+id/footer">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="4dp"
-            android:layout_marginTop="80dp"
-            android:orientation="horizontal"
-            android:weightSum="7">
-            <TextView
-                android:id="@+id/circle1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/circle_sai"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="1" />
-            <TextView
-                android:id="@+id/circle2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/circle_sai"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="2" />
-            <TextView
-                android:id="@+id/circle3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/circle_sai"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="3" />
-            <TextView
-                android:id="@+id/circle4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/circle_sai"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="4" />
+            android:layout_marginTop="40dp"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.16"
+            android:weightSum="1"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/img_sai_klik"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/kabah_sai"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.37"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:weightSum="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/circle"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/circle_sai_blue"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="1" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:text="Do'a Sa'i"
+                        android:layout_gravity="center"
+                        android:paddingLeft="10dp"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.9"/>
+                </LinearLayout>
+                <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.6"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
                 <TextView
-                android:id="@+id/circle5"
-                android:layout_width="wrap_content"
+                    android:text="Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum Lorem ipshum"
+                    android:textAlignment="gravity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                    </RelativeLayout>
+            </ScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:weightSum="1"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/btnplay"
+                        android:layout_margin="5dp"
+                        android:layout_width="0dp"
+                        android:textColor="@color/white"
+                        android:layout_weight="0.4"
+                        android:layout_height="25dp"
+                        android:text="Download"
+                        android:background="@drawable/button"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.48"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/circle_sai"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="5" />
+                android:layout_weight="0.25"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/triangle_circle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/triangle_clear"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Safa"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/circle7"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_sai"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="bold"
+                    android:text="7" />
+                <TextView
+                    android:id="@+id/circle5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_sai"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:text="5" />
+                <TextView
+                    android:id="@+id/circle3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_sai"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:text="3" />
+                <TextView
+                    android:id="@+id/circle1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_sai"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:text="1" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:orientation="vertical">
+                </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/triangle_circle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/triangle_clear"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Marwah"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/circle6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
+                android:textColor="@color/white"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/circle_sai"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:text="6" />
-            <TextView
-                android:id="@+id/circle7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/circle_sai"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="7" />
+                <TextView
+                    android:id="@+id/circle4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circle_sai"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="4" />
+                <TextView
+                    android:id="@+id/circle2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/circle_sai"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="2" />
+                </LinearLayout>
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_center"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_centerInParent="true"
-            android:scaleType="centerInside"
-            android:background="@drawable/logo"
-            android:clickable="true"
-            android:padding="17dp"
-            tools:clickable="true"
-            tools:ignore="ContentDescription" />
+        </LinearLayout>
 
     </RelativeLayout>
 
-    <include layout="@layout/footer"/>
+    <TextView
+        android:id="@+id/state"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<include layout="@layout/footer"/>-->
 </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

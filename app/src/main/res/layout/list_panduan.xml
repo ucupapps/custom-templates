@@ -2,38 +2,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dip" >
+    android:orientation="vertical">
 
-    <TableLayout  android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TableRow>
 
     <TextView
         android:id="@+id/txtNO"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:padding="4dp"
-        android:visibility="gone"
         android:layout_height="match_parent"
-        android:text="No."/>
-    <TextView
-        android:id="@+id/txtNAME"
-        android:layout_width="0dp"
-        android:layout_weight="9"
-        android:padding="4dp"
-        android:layout_height="match_parent"
-        android:text="Name" />
+        android:text="id"/>
 
-            <TextView
-                android:id="@+id/txtAudio"
-                android:layout_width="0dp"
-                android:layout_weight="9"
-                android:padding="4dp"
-                android:visibility="gone"
-                android:layout_height="match_parent"
-                android:text="Play" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
-        </TableRow>
-    </TableLayout>
+        <TextView
+            android:id="@+id/txtImg"
+            android:layout_width="0dp"
+            android:layout_weight="0.17"
+            android:background="@drawable/circle_purple"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_height="50dp"
+            android:text="Video" />
+        <TextView
+            android:id="@+id/txtNAME"
+            android:layout_width="0dp"
+            android:layout_weight="0.53"
+            android:layout_margin="8dp"
+            android:layout_marginLeft="12dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="start"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txtAudio"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/button_green"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:text="Buka" />
+    </LinearLayout>
 </RelativeLayout>

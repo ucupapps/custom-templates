@@ -9,16 +9,16 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
+            android:id="@+id/toolbar"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" >-->
             <include layout="@layout/header"/>
-        </android.support.v7.widget.Toolbar>
+        <!--</android.support.v7.widget.Toolbar>-->
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,30 +32,187 @@
 
         <RelativeLayout
             android:id="@+id/circle_menu"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            android:background="@color/colorSilver"
             android:layout_above="@+id/footer"
             android:gravity="center" >
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="80dp"
-                android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".sample.input">
+                android:weightSum="1"
+                android:layout_marginTop="115dp"
+                tools:context=".sample.input">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:background="@color/white"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:text="Jakarta"
+                        android:padding="5dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.25"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/jak_degree"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.6"
+                            android:layout_height="0dp" />
+                        <TextView
+                            android:id="@+id/jak_cuaca"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="12dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.4"
+                            android:layout_height="0dp"  />
+                    </LinearLayout>
 
-                <ListView
-                    android:id="@+id/listView"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.45"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/jak_time"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.6"
+                            android:layout_height="0dp" />
+                        <TextView
+                            android:id="@+id/jak_date"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="12dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.4"
+                            android:layout_height="0dp"  />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    android:background="@color/white"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.15">
+                    <TextView
+                        android:text="Mekkah"
+                        android:padding="5dp"
+                        android:textSize="20dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.25"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/mek_degree"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.6"
+                            android:layout_height="0dp" />
+                        <TextView
+                            android:id="@+id/mek_cuaca"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="12dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.4"
+                            android:layout_height="0dp"  />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.45"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/mek_time"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="20dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.6"
+                            android:layout_height="0dp" />
+                        <TextView
+                            android:id="@+id/mek_date"
+                            android:text=" "
+                            android:padding="5dp"
+                            android:textSize="12dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_weight="0.4"
+                            android:layout_height="0dp"  />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1"
+                android:background="@color/white"
+                android:layout_height="0dp"
+                android:layout_weight="0.7">
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabMode="fixed"
+                        app:tabGravity="fill"/>
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/txtid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

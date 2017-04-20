@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.garudatekno.jemaah.menu.edit_profile">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+            <include layout="@layout/header"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.garudatekno.jemaah.menu.edit_profile">
+
+        <include layout="@layout/footer" />
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/footer"
+            android:gravity="center">
+
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingTop="110dp"
+                    android:weightSum="1"
+                    tools:context=".sample.input">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorSilver"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:map="http://schemas.android.com/apk/res-auto"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        tools:context=".menu.navigasi" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_weight="0.4"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/hotel" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:text="Hotel"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.2"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txthotel"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:background="@drawable/button_red"
+                            android:text="Set Location"
+                            android:textColor="#fff" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.4"
+                            android:paddingTop="7dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="7dp"
+                            android:src="@drawable/arrow_right"
+                            android:layout_height="30dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_weight="0.4"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/bus" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:text="Bus"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.2"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txtbus"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:background="@drawable/button_red"
+                            android:text="Set Location"
+                            android:textColor="#fff" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.4"
+                            android:paddingTop="7dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="7dp"
+                            android:src="@drawable/arrow_right"
+                            android:layout_height="30dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_weight="0.4"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/masjid" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:text="Masjid (Pintu Masuk)"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.2"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txtmasjid"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:background="@drawable/button_red"
+                            android:text="Set Location"
+                            android:textColor="#fff" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.4"
+                            android:paddingTop="7dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="7dp"
+                            android:src="@drawable/arrow_right"
+                            android:layout_height="30dp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:layout_weight="0.4"
+                            android:layout_gravity="center"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/tempat_bertemu" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:text="Tempat Bertemu"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_weight="1.2"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/txtbertemu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textAlignment="center"
+                            android:background="@drawable/button_red"
+                            android:text="Set Location"
+                            android:textColor="#fff" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.4"
+                            android:paddingTop="7dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="7dp"
+                            android:src="@drawable/arrow_right"
+                            android:layout_height="30dp" />
+                    </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:layout_weight="0.4"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lokasi_menarik" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:text="Lokasi Menarik"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.2"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/txtpoi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textAlignment="center"
+                        android:background="@drawable/button_green"
+                        android:text="Arahkan"
+                        android:textColor="#fff" />
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.4"
+                        android:paddingTop="7dp"
+                        android:layout_gravity="center"
+                        android:paddingBottom="7dp"
+                        android:src="@drawable/arrow_right"
+                        android:layout_height="30dp" />
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/userid"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="true" />
+
+                    <EditText
+                        android:id="@+id/lat"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="true" />
+
+                    <EditText
+                        android:id="@+id/lng"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="true" />
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textIsSelectable="true"
+                        android:visibility="gone"
+                        android:id="@+id/pesan" />
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

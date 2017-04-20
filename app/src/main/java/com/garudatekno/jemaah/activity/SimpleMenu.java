@@ -52,7 +52,7 @@ public class SimpleMenu extends AppCompatActivity
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
         TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_emergency);
+        LinearLayout menu_emergency=(LinearLayout) findViewById(R.id.menu_navigasi);
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
@@ -83,7 +83,6 @@ public class SimpleMenu extends AppCompatActivity
 
         //FOOTER
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_go=(TextView) findViewById(R.id.txt_go);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override

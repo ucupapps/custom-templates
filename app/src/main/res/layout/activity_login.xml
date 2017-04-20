@@ -1,87 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/white"
-        android:gravity="center"
+        android:background="@drawable/background"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="10dp"
+        android:weightSum="1">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="10dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" >
+            android:paddingRight="20dp"
+            android:layout_weight="0.31"
+            android:weightSum="1">
             <ImageView
-                android:src="@drawable/logo"
-                android:layout_gravity="center"
-                android:layout_width="350dp"
-                android:layout_height="200dp"
-                android:paddingBottom="30dp"
-                android:layout_centerInParent="true" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Username" />
+                android:layout_width="match_parent"
+                android:layout_marginTop="40dp"
+                android:padding="30dp"
+                android:layout_height="100dp"
+                android:src="@drawable/logo"/>
             <EditText
                 android:id="@+id/email"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:inputType="textEmailAddress"
+                android:background="@color/white"
                 android:padding="10dp"
+                android:hint="E-mail atau Nomor Ponsel"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:text="Password" />
             <EditText
                 android:id="@+id/password"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:inputType="textPassword"
+                android:background="@color/white"
                 android:padding="10dp"
                 android:singleLine="true"
+                android:hint="Kata Sandi"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
+
 
             <!-- Login Button -->
 
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dip"
+                android:layout_height="50dp"
                 android:background="@drawable/button"
                 android:text="@string/btn_login"
+                android:layout_marginBottom="5dp"
                 android:textColor="#fff" />
 
             <!-- Link to Login Screen -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="Lupa Kata Sandi?"
+                android:textColor="#FFF"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#FFF"
+                android:layout_height="wrap_content"
+                android:text="Masuk Otomatis"
+                android:layout_gravity="center"/>
 
             <Button
                 android:id="@+id/btnLinkToRegisterScreen"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dip"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="20dp"
+                android:layout_marginTop="50dp"
                 android:text="@string/btn_link_to_register"
                 android:textAllCaps="false"
                 android:background="@null"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#FFF"
                 android:textSize="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#FFF"
+                android:layout_height="wrap_content"
+                android:text="Masuk Tanpa Daftar"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#FFF"
+                android:layout_height="wrap_content"
+                android:text="Butuh Bantuan ?"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#FFF"
+                android:layout_height="wrap_content"
+                android:text="Syarat dan Ketentuan"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
+        </ScrollView>
+</LinearLayout>
