@@ -15,8 +15,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_weight="1"
+        android:padding="5dp"
         android:background="@drawable/border"
         android:orientation="horizontal"
         android:weightSum="3">
@@ -28,51 +29,68 @@
             android:layout_weight="0.6"
             android:padding="3dp"
             android:layout_height="60dp"
-            android:layout_gravity="center"
+            android:layout_gravity="start"
             app:civ_border_width="1dp"
             app:civ_border_color="#e1e1e1"/>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.8"
+        android:layout_weight="2.4"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
         <TextView
             android:id="@+id/txtFROM"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
             android:textSize="18dp"
             android:layout_marginLeft="12dp"
             android:textStyle="bold"
             android:layout_height="match_parent"
             android:text="FROM" />
 
+            <TextView
+                android:id="@+id/txtTIME"
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:paddingRight="10dp"
+                android:gravity="right"
+                android:textSize="12dp"
+                android:textColor="#a6a3a3"
+                android:layout_height="match_parent"
+                android:text="time" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
         <TextView
             android:id="@+id/txtMESSAGE"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
             android:paddingBottom="4dp"
             android:layout_marginLeft="12dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="MESSAGE" />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/txtTIME"
-            android:layout_width="0dp"
-            android:layout_weight="0.4"
-            android:padding="4dp"
-            android:gravity="right"
-            android:textSize="12dp"
-            android:textColor="#a6a3a3"
-            android:layout_height="match_parent"
-            android:text="time" />
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.1"
             android:paddingTop="7dp"
             android:layout_gravity="center"
             android:paddingBottom="7dp"
             android:src="@drawable/arrow_right"
             android:layout_height="30dp" />
+
+        </LinearLayout>
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

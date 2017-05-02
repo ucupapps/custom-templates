@@ -2,6 +2,7 @@ package com.garudatekno.jemaah.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,10 @@ public class CustomListPanduan2 extends SimpleAdapter {
         TextView no = (TextView)vi.findViewById(R.id.txtNO);
         final TextView name = (TextView)vi.findViewById(R.id.txtNAME);
         final TextView txtaudio = (TextView)vi.findViewById(R.id.txtAudio);
+
+        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
+        name.setTypeface(font);
+        txtaudio.setTypeface(font);
 
         final String strID = (String) data.get(AppConfig.KEY_ID);
         String strName = (String) data.get(AppConfig.KEY_NAME);

@@ -21,6 +21,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import me.anwarshahriar.calligrapher.Calligrapher;
+
 public class RegisterActivity extends Activity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnRegister;
@@ -36,6 +38,8 @@ public class RegisterActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
         inputFullName = (EditText) findViewById(R.id.name);
         inputEmail = (EditText) findViewById(R.id.email);

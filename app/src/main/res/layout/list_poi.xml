@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="3dp"
+    android:background="@color/colorSilver"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtNO"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:padding="4dp"
+        android:layout_height="match_parent"
+        android:text="id"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:paddingTop="6dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imgpoi"
+            android:layout_width="0dp"
+            android:background="@drawable/button_green"
+            android:layout_weight="0.2"
+            android:layout_marginLeft="5dp"
+            android:layout_height="60dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:weightSum="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txtNAME"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:layout_height="match_parent"
+                android:text="Name" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txtCATEGORY"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent"
+                android:text="Category" />
+
+            <TextView
+                android:id="@+id/txtDISTANCE"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:paddingBottom="4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent"
+                android:text=" " />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="60dp"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:padding="5dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtDESC"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text=" " />
+    </LinearLayout>
+
+</RelativeLayout>

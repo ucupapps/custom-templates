@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -19,7 +20,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
@@ -38,13 +37,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
     private TextView txtbus, txthotel, txtbertemu, txtmasjid,txtpoi;
-    private Bitmap bitmap;
+    private ImageView imgbus,imghotel,imgpintu,imgbertemu;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
@@ -63,6 +69,9 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigasi);
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -81,6 +90,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +125,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
 
-
         ImageView img = (ImageView) findViewById(R.id.img_navigasi);
         img.setBackgroundResource(R.drawable.circle_green_active);
         img.setPadding(22,22,22,22);
@@ -138,7 +147,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
@@ -212,6 +221,15 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         editTextuser.setText(uid);
 //        txtphone.setText(phone);
 
+        imgbus=(ImageView) findViewById(R.id.arrow_bus);
+        imghotel=(ImageView) findViewById(R.id.arrow_hotel);
+        imgpintu=(ImageView) findViewById(R.id.arrow_pintu);
+        imgbertemu=(ImageView) findViewById(R.id.arrow_bertemu);
+        imgbertemu.setOnClickListener(this);
+        imgpintu.setOnClickListener(this);
+        imgbus.setOnClickListener(this);
+        imghotel.setOnClickListener(this);
+
         txtbus = (TextView) findViewById(R.id.txtbus);
         txthotel = (TextView) findViewById(R.id.txthotel);
         txtbertemu = (TextView) findViewById(R.id.txtbertemu);
@@ -223,6 +241,21 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         txtmasjid.setOnClickListener(this);
         txtpoi.setOnClickListener(this);
 
+        //cek
+        cekData("BUS",txtbus);
+        cekData("HOTEL",txthotel);
+        cekData("NO PINTU MASJID",txtmasjid);
+        cekData("TEMPAT BERTEMU",txtbertemu);
+
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
     }
 
     @Override
@@ -311,38 +344,112 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
     public void onClick(View v) {
         if (v == txtbus) {
             getCurrentLocation();
-            if(txtlat.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+            if(txtbus.getText().toString().equals("Set Lokasi")) {
+                if (txtlat.getText().toString().equals("")) {
+                    Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+                }
+                txtMessage.setText("BUS"); insertIntoDB();
+                txtbus.setBackgroundResource(R.drawable.button);
+                txtbus.setText("Arahkan");
+            }else if(txtbus.getText().toString().equals("Arahkan")) {
+                Intent intent = new Intent(getApplicationContext(), go.class);
+                intent.putExtra(AppConfig.KEY_NAME,"BUS");
+                startActivity(intent);
             }
-            txtMessage.setText("BUS");insertIntoDB();
         }
         if (v == txthotel) {
             getCurrentLocation();
-            if(txtlat.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+            if(txthotel.getText().toString().equals("Set Lokasi")){
+                if(txtlat.getText().toString().equals(""))
+                {
+                    Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+                }
+                txtMessage.setText("HOTEL");insertIntoDB();
+                txthotel.setBackgroundResource(R.drawable.button);
+                txthotel.setText("Arahkan");
+            }else if(txthotel.getText().toString().equals("Arahkan")) {
+                Intent intent = new Intent(getApplicationContext(), go.class);
+                intent.putExtra(AppConfig.KEY_NAME,"HOTEL");
+                startActivity(intent);
             }
-            txtMessage.setText("HOTEL");insertIntoDB();
         }
         if (v == txtmasjid) {
             getCurrentLocation();
+            if(txtmasjid.getText().toString().equals("Set Lokasi")){
             if(txtlat.getText().toString().equals(""))
             {
                 Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
             }
             txtMessage.setText("NO PINTU MASJID");insertIntoDB();
+                txtmasjid.setBackgroundResource(R.drawable.button);
+                txtmasjid.setText("Arahkan");
+            }else if(txtmasjid.getText().toString().equals("Arahkan")) {
+                Intent intent = new Intent(getApplicationContext(), go.class);
+                intent.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
+                startActivity(intent);
+            }
         }
         if (v == txtbertemu) {
             getCurrentLocation();
-            if(txtlat.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+            if(txtbertemu.getText().toString().equals("Set Lokasi")){
+                if(txtlat.getText().toString().equals(""))
+                {
+                    Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+                }
+                txtMessage.setText("TEMPAT BERTEMU");insertIntoDB();
+                txtbertemu.setBackgroundResource(R.drawable.button);
+                txtbertemu.setText("Arahkan");
+            }else if(txtbertemu.getText().toString().equals("Arahkan")) {
+                Intent intent = new Intent(getApplicationContext(), go.class);
+                intent.putExtra(AppConfig.KEY_NAME,"TEMPAT BERTEMU");
+                startActivity(intent);
             }
-            txtMessage.setText("TEMPAT BERTEMU");insertIntoDB();
+        }
+
+        if (v == txtpoi) {
+            Intent intent = new Intent(getApplicationContext(), Poi.class);
+            startActivity(intent);
+        }
+
+        //arrow
+        if (v == imghotel) {
+            if(txthotel.getText().toString().equals("Arahkan")){
+                txthotel.setBackgroundResource(R.drawable.button_red);
+                txthotel.setText("Set Lokasi");
+            }
+        }
+
+        if (v == imgbus) {
+            if(txtbus.getText().toString().equals("Arahkan")){
+                txtbus.setBackgroundResource(R.drawable.button_red);
+                txtbus.setText("Set Lokasi");
+            }
+        }
+
+        if (v == imgpintu) {
+            if(txtmasjid.getText().toString().equals("Arahkan")){
+                txtmasjid.setBackgroundResource(R.drawable.button_red);
+                txtmasjid.setText("Set Lokasi");
+            }
+        }
+
+        if (v == imgbertemu) {
+            if(txtbertemu.getText().toString().equals("Arahkan")){
+                txtbertemu.setBackgroundResource(R.drawable.button_red);
+                txtbertemu.setText("Set Lokasi");
+            }
         }
     }
 
+    protected void cekData(String name,TextView tv){
+        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        if(count > 0) {
+            tv.setBackgroundResource(R.drawable.button);
+            tv.setText("Arahkan");
+        }
+    }
     protected void createDatabase(){
         database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,lat VARCHAR,lng VARCHAR);");

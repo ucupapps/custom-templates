@@ -34,6 +34,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import me.anwarshahriar.calligrapher.Calligrapher;
+
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 
 
@@ -60,6 +62,8 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vi = inflater.inflate(R.layout.fragment_panduan, container, false);
+        Calligrapher calligrapher=new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(),"fonts/helvetica.ttf",true);
         // Inflate the layout for this fragment
         listView = (ListView) vi.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
@@ -116,7 +120,7 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_DOA);
+                String s = rh.sendGetRequest(AppConfig.URL_PANDUAN);
                 return s;
             }
         }

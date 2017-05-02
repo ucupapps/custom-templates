@@ -8,15 +8,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
+import com.garudatekno.jemaah.activity.CustomListDoa;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
@@ -31,35 +36,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-import static java.sql.Types.NULL;
+public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClickListener {
 
-public class profile extends AppCompatActivity implements OnClickListener {
-    private TextView txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing;
-    private Button buttonAdd, buttonLogout;
-    private CircleImageView imgProfile;
-    String lat,lng,uid;
-    //user
+    private static final String TAG = "MyUser";
+
+    private ListView listView;
+
+    private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile);
-        File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/images");
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
+        setContentView(R.layout.doa);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
+        listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(this);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -98,15 +98,11 @@ public class profile extends AppCompatActivity implements OnClickListener {
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        //useri
-        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
-        if (!file.exists()) {
-            imgp.setImageResource(R.drawable.profile);
-        }else{
-            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-            imgp.setImageBitmap(bmp);
-        }
+
+        ImageView img = (ImageView) findViewById(R.id.img_doa);
+        img.setBackgroundResource(R.drawable.circle_green_active);
+        img.setPadding(22,22,22,22);
+        img.setImageDrawable(getResources().getDrawable(R.drawable.doa_active));
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +153,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(profile.this, img_setting);
+                PopupMenu popup = new PopupMenu(TitipanDoa.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 //registering popup with OnMenuItemClickListener
@@ -175,40 +171,90 @@ public class profile extends AppCompatActivity implements OnClickListener {
             }
         });
 
-//CONTENT
-        txtName = (TextView) findViewById(R.id.name);
-        txtAddress = (TextView) findViewById(R.id.address);
-        txtPhone = (TextView) findViewById(R.id.phone);
-        txtPassport = (TextView) findViewById(R.id.passport);
-        txtProvince = (TextView) findViewById(R.id.province);
-        txttravel = (TextView) findViewById(R.id.travel_agent);
-        txtmekkah = (TextView) findViewById(R.id.hotel_mekkah);
-        txtmadinah = (TextView) findViewById(R.id.hotel_madinah);
-        txtpembimbing = (TextView) findViewById(R.id.pembimbing);
-        txtTwon = (TextView) findViewById(R.id.town);
-        editTextuser = (TextView) findViewById(R.id.userid);
-
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
-        getData();
 
-        buttonAdd = (Button) findViewById(R.id.buttonAdd);
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
-        imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
-        buttonAdd.setOnClickListener(this);
-        buttonLogout.setOnClickListener(this);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+        getJSON();
 
     }
 
-    public void onClick(View v){
-        if(v == buttonAdd){
-            Intent i = new Intent(getApplicationContext(), edit_profile.class);
-            startActivity(i);
-         }if(v == buttonLogout){
-            logoutUser();
+    private void showData(){
+        JSONObject jsonObject = null;
+        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
+        try {
+            jsonObject = new JSONObject(JSON_STRING);
+            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+            for(int i = 0; i<result.length(); i++){
+                JSONObject jo = result.getJSONObject(i);
+                String id = jo.getString(AppConfig.KEY_ID);
+                String message = jo.getString(AppConfig.KEY_MESSAGE);
+                String time = jo.getString(AppConfig.KEY_TIME);
+                String from = jo.getString(AppConfig.KEY_FROM);
+                String jum = jo.getString(AppConfig.KEY_JUMLAH);
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_ID,id);
+                data.put(AppConfig.KEY_MESSAGE,message);
+                data.put(AppConfig.KEY_TIME,time);
+                data.put(AppConfig.KEY_FROM,from);
+                data.put(AppConfig.KEY_JUMLAH,jum);
+                list.add(data);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        CustomListDoa adapter = new CustomListDoa(this, list,
+                R.layout.list_doa, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM,AppConfig.KEY_JUMLAH },
+                new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME,R.id.txtFROM,R.id.txtJumlah });
+
+        listView.setAdapter(adapter);
+        ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+    }
+
+    private void getJSON(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+//                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+//                loading.dismiss();
+                JSON_STRING = s;
+                showData();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequest(AppConfig.URL_TITIPAN_DOA);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 
     private void logoutUser() {
@@ -217,78 +263,59 @@ public class profile extends AppCompatActivity implements OnClickListener {
         db.deleteUsers();
 
         // Launching the login activity
-        Intent intent = new Intent(profile.this, LoginActivity.class);
+        Intent intent = new Intent(TitipanDoa.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
-    private void getData(){
-        class GetData extends AsyncTask<Void,Void,String>{
+
+    private void addDoakan(final String id){
+        class AddBarcode extends AsyncTask<Bitmap,Void,String> {
+
             ProgressDialog loading;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loading = ProgressDialog.show(profile.this,"Mohon tunggu..."," ",false,false);
+//                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 //                loading.dismiss();
-                showData(s);
+                Toast.makeText(TitipanDoa.this, s, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            protected String doInBackground(Void... params) {
+            protected String doInBackground(Bitmap... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_ID, id);
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_GETPROFILE,uid);
-                return s;
+                String res = rh.sendPostRequest(AppConfig.URL_DOAKAN, data);
+                return res;
             }
         }
-        GetData ge = new GetData();
-        ge.execute();
+
+        AddBarcode ae = new AddBarcode();
+        ae.execute();
+
+        Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
+        finish();
+        startActivity(i);
     }
 
-    private void showData(String json){
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
-            JSONObject c = result.getJSONObject(0);
-            String name = c.getString(AppConfig.KEY_NAME);
-            String address = c.getString(AppConfig.KEY_ADDRESS);
-            String passport = c.getString(AppConfig.KEY_PASSPORT);
-            String phone = c.getString(AppConfig.KEY_PHONE);
-            String province = c.getString(AppConfig.KEY_PROVINCE);
-            String town = c.getString(AppConfig.KEY_TOWN);
-            String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
-            String mekkah = c.getString(AppConfig.KEY_HOTEL_MEKKAH);
-            String madinah = c.getString(AppConfig.KEY_HOTEL_MADINAH);
-            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBING);
-            if(name.equals(NULL) || name.equals("")) {
-                imgProfile.setImageResource(R.drawable.profile);
-            }else{
-                File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
-                if (!file.exists()) {
-                    imgProfile.setImageResource(R.drawable.profile);
-                }else{
-                    Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-                    imgProfile.setImageBitmap(bmp);
-                }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+        final String empId = map.get(AppConfig.TAG_ID).toString();
+        final Button btndoakan = (Button)view.findViewById(R.id.btndoakan);
+        btndoakan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(),"Download "+empId, Toast.LENGTH_LONG).show();
+                addDoakan(empId);
             }
-
-            txtName.setText(name);
-            txtAddress.setText(address);
-            txtPassport.setText(passport);
-            txtPhone.setText(phone);
-            txtProvince.setText(province);
-            txtTwon.setText(town);
-            txttravel.setText(travel);
-            txtmekkah.setText(mekkah);
-            txtmadinah.setText(madinah);
-            txtpembimbing.setText(pembimbing);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        });
     }
-
 }

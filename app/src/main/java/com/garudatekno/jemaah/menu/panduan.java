@@ -3,6 +3,8 @@ package com.garudatekno.jemaah.menu;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,10 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.CustomListPanduan3;
@@ -31,12 +36,16 @@ import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.gcm.weather;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -52,6 +61,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
+
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 
 
@@ -61,7 +73,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
     private ListView listView;
     private TextView txtid;
-    private String JSON_STRING;
+    private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
 
@@ -77,10 +89,43 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         setContentView(R.layout.panduan);
 //        listView = (ListView) findViewById(R.id.listView);
 //        listView.setOnItemClickListener(this);
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+//        String url=AppConfig.URL_HOME + "/uploads/profile/" + uid + "/thumb_images.jpg";
+//        Picasso.with(this).invalidate(url);
+//        Picasso.with(this).load(url)
+//                .networkPolicy(NetworkPolicy.NO_CACHE)
+//                .memoryPolicy(MemoryPolicy.NO_CACHE)
+//                .into(imgp);
+
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+        //fontstyle
+//        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/helvetica.ttf");
+//        txt_emergency.setTypeface(tf);
+//        txt_thowaf.setTypeface(tf);
+//        txt_sai.setTypeface(tf);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +159,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-
+//        txt_panduan.setTypeface(tf);
+//        txt_doa.setTypeface(tf);
+//        txt_navigasi.setTypeface(tf);
+//        txt_profile.setTypeface(tf);
+//        txt_inbox.setTypeface(tf);
 
         ImageView img = (ImageView) findViewById(R.id.img_panduan);
         img.setBackgroundResource(R.drawable.circle_green_active);
@@ -138,7 +187,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
@@ -154,6 +203,29 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
+            }
+        });
+
+        ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
+        rankBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final Dialog rankDialog = new Dialog(panduan.this);
+                rankDialog.setContentView(R.layout.rank_dialog);
+                rankDialog.setCancelable(true);
+
+                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+                updateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RatingBar ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
+                        String rating=String.valueOf(ratingBar.getRating());
+                        addRating(uid,rating);
+//                        Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
+                        rankDialog.dismiss();
+                    }
+                });
+                //now that the dialog is set up, it's time to show it
+                rankDialog.show();
             }
         });
 
@@ -187,14 +259,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 popup.show();//showing popup menu
             }
         });
-
-        session = new SessionManager(getApplicationContext());
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
-        // SqLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-
 //        getJSON();
 
         //jakarta
@@ -202,6 +266,10 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         final TextView jak_cuaca=(TextView) findViewById(R.id.jak_cuaca);
         TextView jak_date=(TextView) findViewById(R.id.jak_date);
         TextView jak_time=(TextView) findViewById(R.id.jak_time);
+//        jak_degree.setTypeface(tf);
+//        jak_cuaca.setTypeface(tf);
+//        jak_date.setTypeface(tf);
+//        jak_time.setTypeface(tf);
 
         Calendar cal_jak = Calendar.getInstance(TimeZone.getTimeZone("GMT+7"));
         Date currentLocalTimejak = cal_jak.getTime();
@@ -220,6 +288,10 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         final TextView mek_cuaca=(TextView) findViewById(R.id.mek_cuaca);
         TextView mek_date=(TextView) findViewById(R.id.mek_date);
         TextView mek_time=(TextView) findViewById(R.id.mek_time);
+//        mek_degree.setTypeface(tf);
+//        mek_cuaca.setTypeface(tf);
+//        mek_date.setTypeface(tf);
+//        mek_time.setTypeface(tf);
 
         Calendar cal_mek = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
         Date currentLocalTimemak = cal_mek.getTime();
@@ -268,6 +340,41 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void addRating(final String user, final String rate){
+        class AddBarcode extends AsyncTask<Bitmap,Void,String> {
+
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(panduan.this,"","",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(panduan.this, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_USERID, user);
+                data.put(AppConfig.KEY_RATING, rate);
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(AppConfig.URL_RATING, data);
+                return res;
+            }
+        }
+
+        AddBarcode ae = new AddBarcode();
+        ae.execute();
+
+        startActivity(new Intent(panduan.this, panduan.class));
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -356,7 +463,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_DOA);
+                String s = rh.sendGetRequest(AppConfig.URL_PANDUAN);
                 return s;
             }
         }

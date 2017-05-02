@@ -2,29 +2,35 @@ package com.garudatekno.jemaah.activity;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import me.anwarshahriar.calligrapher.Calligrapher;
+import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Created by Master on 5/1/2016.
  */
-public class CustomList extends SimpleAdapter {
+public class CustomListPoi extends SimpleAdapter {
 
     private Context mContext;
     public LayoutInflater inflater=null;
-    public CustomList(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+    public CustomListPoi(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         mContext = context;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -34,42 +40,32 @@ public class CustomList extends SimpleAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
-            vi = inflater.inflate(R.layout.list_item, null);
+            vi = inflater.inflate(R.layout.list_poi, null);
 
         HashMap<String, Object> data = (HashMap<String, Object>) getItem(position);
         TextView no = (TextView)vi.findViewById(R.id.txtNO);
         TextView name = (TextView)vi.findViewById(R.id.txtNAME);
+        TextView desc = (TextView)vi.findViewById(R.id.txtDESC);
+        TextView category = (TextView)vi.findViewById(R.id.txtCATEGORY);
+        TextView distance = (TextView)vi.findViewById(R.id.txtDISTANCE);
 
         Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
         name.setTypeface(font);
+        desc.setTypeface(font);
+        category.setTypeface(font);
 
         String strID = (String) data.get(AppConfig.KEY_ID);
         String strName = (String) data.get(AppConfig.KEY_NAME);
+        String strDesc = (String) data.get(AppConfig.KEY_DESCRIPTION);
+        String strCategory = (String) data.get(AppConfig.KEY_CATEGORY);
+        String strDist = (String) data.get(AppConfig.KEY_DISTANCE);
+
         no.setText(strID);
         name.setText(strName);
-//        ImageView imageView = (ImageView) vi.findViewById(R.id.uid);
-            // Set a background color for ListView regular row/item
-//        if (id.equals("1")) {
-//            imageView.setImageResource(R.drawable.ok);
-//            text.setClickable(true);
-//            imageView.setClickable(true);
-//            text.setTextColor(Color.BLACK);
-//        } else if (id.equals("2")) {
-//            imageView.setImageResource(R.drawable.arrow);
-//            text.setClickable(false);
-//            imageView.setClickable(true);
-//            text.setTextColor(Color.BLACK);
-//        } else {
-//            imageView.setImageResource(R.drawable.gradient_bg);
-//            text.setClickable(true);
-//            imageView.setClickable(true);
-//        }
-//        TextView text2 = (TextView)vi.findViewById(R.id.usertext);
-//        String code = (String) data.get(AppConfig.KEY_BARCODE);
-//        text2.setText(code);
-//        ImageView image=(ImageView)vi.findViewById(R.id.userIcon);
-//        String img = (String) data.get(AppConfig.UPLOAD_KEY);
-//        Picasso.with(mContext).load(img).into(image);
+        desc.setText(strDesc);
+        category.setText(strCategory);
+        distance.setText(strDist);
+
         return vi;
     }
 }

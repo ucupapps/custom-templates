@@ -2,6 +2,8 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.os.AsyncTask;
@@ -22,20 +24,26 @@ import android.os.Message;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewPanduan extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,7 +51,7 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
     private TextView txtData,txtid,info, state;
     private Button buttonStart,buttonStop;
 
-    private String id,msg;
+    private String id,msg,uid;
     private SeekBar timeLine;
     LinearLayout timeFrame;
     TextView timePos, timeDur;
@@ -125,7 +133,7 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
@@ -198,6 +206,18 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         timePos = (TextView)findViewById(R.id.pos);
         timeDur = (TextView)findViewById(R.id.dur);
 
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
         ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
 
         myScheduledExecutorService.scheduleWithFixedDelay(
@@ -446,8 +466,8 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_GET_DOA,id);
-                Log.d("GETDOA", AppConfig.URL_GET_DOA+ id);
+                String s = rh.sendGetRequestParam(AppConfig.URL_GET_PANDUAN,id);
+                Log.d("GETDOA", AppConfig.URL_GET_PANDUAN+ id);
                 return s;
             }
         }

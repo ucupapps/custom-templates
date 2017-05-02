@@ -1,5 +1,6 @@
 package com.garudatekno.jemaah.chat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -15,16 +16,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.anwarshahriar.calligrapher.Calligrapher;
+
 /**
  * Created by Master on 5/1/2016.
  */
-public class CustomList extends SimpleAdapter {
+public class CustomListView extends SimpleAdapter {
 
     private Context mContext;
     public LayoutInflater inflater=null;
-    public CustomList(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+    public CustomListView(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         mContext = context;
+
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -32,7 +36,7 @@ public class CustomList extends SimpleAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
         if(convertView==null)
-            vi = inflater.inflate(R.layout.list_chat, null);
+            vi = inflater.inflate(R.layout.list_view_chat, null);
 
         HashMap<String, Object> data = (HashMap<String, Object>) getItem(position);
         TextView no = (TextView)vi.findViewById(R.id.txtNO);

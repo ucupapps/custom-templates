@@ -3,9 +3,11 @@ package com.garudatekno.jemaah.menu;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -24,11 +26,12 @@ import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -36,17 +39,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static java.sql.Types.NULL;
 
 public class edit_profile extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
-    private EditText txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txtfamily1,txtfamily2,txtfamily3;
+    private EditText txtName, txtPhone,
+            txtPassport, editTextuser, txtEmail1,txtEmail2,txtEmail3,
+            txtAddress,txtTwon,txtProvince,txtfamily1,txtfamily2,txtfamily3;
     private Button buttonAdd, scanBtn;
     private Button buttonUpload;
     private CircleImageView imgProfile;
@@ -68,6 +77,8 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit);
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -107,11 +118,6 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
 
-        ImageView img = (ImageView) findViewById(R.id.img_profile);
-        img.setBackgroundResource(R.drawable.circle_green_active);
-        img.setPadding(22,22,22,22);
-        img.setImageDrawable(getResources().getDrawable(R.drawable.profile_active));
-
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +135,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
@@ -188,6 +194,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         txtfamily1 = (EditText) findViewById(R.id.family1);
         txtfamily2 = (EditText) findViewById(R.id.family2);
         txtfamily3 = (EditText) findViewById(R.id.family3);
+        txtEmail1 = (EditText) findViewById(R.id.efamily1);
+        txtEmail2 = (EditText) findViewById(R.id.efamily2);
+        txtEmail3 = (EditText) findViewById(R.id.efamily3);
         editTextuser = (EditText) findViewById(R.id.userid);
         editTextuser.setVisibility(View.GONE);
 
@@ -206,6 +215,16 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         //user
         getData();
         editTextuser.setText(uid);
+
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
@@ -293,13 +312,20 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             String tfamily1 = c.getString(AppConfig.KEY_PHONE_FAMILY1);
             String tfamily2 = c.getString(AppConfig.KEY_PHONE_FAMILY2);
             String tfamily3 = c.getString(AppConfig.KEY_PHONE_FAMILY3);
+            String efamily1 = c.getString(AppConfig.KEY_EMAIL_FAMILY1);
+            String efamily2 = c.getString(AppConfig.KEY_EMAIL_FAMILY2);
+            String efamily3 = c.getString(AppConfig.KEY_EMAIL_FAMILY3);
 
             if(name.equals(NULL) || name.equals("")) {
                 imgProfile.setImageResource(R.drawable.profile);
             }else{
-                Picasso.with(this)
-                        .load(AppConfig.URL_HOME + "/uploads/profile/" + uid + "/images.jpg")
-                        .into(imgProfile);
+                File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+                if (!file.exists()) {
+                    imgProfile.setImageResource(R.drawable.profile);
+                }else{
+                    Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    imgProfile.setImageBitmap(bmp);
+                }
             }
 
 
@@ -312,6 +338,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             txtfamily1.setText(tfamily1);
             txtfamily2.setText(tfamily2);
             txtfamily3.setText(tfamily3);
+            txtEmail1.setText(efamily1);
+            txtEmail2.setText(efamily2);
+            txtEmail3.setText(efamily3);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -356,6 +385,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         final String family1 = txtfamily1.getText().toString().trim();
         final String family2 = txtfamily2.getText().toString().trim();
         final String family3 = txtfamily3.getText().toString().trim();
+        final String efamily1 = txtEmail1.getText().toString().trim();
+        final String efamily2 = txtEmail2.getText().toString().trim();
+        final String efamily3 = txtEmail3.getText().toString().trim();
 //        final String radiovalue = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
 //        final Spinner spinner_house = (Spinner) findViewById(R.id.status);
 //        final String spinner_status = spinner_house.getSelectedItem().toString();
@@ -367,7 +399,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(edit_profile.this,"Adding...","Wait...",false,false);
+                loading = ProgressDialog.show(edit_profile.this,"Menyimpan...","",false,false);
             }
 
             @Override
@@ -390,6 +422,23 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     data.put(AppConfig.UPLOAD_KEY, "");
                     Log.i("Bitmap Error", "Tidak ada image");
                 }
+                //save image to sdcard
+                File sdCardDirectory = Environment.getExternalStorageDirectory();
+                File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
+                // Encode the file as a PNG image.
+                FileOutputStream outStream;
+                try {
+                    outStream = new FileOutputStream(image);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                    /* 100 to keep full quality of the image */
+                    outStream.flush();
+                    outStream.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 db.deleteUsers();
                 db.addUser(uid,nama, email, created,family1+","+family2+","+family3);
 
@@ -402,6 +451,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                 data.put(AppConfig.KEY_PHONE_FAMILY1,family1);
                 data.put(AppConfig.KEY_PHONE_FAMILY2,family2);
                 data.put(AppConfig.KEY_PHONE_FAMILY3,family3);
+                data.put(AppConfig.KEY_EMAIL_FAMILY1,efamily1);
+                data.put(AppConfig.KEY_EMAIL_FAMILY2,efamily2);
+                data.put(AppConfig.KEY_EMAIL_FAMILY3,efamily3);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(AppConfig.URL_PROFILE, data);

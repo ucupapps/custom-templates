@@ -9,7 +9,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.garudatekno.jemaah.menu.Doa;
-import com.garudatekno.jemaah.menu.go;
+import com.garudatekno.jemaah.menu.TitipanDoa;
 import com.garudatekno.jemaah.menu.emergency;
 import com.garudatekno.jemaah.menu.inbox;
 import com.garudatekno.jemaah.menu.navigasi;
@@ -110,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });

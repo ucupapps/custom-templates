@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
@@ -19,7 +20,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.GMapV2Direction;
 import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
@@ -42,11 +41,18 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Document;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 
 public class go extends AppCompatActivity {
@@ -72,9 +78,14 @@ public class go extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.go);
-        Intent i = getIntent();
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        Intent i = getIntent();
         name = i.getStringExtra(AppConfig.KEY_NAME);
+
+        TextView txtpesan= (TextView) findViewById(R.id.txtpesan);
+        txtpesan.setText("ARAH KE "+ name);
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -109,7 +120,7 @@ public class go extends AppCompatActivity {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
 
                 mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                        .title("Your Location"));
+                        .title("Lokasi Saya"));
                 mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
                 getDirectionMap(fromPosition, toPosition);
             }else{
@@ -174,7 +185,7 @@ public class go extends AppCompatActivity {
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
@@ -225,13 +236,8 @@ public class go extends AppCompatActivity {
         });
 
         editTextuser = (EditText) findViewById(R.id.userid);
-        txtMessage = (EditText) findViewById(R.id.pesan);
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
-        editTextuser.setVisibility(View.GONE);
-        txtMessage.setVisibility(View.GONE);
-        txtlat.setVisibility(View.GONE);
-        txtlng.setVisibility(View.GONE);
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -246,7 +252,15 @@ public class go extends AppCompatActivity {
         phone = user.get("family_phone");
         //user
         editTextuser.setText(uid);
-
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
     }
 
     private void getDirectionMap(LatLng from, LatLng to) {

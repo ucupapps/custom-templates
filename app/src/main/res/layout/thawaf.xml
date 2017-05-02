@@ -121,6 +121,7 @@
                     android:orientation="horizontal">
                     <Button
                         android:id="@+id/btnplay"
+                        android:textAllCaps="false"
                         android:layout_margin="5dp"
                         android:layout_width="0dp"
                         android:textColor="@color/white"

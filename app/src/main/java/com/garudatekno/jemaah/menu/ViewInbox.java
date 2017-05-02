@@ -2,6 +2,8 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,40 +12,50 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.activity.CustomList;
 import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.chat.CustomListView;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Doa extends AppCompatActivity implements ListView.OnItemClickListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
-    private static final String TAG = "MyUser";
-
-    private ListView listView;
-
+public class ViewInbox extends AppCompatActivity implements ListView.OnItemClickListener {
+    private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
+    String id, phone, uid;
     private String JSON_STRING;
+    //user
     private SQLiteHandler db;
     private SessionManager session;
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.doa);
+        setContentView(R.layout.view_inbox);
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
@@ -51,6 +63,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,10 +98,10 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
 
-        ImageView img = (ImageView) findViewById(R.id.img_doa);
+        ImageView img = (ImageView) findViewById(R.id.img_inbox);
         img.setBackgroundResource(R.drawable.circle_green_active);
         img.setPadding(22,22,22,22);
-        img.setImageDrawable(getResources().getDrawable(R.drawable.doa_active));
+        img.setImageDrawable(getResources().getDrawable(R.drawable.inbox_active));
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +120,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
@@ -139,7 +152,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(Doa.this, img_setting);
+                PopupMenu popup = new PopupMenu(ViewInbox.this, img_setting);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
                 //registering popup with OnMenuItemClickListener
@@ -157,19 +170,30 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             }
         });
 
+        txtMessage = (EditText) findViewById(R.id.pesan);
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
 
-
-        // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
-
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+        phone = user.get("family_phone");
+        //useri mage
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+        Intent intent = getIntent();
+        id = intent.getStringExtra(AppConfig.TAG_ID);
         getJSON();
-
     }
-
 
     private void showData(){
         JSONObject jsonObject = null;
@@ -180,10 +204,14 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
                 String id = jo.getString(AppConfig.KEY_ID);
-                String name = jo.getString(AppConfig.KEY_NAME);
+                String message = jo.getString(AppConfig.KEY_MESSAGE);
+                String time = jo.getString(AppConfig.KEY_TIME);
+                String from = jo.getString(AppConfig.KEY_FROM);
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_ID,id);
-                data.put(AppConfig.KEY_NAME,name);
+                data.put(AppConfig.KEY_MESSAGE,message);
+                data.put(AppConfig.KEY_TIME,time);
+                data.put(AppConfig.KEY_FROM,from);
                 list.add(data);
             }
 
@@ -191,32 +219,12 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             e.printStackTrace();
         }
 
-        CustomList adapter = new CustomList(this, list,
-                R.layout.list_item, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME },
-                new int[] { R.id.txtNO,R.id.txtNAME });
-//                R.layout.list_item, new String[] { AppConfig.UPLOAD_KEY, AppConfig.KEY_VALUE, AppConfig.KEY_BARCODE },
-//                new int[] { R.id.userIcon, R.id.username, R.id.usertext });
-
-//        ListAdapter adapter = new SimpleAdapter(
-//                ViewAll.this, list, R.layout.list_item,
-////                new String[]{Config.TAG_ID,Config.TAG_NAME},
-////                new int[]{R.id.id, R.id.name});
-//                new String[]{AppConfig.KEY_VALUE,AppConfig.KEY_BARCODE,AppConfig.UPLOAD_KEY},
-//                new int[]{ R.id.title,R.id.text,R.id.icon});
+        CustomListView adapter = new CustomListView(this, list,
+                R.layout.list_view_chat, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM },
+                new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME,R.id.txtFROM });
 
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
-    }
-
-    private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
-
-        // Launching the login activity
-        Intent intent = new Intent(Doa.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     private void getJSON(){
@@ -226,7 +234,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Doa.this,"","Wait...",false,false);
+                loading = ProgressDialog.show(ViewInbox.this,"","",false,false);
             }
 
             @Override
@@ -240,7 +248,7 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_DOA);
+                String s = rh.sendGetRequestParam(AppConfig.URL_GET_INBOX_VIEW,id);
                 return s;
             }
         }
@@ -248,13 +256,24 @@ public class Doa extends AppCompatActivity implements ListView.OnItemClickListen
         gj.execute();
     }
 
+    private void logoutUser() {
+        session.setLogin(false);
+
+        db.deleteUsers();
+
+        // Launching the login activity
+        Intent intent = new Intent(ViewInbox.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Intent intent = new Intent(this, ViewData.class);
-//        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
-//        String empId = map.get(AppConfig.TAG_ID).toString();
-//        intent.putExtra(AppConfig.EMP_ID,empId);
-//        startActivity(intent);
+        Intent intent = new Intent(this, ViewInbox.class);
+        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+        String empId = map.get(AppConfig.TAG_ID).toString();
+        intent.putExtra(AppConfig.TAG_ID,empId);
+        startActivity(intent);
     }
+
 }

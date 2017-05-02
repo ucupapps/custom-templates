@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -61,6 +62,10 @@ public class CustomListPanduan3 extends SimpleAdapter {
         TextView no = (TextView)vi.findViewById(R.id.txtNO);
         final TextView name = (TextView)vi.findViewById(R.id.txtNAME);
         final TextView txtaudio = (TextView)vi.findViewById(R.id.txtAudio);
+
+        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
+        name.setTypeface(font);
+        txtaudio.setTypeface(font);
 
         final String strID = (String) data.get(AppConfig.KEY_ID);
         String strName = (String) data.get(AppConfig.KEY_NAME);

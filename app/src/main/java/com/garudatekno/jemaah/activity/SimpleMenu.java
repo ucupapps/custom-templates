@@ -15,10 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.garudatekno.jemaah.menu.Doa;
+import com.garudatekno.jemaah.menu.TitipanDoa;
 import com.garudatekno.jemaah.menu.emergency;
 import com.garudatekno.jemaah.menu.profile;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -69,7 +68,7 @@ public class SimpleMenu extends AppCompatActivity
         menu_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), Doa.class);
+                Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });

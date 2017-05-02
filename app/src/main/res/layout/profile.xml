@@ -274,6 +274,7 @@
             android:layout_weight="0.5"
             android:layout_height="40dp"
             android:layout_margin="20dp"
+            android:textAllCaps="false"
             android:text="Ubah"
             android:background="@drawable/button"
             android:textColor="#FFF"
@@ -281,6 +282,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="0.5"
+            android:textAllCaps="false"
             android:layout_margin="20dp"
             android:layout_height="40dp"
             android:text="Logout"

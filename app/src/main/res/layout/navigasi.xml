@@ -96,9 +96,10 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Location"
+                            android:text="Set Lokasi"
                             android:textColor="#fff" />
                         <ImageView
+                            android:id="@+id/arrow_hotel"
                             android:layout_width="0dp"
                             android:layout_weight="0.4"
                             android:paddingTop="7dp"
@@ -140,9 +141,10 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Location"
+                            android:text="Set Lokasi"
                             android:textColor="#fff" />
                         <ImageView
+                            android:id="@+id/arrow_bus"
                             android:layout_width="0dp"
                             android:layout_weight="0.4"
                             android:paddingTop="7dp"
@@ -184,9 +186,10 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Location"
+                            android:text="Set Lokasi"
                             android:textColor="#fff" />
                         <ImageView
+                            android:id="@+id/arrow_pintu"
                             android:layout_width="0dp"
                             android:layout_weight="0.4"
                             android:paddingTop="7dp"
@@ -228,9 +231,10 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Location"
+                            android:text="Set Lokasi"
                             android:textColor="#fff" />
                         <ImageView
+                            android:id="@+id/arrow_bertemu"
                             android:layout_width="0dp"
                             android:layout_weight="0.4"
                             android:paddingTop="7dp"
@@ -272,10 +276,11 @@
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:textAlignment="center"
-                        android:background="@drawable/button_green"
+                        android:background="@drawable/button"
                         android:text="Arahkan"
                         android:textColor="#fff" />
                     <ImageView
+                        android:id="@+id/arrow_poi"
                         android:layout_width="0dp"
                         android:layout_weight="0.4"
                         android:paddingTop="7dp"

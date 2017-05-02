@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.garudatekno.jemaah.menu.Doa">
+    tools:context="com.garudatekno.jemaah.menu.TitipanDoa">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.garudatekno.jemaah.menu.Doa" >
+        tools:context="com.garudatekno.jemaah.menu.TitipanDoa" >
 
         <include layout="@layout/footer"/>
 
@@ -54,15 +54,16 @@
                     android:layout_marginBottom="5dp"
                     android:layout_height="0dp"
                     android:layout_weight="0.15">
+
                     <TextView
-                        android:text="Jakarta"
-                        android:padding="5dp"
-                        android:textSize="20dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
                         android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:layout_height="wrap_content" />
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Jakarta"
+                        android:textSize="20dp" />
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="0.25"

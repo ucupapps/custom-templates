@@ -30,6 +30,9 @@ import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -40,6 +43,9 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 
@@ -64,7 +70,7 @@ public class thawaf extends AppCompatActivity {
         Stopped, PlaybackCompleted, End, Error, Preparing}
 
     thawaf.MP_State mediaPlayerState;
-    private String id;
+    private String id,uid;
     private SeekBar timeLine;
     LinearLayout timeFrame;
     TextView timePos, timeDur;
@@ -75,6 +81,8 @@ public class thawaf extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thawaf);
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {
@@ -192,8 +200,7 @@ public class thawaf extends AppCompatActivity {
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
-        String id = user.get("uid");
-
+        uid = user.get("uid");
         //service
         startService(new Intent(thawaf.this, BackgroundService.class));
 
