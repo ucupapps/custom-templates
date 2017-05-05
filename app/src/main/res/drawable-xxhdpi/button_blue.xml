@@ -5,8 +5,8 @@
   <!-- view background color -->
   <gradient
       android:angle="45"
-      android:endColor="#49a2bc"
-      android:startColor="#274c93" />
+      android:startColor="#274c93"
+      android:endColor="#49a2bc" />
 
   <!-- view border color and width -->
 

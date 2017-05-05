@@ -82,9 +82,13 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
                 JSONObject jo = result.getJSONObject(i);
                 String id = jo.getString(AppConfig.KEY_ID);
                 String name = jo.getString(AppConfig.KEY_NAME);
+                String jenis = jo.getString(AppConfig.KEY_JENIS);
+                String file = jo.getString(AppConfig.KEY_FILE);
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_ID,id);
                 data.put(AppConfig.KEY_NAME,name);
+                data.put(AppConfig.KEY_JENIS,jenis);
+                data.put(AppConfig.KEY_FILE,file);
                 list.add(data);
             }
 
@@ -93,8 +97,8 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
         }
 
         CustomListPanduan2 adapter = new CustomListPanduan2(getContext(), list,
-                R.layout.list_panduan, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME },
-                new int[] { R.id.txtNO,R.id.txtNAME });
+                R.layout.list_panduan, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME,AppConfig.KEY_JENIS,AppConfig.KEY_FILE },
+                new int[] { R.id.txtNO,R.id.txtNAME,R.id.txtImg });
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
@@ -119,8 +123,10 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
 
             @Override
             protected String doInBackground(Void... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_CATEGORY, "Saat umrah");
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_PANDUAN);
+                String s = rh.sendPostRequest(AppConfig.URL_PANDUAN, data);
                 return s;
             }
         }
@@ -235,27 +241,36 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
         View vi=view;
         HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
         final String strID = map.get(AppConfig.TAG_ID).toString();
+        final String strFile = map.get(AppConfig.KEY_FILE).toString();
         final TextView txtaudio = (TextView)view.findViewById(R.id.txtAudio);
-        final String audio = txtaudio.getText().toString().trim();
-        txtaudio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(audio.equals("Download")){
-                    File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/panduan2");
-                    boolean success = true;
-                    if (!folder.exists()) {
-                        folder.mkdirs();
-                    }
-                    txtid.setText(strID);
-                    startDownload(strID);
-                }else{
-                    Intent intent = new Intent(getActivity(), ViewPanduan.class);
-                    intent.putExtra(AppConfig.EMP_ID,strID);
-                    intent.putExtra(AppConfig.KEY_MESSAGE,"2");
-                    startActivity(intent);
-                }
-            }
-        });
+        final TextView txtImg = (TextView)view.findViewById(R.id.txtImg);
+        final String jenis = txtImg.getText().toString().trim();
+//        txtaudio.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+        if(jenis.equals("Video")){
+            Intent intent = new Intent(getActivity(), ViewPanduanVideo.class);
+            intent.putExtra(AppConfig.EMP_ID,strID);
+            intent.putExtra(AppConfig.KEY_FILE,strFile);
+            startActivity(intent);
+        }else if(jenis.equals("Doa")){
+            Intent intent = new Intent(getActivity(), ViewPanduanDoa.class);
+            intent.putExtra(AppConfig.EMP_ID,strID);
+            intent.putExtra(AppConfig.KEY_FILE,strFile);
+            startActivity(intent);
+        }else if(jenis.equals("Tips")){
+            Intent intent = new Intent(getActivity(), ViewPanduanTips.class);
+            intent.putExtra(AppConfig.EMP_ID,strID);
+            intent.putExtra(AppConfig.KEY_FILE,strFile);
+            startActivity(intent);
+        }else if(jenis.equals("Kamus")){
+            Intent intent = new Intent(getActivity(), ViewPanduankamus.class);
+            intent.putExtra(AppConfig.EMP_ID,strID);
+            intent.putExtra(AppConfig.KEY_FILE,strFile);
+            startActivity(intent);
+        }
+//            }
+//        });
 
 //        Log.d("MyDataShow", "status: " + strID);
     }

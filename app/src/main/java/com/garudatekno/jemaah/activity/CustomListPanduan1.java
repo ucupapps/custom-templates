@@ -44,6 +44,7 @@ public class CustomListPanduan1 extends SimpleAdapter {
         TextView no = (TextView)vi.findViewById(R.id.txtNO);
         final TextView name = (TextView)vi.findViewById(R.id.txtNAME);
         final TextView txtaudio = (TextView)vi.findViewById(R.id.txtAudio);
+        final TextView txtImg = (TextView)vi.findViewById(R.id.txtImg);
 
         Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
         name.setTypeface(font);
@@ -51,18 +52,31 @@ public class CustomListPanduan1 extends SimpleAdapter {
 
         final String strID = (String) data.get(AppConfig.KEY_ID);
         String strName = (String) data.get(AppConfig.KEY_NAME);
+        String strJenis = (String) data.get(AppConfig.KEY_JENIS);
         no.setText(strID);
         name.setText(strName);
+        txtImg.setText(strJenis);
 
-        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/panduan1/"+strID+".mp3");
-
-        if (!file.exists()) {
-            txtaudio.setText("Download");
-            txtaudio.setBackgroundResource(R.drawable.button_blue);
-            txtaudio.setPadding(10,10,10,10);
-        }else{
-            txtaudio.setText("Buka");
+        if(strJenis.equals("Video")){
+            txtImg.setBackgroundResource(R.drawable.circle_blue);
+        }else if(strJenis.equals("Doa")){
+            txtImg.setBackgroundResource(R.drawable.circle_purple);
+        }else if(strJenis.equals("Tips")){
+            txtImg.setBackgroundResource(R.drawable.circle_orange_muda);
+        }else if(strJenis.equals("Kamus")){
+            txtImg.setBackgroundResource(R.drawable.circle_chocolate);
         }
+
+
+//        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/panduan1/"+strID+".mp3");
+
+//        if (!file.exists()) {
+//            txtaudio.setText("Download");
+//            txtaudio.setBackgroundResource(R.drawable.button_blue);
+//            txtaudio.setPadding(10,10,10,10);
+//        }else{
+            txtaudio.setText("Buka");
+//        }
 
         return vi;
     }

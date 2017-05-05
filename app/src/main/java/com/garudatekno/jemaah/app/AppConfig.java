@@ -2,19 +2,20 @@ package com.garudatekno.jemaah.app;
 
 public class AppConfig {
 	// Server user login url
-//	public static String URL_HOME = "http://192.168.0.10";
+//	public static String URL_HOME = "http://192.168.0.9";
 //	public static String URL_LOGIN = "http://192.168.0.10/api/jemaah/login";
 //	public static String URL_REGISTER = "http://192.168.0.8/api/jemaah/register";
-//	public static String URL_PROFILE = "http://192.168.0.10/api/jemaah/profile";
-//	public static String URL_GETPROFILE = "http://192.168.0.10/api/jemaah/get-profile?id=";
-//	public static String URL_GET_DOA = "http://192.168.0.10/api/jemaah/get-doa?id=";
-//	public static String URL_DOA = "http://192.168.0.10/api/jemaah/doa";
+//	public static String URL_PROFILE = "http://192.168.0.9/api/jemaah/profile";
+//	public static String URL_GETPROFILE = "http://192.168.0.9/api/jemaah/get-profile?id=";
+//	public static String URL_GET_PANDUAN = "http://192.168.0.9/api/jemaah/get-panduan?id=";
+//	public static String URL_PANDUAN = "http://192.168.0.9/api/jemaah/panduan";
+//	public static String URL_PANDUAN_JENIS = "http://192.168.0.9/api/jemaah/panduan-jenis";
 //	public static String URL_EMERGENCY = "http://192.168.0.8/api/jemaah/emergency";
 //	public static String URL_GET_FAMILY_PHONE = "http://192.168.0.8/api/jemaah/family-phone?id=";
 //	public static String URL_GET_INBOX = "http://192.168.0.7/api/jemaah/get-inbox?id=";
 //	public static String URL_GET_INBOX_VIEW = "http://192.168.0.7/api/jemaah/get-inbox-view?id=";
 //	public static String URL_PIN_LOCATION = "http://192.168.0.8/api/jemaah/pinlocation";
-//	public static String URL_RATING= "http://192.168.0.7/api/jemaah/rating";
+//	public static String URL_RATING= "http://192.168.0.9/api/jemaah/rating";
 //	public static String URL_DOAKAN= "http://192.168.0.10/api/jemaah/doakan";
 //	public static String URL_TITIPAN_DOA = "http://192.168.0.10/api/jemaah/titipan-doa";
 //	public static String URL_POI= "http://192.168.0.10/api/jemaah/poi";
@@ -27,6 +28,7 @@ public class AppConfig {
 	public static String URL_GETPROFILE = "https://gohajj.id/api/jemaah/get-profile?id=";
 	public static String URL_GET_PANDUAN = "https://gohajj.id/api/jemaah/get-panduan?id=";
 	public static String URL_PANDUAN = "https://gohajj.id/api/jemaah/panduan";
+	public static String URL_PANDUAN_JENIS = "https://gohajj.id/api/jemaah/panduan-jenis";
 	public static String URL_TITIPAN_DOA = "https://gohajj.id/api/jemaah/titipan-doa";
 	public static String URL_EMERGENCY = "https://gohajj.id/api/jemaah/emergency";
 	public static String URL_GET_FAMILY_PHONE = "https://gohajj.id/api/jemaah/family-phone?id=";
@@ -65,6 +67,9 @@ public class AppConfig {
 	public static final String KEY_RATING = "rating";
 	public static final String KEY_CATEGORY = "category";
 	public static final String KEY_DESCRIPTION = "description";
+	public static final String KEY_JENIS = "jenis";
+	public static final String KEY_FILE = "file";
+	public static final String KEY_ARAB = "arab";
 
 	public static final String KEY_JUMLAH= "jumlah";
 	public static final String KEY_CON_NO = "no";
@@ -72,6 +77,13 @@ public class AppConfig {
 	public static final String KEY_FROM = "from";
 	public static final String KEY_TO = "to";
 	public static final String KEY_STATUS = "status";
+	public static final String KEY_COMMENT = "comment";
+	public static final String KEY_PENILAIID = "penilaiID";
+	public static final String KEY_PEMBIMBINGID = "pembimbingID";
+	public static final String KEY_NILAI_PEMBIMBING = "nilai_pembimbing";
+	public static final String KEY_PEMIMPIN_TUR = "pemimpin_tur";
+	public static final String KEY_PEMIMPIN_TURID = "pemimpin_turID";
+	public static final String KEY_NILAI_PEMIMPIN_TUR = "nilai_pemimpin_tur";
 
 	//category survey
 

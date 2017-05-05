@@ -206,28 +206,28 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
         });
 
-        ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
-        rankBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final Dialog rankDialog = new Dialog(panduan.this);
-                rankDialog.setContentView(R.layout.rank_dialog);
-                rankDialog.setCancelable(true);
-
-                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
-                updateButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        RatingBar ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
-                        String rating=String.valueOf(ratingBar.getRating());
-                        addRating(uid,rating);
-//                        Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
-                        rankDialog.dismiss();
-                    }
-                });
-                //now that the dialog is set up, it's time to show it
-                rankDialog.show();
-            }
-        });
+//        ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
+//        rankBtn.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                final Dialog rankDialog = new Dialog(panduan.this);
+//                rankDialog.setContentView(R.layout.rank_dialog);
+//                rankDialog.setCancelable(true);
+//
+//                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+//                updateButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        RatingBar ratingBar = (RatingBar)rankDialog.findViewById(R.id.dialog_ratingbar);
+//                        String rating=String.valueOf(ratingBar.getRating());
+//                        addRating(uid,rating);
+////                        Toast.makeText(getApplicationContext(), rating, Toast.LENGTH_LONG).show();
+//                        rankDialog.dismiss();
+//                    }
+//                });
+//                //now that the dialog is set up, it's time to show it
+//                rankDialog.show();
+//            }
+//        });
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {

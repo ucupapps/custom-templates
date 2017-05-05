@@ -298,10 +298,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
         AddBarcode ae = new AddBarcode();
         ae.execute();
-
-        Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
-        finish();
-        startActivity(i);
+        startActivity(new Intent(TitipanDoa.this, TitipanDoa.class));
+//        Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
+//        finish();
+//        startActivity(i);
     }
 
     @Override

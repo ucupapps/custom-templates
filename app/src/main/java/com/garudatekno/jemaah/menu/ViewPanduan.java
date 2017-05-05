@@ -44,6 +44,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class ViewPanduan extends AppCompatActivity implements View.OnClickListener {
 
@@ -77,7 +78,8 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_panduan);
-
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);

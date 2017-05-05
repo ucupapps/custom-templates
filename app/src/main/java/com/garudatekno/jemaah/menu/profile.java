@@ -39,8 +39,8 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 import static java.sql.Types.NULL;
 
 public class profile extends AppCompatActivity implements OnClickListener {
-    private TextView txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing;
-    private Button buttonAdd, buttonLogout;
+    private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing;
+    private Button buttonAdd, buttonLogout,buttonpembimbing,buttonPemimpin;
     private CircleImageView imgProfile;
     String lat,lng,uid;
     //user
@@ -187,6 +187,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtpembimbing = (TextView) findViewById(R.id.pembimbing);
         txtTwon = (TextView) findViewById(R.id.town);
         editTextuser = (TextView) findViewById(R.id.userid);
+        txtpemimpin = (TextView) findViewById(R.id.pemimpin);
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -196,7 +197,11 @@ public class profile extends AppCompatActivity implements OnClickListener {
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        buttonpembimbing = (Button) findViewById(R.id.btnpembimbing);
+        buttonPemimpin = (Button) findViewById(R.id.btnpemimpin);
         imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
+        buttonPemimpin.setOnClickListener(this);
+        buttonpembimbing.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
@@ -208,7 +213,14 @@ public class profile extends AppCompatActivity implements OnClickListener {
             startActivity(i);
          }if(v == buttonLogout){
             logoutUser();
+        }if(v == buttonpembimbing){
+            Intent i = new Intent(getApplicationContext(), PenilaianPembimbing.class);
+            startActivity(i);
+        }if(v == buttonPemimpin){
+            Intent i = new Intent(getApplicationContext(), PenilaianPemimpinTur.class);
+            startActivity(i);
         }
+
     }
 
     private void logoutUser() {
@@ -263,6 +275,21 @@ public class profile extends AppCompatActivity implements OnClickListener {
             String mekkah = c.getString(AppConfig.KEY_HOTEL_MEKKAH);
             String madinah = c.getString(AppConfig.KEY_HOTEL_MADINAH);
             String pembimbing = c.getString(AppConfig.KEY_PEMBIMBING);
+            String nilai_pemb = c.getString(AppConfig.KEY_NILAI_PEMBIMBING);
+            String pemimpin = c.getString(AppConfig.KEY_PEMIMPIN_TUR);
+            String nilai_pemim = c.getString(AppConfig.KEY_NILAI_PEMIMPIN_TUR);
+            if(!nilai_pemb.equals("-")){
+                buttonpembimbing.setVisibility(View.GONE);
+            }else{
+                buttonpembimbing.setVisibility(View.VISIBLE);
+            }
+
+            if(!nilai_pemim.equals("-")){
+                buttonPemimpin.setVisibility(View.GONE);
+            }else{
+                buttonPemimpin.setVisibility(View.VISIBLE);
+            }
+
             if(name.equals(NULL) || name.equals("")) {
                 imgProfile.setImageResource(R.drawable.profile);
             }else{
@@ -285,6 +312,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             txtmekkah.setText(mekkah);
             txtmadinah.setText(madinah);
             txtpembimbing.setText(pembimbing);
+            txtpemimpin.setText(pemimpin);
 
         } catch (JSONException e) {
             e.printStackTrace();

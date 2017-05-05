@@ -250,20 +250,82 @@
         android:layout_weight="1"
         android:background="@drawable/border"
         android:orientation="vertical">
-
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text="Nama Pembimbing:"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textSize="18dp"
+                android:id="@+id/pembimbing"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:padding="2dp"
+                android:textSize="12dp"
+                android:text="Berikan Penilaian"
+                android:background="@drawable/button_green"
+                android:textColor="#FFF"
+                android:id="@+id/btnpembimbing" />
+        </LinearLayout>
+
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text=" "
-            android:textSize="18dp"
-            android:id="@+id/pembimbing"/>
-   </LinearLayout>
+            android:text="Nama Pemimpin Tur:"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textSize="18dp"
+                android:id="@+id/pemimpin"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textAllCaps="false"
+                android:textSize="12dp"
+                android:padding="2dp"
+                android:text="Berikan Penilaian"
+                android:background="@drawable/button_green"
+                android:textColor="#FFF"
+                android:id="@+id/btnpemimpin" />
+        </LinearLayout>
+
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

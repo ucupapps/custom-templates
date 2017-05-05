@@ -116,7 +116,22 @@
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.ViewPanduan"
+            android:name="com.garudatekno.jemaah.menu.ViewPanduanTips"
+            android:label="View Panduan"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.ViewPanduanVideo"
+            android:label="View Panduan"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.ViewPanduanDoa"
+            android:label="View Panduan"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.ViewPanduankamus"
             android:label="View Panduan"
             android:launchMode="singleTop">
         </activity>
@@ -138,6 +153,16 @@
         <activity
             android:name="com.garudatekno.jemaah.menu.GoPoi"
             android:label="GO POI"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.PenilaianPembimbing"
+            android:label="Penilaian Pembimbing"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.PenilaianPemimpinTur"
+            android:label="Penilaian"
             android:launchMode="singleTop">
         </activity>
 
