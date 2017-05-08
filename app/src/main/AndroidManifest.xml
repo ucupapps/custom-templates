@@ -56,6 +56,12 @@
         </activity>
 
         <activity
+            android:name="com.garudatekno.jemaah.activity.MapsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.ActionBar">
+        </activity>
+
+        <activity
             android:name="com.garudatekno.jemaah.activity.MainActivity"
             android:label="Home"
             android:launchMode="singleTop">
@@ -199,6 +205,10 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+
+        <service
+            android:name=".activity.FetchAddressIntentService"
+            android:exported="false" />
 
     </application>
 

@@ -44,6 +44,14 @@
                     android:weightSum="1"
                     tools:context=".sample.input">
 
+                    <TextView
+                        android:id="@+id/Address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="3dp"
+                        android:hint="Address"
+                        android:singleLine="true" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -52,15 +60,58 @@
                     android:padding="@dimen/activity_horizontal_margin"
                     android:orientation="horizontal"
                     android:weightSum="1">
-
-                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:map="http://schemas.android.com/apk/res-auto"
-                        xmlns:tools="http://schemas.android.com/tools"
-                        android:id="@+id/map"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        tools:context=".menu.navigasi" />
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/container_toolbar">
+                        <fragment
+                            xmlns:tools="http://schemas.android.com/tools"
+                            android:id="@+id/map"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            tools:context="com.sample.sishin.maplocation.MapsActivity" />
+                        <LinearLayout
+                            android:id="@+id/locationMarker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="30dp"
+                            android:gravity="center"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/locationMarkertext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:background="@drawable/button"
+                                android:gravity="center"
+                                android:minWidth="50dp"
+                                android:visibility="gone"
+                                android:padding="5dp"
+                                android:text=" Set Location "
+                                android:textColor="@android:color/white" />
+                            <TextView
+                                android:id="@+id/setLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="30dp"
+                                android:background="@drawable/button"
+                                android:gravity="center"
+                                android:minWidth="50dp"
+                                android:padding="5dp"
+                                android:text=" Set Location "
+                                android:textColor="@android:color/white" />
+
+                            <ImageView
+                                android:id="@+id/imageMarker"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/marker" />
+                        </LinearLayout>
+
+
+
+                    </FrameLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -297,20 +348,18 @@
                         android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:textIsSelectable="true" />
-
                     <EditText
                         android:id="@+id/lat"
                         android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textIsSelectable="true" />
+                        android:layout_height="wrap_content" />
 
                     <EditText
                         android:id="@+id/lng"
                         android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textIsSelectable="true" />
+                        android:layout_height="wrap_content" />
+
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

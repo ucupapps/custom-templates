@@ -1,13 +1,20 @@
 package com.garudatekno.jemaah.menu;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +38,7 @@ import android.widget.Toast;
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.CustomListPanduan3;
 import com.garudatekno.jemaah.activity.LoginActivity;
+import com.garudatekno.jemaah.activity.MapsActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.gcm.weather;
@@ -83,12 +91,32 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private static final String[] requiredPermissions = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            /* ETC.. */
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
 //        listView = (ListView) findViewById(R.id.listView);
 //        listView.setOnItemClickListener(this);
+
+        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
+            Toast.makeText(this, "Please grant all permissions", Toast.LENGTH_LONG).show();
+            //permission
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        }
+
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
@@ -206,9 +234,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
         });
 
-//        ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
-//        rankBtn.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
+        ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
+        rankBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(i);
 //                final Dialog rankDialog = new Dialog(panduan.this);
 //                rankDialog.setContentView(R.layout.rank_dialog);
 //                rankDialog.setCancelable(true);
@@ -226,8 +256,8 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //                });
 //                //now that the dialog is set up, it's time to show it
 //                rankDialog.show();
-//            }
-//        });
+            }
+        });
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {
@@ -375,6 +405,14 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         ae.execute();
 
         startActivity(new Intent(panduan.this, panduan.class));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public boolean hasPermissions(@NonNull String... permissions) {
+        for (String permission : permissions)
+            if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(permission))
+                return false;
+        return true;
     }
 
     private void setupViewPager(ViewPager viewPager) {

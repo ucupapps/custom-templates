@@ -11,8 +11,13 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -28,15 +33,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
+import com.garudatekno.jemaah.activity.AppUtils;
+import com.garudatekno.jemaah.activity.FetchAddressIntentService;
 import com.garudatekno.jemaah.activity.LoginActivity;
+import com.garudatekno.jemaah.activity.MapsActivity;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -47,7 +69,7 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback {
+public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
     private TextView txtbus, txthotel, txtbertemu, txtmasjid,txtpoi;
     private ImageView imgbus,imghotel,imgpintu,imgbertemu;
@@ -63,7 +85,37 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
     private GoogleMap mMap;
     Location location;
 
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static String TAG = "MAP LOCATION";
+    Context mContext;
+    TextView mLocationMarkerText,txtsetLocation;
+    private LatLng mCenterLatLong;
+    private GoogleApiClient mGoogleApiClient;
+
+    /**
+     * Receiver registered with this activity to get the response from FetchAddressIntentService.
+     */
+    private AddressResultReceiver mResultReceiver;
+    /**
+     * The formatted location address.
+     */
+    protected String mAddressOutput;
+    protected String mAreaOutput;
+    protected String mCityOutput;
+    protected String mStateOutput;
+    TextView mLocationText,mLocationAddress;
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+
     private SQLiteDatabase database;
+
+    private static final String[] requiredPermissions = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            /* ETC.. */
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +123,21 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         setContentView(R.layout.navigasi);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
+            Toast.makeText(this, "Please grant all permissions", Toast.LENGTH_LONG).show();
+            //permission
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        }
+
+        mLocationAddress = (TextView) findViewById(R.id.Address);
+        mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
+        mLocationText = (TextView) findViewById(R.id.Locality);
+        txtsetLocation = (TextView) findViewById(R.id.setLocation);
 
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -84,7 +151,19 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
+        buildGoogleApiClient();
+        mResultReceiver = new AddressResultReceiver(new Handler());
 
+        txtsetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String lokasi=mLocationMarkerText.getText().toString().trim();
+                Toast.makeText(getApplicationContext(),lokasi, Toast.LENGTH_LONG).show();
+
+            }
+
+
+        });
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -202,8 +281,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
         editTextuser.setVisibility(View.GONE);
-        txtlat.setVisibility(View.GONE);
-        txtlng.setVisibility(View.GONE);
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -258,60 +335,80 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        // get the last know location from your location manager.
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Log.d("Mylat", "lat: " + location);
-        Double lat;
-        Double lng;
-//        Double lat= -6.2268682;
-//        Double lng= 106.8289868;
-        if (location != null) {
-            lat=location.getLatitude(); lng=location.getLongitude();
-            LatLng jakarta = new LatLng(lat,lng);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(jakarta));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(jakarta, 17));
-        }else{
-            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-        }
-        mMap.setMyLocationEnabled(true);
-//        if (mMap != null) {
-//            mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-//
-//                @Override
-//                public void onMyLocationChange(Location arg0) {
-//                    // TODO Auto-generated method stub
-//
-//                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
-//                }
-//            });
-
-//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//                @Override
-//                public boolean onMarkerClick(Marker navigasi) {
-//                    LatLng position = navigasi.getPosition();
-//                    Double latitude = position.latitude;
-//                    Double longitude = position.longitude;
-//                    txtlat.setText("" + latitude);
-//                    txtlng.setText("" + longitude);
-//                    Toast.makeText(
-//                            go.this,
-//                            "Lat " + position.latitude + " "
-//                                    + "Long " + position.longitude,
-//                            Toast.LENGTH_LONG).show();
-//                    return true;
-//                }
-//            });
+//    @Override
+//    public void onMapReady(GoogleMap googleMap) {
+//        mMap = googleMap;
+//        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//        // get the last know location from your location manager.
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            return;
 //        }
+//        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//        Log.d("Mylat", "lat: " + location);
+//        Double lat;
+//        Double lng;
+////        Double lat= -6.2268682;
+////        Double lng= 106.8289868;
+//        if (location != null) {
+//            lat=location.getLatitude(); lng=location.getLongitude();
+//            LatLng jakarta = new LatLng(lat,lng);
+//
+////            CameraPosition INIT =
+////                    new CameraPosition.Builder()
+////                            .target(jakarta)
+////                            .zoom(17.5F)
+////                            .bearing(300F) // orientation
+////                            .tilt( 50F) // viewing angle
+////                            .build();
+////
+////            // use map to move camera into position
+////            mMap.moveCamera( CameraUpdateFactory.newCameraPosition(INIT) );
+//
+//            mMap.moveCamera(CameraUpdateFactory.newLatLng(jakarta));
+//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(jakarta, 17));
+//
+//            //create initial marker
+//            mMap.addMarker( new MarkerOptions()
+//                    .position(jakarta)
+//                    .title("Location")
+//                    .snippet("First Marker").draggable(true)).showInfoWindow();
+//
+//        }else{
+//            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
+//        }
+//        mMap.setMyLocationEnabled(true);
+////        if (mMap != null) {
+////            mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+////
+////                @Override
+////                public void onMyLocationChange(Location arg0) {
+////                    // TODO Auto-generated method stub
+////
+////                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+////                }
+////            });
+//
+////            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+////                @Override
+////                public boolean onMarkerClick(Marker navigasi) {
+////                    LatLng position = navigasi.getPosition();
+////                    Double latitude = position.latitude;
+////                    Double longitude = position.longitude;
+////                    txtlat.setText("" + latitude);
+////                    txtlng.setText("" + longitude);
+////                    Toast.makeText(
+////                            go.this,
+////                            "Lat " + position.latitude + " "
+////                                    + "Long " + position.longitude,
+////                            Toast.LENGTH_LONG).show();
+////                    return true;
+////                }
+////            });
+////        }
+//
+//    }
 
-    }
 
     private void getCurrentLocation(){
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -343,7 +440,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
     public void onClick(View v) {
         if (v == txtbus) {
-            getCurrentLocation();
             if(txtbus.getText().toString().equals("Set Lokasi")) {
                 if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
@@ -358,7 +454,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }
         }
         if (v == txthotel) {
-            getCurrentLocation();
             if(txthotel.getText().toString().equals("Set Lokasi")){
                 if(txtlat.getText().toString().equals(""))
                 {
@@ -374,7 +469,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }
         }
         if (v == txtmasjid) {
-            getCurrentLocation();
             if(txtmasjid.getText().toString().equals("Set Lokasi")){
             if(txtlat.getText().toString().equals(""))
             {
@@ -390,7 +484,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }
         }
         if (v == txtbertemu) {
-            getCurrentLocation();
             if(txtbertemu.getText().toString().equals("Set Lokasi")){
                 if(txtlat.getText().toString().equals(""))
                 {
@@ -479,6 +572,352 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         String lats=c.getString(2);
         String lngs=c.getString(3);
         Log.d("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public boolean hasPermissions(@NonNull String... permissions) {
+        for (String permission : permissions)
+            if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(permission))
+                return false;
+        return true;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "OnMapReady");
+        mMap = googleMap;
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                Log.d("Camera postion change" + "", cameraPosition + "");
+                mCenterLatLong = cameraPosition.target;
+                mMap.clear();
+
+                try {
+                    Location mLocation = new Location("");
+                    mLocation.setLatitude(mCenterLatLong.latitude);
+                    mLocation.setLongitude(mCenterLatLong.longitude);
+
+                    startIntentService(mLocation);
+                    mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
+                    txtlng.setText("" + mCenterLatLong.latitude + "");
+                    txtlat.setText("" + mCenterLatLong.longitude+ "");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(            mGoogleApiClient);
+        if (mLastLocation != null) {
+            changeMap(mLastLocation);
+            Log.d(TAG, "ON connected");
+
+        } else
+            try {
+                LocationServices.FusedLocationApi.removeLocationUpdates(
+                        mGoogleApiClient, this);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        try {
+            LocationRequest mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(10000);
+            mLocationRequest.setFastestInterval(5000);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, mLocationRequest, this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Connection suspended");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+            if (location != null)
+                changeMap(location);
+            LocationServices.FusedLocationApi.removeLocationUpdates(
+                    mGoogleApiClient, this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            mGoogleApiClient.connect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                //finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void changeMap(Location location) {
+
+        Log.d(TAG, "Reaching map" + mMap);
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        // check if map is created successfully or not
+        if (mMap != null) {
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+            LatLng latLong;
+
+
+            latLong = new LatLng(location.getLatitude(), location.getLongitude());
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLong).zoom(19f).tilt(70).build();
+
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
+
+            mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
+            txtlng.setText("" + location.getLatitude() + "");
+            txtlat.setText("" + location.getLongitude()+ "");
+            startIntentService(location);
+
+
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+    }
+
+
+    /**
+     * Receiver for data sent from FetchAddressIntentService.
+     */
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string or an error message sent from the intent service.
+            mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
+
+            mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
+
+            mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
+            mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+
+            displayAddressOutput();
+
+            // Show a toast message if an address was found.
+            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
+                //  showToast(getString(R.string.address_found));
+
+
+            }
+
+
+        }
+
+    }
+
+    /**
+     * Updates the address in the UI.
+     */
+    protected void displayAddressOutput() {
+        //  mLocationAddressTextView.setText(mAddressOutput);
+        try {
+            if (mAreaOutput != null)
+                // mLocationText.setText(mAreaOutput+ "");
+
+                mLocationAddress.setText(mAddressOutput);
+            //mLocationText.setText(mAreaOutput);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates an intent, adds location data to it as an extra, and starts the intent service for
+     * fetching an address.
+     */
+    protected void startIntentService(Location mLocation) {
+        // Create an intent for passing to the intent service responsible for fetching the address.
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+
+        // Pass the result receiver as an extra to the service.
+        intent.putExtra(AppUtils.LocationConstants.RECEIVER, mResultReceiver);
+
+        // Pass the location data as an extra to the service.
+        intent.putExtra(AppUtils.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
+
+        // Start the service. If the service isn't already running, it is instantiated and started
+        // (creating a process for it if needed); if it is running then it remains running. The
+        // service kills itself automatically once all intents are processed.
+        startService(intent);
+    }
+
+
+    private void openAutocompleteActivity() {
+        try {
+            // The autocomplete activity requires Google Play Services to be available. The intent
+            // builder checks this and throws an exception if it is not the case.
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                    .build(this);
+            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+        } catch (GooglePlayServicesRepairableException e) {
+            // Indicates that Google Play Services is either not installed or not up to date. Prompt
+            // the user to correct the issue.
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
+                    0 /* requestCode */).show();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // Indicates that Google Play Services is not available and the problem is not easily
+            // resolvable.
+            String message = "Google Play Services is not available: " +
+                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+
+            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Called after the autocomplete activity has finished to return its result.
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that the result was from the autocomplete widget.
+        if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+            if (resultCode == RESULT_OK) {
+                // Get the user's selected place from the Intent.
+                Place place = PlaceAutocomplete.getPlace(mContext, data);
+
+                // TODO call location based filter
+
+
+                LatLng latLong;
+
+
+                latLong = place.getLatLng();
+
+                //mLocationText.setText(place.getName() + "");
+
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(latLong).zoom(19f).tilt(70).build();
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                mMap.setMyLocationEnabled(true);
+                mMap.animateCamera(CameraUpdateFactory
+                        .newCameraPosition(cameraPosition));
+
+
+            }
+
+
+        } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+            Status status = PlaceAutocomplete.getStatus(mContext, data);
+        } else if (resultCode == RESULT_CANCELED) {
+            // Indicates that the activity closed before a selection was made. For example if
+            // the user pressed the back button.
+        }
     }
 
 }

@@ -18,6 +18,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +49,7 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Document;
 
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -85,7 +87,7 @@ public class go extends AppCompatActivity {
         name = i.getStringExtra(AppConfig.KEY_NAME);
 
         TextView txtpesan= (TextView) findViewById(R.id.txtpesan);
-        txtpesan.setText("ARAH KE "+ name);
+        txtpesan.setText("X  Arah Ke Lokasi "+ name);
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -108,8 +110,12 @@ public class go extends AppCompatActivity {
                 database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
                 Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
                 c.moveToFirst();
+                DecimalFormat df = new DecimalFormat("#.####");
                 String lats = c.getString(2);
                 String lngs = c.getString(3);
+//                String lngs = df.format(Float.parseFloat(c.getString(3)));
+//                Log.d("hasilnya",lats+" - "+c.getString(2));
+//                Log.d("hasilnya",lngs+" - "+c.getString(3));
                 LatLng toPosition = new LatLng(Double.parseDouble(lats), Double.parseDouble(lngs));
 
 //            LatLng fromPosition = new LatLng(-6.3039, 106.8267);
@@ -167,6 +173,11 @@ public class go extends AppCompatActivity {
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
+        ImageView img = (ImageView) findViewById(R.id.img_navigasi);
+        img.setBackgroundResource(R.drawable.circle_green_active);
+        img.setPadding(22,22,22,22);
+        img.setImageDrawable(getResources().getDrawable(R.drawable.navigasi_active));
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
