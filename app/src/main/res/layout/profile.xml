@@ -211,36 +211,14 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Hotel di Mekkah:"/>
+            android:text="Nomor Telepon Travel Agent:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
             android:textSize="18dp"
-            android:id="@+id/hotel_mekkah"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/border"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            android:text="Hotel di Madinah:"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            android:text=" "
-            android:textSize="18dp"
-            android:id="@+id/hotel_madinah"/>
+            android:id="@+id/travel_agent_phone"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -291,6 +269,28 @@
         android:layout_weight="1"
         android:background="@drawable/border"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nomor Ponsel Pembimbing:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pembimbing_phone"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -326,15 +326,84 @@
 
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nomor Ponsel Pemimpin Tur:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pemimpin_phone"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Hotel di Mekkah:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/hotel_mekkah"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Hotel di Madinah:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/hotel_madinah"/>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:weightSum="1"
         android:orientation="horizontal">
         <Button
             android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="40dp"
+            android:layout_weight="0.25"
+            android:layout_height="30dp"
             android:layout_margin="20dp"
             android:textAllCaps="false"
             android:text="Ubah"
@@ -343,10 +412,10 @@
             android:id="@+id/buttonAdd" />
         <Button
             android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0.25"
             android:textAllCaps="false"
             android:layout_margin="20dp"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:text="Logout"
             android:background="@drawable/button_red"
             android:textColor="#FFF"

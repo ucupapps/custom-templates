@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,9 +31,6 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +38,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -49,13 +46,15 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
+import static java.lang.Boolean.FALSE;
 import static java.sql.Types.NULL;
 
 public class edit_profile extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
     private EditText txtName, txtPhone,
             txtPassport, editTextuser, txtEmail1,txtEmail2,txtEmail3,
-            txtAddress,txtTwon,txtProvince,txtfamily1,txtfamily2,txtfamily3;
+            txtAddress,txtTwon,txtProvince,txtfamily1,txtfamily2,txtfamily3,EditAgentTravel,EditTravelPhone,
+            EditPembimbing,EditPembimbingPhone,EditPemimpin,EditPemimpinPhone;
     private Button buttonAdd, scanBtn;
     private Button buttonUpload;
     private CircleImageView imgProfile;
@@ -79,6 +78,8 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         setContentView(R.layout.profile_edit);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        session = new SessionManager(getApplicationContext());
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -163,24 +164,49 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        final PopupMenu popup = new PopupMenu(this, img_setting);
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        if (!session.isLoggedIn()) {
+            Menu popupMenu = popup.getMenu();
+            popupMenu.findItem(R.id.logout).setVisible(FALSE);
+        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(edit_profile.this, img_setting);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-                //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         if(id == R.id.logout) {
                             logoutUser();
+                        }if(id == R.id.donasi) {
+                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.penilaian) {
+                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
+                            startActivity(i);
+                        }if(id == R.id.cek_visa) {
+                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.share) {
+                            try {
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/plain");
+                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
+                                String sAux = "\nLet me recommend you this application\n\n";
+                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
+                                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                                startActivity(Intent.createChooser(i, "choose one"));
+                            } catch(Exception e) {
+                                //e.toString();
+                            }
+                        }if(id == R.id.download_doa) {
+
                         }
                         return true;
                     }
                 });
-
                 popup.show();//showing popup menu
             }
         });
@@ -191,6 +217,12 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         txtPassport = (EditText) findViewById(R.id.passport);
         txtProvince = (EditText) findViewById(R.id.province);
         txtTwon = (EditText) findViewById(R.id.town);
+        EditAgentTravel = (EditText) findViewById(R.id.edit_travel_agent);
+        EditTravelPhone = (EditText) findViewById(R.id.edit_travel_phone);
+        EditPembimbing = (EditText) findViewById(R.id.edit_pembimbing);
+        EditPembimbingPhone = (EditText) findViewById(R.id.edit_pembimbing_phone);
+        EditPemimpin = (EditText) findViewById(R.id.edit_pemimpin);
+        EditPemimpinPhone = (EditText) findViewById(R.id.edit_pemimpin_phone);
         txtfamily1 = (EditText) findViewById(R.id.family1);
         txtfamily2 = (EditText) findViewById(R.id.family2);
         txtfamily3 = (EditText) findViewById(R.id.family3);
@@ -200,13 +232,11 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         editTextuser = (EditText) findViewById(R.id.userid);
         editTextuser.setVisibility(View.GONE);
 
-        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
 
         db = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
         nama = user.get("name");
@@ -236,9 +266,11 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
     }
 
     private void logoutUser() {
-        session.setLogin(false);
+        if (session.isLoggedIn()) {
+            session.setLogin(false);
 
-        db.deleteUsers();
+            db.deleteUsers();
+        }
 
         // Launching the login activity
         Intent intent = new Intent(edit_profile.this, LoginActivity.class);
@@ -309,6 +341,12 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             String phone = c.getString(AppConfig.KEY_PHONE);
             String province = c.getString(AppConfig.KEY_PROVINCE);
             String town = c.getString(AppConfig.KEY_TOWN);
+            String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
+            String travel_phone = c.getString(AppConfig.KEY_TRAVEL_PHONE);
+            String pemimpin = c.getString(AppConfig.KEY_PEMIMPIN);
+            String pemimpin_phone = c.getString(AppConfig.KEY_PEMIMPIN_PHONE);
+            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBING);
+            String pembimbing_phone = c.getString(AppConfig.KEY_PEMIMPIN_PHONE);
             String tfamily1 = c.getString(AppConfig.KEY_PHONE_FAMILY1);
             String tfamily2 = c.getString(AppConfig.KEY_PHONE_FAMILY2);
             String tfamily3 = c.getString(AppConfig.KEY_PHONE_FAMILY3);
@@ -341,6 +379,12 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             txtEmail1.setText(efamily1);
             txtEmail2.setText(efamily2);
             txtEmail3.setText(efamily3);
+            EditAgentTravel.setText(travel);
+            EditTravelPhone.setText(travel_phone);
+            EditPemimpin.setText(pemimpin);
+            EditPemimpinPhone.setText(pemimpin_phone);
+            EditPembimbing.setText(pembimbing);
+            EditPembimbingPhone.setText(pembimbing_phone);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -388,6 +432,12 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         final String efamily1 = txtEmail1.getText().toString().trim();
         final String efamily2 = txtEmail2.getText().toString().trim();
         final String efamily3 = txtEmail3.getText().toString().trim();
+        final String travel = EditAgentTravel.getText().toString().trim();
+        final String travel_phone = EditTravelPhone.getText().toString().trim();
+        final String pemimpin = EditPemimpin.getText().toString().trim();
+        final String pemimpin_phone = EditPemimpinPhone.getText().toString().trim();
+        final String pembimbing = EditPembimbing.getText().toString().trim();
+        final String pembimbing_phone = EditPembimbingPhone.getText().toString().trim();
 //        final String radiovalue = ((RadioButton)findViewById(rg.getCheckedRadioButtonId())).getText().toString();
 //        final Spinner spinner_house = (Spinner) findViewById(R.id.status);
 //        final String spinner_status = spinner_house.getSelectedItem().toString();
@@ -418,26 +468,38 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                 try{
                     String uploadImage = getStringImage(bitmap);
                     data.put(AppConfig.UPLOAD_KEY, uploadImage);
-                } catch (Exception ex) {
-                    data.put(AppConfig.UPLOAD_KEY, "");
-                    Log.i("Bitmap Error", "Tidak ada image");
-                }
-                //save image to sdcard
-                File sdCardDirectory = Environment.getExternalStorageDirectory();
-                File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
-                // Encode the file as a PNG image.
-                FileOutputStream outStream;
-                try {
+
+                    //save image to sdcard
+                    File sdCardDirectory = Environment.getExternalStorageDirectory();
+                    File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
+                    // Encode the file as a PNG image.
+                    FileOutputStream outStream;
+
                     outStream = new FileOutputStream(image);
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
                     /* 100 to keep full quality of the image */
                     outStream.flush();
                     outStream.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    data.put(AppConfig.UPLOAD_KEY, "");
+                    Log.i("Bitmap Error", "Tidak ada image");
                 }
+                //save image to sdcard
+//                File sdCardDirectory = Environment.getExternalStorageDirectory();
+//                File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
+//                // Encode the file as a PNG image.
+//                FileOutputStream outStream;
+//                try {
+//                    outStream = new FileOutputStream(image);
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+//                    /* 100 to keep full quality of the image */
+//                    outStream.flush();
+//                    outStream.close();
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
                 db.deleteUsers();
                 db.addUser(uid,nama, email, created,family1+","+family2+","+family3);
@@ -454,6 +516,12 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                 data.put(AppConfig.KEY_EMAIL_FAMILY1,efamily1);
                 data.put(AppConfig.KEY_EMAIL_FAMILY2,efamily2);
                 data.put(AppConfig.KEY_EMAIL_FAMILY3,efamily3);
+                data.put(AppConfig.KEY_TRAVEL_AGENT,travel);
+                data.put(AppConfig.KEY_TRAVEL_PHONE,travel_phone);
+                data.put(AppConfig.KEY_PEMBIMBING,pembimbing);
+                data.put(AppConfig.KEY_PEMBIMBING_PHONE,pembimbing_phone);
+                data.put(AppConfig.KEY_PEMIMPIN,pemimpin);
+                data.put(AppConfig.KEY_PEMIMPIN_PHONE,pemimpin_phone);
 
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(AppConfig.URL_PROFILE, data);

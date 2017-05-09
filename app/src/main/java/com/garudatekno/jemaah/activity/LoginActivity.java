@@ -1,9 +1,11 @@
 package com.garudatekno.jemaah.activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,13 @@ import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Bantuan;
 import com.garudatekno.jemaah.menu.SyaratKetentuan;
 import com.garudatekno.jemaah.menu.panduan;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
@@ -37,16 +46,20 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 //import com.auth0.jwt.JWT;
 //import com.auth0.jwt.exceptions.JWTDecodeException;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnLogin;
     private Button btnLinkToRegister;
+    private SignInButton signInButton;
+    private GoogleApiClient mGoogleApiClient;
+    private int RC_SIGN_IN = 100;
     private EditText inputEmail;
     private TextView txtBantuan,txtSyarat;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
+    private String idToken;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +85,33 @@ public class LoginActivity extends Activity {
                 Intent intent = new Intent(LoginActivity.this, SyaratKetentuan.class);
                 startActivity(intent);
             }
+        });
+
+//        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+//        signInButton.setSize(SignInButton.SIZE_STANDARD);
+
+//        btnLoginGoogle = (Button) findViewById(R.id.sign_in_button);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestIdToken(getString(R.string.server_client_id))
+                .build();
+
+        signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+        signInButton.setScopes(gso.getScopeArray());
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                signIn();
+            }
+
         });
 
         // Progress dialog
@@ -125,6 +165,116 @@ public class LoginActivity extends Activity {
             }
         });
 
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            idToken = acct.getIdToken();
+            Toast.makeText(this, acct.getDisplayName()+","+acct.getEmail()+","+idToken, Toast.LENGTH_LONG).show();
+            loginSocial(idToken);
+//            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+//            updateUI(true);
+        } else {
+            // Signed out, show unauthenticated UI.
+//            updateUI(false);
+            Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void loginSocial(final String token){
+        class LoginSocial extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+//                loading = ProgressDialog.show(profile.this,"Mohon tunggu..."," ",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+//                loading.dismiss();
+                Log.e("response : ",s);
+                try {
+                    JSONObject jObj = new JSONObject(s);
+                    boolean error = jObj.getBoolean("error");
+
+                    // Check for error node in json
+                    if (!error) {
+                        // user successfully logged in
+                        // Create login session
+                        session.setLogin(true);
+
+                        // Now store the user in SQLite
+//                        String uid = jObj.getString("id");
+
+//                        JSONObject user = jObj.getJSONObject("user");
+                        JSONObject user = jObj.getJSONObject("user");
+//                        JWT jwt = new JWT(jObj.getString("token"));
+//                        String ids = jwt.getId();
+//                        Log.e("email",ids);
+//                        String uid = user.getString("id");
+//                        String name = user.getString("name");
+                        String email = user.getString("email");
+//                        String family_phone = user.getString("family_phone");
+////                        String token = refreshedToken;
+//                        String created_at = user
+//                                .getString("created_at");
+//
+//                        // Inserting row in users table
+//                        db.addUser(uid,name, email, created_at,family_phone);
+
+                        Toast.makeText(getApplicationContext(), "email " + email, Toast.LENGTH_LONG).show();
+                        // Launch main activity
+                        Intent intent = new Intent(LoginActivity.this,
+                                panduan.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Error in login. Get the error message
+//                        String errorMsg = jObj.getString("error_msg");
+                        JSONObject user = jObj.getJSONObject("user");
+                        String errorMsg = user.getString("message");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("idToken", token);
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendPostRequest(AppConfig.URL_LOGIN_SOCIAL,data);
+                return s;
+            }
+        }
+        LoginSocial ge = new LoginSocial();
+        ge.execute();
     }
 
     /**
@@ -230,5 +380,10 @@ public class LoginActivity extends Activity {
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

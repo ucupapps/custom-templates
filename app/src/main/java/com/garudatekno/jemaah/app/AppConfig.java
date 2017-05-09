@@ -21,23 +21,27 @@ public class AppConfig {
 //	public static String URL_POI= "http://192.168.0.10/api/jemaah/poi";
 //	public static String URL_GET_POI= "http://192.168.0.10/api/jemaah/get-poi?id=";
 
-	public static String URL_HOME = "https://gohajj.id";
-	public static String URL_LOGIN = "https://gohajj.id/api/jemaah/login";
-	public static String URL_REGISTER = "https://gohajj.id/api/jemaah/register";
-	public static String URL_PROFILE = "https://gohajj.id/api/jemaah/profile";
-	public static String URL_GETPROFILE = "https://gohajj.id/api/jemaah/get-profile?id=";
-	public static String URL_GET_PANDUAN = "https://gohajj.id/api/jemaah/get-panduan?id=";
-	public static String URL_PANDUAN = "https://gohajj.id/api/jemaah/panduan";
-	public static String URL_PANDUAN_JENIS = "https://gohajj.id/api/jemaah/panduan-jenis";
-	public static String URL_TITIPAN_DOA = "https://gohajj.id/api/jemaah/titipan-doa";
-	public static String URL_EMERGENCY = "https://gohajj.id/api/jemaah/emergency";
-	public static String URL_GET_FAMILY_PHONE = "https://gohajj.id/api/jemaah/family-phone?id=";
-	public static String URL_GET_INBOX = "https://gohajj.id/api/jemaah/get-inbox?id=";
-	public static String URL_GET_INBOX_VIEW = "https://gohajj.id/api/jemaah/get-inbox-view?id=";
-	public static String URL_RATING= "https://gohajj.id/api/jemaah/rating";
-	public static String URL_DOAKAN= "https://gohajj.id/api/jemaah/doakan";
-	public static String URL_POI= "https://gohajj.id/api/jemaah/poi";
-	public static String URL_GET_POI= "https://gohajj.id/api/jemaah/get-poi?id=";
+	public static String URL_HOME = "https://dev.gohajj.id";
+	public static String URL_LOGIN = "https://dev.gohajj.id/api/jemaah-free/login";
+	public static String URL_LOGIN_SOCIAL = "https://dev.gohajj.id/api/jemaah-free/login-social";
+	public static String URL_REGISTER = "https://dev.gohajj.id/api/jemaah-free/register";
+	public static String URL_PROFILE = "https://dev.gohajj.id/api/jemaah-free/profile";
+	public static String URL_GETPROFILE = "https://dev.gohajj.id/api/jemaah-free/get-profile?id=";
+	public static String URL_GET_PANDUAN = "https://dev.gohajj.id/api/jemaah-free/get-panduan?id=";
+	public static String URL_PANDUAN = "https://dev.gohajj.id/api/jemaah-free/panduan";
+	public static String URL_PANDUAN_JENIS = "https://dev.gohajj.id/api/jemaah-free/panduan-jenis";
+	public static String URL_TITIPAN_DOA = "https://dev.gohajj.id/api/jemaah-free/titipan-doa";
+	public static String URL_EMERGENCY = "https://dev.gohajj.id/api/jemaah-free/emergency";
+	public static String URL_GET_FAMILY_PHONE = "https://dev.gohajj.id/api/jemaah-free/family-phone?id=";
+	public static String URL_GET_INBOX = "https://dev.gohajj.id/api/jemaah-free/get-inbox?id=";
+	public static String URL_GET_INBOX_VIEW = "https://dev.gohajj.id/api/jemaah-free/get-inbox-view?id=";
+	public static String URL_RATING= "https://dev.gohajj.id/api/jemaah-free/rating";
+	public static String URL_DOAKAN= "https://dev.gohajj.id/api/jemaah-free/doakan";
+	public static String URL_POI= "https://dev.gohajj.id/api/jemaah-free/poi";
+	public static String URL_GET_POI= "https://dev.gohajj.id/api/jemaah-free/get-poi?id=";
+	public static String URL_KAMUS= "https://dev.gohajj.id/api/jemaah-free/kamus";
+	public static String URL_LIST_KAMUS= "https://dev.gohajj.id/api/jemaah-free/list-kamus";
+	public static String URL_PARAMS= "https://dev.gohajj.id/api/jemaah-free/params";
 
 	public static final String KEY_PHONE= "phone";
 	public static final String KEY_MESSAGE= "message";
@@ -70,6 +74,14 @@ public class AppConfig {
 	public static final String KEY_JENIS = "jenis";
 	public static final String KEY_FILE = "file";
 	public static final String KEY_ARAB = "arab";
+	public static final String KEY_TRAVEL_PHONE= "travel_agent_phone";
+	public static final String KEY_PEMIMPIN_PHONE= "pemimpin_phone";
+	public static final String KEY_PEMBIMBING_PHONE= "pembimbing_phone";
+	public static final String KEY_PEMIMPIN = "pemimpin_tur";
+	public static final String KEY_VALUE = "value";
+	public static final String KEY_TRANSLATION = "translation";
+	public static final String KEY_INDONESIA = "indonesia";
+
 
 	public static final String KEY_JUMLAH= "jumlah";
 	public static final String KEY_CON_NO = "no";
