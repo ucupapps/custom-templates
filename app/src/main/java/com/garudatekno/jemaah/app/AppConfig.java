@@ -78,6 +78,10 @@ public class AppConfig {
 	public static final String KEY_PEMIMPIN_PHONE= "pemimpin_phone";
 	public static final String KEY_PEMBIMBING_PHONE= "pembimbing_phone";
 	public static final String KEY_PEMIMPIN = "pemimpin_tur";
+	public static final String KEY_VALUE = "value";
+	public static final String KEY_TRANSLATION = "translation";
+	public static final String KEY_INDONESIA = "indonesia";
+
 
 	public static final String KEY_JUMLAH= "jumlah";
 	public static final String KEY_CON_NO = "no";
