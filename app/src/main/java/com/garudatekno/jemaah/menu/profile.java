@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,9 +23,6 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +37,8 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 import static java.sql.Types.NULL;
 
 public class profile extends AppCompatActivity implements OnClickListener {
-    private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing;
+    private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing,
+                        txtTravelPhone,txtPemimpinPhone,txtPembimbingPhone;
     private Button buttonAdd, buttonLogout,buttonpembimbing,buttonPemimpin;
     private CircleImageView imgProfile;
     String lat,lng,uid;
@@ -182,12 +181,15 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtPassport = (TextView) findViewById(R.id.passport);
         txtProvince = (TextView) findViewById(R.id.province);
         txttravel = (TextView) findViewById(R.id.travel_agent);
+        txtTravelPhone = (TextView) findViewById(R.id.travel_agent_phone);
         txtmekkah = (TextView) findViewById(R.id.hotel_mekkah);
         txtmadinah = (TextView) findViewById(R.id.hotel_madinah);
         txtpembimbing = (TextView) findViewById(R.id.pembimbing);
+        txtPembimbingPhone = (TextView) findViewById(R.id.pembimbing_phone);
         txtTwon = (TextView) findViewById(R.id.town);
         editTextuser = (TextView) findViewById(R.id.userid);
         txtpemimpin = (TextView) findViewById(R.id.pemimpin);
+        txtPemimpinPhone = (TextView) findViewById(R.id.pemimpin_phone);
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -224,9 +226,11 @@ public class profile extends AppCompatActivity implements OnClickListener {
     }
 
     private void logoutUser() {
-        session.setLogin(false);
+        if (session.isLoggedIn()) {
+            session.setLogin(false);
 
-        db.deleteUsers();
+            db.deleteUsers();
+        }
 
         // Launching the login activity
         Intent intent = new Intent(profile.this, LoginActivity.class);
@@ -265,6 +269,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
             JSONObject c = result.getJSONObject(0);
+            Log.e(AppConfig.TAG_JSON_ARRAY, c.getString(AppConfig.KEY_NAME));
             String name = c.getString(AppConfig.KEY_NAME);
             String address = c.getString(AppConfig.KEY_ADDRESS);
             String passport = c.getString(AppConfig.KEY_PASSPORT);
@@ -272,23 +277,26 @@ public class profile extends AppCompatActivity implements OnClickListener {
             String province = c.getString(AppConfig.KEY_PROVINCE);
             String town = c.getString(AppConfig.KEY_TOWN);
             String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
+            String travel_phone = c.getString(AppConfig.KEY_TRAVEL_PHONE);
             String mekkah = c.getString(AppConfig.KEY_HOTEL_MEKKAH);
             String madinah = c.getString(AppConfig.KEY_HOTEL_MADINAH);
             String pembimbing = c.getString(AppConfig.KEY_PEMBIMBING);
-            String nilai_pemb = c.getString(AppConfig.KEY_NILAI_PEMBIMBING);
+            String pembimbing_phone = c.getString(AppConfig.KEY_PEMBIMBING_PHONE);
+//            String nilai_pemb = c.getString(AppConfig.KEY_NILAI_PEMBIMBING);
             String pemimpin = c.getString(AppConfig.KEY_PEMIMPIN_TUR);
-            String nilai_pemim = c.getString(AppConfig.KEY_NILAI_PEMIMPIN_TUR);
-            if(!nilai_pemb.equals("-")){
-                buttonpembimbing.setVisibility(View.GONE);
-            }else{
-                buttonpembimbing.setVisibility(View.VISIBLE);
-            }
-
-            if(!nilai_pemim.equals("-")){
-                buttonPemimpin.setVisibility(View.GONE);
-            }else{
-                buttonPemimpin.setVisibility(View.VISIBLE);
-            }
+            String pemimpin_phone = c.getString(AppConfig.KEY_PEMIMPIN_PHONE);
+//            String nilai_pemim = c.getString(AppConfig.KEY_NILAI_PEMIMPIN_TUR);
+//            if(!nilai_pemb.equals("-")){
+//                buttonpembimbing.setVisibility(View.GONE);
+//            }else{
+//                buttonpembimbing.setVisibility(View.VISIBLE);
+//            }
+//
+//            if(!nilai_pemim.equals("-")){
+//                buttonPemimpin.setVisibility(View.GONE);
+//            }else{
+//                buttonPemimpin.setVisibility(View.VISIBLE);
+//            }
 
             if(name.equals(NULL) || name.equals("")) {
                 imgProfile.setImageResource(R.drawable.profile);
@@ -313,6 +321,9 @@ public class profile extends AppCompatActivity implements OnClickListener {
             txtmadinah.setText(madinah);
             txtpembimbing.setText(pembimbing);
             txtpemimpin.setText(pemimpin);
+            txtPemimpinPhone.setText(pemimpin_phone);
+            txtPembimbingPhone.setText(pembimbing_phone);
+            txtTravelPhone.setText(travel_phone);
 
         } catch (JSONException e) {
             e.printStackTrace();

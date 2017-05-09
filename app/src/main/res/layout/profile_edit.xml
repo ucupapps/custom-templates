@@ -62,6 +62,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
         android:id="@+id/name" />
 
     <TextView
@@ -72,6 +74,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:id="@+id/passport" />
     <TextView
         android:layout_width="wrap_content"
@@ -81,6 +85,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:maxLength="15"
+        android:inputType="number"
         android:id="@+id/phone" />
     <TextView
         android:layout_width="wrap_content"
@@ -90,6 +96,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
         android:id="@+id/address" />
     <TextView
         android:layout_width="wrap_content"
@@ -99,6 +106,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:id="@+id/town" />
 
     <TextView
@@ -109,7 +118,79 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:id="@+id/province" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agent Travel" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:id="@+id/edit_travel_agent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nomor Telepon Agent Travel" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="15"
+        android:id="@+id/edit_travel_phone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Pemimpin Tur" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:id="@+id/edit_pemimpin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nomor Ponsel Pemimpin Tur" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="15"
+        android:id="@+id/edit_pemimpin_phone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Pembimbing" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
+        android:id="@+id/edit_pembimbing" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nomor Ponsel Pembimbing" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="15"
+        android:id="@+id/edit_pembimbing_phone" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,6 +199,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="15"
         android:id="@+id/family1" />
     <TextView
         android:layout_width="wrap_content"
@@ -128,6 +211,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:id="@+id/efamily1" />
     <TextView
         android:layout_width="wrap_content"
@@ -137,6 +222,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="15"
         android:id="@+id/family2" />
     <TextView
         android:layout_width="wrap_content"
@@ -147,6 +234,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:singleLine="true"
         android:id="@+id/efamily2" />
     <TextView
         android:layout_width="wrap_content"
@@ -156,6 +245,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="15"
         android:id="@+id/family3" />
     <TextView
         android:layout_width="wrap_content"
@@ -166,6 +257,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
         android:id="@+id/efamily3" />
 
     <Button

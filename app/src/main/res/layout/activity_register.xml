@@ -41,7 +41,7 @@
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
                 android:background="@color/white"
-                android:hint="Username"
+                android:hint="Fullname"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
