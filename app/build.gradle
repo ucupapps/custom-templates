@@ -51,6 +51,7 @@ dependencies {
     //font setting
     compile 'me.anwarshahriar:calligrapher:1.0'
 
+
 }
 
 apply plugin: 'com.google.gms.google-services'

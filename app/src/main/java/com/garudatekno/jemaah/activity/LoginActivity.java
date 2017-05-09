@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -20,6 +21,8 @@ import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.garudatekno.jemaah.menu.Bantuan;
+import com.garudatekno.jemaah.menu.SyaratKetentuan;
 import com.garudatekno.jemaah.menu.panduan;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -39,6 +42,7 @@ public class LoginActivity extends Activity {
     private Button btnLogin;
     private Button btnLinkToRegister;
     private EditText inputEmail;
+    private TextView txtBantuan,txtSyarat;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
@@ -55,6 +59,20 @@ public class LoginActivity extends Activity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        txtBantuan = (TextView) findViewById(R.id.txtBantuan);
+        txtSyarat = (TextView) findViewById(R.id.txtSyarat);
+        txtBantuan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, Bantuan.class);
+                startActivity(intent);
+            }
+        });
+        txtSyarat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SyaratKetentuan.class);
+                startActivity(intent);
+            }
+        });
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -104,7 +122,6 @@ public class LoginActivity extends Activity {
                 Intent i = new Intent(getApplicationContext(),
                         RegisterActivity.class);
                 startActivity(i);
-                finish();
             }
         });
 

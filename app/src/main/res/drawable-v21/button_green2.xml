@@ -3,12 +3,15 @@
     android:shape="rectangle">
 
   <!-- view background color -->
-  <solid android:color="#74C69B" />
+  <gradient
+      android:angle="45"
+      android:endColor="#FFC5DE8A"
+      android:startColor="#FF75C799" />
 
   <!-- view border color and width -->
-  <stroke
-      android:width="3dp"
-      android:color="#74C69B" />
+  <!--<stroke-->
+      <!--android:width="3dp"-->
+      <!--android:color="#74C69B" />-->
 
   <!-- If you want to add some padding -->
   <padding
@@ -18,6 +21,5 @@
       android:top="2dp" />
 
   <!-- Here is the corner radius -->
-  <corners android:radius="4dp" />
 
 </shape>

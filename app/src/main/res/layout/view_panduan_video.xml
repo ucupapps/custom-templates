@@ -49,13 +49,18 @@
                     android:textSize="17dp"
                     android:textColor="@color/white"
                     android:background="@drawable/button_blue2"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <VideoView
                     android:id="@+id/videoview"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_height="160dp"/>
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="8dp"
+                    android:layout_height="170dp"/>
+                </RelativeLayout>
                 <Button
                     android:id="@+id/btnSimpan"
                     android:textColor="@color/white"

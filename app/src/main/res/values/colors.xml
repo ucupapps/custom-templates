@@ -4,6 +4,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorSilver">#E9E8E7</color>
+    <color name="colorGrey">#F8F9F9</color>
     <color name="colorPrimary">#9fcc67</color>
     <color name="colorTextActive">#008000</color>
     <color name="colorText"> #808080</color>

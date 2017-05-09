@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,6 +24,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -73,6 +75,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 
 public class panduan extends AppCompatActivity implements ListView.OnItemClickListener {
@@ -104,26 +108,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
-//        listView = (ListView) findViewById(R.id.listView);
-//        listView.setOnItemClickListener(this);
-
-        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
-            Toast.makeText(this, "Please grant all permissions", Toast.LENGTH_LONG).show();
-            //permission
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", getPackageName(), null);
-            intent.setData(uri);
-            startActivity(intent);
-        }
 
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
         session = new SessionManager(getApplicationContext());
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
 
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -138,22 +127,12 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
         }
-//        String url=AppConfig.URL_HOME + "/uploads/profile/" + uid + "/thumb_images.jpg";
-//        Picasso.with(this).invalidate(url);
-//        Picasso.with(this).load(url)
-//                .networkPolicy(NetworkPolicy.NO_CACHE)
-//                .memoryPolicy(MemoryPolicy.NO_CACHE)
-//                .into(imgp);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        //fontstyle
-//        Typeface tf = Typeface.createFromAsset(getAssets(),"fonts/helvetica.ttf");
-//        txt_emergency.setTypeface(tf);
-//        txt_thowaf.setTypeface(tf);
-//        txt_sai.setTypeface(tf);
+
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,11 +166,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-//        txt_panduan.setTypeface(tf);
-//        txt_doa.setTypeface(tf);
-//        txt_navigasi.setTypeface(tf);
-//        txt_profile.setTypeface(tf);
-//        txt_inbox.setTypeface(tf);
 
         ImageView img = (ImageView) findViewById(R.id.img_panduan);
         img.setBackgroundResource(R.drawable.circle_green_active);
@@ -268,28 +242,53 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+
+        final PopupMenu popup = new PopupMenu(this, img_setting);
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        if (!session.isLoggedIn()) {
+            Menu popupMenu = popup.getMenu();
+                popupMenu.findItem(R.id.logout).setVisible(FALSE);
+        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(panduan.this, img_setting);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-                //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         if(id == R.id.logout) {
                             logoutUser();
+                        }if(id == R.id.donasi) {
+                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.penilaian) {
+                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
+                            startActivity(i);
+                        }if(id == R.id.cek_visa) {
+                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.share) {
+                            try {
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/plain");
+                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
+                                String sAux = "\nLet me recommend you this application\n\n";
+                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
+                                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                                startActivity(Intent.createChooser(i, "choose one"));
+                            } catch(Exception e) {
+                                //e.toString();
+                            }
+                        }if(id == R.id.download_doa) {
+
                         }
                         return true;
                     }
                 });
-
                 popup.show();//showing popup menu
             }
         });
-//        getJSON();
 
         //jakarta
         final TextView jak_degree=(TextView) findViewById(R.id.jak_degree);
@@ -318,10 +317,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         final TextView mek_cuaca=(TextView) findViewById(R.id.mek_cuaca);
         TextView mek_date=(TextView) findViewById(R.id.mek_date);
         TextView mek_time=(TextView) findViewById(R.id.mek_time);
-//        mek_degree.setTypeface(tf);
-//        mek_cuaca.setTypeface(tf);
-//        mek_date.setTypeface(tf);
-//        mek_time.setTypeface(tf);
 
         Calendar cal_mek = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
         Date currentLocalTimemak = cal_mek.getTime();
@@ -341,7 +336,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //                cityField.setText(weather_city);
 //                updatedField.setText(weather_updatedOn);
                 jak_cuaca.setText(weather_description);
-                jak_degree.setText(weather_temperature);
+                jak_degree.setText(weather_temperature+ " \u2103");
 //                humidity_field.setText("Humidity: "+weather_humidity);
 //                pressure_field.setText("Pressure: "+weather_pressure);
 //                weatherIcon.setText(Html.fromHtml(weather_iconText));
@@ -356,7 +351,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //                cityField.setText(weather_city);
 //                updatedField.setText(weather_updatedOn);
                 mek_cuaca.setText(weather_description);
-                mek_degree.setText(weather_temperature);
+                mek_degree.setText(weather_temperature+ " \u2103" );
 //                humidity_field.setText("Humidity: "+weather_humidity);
 //                pressure_field.setText("Pressure: "+weather_pressure);
 //                weatherIcon.setText(Html.fromHtml(weather_iconText));
@@ -405,6 +400,18 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         ae.execute();
 
         startActivity(new Intent(panduan.this, panduan.class));
+    }
+
+    private void logoutUser() {
+        if (session.isLoggedIn()) {
+            session.setLogin(false);
+            db.deleteUsers();
+        }
+
+        // Launching the login activity
+        Intent intent = new Intent(panduan.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -581,17 +588,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         protected void onPostExecute(String unused) {
             dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
         }
-    }
-
-    private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
-
-        // Launching the login activity
-        Intent intent = new Intent(panduan.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 //    @Override

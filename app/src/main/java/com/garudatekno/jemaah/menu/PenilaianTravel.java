@@ -1,27 +1,25 @@
 package com.garudatekno.jemaah.menu;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.SeekBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.VideoView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
@@ -35,15 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,59 +41,51 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static java.lang.Boolean.FALSE;
 
-public class ViewPanduanTips extends AppCompatActivity implements View.OnClickListener {
-
-
-    private TextView txtData,txtid,info, txtfile,txtName;
-
-    private String id,msg,uid;
-    ImageView imgview;
+public class PenilaianTravel extends AppCompatActivity implements OnClickListener {
+    private TextView txtName, editTextuser,txttravel,txtpembimbing,txtJudul,txtTanya;
+    private EditText textKomen;
+    private Button buttonAdd, buttonLogout;
+    private CircleImageView imgProfile;
+    String lat,lng,uid;
+    RatingBar ratingBar ;
+    //user
     private SQLiteHandler db;
     private SessionManager session;
-    String file,path;
-
-    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
-    private ProgressDialog mProgressDialog;
-
-    enum MP_State {
-        Idle, Initialized, Prepared, Started, Paused,
-        Stopped, PlaybackCompleted, End, Error, Preparing}
-
-    MP_State mediaPlayerState;
-
-    int numMessages = 0;
-    private VideoView videoView;
-
-    MediaPlayer mMediaPlayer ;
-    private MediaPlayer mp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_panduan_tips);
+        setContentView(R.layout.penilaian_pembimbing);
+        session = new SessionManager(getApplicationContext());
+        File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/images");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-        session = new SessionManager(getApplicationContext());
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+        txt_thowaf.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
             }
         });
-        txt_sai.setOnClickListener(new View.OnClickListener() {
+        txt_sai.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), sai.class);
                 startActivity(i);
             }
         });
-        txt_emergency.setOnClickListener(new View.OnClickListener() {
+        txt_emergency.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), emergency.class);
@@ -122,40 +104,45 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-        ImageView img = (ImageView) findViewById(R.id.img_panduan);
-        img.setBackgroundResource(R.drawable.circle_green_active);
-        img.setPadding(22,22,22,22);
-        img.setImageDrawable(getResources().getDrawable(R.drawable.panduan_active));
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
 
-        menu_profile.setOnClickListener(new View.OnClickListener() {
+        menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), profile.class);
+                Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
                 startActivity(i);
             }
         });
-        menu_panduan.setOnClickListener(new View.OnClickListener() {
+        menu_panduan.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
             }
         });
-        menu_doa.setOnClickListener(new View.OnClickListener() {
+        menu_doa.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
             }
         });
-        menu_navigasi.setOnClickListener(new View.OnClickListener() {
+        menu_navigasi.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
             }
         });
-        menu_inbox.setOnClickListener(new View.OnClickListener() {
+        menu_inbox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
@@ -164,7 +151,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
         });
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
-        img_home.setOnClickListener(new View.OnClickListener() {
+        img_home.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
@@ -218,32 +205,42 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
                 popup.show();//showing popup menu
             }
         });
-//        if (!session.isLoggedIn()) {
-//            logoutUser();
-//        }
 
-        Intent intent = getIntent();
-        id = intent.getStringExtra(AppConfig.EMP_ID);
-        file = intent.getStringExtra(AppConfig.KEY_FILE);
+//CONTENT
+        txtJudul = (TextView) findViewById(R.id.judul);
+        txtTanya = (TextView) findViewById(R.id.pertanyaan);
+        txtName = (TextView) findViewById(R.id.name);
+        txttravel = (TextView) findViewById(R.id.travel);
+        editTextuser = (TextView) findViewById(R.id.userid);
+        textKomen = (EditText) findViewById(R.id.komen);
+        txtpembimbing = (TextView) findViewById(R.id.txtpembimbing);
+        ratingBar = (RatingBar) findViewById(R.id.dialog_ratingbar);
 
-        txtName = (TextView) findViewById(R.id.txtNAME);
-        txtData = (TextView) findViewById(R.id.data);
-        txtid= (TextView) findViewById(R.id.txtid);
+        txtJudul.setText("Penilaian Agen Perjalanan");
+        txtTanya.setText("Bagaimana kualitas pelayanan agen perjalanan?");
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
         getData();
-        imgview = (ImageView) findViewById(R.id.imgview);
-        Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/panduan/tips/"+file).into(imgview);
 
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
-        //useri mage
-        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
-        if (!file.exists()) {
-            imgp.setImageResource(R.drawable.profile);
-        }else{
-            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-            imgp.setImageBitmap(bmp);
+        buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
+        buttonAdd.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
+
+    }
+
+    public void onClick(View v){
+        if(v == buttonAdd){
+            String user=uid;
+            String rating=String.valueOf(ratingBar.getRating());
+            String pembimbing=txtpembimbing.getText().toString().trim();
+            String komen=textKomen.getText().toString().trim();
+            addRating(user,pembimbing,rating,komen);
+         }if(v == buttonLogout){
+            Intent i = new Intent(getApplicationContext(), profile.class);
+            startActivity(i);
         }
     }
 
@@ -254,31 +251,30 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
         }
 
         // Launching the login activity
-        Intent intent = new Intent(ViewPanduanTips.this, LoginActivity.class);
+        Intent intent = new Intent(PenilaianTravel.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
-
     private void getData(){
         class GetData extends AsyncTask<Void,Void,String>{
             ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduanTips.this,"","Wait...",false,false);
+//                loading = ProgressDialog.show(profile.this,"Mohon tunggu..."," ",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
                 showData(s);
             }
 
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_GET_PANDUAN,id);
+                String s = rh.sendGetRequestParam(AppConfig.URL_GETPROFILE,uid);
                 return s;
             }
         }
@@ -291,24 +287,58 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             JSONObject jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
             JSONObject c = result.getJSONObject(0);
-            String id = c.getString(AppConfig.KEY_ID);
-            String name = c.getString(AppConfig.KEY_NAME);
-            String data = c.getString(AppConfig.KEY_DESCRIPTION);
-            txtid.setText(id);
-            txtData.setText(data);
-            txtName.setText("X   "+ name);
+            String name = c.getString(AppConfig.KEY_PEMBIMBING);
+            String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
+            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBINGID);
+
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
+
+            txtName.setText(name);
+            txttravel.setText(travel);
+            txtpembimbing.setText(pembimbing);
+            editTextuser.setText(uid);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void onClick(View v) {
+    private void addRating(final String penilai,final String user, final String rate,final String komen){
+        class AddBarcode extends AsyncTask<Bitmap,Void,String> {
 
-//        if(v == buttonStop){
-//        }
+            ProgressDialog loading;
 
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(PenilaianTravel.this,"","",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(PenilaianTravel.this, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_USERID, user);
+                data.put(AppConfig.KEY_PENILAIID, penilai);
+                data.put(AppConfig.KEY_COMMENT, komen);
+                data.put(AppConfig.KEY_RATING, rate);
+                data.put(AppConfig.KEY_CATEGORY, "PEMBIMBING");
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(AppConfig.URL_RATING, data);
+                return res;
+            }
+        }
+
+        AddBarcode ae = new AddBarcode();
+        ae.execute();
+
+        startActivity(new Intent(PenilaianTravel.this, profile.class));
     }
 
 }

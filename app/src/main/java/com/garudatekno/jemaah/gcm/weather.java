@@ -104,7 +104,7 @@ public class weather {
 
                     String city = json.getString("name").toUpperCase(new Locale("id")) + ", " + json.getJSONObject("sys").getString("country");
                     String description = details.getString("description");
-                    String temperature = String.format("%.0f", main.getDouble("temp"))+ "°";
+                    String temperature = String.format("%.0f", main.getDouble("temp"));
                     String humidity = main.getString("humidity") + "%";
                     String pressure = main.getString("pressure") + " hPa";
                     String updatedOn = df.format(new Date(json.getLong("dt")*1000));

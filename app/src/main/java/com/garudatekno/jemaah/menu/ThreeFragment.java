@@ -265,8 +265,7 @@ public class ThreeFragment extends Fragment implements ListView.OnItemClickListe
             startActivity(intent);
         }else if(jenis.equals("Kamus")){
             Intent intent = new Intent(getActivity(), ViewPanduankamus.class);
-            intent.putExtra(AppConfig.EMP_ID,strID);
-            intent.putExtra(AppConfig.KEY_FILE,strFile);
+            intent.putExtra(AppConfig.EMP_ID,"1");
             startActivity(intent);
         }
 //            }
