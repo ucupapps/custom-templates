@@ -73,27 +73,50 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="5"
                                 android:id="@+id/txtDesc"
-                                android:padding="10dp"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:paddingBottom="10dp"
                                 android:textSize="15dp"
                                 android:background="@color/white"
                                 android:textColor="@color/black"
                                 android:layout_marginTop="7dp"
                                 android:layout_marginLeft="7dp"
                                 android:layout_marginRight="1dp"/>
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="5"
-                                android:id="@+id/txtArab"
-                                android:gravity="right"
-                                android:padding="10dp"
-                                android:textSize="20dp"
-                                android:background="@color/white"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginRight="7dp"
-                                android:textColor="@color/black"/>
+                                android:orientation="vertical"
+                                android:layout_weight="5">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/txtArab"
+                                    android:gravity="right"
+                                    android:padding="10dp"
+                                    android:textSize="24dp"
+                                    android:background="@color/white"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_marginRight="7dp"
+                                    android:textColor="@color/black"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/txtIndonesia"
+                                    android:paddingLeft="10dp"
+                                    android:paddingRight="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:layout_marginRight="7dp"
+                                    android:textSize="10sp"
+                                    android:background="@color/white"/>
+                            </LinearLayout>
+
                         </TableRow>
                     </TableLayout>
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:id="@+id/txtFile"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -52,8 +52,7 @@
                     android:weightSum="1"
                     android:background="@color/white"
                     android:layout_marginBottom="5dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.15">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="0dp"
@@ -72,23 +71,24 @@
                         <TextView
                             android:id="@+id/jak_degree"
                             android:text=" "
-                            android:padding="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:textSize="20dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_weight="0.6"
-                            android:layout_height="0dp" />
+                            android:layout_height="wrap_content" />
                         <TextView
                             android:id="@+id/jak_cuaca"
                             android:text=" "
-                            android:padding="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:textSize="12dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_weight="0.4"
-                            android:layout_height="0dp"  />
+                            android:layout_height="wrap_content"  />
                     </LinearLayout>
 
                     <LinearLayout
@@ -124,8 +124,7 @@
                     android:weightSum="1"
                     android:background="@color/white"
                     android:layout_marginBottom="5dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.15">
+                    android:layout_height="wrap_content">
                     <TextView
                         android:text="Mekkah"
                         android:padding="5dp"
@@ -143,23 +142,24 @@
                         <TextView
                             android:id="@+id/mek_degree"
                             android:text=" "
-                            android:padding="5dp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:textSize="20dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_weight="0.6"
-                            android:layout_height="0dp" />
+                            android:layout_height="wrap_content" />
                         <TextView
                             android:id="@+id/mek_cuaca"
                             android:text=" "
-                            android:padding="5dp"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
                             android:textSize="12dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_weight="0.4"
-                            android:layout_height="0dp"  />
+                            android:layout_height="wrap_content"  />
                     </LinearLayout>
 
                     <LinearLayout
@@ -197,12 +197,15 @@
                 android:orientation="vertical"
                 android:weightSum="1"
                 android:background="@color/white"
-                android:layout_height="0dp"
-                android:layout_weight="0.7">
+                android:layout_height="wrap_content">
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tabs"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
+                        app:tabBackground="@drawable/tab_selector"
+                        app:tabTextAppearance="@style/MineCustomTabText"
+                        circle:tabIndicatorHeight="0dp"
+                        app:tabSelectedTextColor="@color/white"
                         app:tabMode="fixed"
                         app:tabGravity="fill"/>
                     <android.support.v4.view.ViewPager
@@ -210,7 +213,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
 
             </LinearLayout>
             </LinearLayout>

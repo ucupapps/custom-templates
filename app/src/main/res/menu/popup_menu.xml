@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/download_doa"
+        android:title="Download Semua Doa"/>
+    <item
+        android:id="@+id/donasi"
+        android:title="Donasi"/>
+    <item
+        android:id="@+id/penilaian"
+        android:title="Penilaian"/>
+    <item
+        android:id="@+id/cek_visa"
+        android:title="Cek Visa Online"/>
+    <item
+        android:id="@+id/share"
+        android:title="Share"/>
     <item
         android:id="@+id/logout"
         android:title="Logout"/>
-
-    <!--<item-->
-        <!--android:id="@+id/hotel"-->
-        <!--android:title="Hotel"/>-->
-    <!--<item-->
-        <!--android:id="@+id/pintu"-->
-        <!--android:title="No Pintu Masjid"/>-->
-    <!--<item-->
-        <!--android:id="@+id/meeting"-->
-        <!--android:title="Meeting point"/>-->
-
-    <!--<item-->
-        <!--android:id="@+id/poi"-->
-        <!--android:title="Point of interest"/>-->
-    <!--<item-->
-        <!--android:id="@+id/pin"-->
-        <!--android:title="Pin Location"/>-->
 </menu>

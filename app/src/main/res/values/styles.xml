@@ -48,4 +48,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">10.5sp</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
 </resources>

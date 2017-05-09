@@ -63,10 +63,12 @@ public class CustomListPanduan3 extends SimpleAdapter {
         final TextView name = (TextView)vi.findViewById(R.id.txtNAME);
         final TextView txtaudio = (TextView)vi.findViewById(R.id.txtAudio);
         final TextView txtImg = (TextView)vi.findViewById(R.id.txtImg);
+        final TextView txtJenis = (TextView)vi.findViewById(R.id.txtJenis);
 
         Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
         name.setTypeface(font);
         txtaudio.setTypeface(font);
+        name.setTypeface(null, Typeface.BOLD);
         txtImg.setTypeface(font);
 
         final String strID = (String) data.get(AppConfig.KEY_ID);
@@ -78,12 +80,16 @@ public class CustomListPanduan3 extends SimpleAdapter {
 
         if(strJenis.equals("Video")){
             txtImg.setBackgroundResource(R.drawable.circle_blue);
+            txtJenis.setText("Video Tutorial");
         }else if(strJenis.equals("Doa")){
             txtImg.setBackgroundResource(R.drawable.circle_purple);
+            txtJenis.setText("Panduan Doa");
         }else if(strJenis.equals("Tips")){
             txtImg.setBackgroundResource(R.drawable.circle_orange_muda);
+            txtJenis.setText("Tips");
         }else if(strJenis.equals("Kamus")){
             txtImg.setBackgroundResource(R.drawable.circle_chocolate);
+            txtJenis.setText("Kamus");
         }
 
 //        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/panduan3/"+strID+".mp3");

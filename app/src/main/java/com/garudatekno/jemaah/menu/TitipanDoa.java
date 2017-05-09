@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,6 +44,8 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
+import static java.lang.Boolean.FALSE;
+
 public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private static final String TAG = "MyUser";
@@ -58,6 +62,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        session = new SessionManager(getApplicationContext());
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
@@ -149,29 +154,53 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        final PopupMenu popup = new PopupMenu(this, img_setting);
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        if (!session.isLoggedIn()) {
+            Menu popupMenu = popup.getMenu();
+            popupMenu.findItem(R.id.logout).setVisible(FALSE);
+        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(TitipanDoa.this, img_setting);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-                //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         if(id == R.id.logout) {
                             logoutUser();
+                        }if(id == R.id.donasi) {
+                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.penilaian) {
+                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
+                            startActivity(i);
+                        }if(id == R.id.cek_visa) {
+                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.share) {
+                            try {
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/plain");
+                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
+                                String sAux = "\nLet me recommend you this application\n\n";
+                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
+                                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                                startActivity(Intent.createChooser(i, "choose one"));
+                            } catch(Exception e) {
+                                //e.toString();
+                            }
+                        }if(id == R.id.download_doa) {
+
                         }
                         return true;
                     }
                 });
-
                 popup.show();//showing popup menu
             }
         });
 
-        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -258,9 +287,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     }
 
     private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
+        if (session.isLoggedIn()) {
+            session.setLogin(false);
+            db.deleteUsers();
+        }
 
         // Launching the login activity
         Intent intent = new Intent(TitipanDoa.this, LoginActivity.class);
@@ -298,10 +328,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
         AddBarcode ae = new AddBarcode();
         ae.execute();
-        startActivity(new Intent(TitipanDoa.this, TitipanDoa.class));
-//        Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
-//        finish();
-//        startActivity(i);
+//        startActivity(new Intent(TitipanDoa.this, TitipanDoa.class));
+        Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
+        finish();
+        startActivity(i);
     }
 
     @Override

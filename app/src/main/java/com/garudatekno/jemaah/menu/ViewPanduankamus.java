@@ -7,11 +7,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,10 +51,12 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
+import static java.lang.Boolean.FALSE;
+
 public class ViewPanduankamus extends AppCompatActivity implements View.OnClickListener,ListView.OnItemClickListener {
 
 
-    private TextView txtname,txtid,info, state,txtdesc,txtarab;
+    private TextView txtname,txtid,txtFile, state,txtdesc,txtarab,txtIndonesia;
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
@@ -80,6 +84,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+        session = new SessionManager(getApplicationContext());
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
@@ -167,52 +172,75 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        final PopupMenu popup = new PopupMenu(this, img_setting);
+        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+        if (!session.isLoggedIn()) {
+            Menu popupMenu = popup.getMenu();
+            popupMenu.findItem(R.id.logout).setVisible(FALSE);
+        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(ViewPanduankamus.this, img_setting);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-                //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         if(id == R.id.logout) {
                             logoutUser();
+                        }if(id == R.id.donasi) {
+                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.penilaian) {
+                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
+                            startActivity(i);
+                        }if(id == R.id.cek_visa) {
+                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
+                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                            startActivity(launchBrowser);
+                        }if(id == R.id.share) {
+                            try {
+                                Intent i = new Intent(Intent.ACTION_SEND);
+                                i.setType("text/plain");
+                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
+                                String sAux = "\nLet me recommend you this application\n\n";
+                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
+                                i.putExtra(Intent.EXTRA_TEXT, sAux);
+                                startActivity(Intent.createChooser(i, "choose one"));
+                            } catch(Exception e) {
+                                //e.toString();
+                            }
+                        }if(id == R.id.download_doa) {
+
                         }
                         return true;
                     }
                 });
-
                 popup.show();//showing popup menu
             }
         });
 
-        session = new SessionManager(getApplicationContext());
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
 
         Intent intent = getIntent();
         id = intent.getStringExtra(AppConfig.EMP_ID);
-        file = intent.getStringExtra(AppConfig.KEY_FILE);
 
         txtdesc = (TextView) findViewById(R.id.txtDesc);
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
         txtarab= (TextView) findViewById(R.id.txtArab);
+        txtIndonesia= (TextView) findViewById(R.id.txtIndonesia);
+        txtFile= (TextView) findViewById(R.id.txtFile);
+        getData();
 
         buttonStart = (Button) findViewById(R.id.btnPlay);
         buttonSave = (Button) findViewById(R.id.btnSimpan);
 
+        file=txtFile.getText().toString().trim();
         srcPath= AppConfig.URL_HOME+"/uploads/panduan/kamus/"+file;
         Log.d("PATH", srcPath);
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         buttonStart.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
-        getData();
 
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -230,9 +258,10 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
     }
 
     private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
+        if (session.isLoggedIn()) {
+            session.setLogin(false);
+            db.deleteUsers();
+        }
 
         // Launching the login activity
         Intent intent = new Intent(ViewPanduankamus.this, LoginActivity.class);
@@ -258,8 +287,10 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
 
             @Override
             protected String doInBackground(Void... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_ID, id);
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_GET_PANDUAN,id);
+                String s = rh.sendPostRequest(AppConfig.URL_KAMUS, data);
                 return s;
             }
         }
@@ -274,16 +305,18 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             JSONObject c = result.getJSONObject(0);
             String id = c.getString(AppConfig.KEY_ID);
             String name = c.getString(AppConfig.KEY_NAME);
-            String jenis = c.getString(AppConfig.KEY_JENIS);
-            String ctg = c.getString(AppConfig.KEY_CATEGORY);
-            String desc = c.getString(AppConfig.KEY_DESCRIPTION);
+            String arti = c.getString(AppConfig.KEY_TRANSLATION);
             String arab = c.getString(AppConfig.KEY_ARAB);
+            String ina = c.getString(AppConfig.KEY_INDONESIA);
+            String file = c.getString(AppConfig.KEY_FILE);
             txtid.setText(id);
             txtname.setText("X  "+name);
-            txtdesc.setText(desc);
+            txtdesc.setText(arti);
             txtarab.setText(arab);
+            txtIndonesia.setText(ina);
+            txtFile.setText(file);
 
-            getJSON(jenis,ctg,id);
+            getJSON(id);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -405,7 +438,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
                 JSONObject jo = result.getJSONObject(i);
                 String id = jo.getString(AppConfig.KEY_ID);
                 String name = jo.getString(AppConfig.KEY_NAME);
-                String jenis = jo.getString(AppConfig.KEY_JENIS);
+                String jenis = "Kamus";
                 String file = jo.getString(AppConfig.KEY_FILE);
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_ID,id);
@@ -428,7 +461,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
 
-    private void getJSON(final String Jenis,final String Category,final String Id){
+    private void getJSON(final String Ids){
         class GetJSON extends AsyncTask<Void,Void,String>{
 
             ProgressDialog loading;
@@ -449,11 +482,9 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             @Override
             protected String doInBackground(Void... params) {
                 HashMap<String,String> data = new HashMap<>();
-                data.put(AppConfig.KEY_CATEGORY, Category);
-                data.put(AppConfig.KEY_JENIS, Jenis);
-                data.put(AppConfig.KEY_ID, Id);
+                data.put(AppConfig.KEY_ID, Ids);
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendPostRequest(AppConfig.URL_PANDUAN_JENIS, data);
+                String s = rh.sendPostRequest(AppConfig.URL_LIST_KAMUS, data);
                 return s;
             }
         }
@@ -466,10 +497,8 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
 
         HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
         final String strID = map.get(AppConfig.TAG_ID).toString();
-        final String strFile = map.get(AppConfig.KEY_FILE).toString();
         Intent i = new Intent(getApplicationContext(), ViewPanduankamus.class);
         i.putExtra(AppConfig.EMP_ID,strID);
-        i.putExtra(AppConfig.KEY_FILE,strFile);
         finish();
         startActivity(i);
     }

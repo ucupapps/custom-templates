@@ -45,6 +45,7 @@ public class CustomListPanduan1 extends SimpleAdapter {
         final TextView name = (TextView)vi.findViewById(R.id.txtNAME);
         final TextView txtaudio = (TextView)vi.findViewById(R.id.txtAudio);
         final TextView txtImg = (TextView)vi.findViewById(R.id.txtImg);
+        final TextView txtJenis = (TextView)vi.findViewById(R.id.txtJenis);
 
         Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
         name.setTypeface(font);
@@ -55,16 +56,21 @@ public class CustomListPanduan1 extends SimpleAdapter {
         String strJenis = (String) data.get(AppConfig.KEY_JENIS);
         no.setText(strID);
         name.setText(strName);
+        name.setTypeface(null, Typeface.BOLD);
         txtImg.setText(strJenis);
 
         if(strJenis.equals("Video")){
             txtImg.setBackgroundResource(R.drawable.circle_blue);
+            txtJenis.setText("Video Tutorial");
         }else if(strJenis.equals("Doa")){
             txtImg.setBackgroundResource(R.drawable.circle_purple);
+            txtJenis.setText("Panduan Doa");
         }else if(strJenis.equals("Tips")){
             txtImg.setBackgroundResource(R.drawable.circle_orange_muda);
+            txtJenis.setText("Tips");
         }else if(strJenis.equals("Kamus")){
             txtImg.setBackgroundResource(R.drawable.circle_chocolate);
+            txtJenis.setText("Kamus");
         }
 
 

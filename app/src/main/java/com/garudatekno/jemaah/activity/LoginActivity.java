@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -22,6 +23,8 @@ import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.garudatekno.jemaah.menu.Bantuan;
+import com.garudatekno.jemaah.menu.SyaratKetentuan;
 import com.garudatekno.jemaah.menu.panduan;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private int RC_SIGN_IN = 100;
     private EditText inputEmail;
+    private TextView txtBantuan,txtSyarat;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
@@ -68,6 +72,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         inputPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        txtBantuan = (TextView) findViewById(R.id.txtBantuan);
+        txtSyarat = (TextView) findViewById(R.id.txtSyarat);
+        txtBantuan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, Bantuan.class);
+                startActivity(intent);
+            }
+        });
+        txtSyarat.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SyaratKetentuan.class);
+                startActivity(intent);
+            }
+        });
 
 //        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
 //        signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -144,7 +162,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Intent i = new Intent(getApplicationContext(),
                         RegisterActivity.class);
                 startActivity(i);
-                finish();
             }
         });
 
