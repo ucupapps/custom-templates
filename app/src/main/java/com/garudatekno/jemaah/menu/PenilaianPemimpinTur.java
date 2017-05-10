@@ -117,7 +117,7 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
         menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), PenilaianPemimpinTur.class);
+                Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
             }
         });
@@ -237,7 +237,7 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
         if(v == buttonAdd){
             String user=uid;
             String rating=String.valueOf(ratingBar.getRating());
-            String pembimbing=txtpembimbing.getText().toString().trim();
+            String pembimbing=txtName.getText().toString().trim();
             String komen=textKomen.getText().toString().trim();
             addRating(user,pembimbing,rating,komen);
          }if(v == buttonLogout){
@@ -289,15 +289,15 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
             JSONObject jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
             JSONObject c = result.getJSONObject(0);
-            String name = c.getString(AppConfig.KEY_PEMIMPIN_TUR);
+            String name = c.getString(AppConfig.KEY_PEMIMPIN);
             String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
-            String pembimbing = c.getString(AppConfig.KEY_PEMIMPIN_TURID);
+//            String pembimbing = c.getString(AppConfig.KEY_PEMIMPIN_TURID);
 
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
+//            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
                
             txtName.setText(name);
             txttravel.setText(travel);
-            txtpembimbing.setText(pembimbing);
+//            txtpembimbing.setText(pembimbing);
             editTextuser.setText(uid);
 
         } catch (JSONException e) {
@@ -340,7 +340,7 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
         AddBarcode ae = new AddBarcode();
         ae.execute();
 
-        startActivity(new Intent(PenilaianPemimpinTur.this, profile.class));
+        startActivity(new Intent(PenilaianPemimpinTur.this, PenilaianPembimbing.class));
     }
 
 }
