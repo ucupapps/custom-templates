@@ -262,12 +262,17 @@
         android:id="@+id/efamily3" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:text="Save"
         android:background="@drawable/button"
         android:id="@+id/buttonAdd" />
     <EditText
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textIsSelectable="true"
