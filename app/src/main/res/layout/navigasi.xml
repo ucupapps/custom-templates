@@ -97,6 +97,7 @@
                                 android:layout_height="30dp"
                                 android:background="@drawable/button"
                                 android:gravity="center"
+                                android:visibility="gone"
                                 android:minWidth="50dp"
                                 android:padding="5dp"
                                 android:text=" Set Location "
@@ -135,14 +136,14 @@
                             android:text="Hotel"
                             android:textStyle="bold"
                             android:layout_gravity="center"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1.4"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/txthotel"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_height="30dp"
+                            android:layout_weight="0.8"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:textAlignment="center"
@@ -180,14 +181,15 @@
                             android:text="Bus"
                             android:textStyle="bold"
                             android:layout_gravity="center"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1.4"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/txtbus"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_height="30dp"
+                            android:layout_weight="0.8"
+                            android:padding="5dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:textAlignment="center"
@@ -225,14 +227,15 @@
                             android:text="Masjid (Pintu Masuk)"
                             android:textStyle="bold"
                             android:layout_gravity="center"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1.4"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/txtmasjid"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_height="30dp"
+                            android:layout_weight="0.8"
+                            android:padding="5dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:textAlignment="center"
@@ -270,14 +273,15 @@
                             android:text="Tempat Bertemu"
                             android:textStyle="bold"
                             android:layout_gravity="center"
-                            android:layout_weight="1.2"
+                            android:layout_weight="1.4"
                             android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/txtbertemu"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_height="30dp"
+                            android:layout_weight="0.8"
+                            android:padding="5dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:textAlignment="center"
@@ -316,14 +320,15 @@
                         android:text="Lokasi Menarik"
                         android:textStyle="bold"
                         android:layout_gravity="center"
-                        android:layout_weight="1.2"
+                        android:layout_weight="1.4"
                         android:layout_height="wrap_content" />
 
                     <TextView
                         android:id="@+id/txtpoi"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.8"
+                        android:padding="5dp"
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:textAlignment="center"

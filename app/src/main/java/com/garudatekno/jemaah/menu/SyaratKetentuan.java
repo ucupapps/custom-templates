@@ -96,7 +96,7 @@ public class SyaratKetentuan extends AppCompatActivity {
             String id = c.getString(AppConfig.KEY_ID);
             String name = c.getString(AppConfig.KEY_NAME);
             String value = c.getString(AppConfig.KEY_VALUE);
-            txtName.setText(name);
+//            txtName.setText(name);
             txtValue.loadData(value, "text/html", "utf-8");
 
         } catch (JSONException e) {

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item>
-    <shape
-        android:shape="rectangle">
-      <stroke android:width="1dp" android:color="#d7d7d7" />
-      <solid android:color="#fcfcfc" />
-
+    <shape android:shape="rectangle">
+      <solid android:color="#d9d8d8" />
     </shape>
   </item>
-
-  <!--<item android:top="1dp" android:bottom="1dp">-->
-  <item android:bottom="0.5dp">
-    <shape
-        android:shape="rectangle">
-      <stroke android:width="0.5dp" android:color="#faf8f8" />
+  <item android:bottom="0.5dp" >
+    // add android:right="5dp" and android:left="5dp" for border on left and right
+    <shape android:shape="rectangle">
       <solid android:color="#FFFFFF" />
     </shape>
   </item>
-
 </layer-list>

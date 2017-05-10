@@ -30,59 +30,11 @@ public class Bantuan extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_syarat);
+        setContentView(R.layout.activity_bantuan);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-        txtValue=(WebView) findViewById(R.id.txtValue);
-        txtName=(TextView) findViewById(R.id.txtName);
-
-        getData();
 
     }
 
-    private void getData(){
-        class GetData extends AsyncTask<Void,Void,String>{
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(Bantuan.this,"","Tunggu...",false,false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                showData(s);
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                HashMap<String,String> data = new HashMap<>();
-                data.put(AppConfig.KEY_NAME, "Butuh Bantuan");
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendPostRequest(AppConfig.URL_PARAMS, data);
-                return s;
-            }
-        }
-        GetData ge = new GetData();
-        ge.execute();
-    }
-
-    private void showData(String json){
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
-            JSONObject c = result.getJSONObject(0);
-            String id = c.getString(AppConfig.KEY_ID);
-            String name = c.getString(AppConfig.KEY_NAME);
-            String value = c.getString(AppConfig.KEY_VALUE);
-            txtName.setText("Butuh Bantuan ?");
-            txtValue.loadData(value, "text/html", "utf-8");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

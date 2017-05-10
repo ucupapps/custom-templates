@@ -97,6 +97,7 @@
                 android:textColor="#FFF"
                 android:textSize="15dp" />
             <TextView
+                android:id="@+id/txtNodaftar"
                 android:layout_width="wrap_content"
                 android:layout_margin="5dp"
                 android:textColor="#FFF"
