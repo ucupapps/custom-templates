@@ -187,9 +187,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
+            String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+            Log.e(TAG, "refreshtokengmc:" + refreshedToken);
             idToken = acct.getIdToken();
-            Toast.makeText(this, acct.getDisplayName()+","+acct.getEmail()+","+idToken, Toast.LENGTH_LONG).show();
-            loginSocial(idToken);
+//            Toast.makeText(this, acct.getDisplayName()+","+acct.getEmail()+","+idToken, Toast.LENGTH_LONG).show();
+            loginSocial(idToken,refreshedToken);
 //            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
 //            updateUI(true);
         } else {
@@ -199,13 +201,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
-    private void loginSocial(final String token){
+    private void loginSocial(final String token, final String refreshedToken){
         class LoginSocial extends AsyncTask<Void,Void,String> {
             ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loading = ProgressDialog.show(profile.this,"Mohon tunggu..."," ",false,false);
+                loading = ProgressDialog.show(LoginActivity.this,"Mohon tunggu..."," ",false,false);
             }
 
             @Override
@@ -228,19 +230,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 //                        JSONObject user = jObj.getJSONObject("user");
                         JSONObject user = jObj.getJSONObject("user");
-//                        JWT jwt = new JWT(jObj.getString("token"));
-//                        String ids = jwt.getId();
-//                        Log.e("email",ids);
-//                        String uid = user.getString("id");
-//                        String name = user.getString("name");
+                        JWT jwt = new JWT(jObj.getString("token"));
+                        String ids = jwt.getId();
+                        Log.e("email",ids);
+                        String uid = user.getString("id");
+                        String name = user.getString("name");
                         String email = user.getString("email");
-//                        String family_phone = user.getString("family_phone");
-////                        String token = refreshedToken;
-//                        String created_at = user
-//                                .getString("created_at");
-//
-//                        // Inserting row in users table
-//                        db.addUser(uid,name, email, created_at,family_phone);
+                        String family_phone = user.getString("family_phone");
+//                        String token = refreshedToken;
+                        String created_at = user
+                                .getString("created_at");
+
+                        // Inserting row in users table
+                        db.addUser(uid,name, email, created_at,family_phone);
 
                         Toast.makeText(getApplicationContext(), "email " + email, Toast.LENGTH_LONG).show();
                         // Launch main activity
@@ -268,6 +270,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             protected String doInBackground(Void... params) {
                 HashMap<String,String> data = new HashMap<>();
                 data.put("idToken", token);
+                data.put("token", refreshedToken);
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendPostRequest(AppConfig.URL_LOGIN_SOCIAL,data);
                 return s;
