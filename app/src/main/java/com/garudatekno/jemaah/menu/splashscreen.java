@@ -24,13 +24,14 @@ import com.garudatekno.jemaah.R;
 public class splashscreen extends Activity {
 
     //Set waktu lama splashscreen
-    private static int splashInterval = 2000;
+    private static int splashInterval = 500;
     private static final String[] requiredPermissions = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.SEND_SMS,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_CONTACTS
             /* ETC.. */
     };
     @Override
@@ -53,14 +54,11 @@ public class splashscreen extends Activity {
 
             new Handler().postDelayed(new Runnable() {
 
-
                 @Override
                 public void run() {
                     // TODO Auto-generated method stub
                     Intent i = new Intent(splashscreen.this, panduan.class);
                     startActivity(i);
-
-
                     //jeda selesai Splashscreen
                     this.finish();
                 }

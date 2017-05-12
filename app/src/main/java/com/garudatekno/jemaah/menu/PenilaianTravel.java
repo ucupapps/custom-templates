@@ -48,6 +48,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
     private CircleImageView imgProfile;
     String lat,lng,uid;
     RatingBar ratingBar ;
+    ImageView img;
     //user
     private SQLiteHandler db;
     private SessionManager session;
@@ -117,7 +118,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
+                Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
             }
         });
@@ -213,19 +214,24 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         txttravel = (TextView) findViewById(R.id.travel);
         editTextuser = (TextView) findViewById(R.id.userid);
         textKomen = (EditText) findViewById(R.id.komen);
+        img = (ImageView) findViewById(R.id.img);
+        img.setVisibility(View.VISIBLE);
         txtpembimbing = (TextView) findViewById(R.id.txtpembimbing);
         ratingBar = (RatingBar) findViewById(R.id.dialog_ratingbar);
-
+        txttravel.setVisibility(View.GONE);
         txtJudul.setText("Penilaian Agen Perjalanan");
         txtTanya.setText("Bagaimana kualitas pelayanan agen perjalanan?");
         if (!session.isLoggedIn()) {
             logoutUser();
         }
+
+        Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").into(img);
         getData();
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
         imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
+        imgProfile.setVisibility(View.GONE);
         buttonAdd.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
@@ -235,11 +241,11 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         if(v == buttonAdd){
             String user=uid;
             String rating=String.valueOf(ratingBar.getRating());
-            String pembimbing=txtpembimbing.getText().toString().trim();
+            String pembimbing=txtName.getText().toString().trim();
             String komen=textKomen.getText().toString().trim();
             addRating(user,pembimbing,rating,komen);
          }if(v == buttonLogout){
-            Intent i = new Intent(getApplicationContext(), profile.class);
+            Intent i = new Intent(getApplicationContext(), panduan.class);
             startActivity(i);
         }
     }
@@ -287,15 +293,14 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
             JSONObject jsonObject = new JSONObject(json);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
             JSONObject c = result.getJSONObject(0);
-            String name = c.getString(AppConfig.KEY_PEMBIMBING);
+            String name = c.getString(AppConfig.KEY_TRAVEL_AGENT);
             String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
-            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBINGID);
+//            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBINGID);
 
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
 
             txtName.setText(name);
             txttravel.setText(travel);
-            txtpembimbing.setText(pembimbing);
+//            txtpembimbing.setText(pembimbing);
             editTextuser.setText(uid);
 
         } catch (JSONException e) {
@@ -328,7 +333,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
                 data.put(AppConfig.KEY_PENILAIID, penilai);
                 data.put(AppConfig.KEY_COMMENT, komen);
                 data.put(AppConfig.KEY_RATING, rate);
-                data.put(AppConfig.KEY_CATEGORY, "PEMBIMBING");
+                data.put(AppConfig.KEY_CATEGORY, "TRAVEL AGENT");
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(AppConfig.URL_RATING, data);
                 return res;
@@ -338,7 +343,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         AddBarcode ae = new AddBarcode();
         ae.execute();
 
-        startActivity(new Intent(PenilaianTravel.this, profile.class));
+        startActivity(new Intent(PenilaianTravel.this, PenilaianPemimpinTur.class));
     }
 
 }

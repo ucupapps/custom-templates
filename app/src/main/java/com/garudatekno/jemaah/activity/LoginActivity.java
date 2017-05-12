@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private int RC_SIGN_IN = 100;
     private EditText inputEmail;
-    private TextView txtBantuan,txtSyarat;
+    private TextView txtBantuan,txtSyarat,txtNodaftar;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
@@ -74,6 +74,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
         txtBantuan = (TextView) findViewById(R.id.txtBantuan);
         txtSyarat = (TextView) findViewById(R.id.txtSyarat);
+        txtNodaftar = (TextView) findViewById(R.id.txtNodaftar);
+        txtNodaftar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, panduan.class);
+                startActivity(intent);
+            }
+        });
         txtBantuan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, Bantuan.class);

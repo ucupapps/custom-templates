@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -29,13 +27,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.CustomListPanduan3;
@@ -43,12 +38,12 @@ import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.MapsActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.gcm.weather;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,12 +71,11 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 
 public class panduan extends AppCompatActivity implements ListView.OnItemClickListener {
 
-    private static final String TAG = "MyUser";
+    private static final String TAG = "MyHOME";
 
     private ListView listView;
     private TextView txtid;
@@ -103,11 +97,17 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             /* ETC.. */
     };
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
+        //tracker
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        sendScreenImageName("Home");
+        //end tracker
 
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
@@ -367,39 +367,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void addRating(final String user, final String rate){
-        class AddBarcode extends AsyncTask<Bitmap,Void,String> {
-
-            ProgressDialog loading;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(panduan.this,"","",false,false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(panduan.this, s, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                HashMap<String,String> data = new HashMap<>();
-                data.put(AppConfig.KEY_USERID, user);
-                data.put(AppConfig.KEY_RATING, rate);
-                RequestHandler rh = new RequestHandler();
-                String res = rh.sendPostRequest(AppConfig.URL_RATING, data);
-                return res;
-            }
-        }
-
-        AddBarcode ae = new AddBarcode();
-        ae.execute();
-
-        startActivity(new Intent(panduan.this, panduan.class));
+    private void sendScreenImageName(String name) {
+        // [START screen_view_hit]
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
     }
 
     private void logoutUser() {
@@ -455,6 +427,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         @Override
         public CharSequence getPageTitle(int position) {
+            Log.d(TAG, mFragmentTitleList.get(position).toString());
             return mFragmentTitleList.get(position);
         }
     }

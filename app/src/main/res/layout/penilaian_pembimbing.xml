@@ -68,6 +68,14 @@
         android:paddingTop="5dp"
         android:layout_gravity="center"
         android:background="@drawable/circle_green"/>
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
 <TextView
     android:id="@+id/userid"
     android:visibility="gone"
@@ -148,10 +156,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:orientation="horizontal">
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_margin="20dp"
             android:textAllCaps="false"
@@ -160,8 +169,7 @@
             android:textColor="#FFF"
             android:id="@+id/buttonAdd" />
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_width="wrap_content"
             android:textAllCaps="false"
             android:layout_margin="20dp"
             android:layout_height="30dp"

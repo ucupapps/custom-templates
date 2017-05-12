@@ -18,7 +18,7 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +37,15 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Document;
 
@@ -54,10 +57,8 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-import static java.lang.Boolean.FALSE;
 
-
-public class go extends AppCompatActivity implements OnMapReadyCallback {
+public class go extends AppCompatActivity {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
     private Button btnbus, btnhotel, btnmeeting, btnpintu;
     private Bitmap bitmap;
@@ -83,7 +84,6 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-        session = new SessionManager(getApplicationContext());
         Intent i = getIntent();
         name = i.getStringExtra(AppConfig.KEY_NAME);
 
@@ -97,12 +97,43 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         } else {
-//            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-            MapFragment mapFragment = (MapFragment) getFragmentManager()
-                    .findFragmentById(R.id.map);
+            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync((OnMapReadyCallback) this);
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            // get the last know location from your location manager.
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                return;
+            }
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            if (location != null) {
+                LatLng fromPosition = new LatLng(location.getLatitude(), location.getLongitude());
+//
+                database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+                Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
+                c.moveToFirst();
+                DecimalFormat df = new DecimalFormat("#.####");
+                String lats = c.getString(2);
+                String lngs = c.getString(3);
+//                String lngs = df.format(Float.parseFloat(c.getString(3)));
+//                Log.d("hasilnya",lats+" - "+c.getString(2));
+//                Log.d("hasilnya",lngs+" - "+c.getString(3));
+                LatLng toPosition = new LatLng(Double.parseDouble(lats), Double.parseDouble(lngs));
 
-            mapFragment.getMapAsync(this);
+//            LatLng fromPosition = new LatLng(-6.3039, 106.8267);
+//            LatLng toPosition = new LatLng(-6.29436, 106.8859);
+                md = new GMapV2Direction();
 
+//            LatLng coordinates = new LatLng(-6.3039, 106.8267);
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
+
+                mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                        .title("Lokasi Saya"));
+                mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
+                getDirectionMap(fromPosition, toPosition);
+            }else{
+                Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
+            }
+            mMap.setMyLocationEnabled(true);
 
         }
 
@@ -194,49 +225,24 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
-        final PopupMenu popup = new PopupMenu(this, img_setting);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        if (!session.isLoggedIn()) {
-            Menu popupMenu = popup.getMenu();
-            popupMenu.findItem(R.id.logout).setVisible(FALSE);
-        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(go.this, img_setting);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         if(id == R.id.logout) {
                             logoutUser();
-                        }if(id == R.id.donasi) {
-                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.penilaian) {
-                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
-                            startActivity(i);
-                        }if(id == R.id.cek_visa) {
-                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.share) {
-                            try {
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("text/plain");
-                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
-                                String sAux = "\nLet me recommend you this application\n\n";
-                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
-                                i.putExtra(Intent.EXTRA_TEXT, sAux);
-                                startActivity(Intent.createChooser(i, "choose one"));
-                            } catch(Exception e) {
-                                //e.toString();
-                            }
-                        }if(id == R.id.download_doa) {
-
                         }
                         return true;
                     }
                 });
+
                 popup.show();//showing popup menu
             }
         });
@@ -245,6 +251,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
 
+        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -272,48 +279,6 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
        LatLng fromto[] = { from, to };
        new LongOperation().execute(fromto);
 
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        // get the last know location from your location manager.
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        if (location != null) {
-            LatLng fromPosition = new LatLng(location.getLatitude(), location.getLongitude());
-//
-            database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
-            Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
-            c.moveToFirst();
-            DecimalFormat df = new DecimalFormat("#.####");
-            String lats = c.getString(2);
-            String lngs = c.getString(3);
-//                String lngs = df.format(Float.parseFloat(c.getString(3)));
-//                Log.d("hasilnya",lats+" - "+c.getString(2));
-//                Log.d("hasilnya",lngs+" - "+c.getString(3));
-            LatLng toPosition = new LatLng(Double.parseDouble(lats), Double.parseDouble(lngs));
-
-//            LatLng fromPosition = new LatLng(-6.3039, 106.8267);
-//            LatLng toPosition = new LatLng(-6.29436, 106.8859);
-            md = new GMapV2Direction();
-
-//            LatLng coordinates = new LatLng(-6.3039, 106.8267);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
-
-            mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                    .title("Lokasi Saya"));
-            mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
-            getDirectionMap(fromPosition, toPosition);
-        }else{
-            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-        }
-        mMap.setMyLocationEnabled(true);
     }
 
     private class LongOperation extends AsyncTask<LatLng, Void, Document> {

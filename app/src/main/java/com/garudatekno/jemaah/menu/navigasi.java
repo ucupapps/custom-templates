@@ -331,6 +331,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         imghotel=(ImageView) findViewById(R.id.arrow_hotel);
         imgpintu=(ImageView) findViewById(R.id.arrow_pintu);
         imgbertemu=(ImageView) findViewById(R.id.arrow_bertemu);
+
         imgbertemu.setOnClickListener(this);
         imgpintu.setOnClickListener(this);
         imgbus.setOnClickListener(this);
@@ -341,6 +342,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         txtbertemu = (TextView) findViewById(R.id.txtbertemu);
         txtmasjid = (TextView) findViewById(R.id.txtmasjid);
         txtpoi = (TextView) findViewById(R.id.txtpoi);
+
         txtbus.setOnClickListener(this);
         txthotel.setOnClickListener(this);
         txtbertemu.setOnClickListener(this);
@@ -570,6 +572,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         int count= mCount.getInt(0);
         if(count > 0) {
             tv.setBackgroundResource(R.drawable.button);
+            tv.setPadding(5,5,5,5);
             tv.setText("Arahkan");
         }
     }

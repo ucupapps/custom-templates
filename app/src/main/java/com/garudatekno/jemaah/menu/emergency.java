@@ -2,8 +2,10 @@ package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
@@ -11,6 +13,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +58,8 @@ import static java.lang.Boolean.FALSE;
 
 public class emergency extends AppCompatActivity implements OnClickListener, OnMapReadyCallback  {
     private EditText editTextuser,txtMessage,txtphone,txtlng,txtlat;
-    private Button buttonAdd;
+    private Button buttonAdd,buttonAdd2,btnaddcontact;
+    TextView contact;
     private Bitmap bitmap;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
@@ -68,6 +72,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     private SessionManager session;
     private GoogleMap mMap;
     Location location;
+    private final int PICK_CONTACT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,8 +250,14 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         editTextuser.setText(uid);
         txtphone.setText(phone);
 
+        contact = (TextView) findViewById(R.id.contact);
+
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        buttonAdd2 = (Button) findViewById(R.id.buttonAdd2);
+        btnaddcontact = (Button) findViewById(R.id.addContact);
         buttonAdd.setOnClickListener(this);
+        buttonAdd2.setOnClickListener(this);
+        btnaddcontact.setOnClickListener(this);
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
         File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
@@ -332,8 +343,8 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             for(String number : numbers) {
                 smsManager.sendMultipartTextMessage(number, null, parts, null, null);
             }
-            Toast.makeText(getApplicationContext(), "Message Sent",
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "Pesan terkirim",
+//                    Toast.LENGTH_LONG).show();
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
                     Toast.LENGTH_LONG).show();
@@ -342,24 +353,67 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     }
 
     public void onClick(View v){
+        if(v == buttonAdd2){
+            getCurrentLocation();
+//            if(contact.getText().toString().equals("") || contact.getText().toString().equals(","))
+//            {
+//                Toast.makeText(this, "No tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+//            }else{
+                addBarcode();
+//            }
+        }
         if(v == buttonAdd){
             getCurrentLocation();
             if(txtMessage.getText().toString().equals(""))
             {
-                Toast.makeText(this, "Message cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtphone.getText().toString().equals(""))
+                Toast.makeText(this, "Pesan tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            }else if(contact.getText().toString().equals("") || contact.getText().toString().equals(","))
             {
-                Toast.makeText(this, "Family phone cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtlat.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
             }else {
 //            String phoneNumber = "082113150425,085229296292,081328280585";
-                String phoneNumber = txtphone.getText().toString();
+                String phoneNumber = contact.getText().toString();
                 String message = txtMessage.getText().toString();
                 sendSMS(phoneNumber, message);
                 addBarcode();
             }
+        }
+        if(v == btnaddcontact){
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, PICK_CONTACT);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        switch (reqCode) {
+            case (PICK_CONTACT):
+                if (resultCode == RESULT_OK) {
+
+                    Uri contactData = data.getData();
+                    Cursor c = managedQuery(contactData, null, null, null, null);
+                    if (c.moveToFirst()) {
+                        String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                        String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                        if (hasPhone.equalsIgnoreCase("1")) {
+                            Cursor phones = getContentResolver().query(
+                                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
+                                    null, null);
+                            phones.moveToFirst();
+                            String cNumber = phones.getString(phones.getColumnIndex("data1"));
+                            String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                            String no=contact.getText().toString().trim();
+                            no += cNumber+",";
+                            contact.setText(no);
+//                            Toast.makeText(this, name +":"+ cNumber, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+                break;
         }
     }
 

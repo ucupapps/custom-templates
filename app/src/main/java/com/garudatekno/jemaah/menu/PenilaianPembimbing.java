@@ -118,7 +118,7 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), PenilaianPembimbing.class);
+                Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
             }
         });
@@ -237,7 +237,7 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         if(v == buttonAdd){
             String user=uid;
             String rating=String.valueOf(ratingBar.getRating());
-            String pembimbing=txtpembimbing.getText().toString().trim();
+            String pembimbing=txtName.getText().toString().trim();
             String komen=textKomen.getText().toString().trim();
             addRating(user,pembimbing,rating,komen);
          }if(v == buttonLogout){
@@ -291,14 +291,13 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
             JSONObject c = result.getJSONObject(0);
             String name = c.getString(AppConfig.KEY_PEMBIMBING);
             String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
-            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBINGID);
-
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
 
             txtName.setText(name);
             txttravel.setText(travel);
-            txtpembimbing.setText(pembimbing);
+//            txtpembimbing.setText(pembimbing);
             editTextuser.setText(uid);
+
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").into(imgProfile);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -340,7 +339,7 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         AddBarcode ae = new AddBarcode();
         ae.execute();
 
-        startActivity(new Intent(PenilaianPembimbing.this, profile.class));
+        startActivity(new Intent(PenilaianPembimbing.this, panduan.class));
     }
 
 }
