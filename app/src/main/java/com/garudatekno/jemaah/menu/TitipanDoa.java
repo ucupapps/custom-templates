@@ -166,7 +166,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.logout) {
+                        if(id == R.id.syarat) {
+                            Intent i = new Intent(getApplicationContext(), SyaratKetentuan.class);
+                            startActivity(i);
+                        }if(id == R.id.logout) {
                             logoutUser();
                         }if(id == R.id.donasi) {
                             Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
@@ -327,9 +330,9 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         AddBarcode ae = new AddBarcode();
         ae.execute();
 //        startActivity(new Intent(TitipanDoa.this, TitipanDoa.class));
-        Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
+        Intent intent = getIntent();
         finish();
-        startActivity(i);
+        startActivity(intent);
     }
 
     @Override

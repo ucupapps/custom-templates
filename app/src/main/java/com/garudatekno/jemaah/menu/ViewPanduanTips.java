@@ -184,7 +184,10 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
-                        if(id == R.id.logout) {
+                        if(id == R.id.syarat) {
+                            Intent i = new Intent(getApplicationContext(), SyaratKetentuan.class);
+                            startActivity(i);
+                        }if(id == R.id.logout) {
                             logoutUser();
                         }if(id == R.id.donasi) {
                             Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");

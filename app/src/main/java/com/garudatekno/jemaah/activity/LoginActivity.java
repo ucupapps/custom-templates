@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
         txtBantuan = (TextView) findViewById(R.id.txtBantuan);
-        txtSyarat = (TextView) findViewById(R.id.txtSyarat);
+//        txtSyarat = (TextView) findViewById(R.id.txtSyarat);
         txtNodaftar = (TextView) findViewById(R.id.txtNodaftar);
         txtNodaftar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -87,12 +87,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivity(intent);
             }
         });
-        txtSyarat.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SyaratKetentuan.class);
-                startActivity(intent);
-            }
-        });
+//        txtSyarat.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LoginActivity.this, SyaratKetentuan.class);
+//                startActivity(intent);
+//            }
+//        });
 
 //        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
 //        signInButton.setSize(SignInButton.SIZE_STANDARD);
