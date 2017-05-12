@@ -1,10 +1,8 @@
 package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,14 +35,12 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Document;
 
@@ -58,7 +54,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 import static java.lang.Boolean.FALSE;
 
 
-public class GoPoi extends AppCompatActivity {
+public class GoPoi extends AppCompatActivity implements OnMapReadyCallback {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
     private Button btnbus, btnhotel, btnmeeting, btnpintu;
     private Bitmap bitmap;
@@ -100,30 +96,10 @@ public class GoPoi extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         } else {
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            // get the last know location from your location manager.
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                return;
-            }
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location != null) {
-                LatLng fromPosition = new LatLng(location.getLatitude(), location.getLongitude());
-                LatLng toPosition = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+            MapFragment mapFragment = (MapFragment) getFragmentManager()
+                    .findFragmentById(R.id.map);
 
-                md = new GMapV2Direction();
-
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
-
-                mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                        .title("Lokasi Saya"));
-                mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
-                getDirectionMap(fromPosition, toPosition);
-            }else{
-                Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-            }
-            mMap.setMyLocationEnabled(true);
+            mapFragment.getMapAsync(this);
 
         }
 
@@ -289,6 +265,35 @@ public class GoPoi extends AppCompatActivity {
        LatLng fromto[] = { from, to };
        new LongOperation().execute(fromto);
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        // get the last know location from your location manager.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location != null) {
+            LatLng fromPosition = new LatLng(location.getLatitude(), location.getLongitude());
+            LatLng toPosition = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+
+            md = new GMapV2Direction();
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
+
+            mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                    .title("Lokasi Saya"));
+            mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
+            getDirectionMap(fromPosition, toPosition);
+        }else{
+            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
+        }
+        mMap.setMyLocationEnabled(true);
     }
 
     private class LongOperation extends AsyncTask<LatLng, Void, Document> {

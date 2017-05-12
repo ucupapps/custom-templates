@@ -62,6 +62,9 @@ public class AppConfig {
 	public static final String KEY_TOWN = "town";
 	public static final String KEY_PROVINCE = "province";
 	public static final String UPLOAD_KEY = "image";
+	public static final String UPLOAD_AGENT = "image_agent";
+	public static final String UPLOAD_PEMBIMBING = "image_pembimbing";
+	public static final String UPLOAD_PEMIMPIN= "image_pemimpin";
 	public static final String KEY_USERID = "userid";
 	public static final String KEY_DATETIME = "datetime";
 	public static final String KEY_DATE = "date";

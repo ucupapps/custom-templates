@@ -57,14 +57,15 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             EditPembimbing,EditPembimbingPhone,EditPemimpin,EditPemimpinPhone;
     private Button buttonAdd, scanBtn;
     private Button buttonUpload;
-    private CircleImageView imgProfile;
-    private Bitmap bitmap;
+    private CircleImageView imgProfile,imgAgent,imgPemimpin,imgPembimbing;
+    private Bitmap bitmapProfile,bitmapAgent,bitmapPemimpin,bitmapPembimbing;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
     String created,email,uid,nama;
-    private int PICK_IMAGE_REQUEST = 1;
-    private Uri filePath;
+    private int PICK_IMAGE_REQUEST = 3;
+    private Uri filePathProfile,filePathAgent,filePathPemimpin,filePathPembimbing;
+    private String selectedProfile,selectedAgent,selectedPemimpin,selectedPembimbing;
     //user
     private SQLiteHandler db;
     private SessionManager session;
@@ -258,9 +259,15 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
+        imgAgent = (CircleImageView) findViewById(R.id.imageAgent);
+        imgPembimbing = (CircleImageView) findViewById(R.id.imagePembimbing);
+        imgPemimpin = (CircleImageView) findViewById(R.id.imagePemimpin);
 
         //buttonChoose.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
+        imgAgent.setOnClickListener(this);
+        imgPembimbing.setOnClickListener(this);
+        imgPemimpin.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
 
     }
@@ -296,11 +303,45 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                 addBarcode();
             }
         }if(v == imgProfile){
+                selectedProfile = "selected";
+                selectedAgent = null;
+                selectedPembimbing = null;
+                selectedPemimpin = null;
             Intent inten = new Intent();
             inten.setType("image/*");
             inten.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(inten, "Select Picture"), PICK_IMAGE_REQUEST);
         }
+            if(v == imgAgent){
+                selectedProfile = null;
+                selectedAgent = "selected";
+                selectedPembimbing = null;
+                selectedPemimpin = null;
+                Intent inten = new Intent();
+                inten.setType("image/*");
+                inten.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(inten, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+            if(v == imgPembimbing){
+                selectedProfile = null;
+                selectedAgent = null;
+                selectedPembimbing = "selected";
+                selectedPemimpin = null;
+                Intent inten = new Intent();
+                inten.setType("image/*");
+                inten.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(inten, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
+            if(v == imgPemimpin){
+                selectedProfile = null;
+                selectedAgent = null;
+                selectedPembimbing = null;
+                selectedPemimpin = "selected";
+                Intent inten = new Intent();
+                inten.setType("image/*");
+                inten.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(inten, "Select Picture"), PICK_IMAGE_REQUEST);
+            }
     }
 
     private void getData(){
@@ -396,13 +437,43 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imgProfile.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            if(selectedProfile != null) {
+                filePathProfile = data.getData();
+                try {
+                    Bitmap bitmapProfileOri = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathProfile);
+                    bitmapProfile = getResizedBitmap(bitmapProfileOri, 500);
+                    imgProfile.setImageBitmap(bitmapProfile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(selectedAgent != null) {
+                filePathAgent = data.getData();
+                try {
+                    Bitmap bitmapAgentOri = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathAgent);
+                    bitmapAgent = getResizedBitmap(bitmapAgentOri, 500);
+                    imgAgent.setImageBitmap(bitmapAgent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(selectedPemimpin != null) {
+                filePathPemimpin = data.getData();
+                try {
+                    Bitmap bitmapPemimpinOri = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathPemimpin);
+                    bitmapPemimpin = getResizedBitmap(bitmapPemimpinOri, 500);
+                    imgPemimpin.setImageBitmap(bitmapPemimpin);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(selectedPembimbing != null) {
+                filePathPembimbing = data.getData();
+                try {
+                    Bitmap bitmapPembimbingOri = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathPembimbing);
+                    bitmapPembimbing = getResizedBitmap(bitmapPembimbingOri, 500);
+                    imgPembimbing.setImageBitmap(bitmapPembimbing);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -413,6 +484,21 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     //Adding an addBarcode
@@ -462,12 +548,43 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected String doInBackground(Bitmap... params) {
                 Bitmap bitmap = params[0];
+                Bitmap bitmap2 = params[1];
 
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_USERID, idUser);
+                if(bitmapProfile != null) {
+                    String uploadImageProfile = getStringImage(bitmapProfile);
+                    Log.e("profile", uploadImageProfile);
+                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
+                }else{
+                    data.put(AppConfig.UPLOAD_KEY, "");
+                }
+                if(bitmapAgent != null) {
+                    String uploadImageAgent = getStringImage(bitmapAgent);
+                    Log.e("agent", uploadImageAgent);
+                    data.put(AppConfig.UPLOAD_AGENT, uploadImageAgent);
+                }else{
+                    data.put(AppConfig.UPLOAD_AGENT, "");
+                }
+                if(bitmapPemimpin != null) {
+                    String uploadImagePemimpin = getStringImage(bitmapPemimpin);
+                    Log.e("pemimpin", uploadImagePemimpin);
+                    data.put(AppConfig.UPLOAD_PEMIMPIN, uploadImagePemimpin);
+                }else{
+                    data.put(AppConfig.UPLOAD_PEMIMPIN, "");
+                }
+                if(bitmapPembimbing != null) {
+                    String uploadImagePembimbing = getStringImage(bitmapPembimbing);
+                    Log.e("pemimpin", uploadImagePembimbing);
+                    data.put(AppConfig.UPLOAD_PEMBIMBING, uploadImagePembimbing);
+                }else{
+                    data.put(AppConfig.UPLOAD_PEMBIMBING, "");
+                }
+
                 try{
-                    String uploadImage = getStringImage(bitmap);
-                    data.put(AppConfig.UPLOAD_KEY, uploadImage);
+//                    String uploadImageProfile = getStringImage(bitmapProfile);
+//                    Log.e("profile",uploadImageProfile);
+//                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
 
                     //save image to sdcard
                     File sdCardDirectory = Environment.getExternalStorageDirectory();
@@ -476,7 +593,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     FileOutputStream outStream;
 
                     outStream = new FileOutputStream(image);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
                     /* 100 to keep full quality of the image */
                     outStream.flush();
                     outStream.close();
@@ -530,7 +647,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         }
 
         AddBarcode ae = new AddBarcode();
-        ae.execute(bitmap);
+        ae.execute(bitmapProfile,bitmapAgent,bitmapPembimbing,bitmapPemimpin);
 
         startActivity(new Intent(edit_profile.this, edit_profile.class));
     }
