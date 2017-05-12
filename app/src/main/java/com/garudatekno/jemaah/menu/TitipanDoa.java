@@ -51,7 +51,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     private static final String TAG = "MyUser";
 
     private ListView listView;
-
     private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
@@ -64,6 +63,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
         session = new SessionManager(getApplicationContext());
         listView = (ListView) findViewById(R.id.listView);
+        listView.destroyDrawingCache();
         listView.setOnItemClickListener(this);
 
         //HEADER
@@ -228,6 +228,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     private void showData(){
         JSONObject jsonObject = null;
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
+
         try {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
@@ -299,7 +300,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         finish();
     }
 
-    private void addDoakan(final String id){
+    public void addDoakan(final String id){
         class AddBarcode extends AsyncTask<Bitmap,Void,String> {
 
             ProgressDialog loading;
@@ -314,7 +315,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
 //                loading.dismiss();
-                Toast.makeText(TitipanDoa.this, s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TitipanDoa.this, s, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -330,23 +331,21 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         AddBarcode ae = new AddBarcode();
         ae.execute();
 //        startActivity(new Intent(TitipanDoa.this, TitipanDoa.class));
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
-        final String empId = map.get(AppConfig.TAG_ID).toString();
-        final Button btndoakan = (Button)view.findViewById(R.id.btndoakan);
-        btndoakan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(),"Download "+empId, Toast.LENGTH_LONG).show();
-                addDoakan(empId);
-            }
-        });
+//        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+//        final String empId = map.get(AppConfig.TAG_ID).toString();
+//        final Button btndoakan = (Button)view.findViewById(R.id.btndoakan);
+//        btndoakan.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Toast.makeText(getApplicationContext(),"Download "+empId, Toast.LENGTH_LONG).show();
+//                addDoakan(empId);
+//            }
+//        });
     }
 }

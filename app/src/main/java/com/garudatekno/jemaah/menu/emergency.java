@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -258,6 +259,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonAdd2 = (Button) findViewById(R.id.buttonAdd2);
         btnaddcontact = (Button) findViewById(R.id.addContact);
+        btnaddcontact.setTypeface(null, Typeface.BOLD);
         buttonAdd.setOnClickListener(this);
         buttonAdd2.setOnClickListener(this);
         btnaddcontact.setOnClickListener(this);

@@ -134,7 +134,6 @@
                 android:id="@+id/btndoakan"
                 android:textColor="@color/white"
                 android:text="Doakan"
-                android:focusable="false"
                 android:textAllCaps="false"
                 android:background="@drawable/button"
                 android:layout_width="100dp"

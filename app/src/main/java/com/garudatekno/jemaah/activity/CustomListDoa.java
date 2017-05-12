@@ -1,16 +1,25 @@
 package com.garudatekno.jemaah.activity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.menu.TitipanDoa;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +61,7 @@ public class CustomListDoa extends SimpleAdapter {
         titip.setTypeface(font);
         btndoakan.setTypeface(font);
 
-        String strID = (String) data.get(AppConfig.KEY_ID);
+        final String strID = (String) data.get(AppConfig.KEY_ID);
         String strMessage = (String) data.get(AppConfig.KEY_MESSAGE);
         String strTime = (String) data.get(AppConfig.KEY_TIME);
         String strFrom = (String) data.get(AppConfig.KEY_FROM);
@@ -63,6 +72,23 @@ public class CustomListDoa extends SimpleAdapter {
         from.setText(strFrom);
         jum.setText(strJum);
 
+        btndoakan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notifyDataSetChanged();
+                TitipanDoa d= new TitipanDoa();
+                d.addDoakan(strID);
+                Intent intent= new Intent(mContext, TitipanDoa.class);
+                ((Activity)mContext).finish();
+                mContext.startActivity(intent);
+            }
+
+
+        });
+
         return vi;
     }
+
+
+
 }
