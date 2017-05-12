@@ -68,6 +68,14 @@
         android:paddingTop="5dp"
         android:layout_gravity="center"
         android:background="@drawable/circle_green"/>
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
 <TextView
     android:id="@+id/userid"
     android:visibility="gone"

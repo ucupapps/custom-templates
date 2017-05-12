@@ -234,9 +234,6 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
         buttonStart = (Button) findViewById(R.id.btnPlay);
         buttonSave = (Button) findViewById(R.id.btnSimpan);
 
-        file=txtFile.getText().toString().trim();
-        srcPath= AppConfig.URL_HOME+"/uploads/panduan/kamus/"+file;
-        Log.d("PATH", srcPath);
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         buttonStart.setOnClickListener(this);
@@ -328,10 +325,13 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
 
         if(v == buttonStart){
             if(buttonStart.getText().toString().trim().equals("Mainkan Audio")){
+                mediaPlayer.reset();
+                file=txtFile.getText().toString().trim();
+                srcPath= AppConfig.URL_HOME+"/uploads/panduan/kamus/"+file;
+                Log.d("PATH", srcPath);
                  new Player()
                             .execute(srcPath);
                     mediaPlayer.start();
-
                 buttonStart.setText("Stop");
                 playPause = true;
             }else{

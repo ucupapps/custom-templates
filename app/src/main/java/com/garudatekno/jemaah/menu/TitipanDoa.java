@@ -205,7 +205,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             logoutUser();
         }
 
-
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -252,7 +251,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         CustomListDoa adapter = new CustomListDoa(this, list,
                 R.layout.list_doa, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM,AppConfig.KEY_JUMLAH },
                 new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME,R.id.txtFROM,R.id.txtJumlah });
-
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }

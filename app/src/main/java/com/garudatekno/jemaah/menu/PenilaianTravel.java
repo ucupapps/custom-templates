@@ -48,6 +48,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
     private CircleImageView imgProfile;
     String lat,lng,uid;
     RatingBar ratingBar ;
+    ImageView img;
     //user
     private SQLiteHandler db;
     private SessionManager session;
@@ -213,6 +214,8 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         txttravel = (TextView) findViewById(R.id.travel);
         editTextuser = (TextView) findViewById(R.id.userid);
         textKomen = (EditText) findViewById(R.id.komen);
+        img = (ImageView) findViewById(R.id.img);
+        img.setVisibility(View.VISIBLE);
         txtpembimbing = (TextView) findViewById(R.id.txtpembimbing);
         ratingBar = (RatingBar) findViewById(R.id.dialog_ratingbar);
         txttravel.setVisibility(View.GONE);
@@ -221,11 +224,14 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         if (!session.isLoggedIn()) {
             logoutUser();
         }
+
+        Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").into(img);
         getData();
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
         imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
+        imgProfile.setVisibility(View.GONE);
         buttonAdd.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
@@ -291,7 +297,6 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
             String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
 //            String pembimbing = c.getString(AppConfig.KEY_PEMBIMBINGID);
 
-//            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
 
             txtName.setText(name);
             txttravel.setText(travel);

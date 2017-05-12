@@ -292,12 +292,12 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
             String name = c.getString(AppConfig.KEY_PEMBIMBING);
             String travel = c.getString(AppConfig.KEY_TRAVEL_AGENT);
 
-//            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+pembimbing+"/images.jpg").into(imgProfile);
-
             txtName.setText(name);
             txttravel.setText(travel);
 //            txtpembimbing.setText(pembimbing);
             editTextuser.setText(uid);
+
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").into(imgProfile);
 
         } catch (JSONException e) {
             e.printStackTrace();

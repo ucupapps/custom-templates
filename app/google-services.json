@@ -1,38 +1,28 @@
 {
   "project_info": {
-    "project_number": "230690886961",
-    "project_id": "gohajjdevfree"
+    "project_number": "810027904434",
+    "project_id": "apps-jemaah"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:230690886961:android:13c702ab04777566",
+        "mobilesdk_app_id": "1:810027904434:android:13c702ab04777566",
         "android_client_info": {
           "package_name": "com.garudatekno.jemaah"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "230690886961-65tub336koa3qgnv4guns6qssgnp852l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.garudatekno.jemaah",
-            "certificate_hash": "a9a89c595e5e1adbec47a4e2f65264a24abb26af"
-          }
-        },
-        {
-          "client_id": "230690886961-sg1t0m667vkcuoen3ic78j4enoa58o3a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDBTUqj7dN6oD6VN-eW1_InxPVIaQ7zmew"
+          "current_key": "AIzaSyAh4xoFX85B_OddqKOtiIOHSTKWu3hRkGc"
         }
       ],
       "services": {
         "analytics_service": {
-          "status": 1
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-98913775-1"
+          }
         },
         "appinvite_service": {
           "status": 1,

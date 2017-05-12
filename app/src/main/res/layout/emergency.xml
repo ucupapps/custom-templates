@@ -79,16 +79,45 @@
             tools:context=".menu.emergency" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorSilver"
+        android:padding="5dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To: " />
+
+        <TextView
+            android:id="@+id/contact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.96"
+            android:paddingLeft="5dp"
+            android:text="" />
+
+        <Button
+            android:id="@+id/addContact"
+            android:background="@drawable/circle_grey"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:text="+"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pesan" />
 
         <EditText
             android:layout_width="match_parent"
@@ -102,19 +131,36 @@
             android:ems="100"
             android:inputType="textMultiLine"
             android:id="@+id/message"/>
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center">
 
         <Button
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="40dp"
+            android:textAllCaps="false"
+            android:padding="10dp"
+            android:layout_margin="10dp"
             android:text="Kirim Pesan"
             android:textColor="#FFF"
             android:background="@drawable/button"
             android:id="@+id/buttonAdd" />
 
+    <Button
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:text="Kirim Tanpa Pesan"
+        android:textColor="#FFF"
+        android:background="@drawable/button_red"
+        android:id="@+id/buttonAdd2" />
+
+</LinearLayout>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
