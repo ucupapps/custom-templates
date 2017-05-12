@@ -25,6 +25,7 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,13 +38,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static java.lang.Boolean.FALSE;
-import static java.sql.Types.NULL;
 
 public class profile extends AppCompatActivity implements OnClickListener {
     private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing,
                         txtTravelPhone,txtPemimpinPhone,txtPembimbingPhone;
     private Button buttonAdd, buttonLogout,buttonpembimbing,buttonPemimpin;
-    private CircleImageView imgProfile;
+    private CircleImageView imgProfile,imgAgentProfile,imgPemimpinProfile,imgPembimbingProfile;
     String lat,lng,uid;
     //user
     private SQLiteHandler db;
@@ -58,6 +58,8 @@ public class profile extends AppCompatActivity implements OnClickListener {
         }
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        session = new SessionManager(getApplicationContext());
 
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -109,6 +111,8 @@ public class profile extends AppCompatActivity implements OnClickListener {
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
         }
+
+//        Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").error(R.drawable.profile).into(imgp);
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +226,6 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtpemimpin = (TextView) findViewById(R.id.pemimpin);
         txtPemimpinPhone = (TextView) findViewById(R.id.pemimpin_phone);
 
-        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -230,11 +233,16 @@ public class profile extends AppCompatActivity implements OnClickListener {
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
-        buttonpembimbing = (Button) findViewById(R.id.btnpembimbing);
-        buttonPemimpin = (Button) findViewById(R.id.btnpemimpin);
+//        buttonpembimbing = (Button) findViewById(R.id.btnpembimbing);
+//        buttonPemimpin = (Button) findViewById(R.id.btnpemimpin);
+
         imgProfile = (CircleImageView) findViewById(R.id.imageProfile);
-        buttonPemimpin.setOnClickListener(this);
-        buttonpembimbing.setOnClickListener(this);
+        imgAgentProfile = (CircleImageView) findViewById(R.id.imageAgentProfile);
+        imgPembimbingProfile = (CircleImageView) findViewById(R.id.imagePembimbingProfile);
+        imgPemimpinProfile = (CircleImageView) findViewById(R.id.imagePemimpinProfile);
+
+//        buttonPemimpin.setOnClickListener(this);
+//        buttonpembimbing.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
@@ -246,13 +254,14 @@ public class profile extends AppCompatActivity implements OnClickListener {
             startActivity(i);
          }if(v == buttonLogout){
             logoutUser();
-        }if(v == buttonpembimbing){
-            Intent i = new Intent(getApplicationContext(), PenilaianPembimbing.class);
-            startActivity(i);
-        }if(v == buttonPemimpin){
-            Intent i = new Intent(getApplicationContext(), PenilaianPemimpinTur.class);
-            startActivity(i);
         }
+//        if(v == buttonpembimbing){
+//            Intent i = new Intent(getApplicationContext(), PenilaianPembimbing.class);
+//            startActivity(i);
+//        }if(v == buttonPemimpin){
+//            Intent i = new Intent(getApplicationContext(), PenilaianPemimpinTur.class);
+//            startActivity(i);
+//        }
 
     }
 
@@ -329,9 +338,9 @@ public class profile extends AppCompatActivity implements OnClickListener {
 //                buttonPemimpin.setVisibility(View.VISIBLE);
 //            }
 
-            if(name.equals(NULL) || name.equals("")) {
-                imgProfile.setImageResource(R.drawable.profile);
-            }else{
+//            if(name.equals(NULL) || name.equals("")) {
+//                imgProfile.setImageResource(R.drawable.profile);
+//            }else{
                 File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
                 if (!file.exists()) {
                     imgProfile.setImageResource(R.drawable.profile);
@@ -339,7 +348,12 @@ public class profile extends AppCompatActivity implements OnClickListener {
                     Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
                     imgProfile.setImageBitmap(bmp);
                 }
-            }
+//            }
+
+//            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").error(R.drawable.profile).into(imgProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/agent.jpg").error(R.drawable.profile).into(imgAgentProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").error(R.drawable.profile).into(imgPembimbingProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pemimpin.jpg").error(R.drawable.profile).into(imgPemimpinProfile);
 
             txtName.setText(name);
             txtAddress.setText(address);

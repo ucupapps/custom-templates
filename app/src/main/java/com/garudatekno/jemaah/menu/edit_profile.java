@@ -31,6 +31,7 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +48,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static java.lang.Boolean.FALSE;
-import static java.sql.Types.NULL;
 
 public class edit_profile extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
@@ -398,9 +398,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             String efamily2 = c.getString(AppConfig.KEY_EMAIL_FAMILY2);
             String efamily3 = c.getString(AppConfig.KEY_EMAIL_FAMILY3);
 
-            if(name.equals(NULL) || name.equals("")) {
-                imgProfile.setImageResource(R.drawable.profile);
-            }else{
+//            if(name.equals(NULL) || name.equals("")) {
+//                imgProfile.setImageResource(R.drawable.profile);
+//            }else{
                 File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
                 if (!file.exists()) {
                     imgProfile.setImageResource(R.drawable.profile);
@@ -408,7 +408,11 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
                     imgProfile.setImageBitmap(bmp);
                 }
-            }
+//            }
+//            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").error(R.drawable.profile).into(imgProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/agent.jpg").error(R.drawable.profile).into(imgAgent);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").error(R.drawable.profile).into(imgPembimbing);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pemimpin.jpg").error(R.drawable.profile).into(imgPemimpin);
 
 
             txtName.setText(name);
@@ -596,7 +600,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     FileOutputStream outStream;
 
                     outStream = new FileOutputStream(image);
-//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
                     /* 100 to keep full quality of the image */
                     outStream.flush();
                     outStream.close();
@@ -652,7 +656,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         AddBarcode ae = new AddBarcode();
         ae.execute(bitmapProfile,bitmapAgent,bitmapPembimbing,bitmapPemimpin);
 
-        startActivity(new Intent(edit_profile.this, edit_profile.class));
+        startActivity(new Intent(edit_profile.this, profile.class));
     }
 
 }
