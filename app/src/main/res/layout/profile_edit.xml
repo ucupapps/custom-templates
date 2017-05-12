@@ -126,12 +126,30 @@
         android:layout_height="wrap_content"
         android:text="Agent Travel" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionNext"
-        android:singleLine="true"
-        android:id="@+id/edit_travel_agent" />
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageAgent"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingTop="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#e1e1e1"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:layout_gravity="center"
+            android:singleLine="true"
+            android:id="@+id/edit_travel_agent" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -150,12 +168,29 @@
         android:layout_height="wrap_content"
         android:text="Nama Pemimpin Tur" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionNext"
-        android:singleLine="true"
-        android:id="@+id/edit_pemimpin" />
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imagePemimpin"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingTop="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#e1e1e1"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:id="@+id/edit_pemimpin" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -174,12 +209,30 @@
         android:layout_height="wrap_content"
         android:text="Nama Pembimbing" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:imeOptions="actionNext"
-        android:singleLine="true"
-        android:id="@+id/edit_pembimbing" />
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imagePembimbing"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingTop="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/profile"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#e1e1e1"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:id="@+id/edit_pembimbing" />
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
