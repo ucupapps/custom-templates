@@ -47,6 +47,7 @@
     <string name="no_location_data_provided">No location data provided</string>
     <string name="service_not_available">Sorry, the service is not available</string>
     <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
-    <string name="server_client_id">230690886961-sg1t0m667vkcuoen3ic78j4enoa58o3a.apps.googleusercontent.com</string>
+    <!--<string name="server_client_id">230690886961-sg1t0m667vkcuoen3ic78j4enoa58o3a.apps.googleusercontent.com</string>-->
+    <string name="server_client_id">810027904434-tokvloq8bqmfvcm7etor57g6qceko9pq.apps.googleusercontent.com</string>
 
 </resources>

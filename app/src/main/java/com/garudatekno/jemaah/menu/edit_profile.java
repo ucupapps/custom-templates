@@ -13,10 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +31,8 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -46,8 +48,6 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
-
-import static java.lang.Boolean.FALSE;
 
 public class edit_profile extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
@@ -80,7 +80,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-        session = new SessionManager(getApplicationContext());
+//        session = new SessionManager(getApplicationContext());
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -167,10 +167,10 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
         final PopupMenu popup = new PopupMenu(this, img_setting);
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        if (!session.isLoggedIn()) {
-            Menu popupMenu = popup.getMenu();
-            popupMenu.findItem(R.id.logout).setVisible(FALSE);
-        }
+//        if (!session.isLoggedIn()) {
+//            Menu popupMenu = popup.getMenu();
+//            popupMenu.findItem(R.id.logout).setVisible(FALSE);
+//        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,6 +236,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         editTextuser = (EditText) findViewById(R.id.userid);
         editTextuser.setVisibility(View.GONE);
 
+        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -272,6 +273,8 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         imgPembimbing.setOnClickListener(this);
         imgPemimpin.setOnClickListener(this);
         buttonAdd.setOnClickListener(this);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 
@@ -410,9 +413,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                 }
 //            }
 //            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").error(R.drawable.profile).into(imgProfile);
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/agent.jpg").error(R.drawable.profile).into(imgAgent);
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").error(R.drawable.profile).into(imgPembimbing);
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pemimpin.jpg").error(R.drawable.profile).into(imgPemimpin);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgAgent);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgPembimbing);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pemimpin.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgPemimpin);
 
 
             txtName.setText(name);
@@ -555,7 +558,6 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected String doInBackground(Bitmap... params) {
                 Bitmap bitmap = params[0];
-                Bitmap bitmap2 = params[1];
 
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_USERID, idUser);
@@ -563,6 +565,27 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     String uploadImageProfile = getStringImage(bitmapProfile);
                     Log.e("profile", uploadImageProfile);
                     data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
+
+                    try{
+//                    String uploadImageProfile = getStringImage(bitmapProfile);
+//                    Log.e("profile",uploadImageProfile);
+//                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
+
+                        //save image to sdcard
+                        File sdCardDirectory = Environment.getExternalStorageDirectory();
+                        File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
+                        // Encode the file as a PNG image.
+                        FileOutputStream outStream;
+
+                        outStream = new FileOutputStream(image);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                    /* 100 to keep full quality of the image */
+                        outStream.flush();
+                        outStream.close();
+                    } catch (Exception ex) {
+//                    data.put(AppConfig.UPLOAD_KEY, "");
+                        Log.i("Bitmap Error", "Tidak ada image");
+                    }
                 }else{
                     data.put(AppConfig.UPLOAD_KEY, "");
                 }
@@ -588,26 +611,26 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     data.put(AppConfig.UPLOAD_PEMBIMBING, "");
                 }
 
-                try{
-//                    String uploadImageProfile = getStringImage(bitmapProfile);
-//                    Log.e("profile",uploadImageProfile);
-//                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
-
-                    //save image to sdcard
-                    File sdCardDirectory = Environment.getExternalStorageDirectory();
-                    File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
-                    // Encode the file as a PNG image.
-                    FileOutputStream outStream;
-
-                    outStream = new FileOutputStream(image);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-                    /* 100 to keep full quality of the image */
-                    outStream.flush();
-                    outStream.close();
-                } catch (Exception ex) {
-                    data.put(AppConfig.UPLOAD_KEY, "");
-                    Log.i("Bitmap Error", "Tidak ada image");
-                }
+//                try{
+////                    String uploadImageProfile = getStringImage(bitmapProfile);
+////                    Log.e("profile",uploadImageProfile);
+////                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
+//
+//                    //save image to sdcard
+//                    File sdCardDirectory = Environment.getExternalStorageDirectory();
+//                    File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
+//                    // Encode the file as a PNG image.
+//                    FileOutputStream outStream;
+//
+//                    outStream = new FileOutputStream(image);
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+//                    /* 100 to keep full quality of the image */
+//                    outStream.flush();
+//                    outStream.close();
+//                } catch (Exception ex) {
+////                    data.put(AppConfig.UPLOAD_KEY, "");
+//                    Log.i("Bitmap Error", "Tidak ada image");
+//                }
                 //save image to sdcard
 //                File sdCardDirectory = Environment.getExternalStorageDirectory();
 //                File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");

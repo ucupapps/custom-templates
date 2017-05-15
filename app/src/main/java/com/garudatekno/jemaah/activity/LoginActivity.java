@@ -24,7 +24,6 @@ import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.garudatekno.jemaah.menu.Bantuan;
-import com.garudatekno.jemaah.menu.SyaratKetentuan;
 import com.garudatekno.jemaah.menu.panduan;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -98,6 +97,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //        signInButton.setSize(SignInButton.SIZE_STANDARD);
 
 //        btnLoginGoogle = (Button) findViewById(R.id.sign_in_button);
+
+//        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

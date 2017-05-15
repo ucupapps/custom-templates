@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +24,8 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -36,8 +37,6 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
-
-import static java.lang.Boolean.FALSE;
 
 public class profile extends AppCompatActivity implements OnClickListener {
     private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing,
@@ -59,7 +58,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-        session = new SessionManager(getApplicationContext());
+//        session = new SessionManager(getApplicationContext());
 
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -161,10 +160,10 @@ public class profile extends AppCompatActivity implements OnClickListener {
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
         final PopupMenu popup = new PopupMenu(this, img_setting);
         popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        if (!session.isLoggedIn()) {
-            Menu popupMenu = popup.getMenu();
-            popupMenu.findItem(R.id.logout).setVisible(FALSE);
-        }
+//        if (!session.isLoggedIn()) {
+//            Menu popupMenu = popup.getMenu();
+//            popupMenu.findItem(R.id.logout).setVisible(FALSE);
+//        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,6 +225,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtpemimpin = (TextView) findViewById(R.id.pemimpin);
         txtPemimpinPhone = (TextView) findViewById(R.id.pemimpin_phone);
 
+        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -351,9 +351,9 @@ public class profile extends AppCompatActivity implements OnClickListener {
 //            }
 
 //            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/images.jpg").error(R.drawable.profile).into(imgProfile);
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/agent.jpg").error(R.drawable.profile).into(imgAgentProfile);
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").error(R.drawable.profile).into(imgPembimbingProfile);
-            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pemimpin.jpg").error(R.drawable.profile).into(imgPemimpinProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgAgentProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgPembimbingProfile);
+            Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pemimpin.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgPemimpinProfile);
 
             txtName.setText(name);
             txtAddress.setText(address);
