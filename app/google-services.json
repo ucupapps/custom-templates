@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "810027904434-anm1lqg2gk0mkmofiv8h2ppsp0fmuh9o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.garudatekno.jemaah",
+            "certificate_hash": "199519c1fc869e627d156311437af9e5a566f3b8"
+          }
+        },
+        {
           "client_id": "810027904434-i14jajulti46ljbd21874ba671urndrk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
