@@ -13,174 +13,286 @@
         android:id="@+id/toolbar"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-            <include layout="@layout/header"/>
+            <include layout="@layout/header2"/>
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:circle="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.garudatekno.jemaah.menu.profile" >
+        tools:context="com.garudatekno.jemaah.menu.profile">
 
-        <include layout="@layout/footer"/>
+        <include layout="@layout/footer" />
 
         <RelativeLayout
             android:id="@+id/circle_menu"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@id/footer"
-            android:gravity="center" >
+            android:gravity="center">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    android:paddingTop="110dp"
-    tools:context=".sample.input">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="5dp"
-    android:background="@color/colorSilver"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/judul"
-        android:text=""
-        android:padding="5dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="16dp"
-        android:layout_marginBottom="5dp"/>
+            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageProfile"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:paddingTop="5dp"
-        android:layout_gravity="center"
-        android:background="@drawable/circle_green"/>
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"/>
-<TextView
-    android:id="@+id/userid"
-    android:visibility="gone"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/txtpembimbing"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="60dp"
+                    tools:context=".sample.input">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Penilaian"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:textSize="24dp"
+                        android:layout_marginBottom="5dp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=" "
-        android:padding="5dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:id="@+id/name"
-        android:textSize="16dp"
-        android:layout_marginBottom="1dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=" "
-        android:padding="2dp"
-        android:textStyle="bold"
-        android:textSize="8dp"
-        android:textAlignment="center"
-        android:id="@+id/travel"
-        android:layout_marginBottom="5dp"/>
 
-</LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_centerVertical="true"
+                            android:background="@color/colorSilver" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/border"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="4dp"
-            android:gravity="center"
-            android:id="@+id/pertanyaan"
-            android:layout_height="wrap_content"
-            android:text=" "/>
-        <RatingBar
-            android:layout_marginBottom="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:id="@+id/dialog_ratingbar"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:numStars="5" android:stepSize="1.0"
-            android:rating="0"
-            android:isIndicator="false"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_gravity="top"
-            android:gravity="top"
-            android:padding="5dp"
-            android:layout_marginBottom="5dp"
-            android:hint="Tambahkan Komentar"
-            android:textColorHint="#d4d4d4"
-            android:background="#f7f6f6"
-            android:ems="100"
-            android:inputType="textMultiLine"
-            android:id="@+id/komen"/>
-</LinearLayout>
+                        <TextView
+                            android:id="@+id/bullet1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="50dp"
+                            android:background="@drawable/circle_nilai"
+                            android:gravity="center"
+                            android:text="1"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_margin="20dp"
-            android:textAllCaps="false"
-            android:text="Kirim"
-            android:background="@drawable/button"
-            android:textColor="#FFF"
-            android:id="@+id/buttonAdd" />
-        <Button
-            android:layout_width="wrap_content"
-            android:textAllCaps="false"
-            android:layout_margin="20dp"
-            android:layout_height="30dp"
-            android:text="Batal"
-            android:background="@drawable/button_red"
-            android:textColor="#FFF"
-            android:id="@+id/buttonLogout" />
+                        <TextView
+                            android:id="@+id/bullet2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/circle_nilai"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
-    </LinearLayout>
-</LinearLayout>
-</ScrollView>
+                        <TextView
+                            android:id="@+id/bullet3"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="50dp"
+                            android:background="@drawable/circle_nilai"
+                            android:gravity="center"
+                            android:text="3"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="15dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="35dp"
+                            android:gravity="center"
+                            android:text="Agen Perjalanan"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="Aplikasi GoHajj"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="40dp"
+                            android:gravity="center"
+                            android:text="Pembimbing"
+                            android:textColor="@color/black"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorSilver"
+                        android:orientation="vertical"
+                        android:paddingTop="5dp">
+
+                        <TextView
+                            android:id="@+id/judul"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:padding="5dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/imageProfile"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/circle_green"
+                            android:paddingTop="5dp" />
+
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:layout_gravity="center"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/userid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/txtpembimbing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="1dp"
+                            android:padding="5dp"
+                            android:text=" "
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/travel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:padding="2dp"
+                            android:text=" "
+                            android:textAlignment="center"
+                            android:textSize="8dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/pertanyaan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="4dp"
+                            android:text=" " />
+
+                        <RatingBar
+                            android:id="@+id/dialog_ratingbar"
+                            style="?android:attr/ratingBarStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:isIndicator="false"
+                            android:numStars="5"
+                            android:rating="0"
+                            android:stepSize="1.0" />
+
+                        <EditText
+                            android:id="@+id/komen"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_gravity="top"
+                            android:layout_marginBottom="5dp"
+                            android:background="#f7f6f6"
+                            android:ems="100"
+                            android:gravity="top"
+                            android:hint="Tambahkan Komentar"
+                            android:inputType="textMultiLine"
+                            android:padding="5dp"
+                            android:textColorHint="#d4d4d4" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <Button
+                            android:id="@+id/buttonAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="20dp"
+                            android:background="@drawable/button"
+                            android:text="Kirim"
+                            android:textAllCaps="false"
+                            android:textColor="#FFF" />
+
+                        <Button
+                            android:id="@+id/buttonLogout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="20dp"
+                            android:background="@drawable/button_red"
+                            android:text="Batal"
+                            android:textAllCaps="false"
+                            android:textColor="#FFF" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </RelativeLayout>
-        </RelativeLayout>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

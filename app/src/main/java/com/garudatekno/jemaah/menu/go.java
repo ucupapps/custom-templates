@@ -228,22 +228,8 @@ public class go extends AppCompatActivity {
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(go.this, img_setting);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-                        if(id == R.id.logout) {
-                            logoutUser();
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();//showing popup menu
+                Intent i = new Intent(getApplicationContext(), setting.class);
+                startActivity(i);
             }
         });
 

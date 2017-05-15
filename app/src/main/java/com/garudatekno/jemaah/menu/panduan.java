@@ -3,11 +3,14 @@ package com.garudatekno.jemaah.menu;
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -108,7 +111,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         mTracker = application.getDefaultTracker();
         sendScreenImageName("Home");
         //end tracker
-
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
@@ -209,10 +211,10 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         });
 
         ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
-        rankBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(i);
+//        rankBtn.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+//                startActivity(i);
 //                final Dialog rankDialog = new Dialog(panduan.this);
 //                rankDialog.setContentView(R.layout.rank_dialog);
 //                rankDialog.setCancelable(true);
@@ -230,8 +232,8 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //                });
 //                //now that the dialog is set up, it's time to show it
 //                rankDialog.show();
-            }
-        });
+//            }
+//        });
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {
@@ -242,54 +244,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
-
-        final PopupMenu popup = new PopupMenu(this, img_setting);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        if (!session.isLoggedIn()) {
-            Menu popupMenu = popup.getMenu();
-                popupMenu.findItem(R.id.logout).setVisible(FALSE);
-        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-                        if(id == R.id.syarat) {
-                            Intent i = new Intent(getApplicationContext(), SyaratKetentuan.class);
-                            startActivity(i);
-                        }if(id == R.id.logout) {
-                            logoutUser();
-                        }if(id == R.id.donasi) {
-                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.penilaian) {
-                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
-                            startActivity(i);
-                        }if(id == R.id.cek_visa) {
-                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.share) {
-                            try {
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("text/plain");
-                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
-                                String sAux = "\nLet me recommend you this application\n\n";
-                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
-                                i.putExtra(Intent.EXTRA_TEXT, sAux);
-                                startActivity(Intent.createChooser(i, "choose one"));
-                            } catch(Exception e) {
-                                //e.toString();
-                            }
-                        }if(id == R.id.download_doa) {
-
-                        }
-                        return true;
-                    }
-                });
-                popup.show();//showing popup menu
+                Intent i = new Intent(getApplicationContext(), setting.class);
+                startActivity(i);
             }
         });
 
@@ -375,6 +334,18 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         mTracker.setScreenName(name);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
+    }
+
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
+        }
     }
 
     private void logoutUser() {

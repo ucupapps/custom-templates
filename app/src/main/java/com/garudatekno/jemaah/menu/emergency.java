@@ -1,6 +1,7 @@
 package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -48,6 +50,10 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +66,7 @@ import static java.lang.Boolean.FALSE;
 public class emergency extends AppCompatActivity implements OnClickListener, OnMapReadyCallback  {
     private EditText editTextuser,txtMessage,txtphone,txtlng,txtlat;
     private Button buttonAdd,buttonAdd2,btnaddcontact;
-    TextView contact;
+    EditText contact;
     private Bitmap bitmap;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
@@ -79,6 +85,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
@@ -180,53 +187,11 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
-        final PopupMenu popup = new PopupMenu(this, img_setting);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        if (!session.isLoggedIn()) {
-            Menu popupMenu = popup.getMenu();
-            popupMenu.findItem(R.id.logout).setVisible(FALSE);
-        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-                        if(id == R.id.syarat) {
-                            Intent i = new Intent(getApplicationContext(), SyaratKetentuan.class);
-                            startActivity(i);
-                        }if(id == R.id.logout) {
-                            logoutUser();
-                        }if(id == R.id.donasi) {
-                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.penilaian) {
-                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
-                            startActivity(i);
-                        }if(id == R.id.cek_visa) {
-                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.share) {
-                            try {
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("text/plain");
-                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
-                                String sAux = "\nLet me recommend you this application\n\n";
-                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
-                                i.putExtra(Intent.EXTRA_TEXT, sAux);
-                                startActivity(Intent.createChooser(i, "choose one"));
-                            } catch(Exception e) {
-                                //e.toString();
-                            }
-                        }if(id == R.id.download_doa) {
-
-                        }
-                        return true;
-                    }
-                });
-                popup.show();//showing popup menu
+                Intent i = new Intent(getApplicationContext(), setting.class);
+                startActivity(i);
             }
         });
 
@@ -254,15 +219,54 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         editTextuser.setText(uid);
         txtphone.setText(phone);
 
-        contact = (TextView) findViewById(R.id.contact);
+        contact = (EditText) findViewById(R.id.contact);
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonAdd2 = (Button) findViewById(R.id.buttonAdd2);
         btnaddcontact = (Button) findViewById(R.id.addContact);
+        final PopupMenu addkontak = new PopupMenu(this, btnaddcontact);
+        addkontak.getMenu().add(1, 1, 1, "Ambil dari kontak");
+//        addkontak.getMenu().add(1, 2, 2, "Ketik manual");
+        btnaddcontact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addkontak.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if(id == 1) {
+                            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                            startActivityForResult(intent, PICK_CONTACT);
+                        }if(id == 2) {
+                            final Dialog rankDialog = new Dialog(emergency.this);
+                            rankDialog.setContentView(R.layout.kontak_dialog);
+                            rankDialog.setCancelable(true);
+                            Button btnok = (Button) rankDialog.findViewById(R.id.btnOK);
+                            final EditText nophone=(EditText) rankDialog.findViewById(R.id.nophone);
+
+                            btnok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                               String cNumber= nophone.getText().toString().trim();
+                                String no=contact.getText().toString().trim();
+                                no += cNumber+",";
+                                contact.setText(no);
+                                contact.setSelection(contact.getText().length());
+                                rankDialog.dismiss();
+                            }
+                        });
+                            rankDialog.getWindow().setLayout(700, 450);
+                            rankDialog.show();
+                        }
+                        return true;
+                    }
+                });
+            addkontak.show();
+            }
+        });
         btnaddcontact.setTypeface(null, Typeface.BOLD);
         buttonAdd.setOnClickListener(this);
         buttonAdd2.setOnClickListener(this);
-        btnaddcontact.setOnClickListener(this);
+//        btnaddcontact.setOnClickListener(this);
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
         File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
@@ -272,6 +276,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
         }
+        getCurrentLocation(); getData();
     }
 
     @Override
@@ -320,6 +325,8 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         txtlat.setText("" + location.getLatitude());
                     txtlng.setText("" + location.getLongitude());
+
+        txtMessage.setText("\n\n\n Location: https://maps.google.com/?q="+ location.getLatitude()+"," + location.getLongitude()+"");
 //        Toast.makeText(
 //                emergency.this,
 //                "Lat " + location.getLatitude() + " "
@@ -368,7 +375,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
 //            }
         }
         if(v == buttonAdd){
-            getCurrentLocation();
             if(txtMessage.getText().toString().equals(""))
             {
                 Toast.makeText(this, "Pesan tidak boleh kosong", Toast.LENGTH_SHORT).show();
@@ -413,6 +419,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                             String no=contact.getText().toString().trim();
                             no += cNumber+",";
                             contact.setText(no);
+                            contact.setSelection(contact.getText().length());
 //                            Toast.makeText(this, name +":"+ cNumber, Toast.LENGTH_SHORT).show();
                         }
 
@@ -462,7 +469,70 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         AddBarcode ae = new AddBarcode();
         ae.execute();
 
-        startActivity(new Intent(emergency.this, emergency.class));
+        Intent intent = new Intent(emergency.this, emergency.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void getData(){
+        class GetData extends AsyncTask<Void,Void,String>{
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+//                loading = ProgressDialog.show(profile.this,"Mohon tunggu..."," ",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+//                loading.dismiss();
+                showData(s);
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_GETPROFILE,uid);
+                return s;
+            }
+        }
+        GetData ge = new GetData();
+        ge.execute();
+    }
+
+    private void showData(String json){
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            Log.e(AppConfig.TAG_JSON_ARRAY, c.getString(AppConfig.KEY_NAME));
+            String phone1 = c.getString(AppConfig.KEY_TRAVEL_PHONE);
+            String phone2 = c.getString(AppConfig.KEY_PEMBIMBING_PHONE);
+            String phone3 = c.getString(AppConfig.KEY_PEMIMPIN_PHONE);
+            String phone4 = c.getString(AppConfig.KEY_PHONE_FAMILY1);
+            String phone5 = c.getString(AppConfig.KEY_PHONE_FAMILY2);
+            String phone6 = c.getString(AppConfig.KEY_PHONE_FAMILY3);
+            if(!phone1.equals("")){
+                phone1 +=  ",";
+            }if(!phone2.equals("")){
+                phone2 +=  ",";
+            }if(!phone3.equals("")){
+                phone3 += ",";
+            }if(!phone4.equals("")){
+                phone4 += ",";
+            }if(!phone5.equals("")){
+                phone5 += ",";
+            }if(!phone6.equals("")){
+                phone6 += ",";
+            }
+
+            contact.setText(phone1+phone2+phone3+phone4+phone5+phone6);
+            contact.setSelection(contact.getText().length());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }

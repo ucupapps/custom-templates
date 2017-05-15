@@ -14,10 +14,9 @@
         android:weightSum="3">
         <ImageView
             android:id="@+id/img_home"
-            android:layout_width="100dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
+            android:layout_width="150dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_gravity="left"
             android:layout_weight="1"
             android:src="@drawable/home"
@@ -31,10 +30,9 @@
             android:layout_height="20dp" />
         <ImageView
             android:id="@+id/img_setting"
-            android:layout_width="100dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp"
+            android:layout_width="150dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:layout_gravity="right"
             android:src="@drawable/setting"
             android:layout_weight="1"

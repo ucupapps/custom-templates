@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -56,6 +58,7 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.penilaian_pembimbing);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         session = new SessionManager(getApplicationContext());
         File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/images");
         if (!folder.exists()) {
@@ -68,31 +71,9 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
 
-        //HEADER
-        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-        txt_thowaf.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), thawaf.class);
-                startActivity(i);
-            }
-        });
-        txt_sai.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), sai.class);
-                startActivity(i);
-            }
-        });
-        txt_emergency.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), emergency.class);
-                startActivity(i);
-            }
-        });
+        TextView bullet=(TextView) findViewById(R.id.bullet3);
+        bullet.setBackgroundResource(R.drawable.circle_sai_green);
+        bullet.setTextColor(Color.WHITE);
 
         // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
@@ -160,57 +141,13 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
-        final PopupMenu popup = new PopupMenu(this, img_setting);
-        popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
-        if (!session.isLoggedIn()) {
-            Menu popupMenu = popup.getMenu();
-            popupMenu.findItem(R.id.logout).setVisible(FALSE);
-        }
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-                        if(id == R.id.syarat) {
-                            Intent i = new Intent(getApplicationContext(), SyaratKetentuan.class);
-                            startActivity(i);
-                        }if(id == R.id.logout) {
-                            logoutUser();
-                        }if(id == R.id.donasi) {
-                            Uri uriUrl = Uri.parse("https://kitabisa.com/gohaji");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.penilaian) {
-                            Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
-                            startActivity(i);
-                        }if(id == R.id.cek_visa) {
-                            Uri uriUrl = Uri.parse("https://eservices.haj.gov.sa/eservices3/pages/VisaInquiry/SearchVisa.xhtml?dswid=4963");
-                            Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                            startActivity(launchBrowser);
-                        }if(id == R.id.share) {
-                            try {
-                                Intent i = new Intent(Intent.ACTION_SEND);
-                                i.setType("text/plain");
-                                i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
-                                String sAux = "\nLet me recommend you this application\n\n";
-                                sAux = sAux + "https://play.google.com/store/apps/details?id=GoHajj.Soft \n\n";
-                                i.putExtra(Intent.EXTRA_TEXT, sAux);
-                                startActivity(Intent.createChooser(i, "choose one"));
-                            } catch(Exception e) {
-                                //e.toString();
-                            }
-                        }if(id == R.id.download_doa) {
-
-                        }
-                        return true;
-                    }
-                });
-                popup.show();//showing popup menu
+                Intent i = new Intent(getApplicationContext(), setting.class);
+                startActivity(i);
             }
         });
-
-
 //CONTENT
         txtJudul = (TextView) findViewById(R.id.judul);
         txtTanya = (TextView) findViewById(R.id.pertanyaan);
