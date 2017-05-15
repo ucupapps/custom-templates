@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "810027904434",
-    "project_id": "apps-jemaah"
+    "firebase_url": "https://apps-jemaah.firebaseio.com",
+    "project_id": "apps-jemaah",
+    "storage_bucket": "apps-jemaah.appspot.com"
   },
   "client": [
     {
@@ -11,7 +13,24 @@
           "package_name": "com.garudatekno.jemaah"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "810027904434-i14jajulti46ljbd21874ba671urndrk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.garudatekno.jemaah",
+            "certificate_hash": "a9a89c595e5e1adbec47a4e2f65264a24abb26af"
+          }
+        },
+        {
+          "client_id": "810027904434-tokvloq8bqmfvcm7etor57g6qceko9pq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "810027904434-j7nqar4qt5uf4tkff0mv6o8jl4j615hu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAh4xoFX85B_OddqKOtiIOHSTKWu3hRkGc"
@@ -29,7 +48,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
