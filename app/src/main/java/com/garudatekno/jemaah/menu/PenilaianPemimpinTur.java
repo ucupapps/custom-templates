@@ -169,7 +169,8 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
         }
         txtName.setText("");
         img.setImageResource(R.drawable.logo);
-        img.setPadding(10,10,10,10);
+        img.getLayoutParams().width = 600;
+        img.getLayoutParams().height = 60;
         editTextuser.setText(uid);
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);

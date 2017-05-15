@@ -267,7 +267,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             String ina = c.getString(AppConfig.KEY_INDONESIA);
             String file = c.getString(AppConfig.KEY_FILE);
             txtid.setText(id);
-            txtname.setText("X  "+name);
+            txtname.setText(" "+name);
             txtdesc.setText(arti);
             txtarab.setText(arab);
             txtIndonesia.setText(ina);

@@ -44,7 +44,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/circle"/>
+            android:padding="5dp"
+            android:src="@drawable/bantuan"
+            android:background="@drawable/circle"/>
         <TextView
             android:layout_gravity="center"
             android:padding="10dp"
@@ -75,7 +77,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/circle"/>
+            android:padding="5dp"
+            android:src="@drawable/hubungi"
+            android:background="@drawable/circle"/>
         <TextView
             android:layout_gravity="center"
             android:padding="10dp"
@@ -85,7 +89,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.85"
             android:layout_height="wrap_content"
-            android:text="Layanan"/>
+            android:text="Hubungi Kami"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="0.15"
@@ -105,7 +109,9 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/circle"/>
+            android:padding="5dp"
+            android:src="@drawable/laporkan"
+            android:background="@drawable/circle"/>
         <TextView
             android:layout_gravity="center"
             android:padding="10dp"

@@ -257,7 +257,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             String data = c.getString(AppConfig.KEY_DESCRIPTION);
             txtid.setText(id);
             txtData.setText(data);
-            txtName.setText("X   "+ name);
+            txtName.setText(" "+ name);
 
         } catch (JSONException e) {
             e.printStackTrace();
