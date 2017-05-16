@@ -81,7 +81,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private static final String TAG = "MyHOME";
 
     private ListView listView;
-    private TextView txtid;
+    private TextView txtid,txtkoneksi,jak_degree,jak_cuaca,jak_date,jak_time,mek_degree,mek_cuaca,mek_date,mek_time;
     private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
@@ -113,7 +113,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         //end tracker
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-
+        txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        if (!cek_status(this))
+        {
+            txtkoneksi.setVisibility(View.VISIBLE);
+        }
         session = new SessionManager(getApplicationContext());
 
         // SqLite database handler
@@ -253,80 +257,42 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         });
 
         //jakarta
-        final TextView jak_degree=(TextView) findViewById(R.id.jak_degree);
-        final TextView jak_cuaca=(TextView) findViewById(R.id.jak_cuaca);
-        TextView jak_date=(TextView) findViewById(R.id.jak_date);
-        TextView jak_time=(TextView) findViewById(R.id.jak_time);
-//        jak_degree.setTypeface(tf);
-//        jak_cuaca.setTypeface(tf);
-//        jak_date.setTypeface(tf);
-//        jak_time.setTypeface(tf);
-
-        Calendar cal_jak = Calendar.getInstance(TimeZone.getTimeZone("GMT+7"));
-        Date currentLocalTimejak = cal_jak.getTime();
-        DateFormat date_jak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
-        date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-        DateFormat time_jak = new SimpleDateFormat("HH:mm");
-        date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-        String j_date = date_jak.format(currentLocalTimejak);
-        String j_time = time_jak.format(currentLocalTimejak);
-
-        jak_date.setText("" + j_date);
-        jak_time.setText("" + j_time);
+        jak_degree=(TextView) findViewById(R.id.jak_degree);
+        jak_cuaca=(TextView) findViewById(R.id.jak_cuaca);
+        jak_date=(TextView) findViewById(R.id.jak_date);
+        jak_time=(TextView) findViewById(R.id.jak_time);
 
         //mekkah
-        final TextView mek_degree=(TextView) findViewById(R.id.mek_degree);
-        final TextView mek_cuaca=(TextView) findViewById(R.id.mek_cuaca);
-        TextView mek_date=(TextView) findViewById(R.id.mek_date);
-        TextView mek_time=(TextView) findViewById(R.id.mek_time);
-
-        Calendar cal_mek = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
-        Date currentLocalTimemak = cal_mek.getTime();
-        DateFormat date_mak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
-        date_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
-        DateFormat time_mak = new SimpleDateFormat("HH:mm");
-        time_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
-        String m_date = date_mak.format(currentLocalTimemak);
-        String m_time = time_mak.format(currentLocalTimemak);
-
-        mek_date.setText("" + m_date);
-        mek_time.setText("" + m_time);
-
-        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
-
-//                cityField.setText(weather_city);
-//                updatedField.setText(weather_updatedOn);
-                jak_cuaca.setText(weather_description);
-                jak_degree.setText(weather_temperature+ " \u2103");
-//                humidity_field.setText("Humidity: "+weather_humidity);
-//                pressure_field.setText("Pressure: "+weather_pressure);
-//                weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-            }
-        });
-        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
-
-        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
-
-//                cityField.setText(weather_city);
-//                updatedField.setText(weather_updatedOn);
-                mek_cuaca.setText(weather_description);
-                mek_degree.setText(weather_temperature+ " \u2103" );
-//                humidity_field.setText("Humidity: "+weather_humidity);
-//                pressure_field.setText("Pressure: "+weather_pressure);
-//                weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-            }
-        });
-        asyncTask2.execute("21.4267", "39.8261");
+        mek_degree=(TextView) findViewById(R.id.mek_degree);
+        mek_cuaca=(TextView) findViewById(R.id.mek_cuaca);
+        mek_date=(TextView) findViewById(R.id.mek_date);
+        mek_time=(TextView) findViewById(R.id.mek_time);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateTime();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
     }
 
     private void sendScreenImageName(String name) {
@@ -404,6 +370,63 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             Log.d(TAG, mFragmentTitleList.get(position).toString());
             return mFragmentTitleList.get(position);
         }
+    }
+
+    private void updateTime(){
+        Calendar cal_jak = Calendar.getInstance(TimeZone.getTimeZone("GMT+7"));
+        Date currentLocalTimejak = cal_jak.getTime();
+        DateFormat date_jak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
+        date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        DateFormat time_jak = new SimpleDateFormat("HH:mm");
+        date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        String j_date = date_jak.format(currentLocalTimejak);
+        String j_time = time_jak.format(currentLocalTimejak);
+
+        jak_date.setText("" + j_date);
+        jak_time.setText("" + j_time);
+
+        Calendar cal_mek = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
+        Date currentLocalTimemak = cal_mek.getTime();
+        DateFormat date_mak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
+        date_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        DateFormat time_mak = new SimpleDateFormat("HH:mm");
+        time_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
+        String m_date = date_mak.format(currentLocalTimemak);
+        String m_time = time_mak.format(currentLocalTimemak);
+
+        mek_date.setText("" + m_date);
+        mek_time.setText("" + m_time);
+
+        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+//                cityField.setText(weather_city);
+//                updatedField.setText(weather_updatedOn);
+                jak_cuaca.setText(weather_description);
+                jak_degree.setText(weather_temperature+ " \u2103");
+//                humidity_field.setText("Humidity: "+weather_humidity);
+//                pressure_field.setText("Pressure: "+weather_pressure);
+//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
+
+        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+//                cityField.setText(weather_city);
+//                updatedField.setText(weather_updatedOn);
+                mek_cuaca.setText(weather_description);
+                mek_degree.setText(weather_temperature+ " \u2103" );
+//                humidity_field.setText("Humidity: "+weather_humidity);
+//                pressure_field.setText("Pressure: "+weather_pressure);
+//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask2.execute("21.4267", "39.8261");
+
     }
 
     private void showData(){

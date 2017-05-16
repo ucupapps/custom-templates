@@ -285,7 +285,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             String desc = c.getString(AppConfig.KEY_DESCRIPTION);
             String arab = c.getString(AppConfig.KEY_ARAB);
             txtid.setText(id);
-            txtname.setText("X  "+name);
+            txtname.setText(" "+name);
             txtdesc.setText(desc);
             txtarab.setText(arab);
 

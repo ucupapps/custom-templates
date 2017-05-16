@@ -282,6 +282,7 @@
 
                         <Button
                             android:id="@+id/buttonLogout"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:layout_margin="20dp"
