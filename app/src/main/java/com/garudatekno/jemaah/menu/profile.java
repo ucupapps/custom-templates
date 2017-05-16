@@ -40,10 +40,10 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class profile extends AppCompatActivity implements OnClickListener {
     private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing,
-                        txtTravelPhone,txtPemimpinPhone,txtPembimbingPhone;
+                        txtTravelPhone,txtPemimpinPhone,txtPembimbingPhone,txtEmailProfile;
     private Button buttonAdd, buttonLogout,buttonpembimbing,buttonPemimpin;
     private CircleImageView imgProfile,imgAgentProfile,imgPemimpinProfile,imgPembimbingProfile;
-    String lat,lng,uid;
+    String lat,lng,uid,emailUser;
     //user
     private SQLiteHandler db;
     private SessionManager session;
@@ -63,6 +63,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
+        emailUser = user.get("email");
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -224,6 +225,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         editTextuser = (TextView) findViewById(R.id.userid);
         txtpemimpin = (TextView) findViewById(R.id.pemimpin);
         txtPemimpinPhone = (TextView) findViewById(R.id.pemimpin_phone);
+        txtEmailProfile = (TextView) findViewById(R.id.emailProfile);
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -369,6 +371,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             txtPemimpinPhone.setText(pemimpin_phone);
             txtPembimbingPhone.setText(pembimbing_phone);
             txtTravelPhone.setText(travel_phone);
+            txtEmailProfile.setText(emailUser);
 
         } catch (JSONException e) {
             e.printStackTrace();
