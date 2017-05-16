@@ -1,50 +1,55 @@
 package com.garudatekno.jemaah.activity;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
+
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.menu.TitipanDoa;
+import com.garudatekno.jemaah.menu.items;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Created by Master on 5/1/2016.
  */
-public class CustomListDoa extends SimpleAdapter {
+public class CustomListDoa extends ArrayAdapter<items> {
 
     private Context mContext;
     public LayoutInflater inflater=null;
-    public CustomListDoa(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
-        super(context, data, resource, from, to);
-        mContext = context;
-        inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    ArrayList<items> listData = new ArrayList<>();
+    public CustomListDoa(Context context, int textViewResourceId, ArrayList<items> objects) {
+        super(context, textViewResourceId, objects);
+        this.mContext = context;
+//        mContext = context;
+        listData = objects;
+        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+//    public CustomListDoa(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
+//        super(context, data, resource, from, to);
+//        mContext = context;
+//        inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    }
+
+    @Override
+    public int getCount() {
+        return super.getCount();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View vi=convertView;
-        if(convertView==null)
-            vi = inflater.inflate(R.layout.list_doa, null);
+        if(convertView==null) {
+            vi = View.inflate(mContext,R.layout.list_doa, null);
+        }
 
-        HashMap<String, Object> data = (HashMap<String, Object>) getItem(position);
+//        HashMap<String, Object> data = (HashMap<String, Object>) getItem(position);
         TextView no = (TextView)vi.findViewById(R.id.txtNO);
         TextView message = (TextView)vi.findViewById(R.id.txtMESSAGE);
         TextView time = (TextView)vi.findViewById(R.id.txtTIME);
@@ -61,11 +66,11 @@ public class CustomListDoa extends SimpleAdapter {
         titip.setTypeface(font);
         btndoakan.setTypeface(font);
 
-        final String strID = (String) data.get(AppConfig.KEY_ID);
-        String strMessage = (String) data.get(AppConfig.KEY_MESSAGE);
-        String strTime = (String) data.get(AppConfig.KEY_TIME);
-        String strFrom = (String) data.get(AppConfig.KEY_FROM);
-        String strJum = (String) data.get(AppConfig.KEY_JUMLAH);
+        final String strID = listData.get(position).getId();
+        String strMessage = listData.get(position).getMessage();
+        String strTime = listData.get(position).getTime();
+        String strFrom = listData.get(position).getFrom();
+        String strJum = listData.get(position).getJum();
         no.setText(strID);
         message.setText(strMessage);
         time.setText(strTime);
@@ -75,12 +80,12 @@ public class CustomListDoa extends SimpleAdapter {
         btndoakan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notifyDataSetChanged();
+//                notifyDataSetChanged();
                 TitipanDoa d= new TitipanDoa();
                 d.addDoakan(strID);
-                Intent intent= new Intent(mContext, TitipanDoa.class);
-                ((Activity)mContext).finish();
-                mContext.startActivity(intent);
+//                Intent intent= new Intent(mContext, TitipanDoa.class);
+//                ((Activity)mContext).finish();
+//                mContext.startActivity(intent);
             }
 
 

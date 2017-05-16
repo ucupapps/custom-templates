@@ -8,11 +8,12 @@
         android:weightSum="1">
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:paddingLeft="20dp"
@@ -37,7 +38,8 @@
                 android:hint="E-mail atau Nomor Ponsel"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
-                android:textColorHint="@color/input_login_hint" />
+                android:textColorHint="@color/input_login_hint"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/password"
                 android:layout_width="fill_parent"
@@ -50,7 +52,8 @@
                 android:singleLine="true"
                 android:hint="Kata Sandi"
                 android:textColor="@color/input_login"
-                android:textColorHint="@color/input_login_hint" />
+                android:textColorHint="@color/input_login_hint"
+                android:visibility="gone"/>
 
 
             <!-- Login Button -->
@@ -62,7 +65,8 @@
                 android:background="@drawable/button_login"
                 android:text="@string/btn_login"
                 android:layout_marginBottom="5dp"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:visibility="gone"/>
 
             <!-- Link to Login Screen -->
             <TextView
@@ -70,14 +74,16 @@
                 android:layout_height="20dp"
                 android:text="Lupa Kata Sandi?"
                 android:textColor="#FFF"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_margin="5dp"
                 android:textColor="#FFF"
                 android:layout_height="wrap_content"
                 android:text="Masuk Otomatis"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="gone"/>
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
@@ -95,7 +101,8 @@
                 android:textAllCaps="false"
                 android:background="@null"
                 android:textColor="#FFF"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/txtNodaftar"
                 android:layout_width="wrap_content"
@@ -103,7 +110,8 @@
                 android:textColor="#FFF"
                 android:layout_height="wrap_content"
                 android:text="Masuk Tanpa Daftar"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/txtBantuan"
                 android:layout_width="wrap_content"
@@ -111,7 +119,8 @@
                 android:textColor="#FFF"
                 android:layout_height="wrap_content"
                 android:text="Butuh Bantuan ?"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/txtSyarat"
                 android:layout_width="wrap_content"

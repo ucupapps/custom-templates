@@ -81,6 +81,28 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
+            android:text="Email:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:textSize="18dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/emailProfile"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
             android:text="No. Passport:"/>
         <TextView
             android:layout_width="match_parent"
@@ -240,6 +262,87 @@
             android:textSize="18dp"
             android:id="@+id/travel_agent_phone"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nama Pemimpin Tur:"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imagePemimpinProfile"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#e1e1e1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" "
+                android:textSize="18dp"
+                android:id="@+id/pemimpin"/>
+
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:visibility="gone"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="12dp"-->
+            <!--android:padding="2dp"-->
+            <!--android:text="Berikan Penilaian"-->
+            <!--android:background="@drawable/button_green"-->
+            <!--android:textColor="#FFF"-->
+            <!--android:id="@+id/btnpemimpin" />-->
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nomor Ponsel Pemimpin Tur:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pemimpin_phone"/>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -317,85 +420,7 @@
             android:textSize="18dp"
             android:id="@+id/pembimbing_phone"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/border"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            android:text="Nama Pemimpin Tur:"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/imagePemimpinProfile"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:layout_gravity="center"
-                android:src="@drawable/profile"
-                app:civ_border_width="2dp"
-                app:civ_border_color="#e1e1e1"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:padding="4dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=" "
-                android:textSize="18dp"
-                android:id="@+id/pemimpin"/>
-
-            <!--<Button-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="20dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:gravity="center"-->
-                <!--android:visibility="gone"-->
-                <!--android:textAllCaps="false"-->
-                <!--android:textSize="12dp"-->
-                <!--android:padding="2dp"-->
-                <!--android:text="Berikan Penilaian"-->
-                <!--android:background="@drawable/button_green"-->
-                <!--android:textColor="#FFF"-->
-                <!--android:id="@+id/btnpemimpin" />-->
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_weight="1"
-        android:background="@drawable/border"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            android:text="Nomor Ponsel Pemimpin Tur:"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:padding="4dp"
-            android:layout_height="wrap_content"
-            android:text=" "
-            android:textSize="18dp"
-            android:id="@+id/pemimpin_phone"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

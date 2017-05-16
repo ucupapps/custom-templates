@@ -4,34 +4,26 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.activity.CustomListDoa;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,11 +36,15 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-import static java.lang.Boolean.FALSE;
-
 public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private static final String TAG = "MyUser";
+
+    private LinearLayout doaLinear;
+
+    private ListDoa adapter;
+
+    private ArrayList<items> list = new ArrayList<>();
 
     private ListView listView;
     private String JSON_STRING,uid;
@@ -65,6 +61,8 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         listView = (ListView) findViewById(R.id.listView);
         listView.destroyDrawingCache();
         listView.setOnItemClickListener(this);
+
+        doaLinear = (LinearLayout) findViewById(R.id.linearDoa);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -185,36 +183,38 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
     private void showData(){
         JSONObject jsonObject = null;
-        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
+//        ArrayList<items> list = new ArrayList<>();
 
         try {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
             for(int i = 0; i<result.length(); i++){
+//                ArrayList<items> list = new ArrayList<>();
                 JSONObject jo = result.getJSONObject(i);
                 String id = jo.getString(AppConfig.KEY_ID);
                 String message = jo.getString(AppConfig.KEY_MESSAGE);
                 String time = jo.getString(AppConfig.KEY_TIME);
                 String from = jo.getString(AppConfig.KEY_FROM);
                 String jum = jo.getString(AppConfig.KEY_JUMLAH);
-                HashMap<String,String> data = new HashMap<>();
-                data.put(AppConfig.KEY_ID,id);
-                data.put(AppConfig.KEY_MESSAGE,message);
-                data.put(AppConfig.KEY_TIME,time);
-                data.put(AppConfig.KEY_FROM,from);
-                data.put(AppConfig.KEY_JUMLAH,jum);
-                list.add(data);
+//                HashMap<String,String> data = new HashMap<>();
+//                data.put(AppConfig.KEY_ID,id);
+//                data.put(AppConfig.KEY_MESSAGE,message);
+//                data.put(AppConfig.KEY_MESSAGE,message);
+//                data.put(AppConfig.KEY_FROM,from);
+//                data.put(AppConfig.KEY_JUMLAH,jum);
+                list.add(new items(id,message,time,from,jum));
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        CustomListDoa adapter = new CustomListDoa(this, list,
-                R.layout.list_doa, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM,AppConfig.KEY_JUMLAH },
-                new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME,R.id.txtFROM,R.id.txtJumlah });
+//        adapter = new CustomListDoa(TitipanDoa.this, R.layout.list_doa,list);
+        doaLinear.removeAllViews();
+        adapter = new ListDoa(list);
         listView.setAdapter(adapter);
-        ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
+        doaLinear.addView(listView);
     }
 
     private void getJSON(){
@@ -224,13 +224,13 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
+                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-//                loading.dismiss();
+                loading.dismiss();
                 JSON_STRING = s;
                 showData();
             }
@@ -266,13 +266,16 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
+                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-//                loading.dismiss();
+                loading.dismiss();
+                JSON_STRING = s;
+                showData();
+
 //                Toast.makeText(TitipanDoa.this, s, Toast.LENGTH_SHORT).show();
             }
 
@@ -305,5 +308,67 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 //                addDoakan(empId);
 //            }
 //        });
+    }
+
+    private class ListDoa extends ArrayAdapter<items> {
+        public ListDoa(ArrayList<items> ItemList) {
+            super(TitipanDoa.this, R.layout.list_doa, ItemList);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            View itemView = convertView;
+            if(itemView == null){
+                itemView = getLayoutInflater().inflate(R.layout.list_doa, parent, false);
+            }
+
+
+            TextView no = (TextView)itemView.findViewById(R.id.txtNO);
+            TextView message = (TextView)itemView.findViewById(R.id.txtMESSAGE);
+            TextView time = (TextView)itemView.findViewById(R.id.txtTIME);
+            TextView from = (TextView)itemView.findViewById(R.id.txtFROM);
+            TextView jum = (TextView)itemView.findViewById(R.id.txtJumlah);
+            TextView titip = (TextView)itemView.findViewById(R.id.txttitip);
+            Button btndoakan = (Button)itemView.findViewById(R.id.btndoakan);
+
+            Typeface font = Typeface.createFromAsset(TitipanDoa.this.getAssets(), "fonts/helvetica.ttf");
+            message.setTypeface(font);
+            time.setTypeface(font);
+            from.setTypeface(font,Typeface.BOLD);
+            jum.setTypeface(font);
+            titip.setTypeface(font);
+            btndoakan.setTypeface(font);
+
+            final String strID = list.get(position).getId();
+            String strMessage = list.get(position).getMessage();
+            String strTime = list.get(position).getTime();
+            String strFrom = list.get(position).getFrom();
+            String strJum = list.get(position).getJum();
+            no.setText(strID);
+            message.setText(strMessage);
+            time.setText(strTime);
+            from.setText(strFrom);
+            jum.setText(strJum);
+
+            btndoakan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                notifyDataSetChanged();
+//                    TitipanDoa d= new TitipanDoa();
+//                    d.addDoakan(strID);
+                    list.clear();
+                    addDoakan(strID);
+//                Intent intent= new Intent(mContext, TitipanDoa.class);
+//                ((Activity)mContext).finish();
+//                mContext.startActivity(intent);
+                }
+
+
+            });
+
+            return itemView;
+
+        }
     }
 }

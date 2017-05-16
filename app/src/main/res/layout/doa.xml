@@ -38,6 +38,7 @@
     android:layout_height="match_parent"
     android:paddingTop="115dp"
     android:background="@color/colorSilver"
+    android:id="@+id/linearDoa"
     tools:context=".sample.input">
 
     <ListView
