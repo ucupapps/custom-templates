@@ -19,21 +19,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class Bantuan extends AppCompatActivity {
+public class View_PusatBantuan extends AppCompatActivity {
 
     private static final String TAG = "MyUser";
-    LinearLayout txtpusatbantuan,txtlayanan,txtlaporkan;
-
-
-    private String JSON_STRING,uid;
+    TextView pertanyaan;
+    WebView jawaban;
+    private String JSON_STRING,id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bantuan);
+        setContentView(R.layout.view_pusat_bantuan);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 // FOOTER
@@ -100,32 +97,52 @@ public class Bantuan extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-        txtpusatbantuan=(LinearLayout) findViewById(R.id.txtpusatbantuan);
-        txtpusatbantuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PusatBantuan.class);
-                startActivity(i);
-            }
-        });
-        txtlayanan=(LinearLayout) findViewById(R.id.txtlayanan);
-        txtlayanan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), layanan.class);
-                startActivity(i);
-            }
-        });
-        txtlaporkan=(LinearLayout) findViewById(R.id.txtlaporkan);
-        txtlaporkan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), laporkanmasalah.class);
-                startActivity(i);
-            }
-        });
+        Intent intent = getIntent();
+        id = intent.getStringExtra(AppConfig.EMP_ID);
+        pertanyaan=(TextView) findViewById(R.id.txtpertanyaan);
+        jawaban=(WebView) findViewById(R.id.txtjawaban);
+        getData();
     }
 
+    private void getData(){
+        class GetData extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(View_PusatBantuan.this,"","Tunggu...",false,false);
+            }
 
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                showData(s);
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_GET_PUSATBANTUAN,id);
+                return s;
+            }
+        }
+        GetData ge = new GetData();
+        ge.execute();
+    }
+
+    private void showData(String json){
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+            JSONObject c = result.getJSONObject(0);
+            String tanya = c.getString(AppConfig.KEY_PERTANYAAN);
+            String jawab = c.getString(AppConfig.KEY_JAWABAN);
+            pertanyaan.setText(tanya);
+            jawaban.loadData(jawab, "text/html", "utf-8");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

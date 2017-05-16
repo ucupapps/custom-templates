@@ -230,37 +230,39 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         btnaddcontact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addkontak.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        int id = item.getItemId();
-                        if(id == 1) {
-                            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                            startActivityForResult(intent, PICK_CONTACT);
-                        }if(id == 2) {
-                            final Dialog rankDialog = new Dialog(emergency.this);
-                            rankDialog.setContentView(R.layout.kontak_dialog);
-                            rankDialog.setCancelable(true);
-                            Button btnok = (Button) rankDialog.findViewById(R.id.btnOK);
-                            final EditText nophone=(EditText) rankDialog.findViewById(R.id.nophone);
-
-                            btnok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                               String cNumber= nophone.getText().toString().trim();
-                                String no=contact.getText().toString().trim();
-                                no += cNumber+",";
-                                contact.setText(no);
-                                contact.setSelection(contact.getText().length());
-                                rankDialog.dismiss();
-                            }
-                        });
-                            rankDialog.getWindow().setLayout(700, 450);
-                            rankDialog.show();
-                        }
-                        return true;
-                    }
-                });
-            addkontak.show();
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, PICK_CONTACT);
+//                addkontak.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        int id = item.getItemId();
+//                        if(id == 1) {
+//                            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+//                            startActivityForResult(intent, PICK_CONTACT);
+//                        }if(id == 2) {
+//                            final Dialog rankDialog = new Dialog(emergency.this);
+//                            rankDialog.setContentView(R.layout.kontak_dialog);
+//                            rankDialog.setCancelable(true);
+//                            Button btnok = (Button) rankDialog.findViewById(R.id.btnOK);
+//                            final EditText nophone=(EditText) rankDialog.findViewById(R.id.nophone);
+//
+//                            btnok.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                               String cNumber= nophone.getText().toString().trim();
+//                                String no=contact.getText().toString().trim();
+//                                no += cNumber+",";
+//                                contact.setText(no);
+//                                contact.setSelection(contact.getText().length());
+//                                rankDialog.dismiss();
+//                            }
+//                        });
+//                            rankDialog.getWindow().setLayout(700, 450);
+//                            rankDialog.show();
+//                        }
+//                        return true;
+//                    }
+//                });
+//            addkontak.show();
             }
         });
         btnaddcontact.setTypeface(null, Typeface.BOLD);

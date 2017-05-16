@@ -114,10 +114,32 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
-        if (!cek_status(this))
-        {
-            txtkoneksi.setVisibility(View.VISIBLE);
-        }
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        th.start();
+
         session = new SessionManager(getApplicationContext());
 
         // SqLite database handler

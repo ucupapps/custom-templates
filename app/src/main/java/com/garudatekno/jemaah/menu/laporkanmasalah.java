@@ -1,39 +1,28 @@
 package com.garudatekno.jemaah.menu;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class Bantuan extends AppCompatActivity {
+public class laporkanmasalah extends AppCompatActivity {
 
-    private static final String TAG = "MyUser";
-    LinearLayout txtpusatbantuan,txtlayanan,txtlaporkan;
+    private static final String TAG = "Laporkan";
 
 
     private String JSON_STRING,uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bantuan);
+        setContentView(R.layout.activity_laporkan);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 // FOOTER
@@ -101,27 +90,75 @@ public class Bantuan extends AppCompatActivity {
             }
         });
 
-        txtpusatbantuan=(LinearLayout) findViewById(R.id.txtpusatbantuan);
-        txtpusatbantuan.setOnClickListener(new View.OnClickListener() {
+        LinearLayout panduan=(LinearLayout) findViewById(R.id.txtpanduan);
+        LinearLayout titipdoa=(LinearLayout) findViewById(R.id.txttitipdoa);
+        LinearLayout navigasi=(LinearLayout) findViewById(R.id.txtnavigasi);
+        LinearLayout pesan=(LinearLayout) findViewById(R.id.txtpesan);
+        LinearLayout profile=(LinearLayout) findViewById(R.id.txtprofile);
+        LinearLayout sai=(LinearLayout) findViewById(R.id.txtsai);
+        LinearLayout sos=(LinearLayout) findViewById(R.id.txtsos);
+        LinearLayout thawaf=(LinearLayout) findViewById(R.id.txtthawaf);
+        panduan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PusatBantuan.class);
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Panduan");
                 startActivity(i);
             }
         });
-        txtlayanan=(LinearLayout) findViewById(R.id.txtlayanan);
-        txtlayanan.setOnClickListener(new View.OnClickListener() {
+        titipdoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), layanan.class);
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Titip Doa");
                 startActivity(i);
             }
         });
-        txtlaporkan=(LinearLayout) findViewById(R.id.txtlaporkan);
-        txtlaporkan.setOnClickListener(new View.OnClickListener() {
+        navigasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), laporkanmasalah.class);
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Navigasi");
+                startActivity(i);
+            }
+        });
+        pesan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Pesan");
+                startActivity(i);
+            }
+        });
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Profile");
+                startActivity(i);
+            }
+        });
+        sai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Sai");
+                startActivity(i);
+            }
+        });
+        sos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"S.O.S");
+                startActivity(i);
+            }
+        });
+        thawaf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
+                i.putExtra(AppConfig.EMP_ID,"Thawaf");
                 startActivity(i);
             }
         });

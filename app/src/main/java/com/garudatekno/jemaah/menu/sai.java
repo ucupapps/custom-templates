@@ -131,14 +131,14 @@ public class sai extends AppCompatActivity {
         T_1 =(TextView) findViewById(R.id.triangle_circle1);
         T_2 =(TextView) findViewById(R.id.triangle_circle2);
 
-        ImageView img_click =(ImageView) findViewById(R.id.img_sai_klik);
-
-        img_click.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imgCenter();
-            }
-        });
+//        ImageView img_click =(ImageView) findViewById(R.id.img_sai_klik);
+//
+//        img_click.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                imgCenter();
+//            }
+//        });
 
 //        Button btnSimple =(Button) findViewById(R.id.buttonSimple);
         C_1.setOnClickListener(new View.OnClickListener() {
