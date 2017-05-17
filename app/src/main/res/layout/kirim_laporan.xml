@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.garudatekno.jemaah.menu.TitipanDoa">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/header2"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.garudatekno.jemaah.menu.TitipanDoa" >
+
+        <include layout="@layout/footer"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/footer"
+            android:gravity="center" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:paddingTop="45dp"
+                android:background="@color/white"
+                tools:context=".sample.input">
+                <TextView
+                    android:layout_margin="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:text="Laporkan"/>
+                <TextView
+                    android:id="@+id/name"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="top"
+                    android:gravity="top"
+                    android:padding="5dp"
+                    android:layout_margin="20dp"
+                    android:hint="Laporkan masalah"
+                    android:textColorHint="#d4d4d4"
+                    android:background="#f7f6f6"
+                    android:ems="100"
+                    android:textSize="14sp"
+                    android:inputType="textMultiLine"
+                    android:id="@+id/masalah"/>
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_gravity="center"
+                    android:layout_width="120dp"
+                    android:background="@drawable/camera"
+                    android:layout_height="160dp" />
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:textAllCaps="false"
+                    android:padding="10dp"
+                    android:layout_margin="10dp"
+                    android:text="Kirim"
+                    android:textColor="#FFF"
+                    android:background="@drawable/button"
+                    android:id="@+id/buttonAdd" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

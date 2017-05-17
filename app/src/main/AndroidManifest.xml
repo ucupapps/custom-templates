@@ -154,6 +154,7 @@
         <activity
             android:name="com.garudatekno.jemaah.menu.ViewPanduanVideo"
             android:label="View Panduan"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
@@ -222,6 +223,31 @@
         <activity
             android:name="com.garudatekno.jemaah.menu.setting"
             android:label="Setting"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+        android:name="com.garudatekno.jemaah.menu.PusatBantuan"
+        android:label="Bantuan"
+        android:screenOrientation="portrait">
+    </activity>
+        <activity
+        android:name="com.garudatekno.jemaah.menu.laporkanmasalah"
+        android:label="Bantuan "
+        android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.kirimlaporan"
+            android:label="Bantuan "
+            android:screenOrientation="portrait">
+    </activity>
+        <activity
+        android:name="com.garudatekno.jemaah.menu.layanan"
+        android:label="Bantuan "
+        android:screenOrientation="portrait">
+    </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.View_PusatBantuan"
+            android:label="Bantuan "
             android:screenOrientation="portrait">
         </activity>
 

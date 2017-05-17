@@ -42,6 +42,9 @@ public class AppConfig {
 	public static String URL_KAMUS= "https://dev.gohajj.id/api/jemaah-free/kamus";
 	public static String URL_LIST_KAMUS= "https://dev.gohajj.id/api/jemaah-free/list-kamus";
 	public static String URL_PARAMS= "https://dev.gohajj.id/api/jemaah-free/params";
+	public static String URL_PUSATBANTUAN= "https://dev.gohajj.id/api/jemaah-free/pusat-bantuan";
+	public static String URL_GET_PUSATBANTUAN= "https://dev.gohajj.id/api/jemaah-free/get-pusat-bantuan?id=";
+	public static String URL_LAPORKAN_MASALAH= "https://dev.gohajj.id/api/jemaah-free/laporkan-masalah";
 
 	public static final String KEY_PHONE= "phone";
 	public static final String KEY_MESSAGE= "message";
@@ -84,6 +87,9 @@ public class AppConfig {
 	public static final String KEY_VALUE = "value";
 	public static final String KEY_TRANSLATION = "translation";
 	public static final String KEY_INDONESIA = "indonesia";
+	public static final String KEY_PERTANYAAN = "pertanyaan";
+	public static final String KEY_JAWABAN = "jawaban";
+	public static final String KEY_MASALAH = "masalah";
 
 
 	public static final String KEY_JUMLAH= "jumlah";

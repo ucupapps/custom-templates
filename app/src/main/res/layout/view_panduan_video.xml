@@ -52,14 +52,16 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                <VideoView
-                    android:id="@+id/videoview"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="8dp"
-                    android:layout_height="170dp"/>
+                    <FrameLayout
+                        android:layout_margin="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp">
+
+                        <com.github.rtoshiro.view.video.FullscreenVideoLayout
+                            android:id="@+id/videoview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </FrameLayout>
                 </RelativeLayout>
                 <Button
                     android:id="@+id/btnSimpan"

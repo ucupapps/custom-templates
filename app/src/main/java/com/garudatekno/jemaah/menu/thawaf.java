@@ -132,14 +132,14 @@ public class thawaf extends AppCompatActivity {
         T_6=(TextView) findViewById(R.id.triangle_circle6);
         T_7=(TextView) findViewById(R.id.triangle_circle7);
 
-        ImageView img_click =(ImageView) findViewById(R.id.img_sai_klik);
-
-        img_click.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                imgCenter();
-            }
-        });
+//        ImageView img_click =(ImageView) findViewById(R.id.img_sai_klik);
+//
+//        img_click.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                imgCenter();
+//            }
+//        });
 
 //        Button btnSimple =(Button) findViewById(R.id.buttonSimple);
         C_1.setOnClickListener(new View.OnClickListener() {

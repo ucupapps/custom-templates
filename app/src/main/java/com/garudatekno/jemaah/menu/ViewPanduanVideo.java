@@ -2,7 +2,9 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -18,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +36,7 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.github.rtoshiro.view.video.FullscreenVideoLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,7 +77,8 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
     private SQLiteHandler db;
     private SessionManager session;
     String file,path;
-
+    FullscreenVideoLayout videoLayout;
+    Uri videoUri;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private ProgressDialog mProgressDialog;
 
@@ -204,29 +209,25 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         txtid= (TextView) findViewById(R.id.txtid);
         getData();
         buttonSave= (Button) findViewById(R.id.btnSimpan);
-        videoView = (VideoView) findViewById(R.id.videoview);
+        videoLayout = (FullscreenVideoLayout) findViewById(R.id.videoview);
 
         File cek = new File("/sdcard/android/data/com.garudatekno.jemaah/panduan/"+file);
         if (!cek.exists()) {
-            videoView.setVideoPath(AppConfig.URL_HOME+"/uploads/panduan/video/"+file);
+//            videoView.setVideoPath(AppConfig.URL_HOME+"/uploads/panduan/video/"+file);
+            videoUri = Uri.parse(AppConfig.URL_HOME+"/uploads/panduan/video/"+file);
             buttonSave.setVisibility(View.VISIBLE);
         }else{
+            videoUri = Uri.parse("/sdcard/android/data/com.garudatekno.jemaah/panduan/"+file);
             buttonSave.setVisibility(View.GONE);
-            videoView.setVideoPath("/sdcard/android/data/com.garudatekno.jemaah/panduan/"+file);
+//            videoView.setVideoPath("/sdcard/android/data/com.garudatekno.jemaah/panduan/"+file);
         }
-        videoView.requestFocus();
-        videoView.setScaleX((float) 1);
-        MediaController mediaController = new
-                MediaController(this);
-        mediaController.setAnchorView(videoView);
-        videoView.setMediaController(mediaController);
-        videoView.setOnPreparedListener(new
-                                                MediaPlayer.OnPreparedListener()  {
-                                                    @Override
-                                                    public void onPrepared(MediaPlayer mp) {
-                                                        Log.i("Video", "Duration = " +videoView.getDuration());
-                                                    }
-                                                });
+
+        try {
+            videoLayout.setVideoURI(videoUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -391,5 +392,9 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String unused) {
             dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
         }
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

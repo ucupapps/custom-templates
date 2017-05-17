@@ -47,6 +47,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.0.0'
     //font setting
     compile 'me.anwarshahriar:calligrapher:1.0'
+    //video
+    compile 'com.github.rtoshiro.fullscreenvideoview:fullscreenvideoview:1.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
