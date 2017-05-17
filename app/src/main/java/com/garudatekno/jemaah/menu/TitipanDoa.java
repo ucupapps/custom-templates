@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
@@ -24,6 +25,9 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -276,7 +280,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 JSON_STRING = s;
                 showData();
 
-//                Toast.makeText(TitipanDoa.this, s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TitipanDoa.this, "Terimakasih telah mendoakan", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -324,6 +328,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             }
 
 
+            CircleImageView imgDoa = (CircleImageView) itemView.findViewById(R.id.imgprofile_doa);
             TextView no = (TextView)itemView.findViewById(R.id.txtNO);
             TextView message = (TextView)itemView.findViewById(R.id.txtMESSAGE);
             TextView time = (TextView)itemView.findViewById(R.id.txtTIME);
@@ -350,6 +355,8 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             time.setText(strTime);
             from.setText(strFrom);
             jum.setText(strJum);
+
+            Picasso.with(getContext()).load(AppConfig.URL_HOME+"/uploads/profile/"+strFrom+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgDoa);
 
             btndoakan.setOnClickListener(new View.OnClickListener() {
                 @Override
