@@ -198,6 +198,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 String id = jo.getString(AppConfig.KEY_ID);
                 String message = jo.getString(AppConfig.KEY_MESSAGE);
                 String time = jo.getString(AppConfig.KEY_TIME);
+                String userId = jo.getString(AppConfig.KEY_USERID);
                 String from = jo.getString(AppConfig.KEY_FROM);
                 String jum = jo.getString(AppConfig.KEY_JUMLAH);
 //                HashMap<String,String> data = new HashMap<>();
@@ -206,7 +207,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 //                data.put(AppConfig.KEY_MESSAGE,message);
 //                data.put(AppConfig.KEY_FROM,from);
 //                data.put(AppConfig.KEY_JUMLAH,jum);
-                list.add(new items(id,message,time,from,jum));
+                list.add(new items(id,message,time,userId,from,jum));
             }
 
         } catch (JSONException e) {
@@ -348,6 +349,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             final String strID = list.get(position).getId();
             String strMessage = list.get(position).getMessage();
             String strTime = list.get(position).getTime();
+            String strIdUser = list.get(position).getUserid();
             String strFrom = list.get(position).getFrom();
             String strJum = list.get(position).getJum();
             no.setText(strID);
@@ -356,7 +358,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             from.setText(strFrom);
             jum.setText(strJum);
 
-            Picasso.with(getContext()).load(AppConfig.URL_HOME+"/uploads/profile/"+strFrom+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgDoa);
+            Picasso.with(getContext()).load(AppConfig.URL_HOME+"/uploads/profile/"+strIdUser+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgDoa);
 
             btndoakan.setOnClickListener(new View.OnClickListener() {
                 @Override
