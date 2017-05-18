@@ -24,7 +24,7 @@ import com.garudatekno.jemaah.R;
 public class splashscreen extends Activity {
 
     //Set waktu lama splashscreen
-    private static int splashInterval = 1000;
+    private static int splashInterval = 1500;
     private static final String[] requiredPermissions = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,

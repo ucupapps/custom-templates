@@ -2,26 +2,15 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -30,30 +19,15 @@ import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.BackgroundService;
-import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MainActivity;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
-
-import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
-import static java.lang.Boolean.FALSE;
 
 
 public class sai extends AppCompatActivity {
@@ -61,27 +35,27 @@ public class sai extends AppCompatActivity {
     private SQLiteHandler db;
     private SessionManager session;
 
-    protected TextView CC,C_1,C_2,C_3,C_4,C_5,C_6,C_7,T_1,T_2,T_3,T_4,T_5,T_6,T_7,state;
-
     private SQLiteDatabase database;
 
-    private Button btnplay;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private ProgressDialog mProgressDialog;
-    private TextView txtid;
-
+    private TextView state,txt_play,txt_back,txt_next,
+            circle,txtArab,txtArti,txt_doa1,txt_doa2,txt_doa3,
+            vname,varab,varti,vaudio,v_play;
+    ImageView img_back,img_next,progress,img_play,arrow_back,img_vplay;
     String srcPath = null;
     enum MP_State {
         Idle, Initialized, Prepared, Started, Paused,
         Stopped, PlaybackCompleted, End, Error, Preparing}
 
     sai.MP_State mediaPlayerState;
-    private String uid;
+    private String id,uid;
     private SeekBar timeLine;
     LinearLayout timeFrame;
     TextView timePos, timeDur;
     final static int RQS_OPEN_AUDIO_MP3 = 1;
     MediaPlayer mediaPlayer;
+    LinearLayout menu_play,menu_next,menu_back,judul,isi,vplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,324 +83,250 @@ public class sai extends AppCompatActivity {
             }
         });
 
+
+        circle = (TextView) findViewById(R.id.circle);
+        txt_back = (TextView) findViewById(R.id.txt_back);
+        txt_play = (TextView) findViewById(R.id.txt_play);
+        txt_next = (TextView) findViewById(R.id.txt_next);
+        txtArab = (TextView) findViewById(R.id.txtArab);
+        txtArti = (TextView) findViewById(R.id.txtArti);
+        txt_doa1 = (TextView) findViewById(R.id.txt_doa1);
+        txt_doa2 = (TextView) findViewById(R.id.txt_doa2);
+        txt_doa3 = (TextView) findViewById(R.id.txt_doa3);
+
+        progress = (ImageView) findViewById(R.id.progress);
+        img_next = (ImageView) findViewById(R.id.img_next);
+        img_back = (ImageView) findViewById(R.id.img_back);
+        img_play = (ImageView) findViewById(R.id.img_play);
+
+        menu_back = (LinearLayout) findViewById(R.id.menu_back);
+        menu_play = (LinearLayout) findViewById(R.id.menu_play);
+        menu_next = (LinearLayout) findViewById(R.id.menu_next);
+        judul = (LinearLayout) findViewById(R.id.judul);
+        isi = (LinearLayout) findViewById(R.id.isi);
         state = (TextView)findViewById(R.id.state);
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
-
-//        if (!session.isLoggedIn()) {
-//            logoutUser();
-//        }
-
-       //circle menu
-        CC =(TextView) findViewById(R.id.circle);
-        C_1 =(TextView) findViewById(R.id.circle1);
-        C_2 =(TextView) findViewById(R.id.circle2);
-        C_3=(TextView) findViewById(R.id.circle3);
-        C_4=(TextView) findViewById(R.id.circle4);
-        C_5=(TextView) findViewById(R.id.circle5);
-        C_6=(TextView) findViewById(R.id.circle6);
-        C_7=(TextView) findViewById(R.id.circle7);
-
-        //triangle
-        T_1 =(TextView) findViewById(R.id.triangle_circle1);
-        T_2 =(TextView) findViewById(R.id.triangle_circle2);
-
-//        ImageView img_click =(ImageView) findViewById(R.id.img_sai_klik);
-//
-//        img_click.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                imgCenter();
-//            }
-//        });
-
-//        Button btnSimple =(Button) findViewById(R.id.buttonSimple);
-        C_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("1",C_1,T_1);
-            }
-        });
-        C_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("2",C_2,T_2);
-            }
-        });
-        C_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("3",C_3,T_1);
-            }
-        });
-        C_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("4",C_4,T_2);
-            }
-        });
-        C_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("5",C_5,T_1);
-            }
-        });
-        C_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("6",C_6,T_2);
-            }
-        });
-        C_7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resetBackground(); insertIntoDB("7",C_7,T_1);
-            }
-        });
-
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
         //service
         startService(new Intent(sai.this, BackgroundService.class));
 
-        btnplay = (Button) findViewById(R.id.btnplay);
-        createDatabase();
 
-        btnplay.setOnClickListener(new View.OnClickListener() {
+        menu_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String ids = CC.getText().toString().trim();
-                final String str = btnplay.getText().toString().trim();
+                final String ids = circle.getText().toString().trim();
+                final String play = txt_play.getText().toString().trim();
+//                media/doa_harian/01_doa_tawaf_1.mp3
 
                 srcPath="/sdcard/android/data/com.garudatekno.jemaah/sai/"+ids+".mp3";
+                File cek = new File(srcPath);
+                if (!cek.exists()) {
+                    srcPath=AppConfig.URL_HOME+"/media/doa_harian/0"+ids+"_perjalanan_sa'i_"+ids+".mp3";
+                }
                 cmdReset();
                 cmdSetDataSource(srcPath);
 
-                if(str.equals("Download")){
-                    //make dir
-                    File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/sai");
-                    boolean success = true;
-                    if (!folder.exists()) {
-                        folder.mkdirs();
-                    }
-                    startDownload(ids);
-                }else if(str.equals("Stop")) {
-                    cmdStop();
-                    btnplay.setText("Putar Audio");
-                }else if(str.equals("Putar Audio")) {
+                if(play.equals("Mulai")) {
+                    judul.setVisibility(View.VISIBLE);
+                    isi.setVisibility(View.VISIBLE);
+                    img_next.setVisibility(View.VISIBLE);
+                    img_back.setVisibility(View.VISIBLE);
+                    txt_back.setVisibility(View.VISIBLE);
+                    txt_next.setVisibility(View.VISIBLE);
+                    txt_next.setVisibility(View.VISIBLE);
+                    txt_play.setText("Mainkan");
+                    circle.setText("1");
+                    SetProgess(1);
+                    circle.setBackground(getResources().getDrawable(R.drawable.circle_sai_blue));
+                }else if(play.equals("Pause")) {
+//                    cmdStop();
+                    cmdPause();
+                    img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                    txt_play.setText("Mainkan");
+                }else if(play.equals("Mainkan")) {
                     cmdPrepare();
                     cmdStart();
-                    btnplay.setText("Stop");
+                    txt_play.setText("Pause");
+                    img_play.setImageDrawable(getResources().getDrawable(R.drawable.stop));
                 }
             }
         });
-    }
 
-    protected void resetBackground(){
-        C_1.setBackgroundResource(R.drawable.circle_sai);
-        C_1.setTextColor(Color.WHITE);
-        C_2.setBackgroundResource(R.drawable.circle_sai);
-        C_2.setTextColor(Color.WHITE);
-        C_3.setBackgroundResource(R.drawable.circle_sai);
-        C_3.setTextColor(Color.WHITE);
-        C_4.setBackgroundResource(R.drawable.circle_sai);
-        C_4.setTextColor(Color.WHITE);
-        C_5.setBackgroundResource(R.drawable.circle_sai);
-        C_5.setTextColor(Color.WHITE);
-        C_6.setBackgroundResource(R.drawable.circle_sai);
-        C_6.setTextColor(Color.WHITE);
-        C_7.setBackgroundResource(R.drawable.circle_sai);
-        C_7.setTextColor(Color.WHITE);
-
-        T_1.setBackgroundResource(R.drawable.triangle_clear);
-        T_2.setBackgroundResource(R.drawable.triangle_clear);
-    }
-
-    protected void imgCenter(){
-        resetBackground();
-        Cursor c = database.rawQuery("SELECT * FROM sai WHERE name='sai'", null);
-        c.moveToFirst();
-        String stat=c.getString(2);
-        if(stat.equals("1")){
-            insertIntoDB("2",C_2,T_2);
-        }else if(stat.equals("2")){
-            insertIntoDB("3",C_3,T_1);
-        }else if(stat.equals("3")){
-            insertIntoDB("4",C_4,T_2);
-        }else if(stat.equals("4")){
-            insertIntoDB("5",C_5,T_1);
-        }else if(stat.equals("5")){
-            insertIntoDB("6",C_6,T_2);
-        }else if(stat.equals("6")){
-            insertIntoDB("7",C_7,T_1);
-        }else if(stat.equals("7")){
-            insertIntoDB("1",C_1,T_1);
-        }else{
-            insertIntoDB("1",C_1,T_1);
-        }
-
-    }
-
-    protected void createDatabase(){
-        database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
-        database.execSQL("CREATE TABLE IF NOT EXISTS sai(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,status VARCHAR);");
-        Cursor mCount= database.rawQuery("select count(*) from sai where name='sai'", null);
-        mCount.moveToFirst();
-        int count= mCount.getInt(0);
-        if(count > 0) {
-            insertIntoDB("1",C_1,T_1);
-        }else {
-            String query = "INSERT INTO sai (name,status) VALUES('sai', '1');";
-            database.execSQL(query);
-            insertIntoDB("1",C_1,T_1);
-        }
-    }
-
-    protected void insertIntoDB(String status,TextView circle,TextView triangle){
-       String query = "UPDATE sai SET status='" + status + "' WHERE name='sai';";
-       database.execSQL(query);
-
-        Cursor c = database.rawQuery("SELECT * FROM sai WHERE name='sai'", null);
-
-        c.moveToFirst();
-        String stat=c.getString(2);
-        Log.d("MyDataShow", "status: " + stat);
-        history(stat);
-        CC.setText(stat);
-        triangle.setBackgroundResource(R.drawable.triangle);
-        circle.setBackgroundResource(R.drawable.circle_sai_blue);
-        circle.setTextColor(Color.WHITE);
-
-        File file = new File("/sdcard/android/data/com.garudatekno.jemaah/sai/"+stat+".mp3");
-
-        if (!file.exists()) {
-            btnplay.setText("Download");
-            btnplay.setBackgroundResource(R.drawable.button_blue);
-        }else{
-            btnplay.setText("Putar Audio");
-            btnplay.setBackgroundResource(R.drawable.button);
-        }
-
-    }
-    protected void history(String stat){
-        if(stat.equals("1")){
-//            insertIntoDB("2",C_2,T_2);
-        }else if(stat.equals("2")){
-           C_1.setBackgroundResource(R.drawable.circle_sai_green);
-        }else if(stat.equals("3")){
-            C_1.setBackgroundResource(R.drawable.circle_sai_green);
-            C_2.setBackgroundResource(R.drawable.circle_sai_green);
-        }else if(stat.equals("4")){
-            C_1.setBackgroundResource(R.drawable.circle_sai_green);
-            C_2.setBackgroundResource(R.drawable.circle_sai_green);
-            C_3.setBackgroundResource(R.drawable.circle_sai_green);
-        }else if(stat.equals("5")){
-            C_1.setBackgroundResource(R.drawable.circle_sai_green);
-            C_2.setBackgroundResource(R.drawable.circle_sai_green);
-            C_3.setBackgroundResource(R.drawable.circle_sai_green);
-            C_4.setBackgroundResource(R.drawable.circle_sai_green);
-        }else if(stat.equals("6")){
-            C_1.setBackgroundResource(R.drawable.circle_sai_green);
-            C_2.setBackgroundResource(R.drawable.circle_sai_green);
-            C_3.setBackgroundResource(R.drawable.circle_sai_green);
-            C_4.setBackgroundResource(R.drawable.circle_sai_green);
-            C_5.setBackgroundResource(R.drawable.circle_sai_green);
-        }else if(stat.equals("7")){
-            C_1.setBackgroundResource(R.drawable.circle_sai_green);
-            C_2.setBackgroundResource(R.drawable.circle_sai_green);
-            C_3.setBackgroundResource(R.drawable.circle_sai_green);
-            C_4.setBackgroundResource(R.drawable.circle_sai_green);
-            C_5.setBackgroundResource(R.drawable.circle_sai_green);
-            C_6.setBackgroundResource(R.drawable.circle_sai_green);
-        }
-    }
-    private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
-
-        // Launching the login activity
-        Intent intent = new Intent(sai.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void startDownload(String id) {
-        String url = URL_HOME+"/uploads/doa/"+id+".mp3";
-        new sai.DownloadFileAsync().execute(url);
-    }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_DOWNLOAD_PROGRESS:
-                mProgressDialog = new ProgressDialog(this);
-                mProgressDialog.setMessage("Downloading file..");
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                return mProgressDialog;
-            default:
-                return null;
-        }
-    }
-
-    class DownloadFileAsync extends AsyncTask<String, String, String> {
-        final String id = CC.getText().toString().trim();
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showDialog(DIALOG_DOWNLOAD_PROGRESS);
-        }
-
-        @Override
-        protected String doInBackground(String... aurl) {
-            int count;
-
-            try {
-
-                URL url = new URL(aurl[0]);
-                URLConnection conexion = url.openConnection();
-                conexion.connect();
-
-                int lenghtOfFile = conexion.getContentLength();
-                Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
-
-                InputStream input = new BufferedInputStream(url.openStream());
-
-                //save file
-                OutputStream output = new FileOutputStream("/sdcard/android/data/com.garudatekno.jemaah/sai/"+id+".mp3");
-
-                byte data[] = new byte[1024];
-
-                long total = 0;
-
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress(""+(int)((total*100)/lenghtOfFile));
-                    output.write(data, 0, count);
+        menu_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cmdStop(); txt_play.setText("Mainkan");
+                img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                final String ids = circle.getText().toString();
+                if(Integer.parseInt(ids) > 1){
+                    int no= Integer.parseInt(ids) - 1;  circle.setText(""+no+""); SetProgess(no);
+                }else{
+                    isi.setVisibility(View.GONE);
+                    img_next.setVisibility(View.GONE);
+                    img_back.setVisibility(View.GONE);
+                    txt_back.setVisibility(View.GONE);
+                    txt_next.setVisibility(View.GONE);
+                    txt_next.setVisibility(View.GONE);
+                    txt_play.setText("Mulai");
+                    SetProgess(0);
+                    circle.setBackground(getResources().getDrawable(R.drawable.circle));
+                    circle.setText("");
                 }
+            }
+        });
 
-                output.flush();
-                output.close();
-                input.close();
-                Intent i = new Intent(getApplicationContext(), sai.class);
-                finish();
-                startActivity(i);
-            } catch (Exception e) {}
-            return null;
+        menu_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cmdStop(); txt_play.setText("Mainkan");
+                img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                final String ids = circle.getText().toString();
+                if(Integer.parseInt(ids) < 7){
+                    int no= Integer.parseInt(ids) + 1;  circle.setText(""+no+""); SetProgess(no);
+                }else{
+                    isi.setVisibility(View.GONE);
+                    img_next.setVisibility(View.GONE);
+                    img_back.setVisibility(View.GONE);
+                    txt_back.setVisibility(View.GONE);
+                    txt_next.setVisibility(View.GONE);
+                    txt_next.setVisibility(View.GONE);
+                    txt_play.setText("Mulai");
+                    SetProgess(0);
+                    circle.setBackground(getResources().getDrawable(R.drawable.circle));
+                    circle.setText("");
+                }
+            }
+        });
 
-        }
-        protected void onProgressUpdate(String... progress) {
-            Log.d("ANDRO_ASYNC",progress[0]);
-            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
-        }
+        //popup
+        final Dialog rankDialog = new Dialog(sai.this);
+        rankDialog.setContentView(R.layout.view_dialog);
+        rankDialog.setCancelable(false);
+        Typeface font = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/helvetica.ttf");
+        vname = (TextView) rankDialog.findViewById(R.id.vname);
+        varab = (TextView) rankDialog.findViewById(R.id.vArab);
+        varti = (TextView) rankDialog.findViewById(R.id.varti);
+        vaudio = (TextView) rankDialog.findViewById(R.id.vaudio);
+        v_play = (TextView) rankDialog.findViewById(R.id.txt_play);
+        arrow_back = (ImageView) rankDialog.findViewById(R.id.arrow_back);
+        img_vplay = (ImageView) rankDialog.findViewById(R.id.img_play);
+        vplay = (LinearLayout) rankDialog.findViewById(R.id.menu_play);
+        vname.setTypeface(font);
+        varab.setTypeface(font);
+        varti.setTypeface(font);
+        v_play.setTypeface(font);
+        v_play.setText("Mainkan");
 
-        @Override
-        protected void onPostExecute(String unused) {
-            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
-        }
+        vplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String ids = vaudio.getText().toString().trim();
+                final String play = v_play.getText().toString().trim();
+                srcPath="/sdcard/android/data/com.garudatekno.jemaah/sai/"+ids;
+                File cek = new File(srcPath);
+                if (!cek.exists()) {
+                    srcPath=AppConfig.URL_HOME+"/media/doa_harian/"+ids;
+                }
+                cmdReset();
+                cmdSetDataSource(srcPath);
+
+                if(play.equals("Pause")) {
+//                    cmdStop();
+                    cmdPause();
+                    img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                    v_play.setText("Mainkan");
+                }else if(play.equals("Mainkan")) {
+                    cmdPrepare();
+                    cmdStart();
+                    v_play.setText("Pause");
+                    img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.stop));
+                }
+            }
+        });
+
+//        rankDialog.getWindow().setLayout(700, 450);
+        arrow_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cmdStop();
+                rankDialog.dismiss();
+            }
+        });
+
+        txt_doa1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vname.setText("Doa mendaki bukit safa");
+                varab.setText("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ، أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ وَرَسُوْلُهُ. إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
+                varti.setText("Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Aku mulai dengan apa yang telah dimulai oleh Allah dan Rasul-Nya. Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
+                vaudio.setText("08_doa_mendaki_bukit_safa.mp3");
+                rankDialog.show();
+            }
+        });
+
+        txt_doa2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vname.setText("Doa ketika mendekati bukit safa marwa");
+                varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
+                varti.setText("Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
+                vaudio.setText("11_doa_ketika_mendekati_bukit_safa_marwa.mp3");
+                rankDialog.show();
+            }
+        });
+        txt_doa3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vname.setText("Doa diantara 2 pilar hijab");
+                varab.setText("رَبّ اغْفِرْ وَارْحَمْ، وَاعْفُ وَتَكَرَّمْ، وَتَجَاوَزْ عَمَّا تَعْلَمُ، إنَّكَ تَعْلَمُ مَالاَ نَعْلَمْ، إنَّكَ أَنْتَ اللهُ الأَعَزُّ الأَكْرَمُ");
+                varti.setText("Ya Allah ampunilah, sayangilah, ma’afkanlah, bermurah hatilah dan hapuskanlah apa-apa yang Engkau ketahui. Sesungguhnya Engkau Maha Mengetahui apa-apa yang kami sendiri tidak tahu. Sesungguhnya Engkau Ya Allah Maha Mulia dan Maha Pemurah. ");
+                vaudio.setText("10_doa_diantara_2_pilar_hijab.mp3");
+                rankDialog.show();
+            }
+        });
+
     }
+
+    private void SetProgess(int no){
+        if(no == 1){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_1));
+            txtArab.setText("اللهُ اَكْبَرُ/ اللهُ اَكْبَرُاللهُ/ اَكْبَرُ اللهُ اَكْبَرُ كَبِيْرًا وَالْحَمْدُلِلهِ كَثِيْرًا/ وَسُبْحَانَ اللهِ الْعَظِيْمِ/ وَبِحَمْدِهِ الْكَرِيْمِ/ بُكْرَةً وَأَصِيْلًا/ وَمِنَ اللَّيْلِ فَاسْجُدْ لَهُ/ وَسَبِّحْهُ لَيْلًا طَوِيْلًا/ لَااِلَهَ اِلاَاللهُ وَحْدَهُ/ أَنْجَزَ وَعْدَهُ/ وَنَصَرَ عَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ/ لاَشَيْءَ قَبْلَهُ وَلاَ بَعْدَهُ/ يُحْيِيْ وَيُمِيْتُ/ وَهُوَ حَيٌّ دَائِمً/ لاَيَمُوْتُ وَلاَيَفُوْتُ أَبَدًا/ بِيَهْدِهِ الْخَيْرُ/ وَاِلَيْهِ الْمَصِيْرُ/ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرُ");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar, dengan segala kebesaran-Nya, segala puji bagi Allah yang Maha Agung dengan segala pujian-Nya yang tidak terhingga, Maha Suci Allah dengan pujian yang Maha Mulia di waktu pagi dan petang, bersujud dan bertasbih pada-Nya sepanjang malam, tidak ada Tuhan selain Allah yang Maha Esa, yang menepati janji-Nya, membela hamba-hamba-Nya, yang menghancurkan musuh-musuh-Nya dengan ke-Esa-an-Nya, tidak ada sesuatu sebelum-Nya ataupun sesudah-Nya, Dia-lah yang menghidupkan dan mematikan, dan Dia adalah Maha Hidup Kekal tiada mati dan tiada musnah untuk selam-lamanya, hanya di tengah-Nya lah terletak kebaikan dan kepada-Nya lah tempat kembali dan hanya Dia-lah yang Maha Kuasa atas segala sesuatu");
+        }else if(no == 2){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_2));
+            txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، لاَ إِلهَ إِلاَّ اللهُ الوَاحِدُ الفَرْدُ الصَّمَدُ الذِيْ لَمْ يّتَّخٍذ صَاحِبَةً وَلَا وَلَدًاْ وَلَمْ يَكُنْ لَهُ شَرِيكٌ فِي الْمُلْكِ وَلَمْ يَكُنْ لَهُ وَلِيٌّ مِنَ الذُّلِّ وَكَبِّرْهُ تَكْبِيرًا اللَّهُمَّ إِنَّكَ قُلْتَ فِيْ كِتَابِكَ المُنَزَّلِ اُدْعُوْنِي أسْتَجِبْ لَكُمْ، دَعَوْنَاكَ رَبَّنَا فَاغْفِرْ لَنَا كَمَا أَمَرْتَنَا إِنَّكَ لا تُخْلِفُ المِيْعَادَ رَبَّنَا إِنَّنَا سَمِعْنَا مُنَادِيًا يُنَادِي لِلْإِيمَانِ أَنْ آَمِنُوا بِرَبِّكُمْ فَآَمَنَّا رَبَّنَا فَاغْفِرْ لَنَا ذُنُوبَنَا وَكَفِّرْ عَنَّا سَيِّئَاتِنَا وَتَوَفَّنَا مَعَ الْأَبْرَارِ رَبَّنَا وَآَتِنَا مَا وَعَدْتَنَا عَلَى رُسُلِكَ وَلَا تُخْزِنَا يَوْمَ الْقِيَامَةِ إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ رَبَّنَا عَلَيْكَ تَوَكَّلْنَا وَإِلَيْكَ أَنَبْنَا وَإِلَيْكَ الْمَصِيرُ. رَبَّنَا اغفِر لَنَا وَ لِأِخوانِنَا الَّذِينَ سَبَقُونَا بِالاِيمَانِ وَ لاَ تَجعَل فىِ قُلُوبِنَا غِلاًّ لِلَّذِينَ ءَامَنُوا رَبَّنَا اِنَّكَ رَءُوفٌ رَحِيمٌ");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar, hanya bagi Allahlah segala pujian. Tidak ada Tuhan selain Allah yang Maha Esa, tunggal dan tumpuan segala maksud dan hajat, yang tidak beristri dan tidak beranak, tidak bersekutu dalam kekuasaan. Tidak menjadi pelindung kehinaan. Agungkanlah Dia dengan segenap kebesaran.");
+        }else if(no == 3){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_3));
+            txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا إِنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ الخَيْرَ كُلَّهُ عَاجِلَهُ وآجِلَهُ، وَأَسْتَغْفِرُكَ لِذَنْبِيْ، وَأَسْأَلُكَ رَحْمَتَكَ يَا أَرْحَمَ الرَّاحِمِيْنَ");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Hanya bagi Allah semua pujian. Ya Allah, sempurnakanlah cahaya terang bagi kami, ampunilah kami, sesungguhnya Engkau Maha Kuasa atas segala sesuatu. Ya Allah, sesungguhnya aku mohon pada-Mu segala kebaikan yang sekarang dan masa yang akan datang dan aku mohon ampunan pada-Mu dan dosaku serta aku mohon pada-Mu rahmat-Mu Wahai Tuhan Yang Maha Pengasih dari segala yang pengasih.");
+        }else if(no == 4){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_4));
+            txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، اللَّهُمَّ إِنِّيْ أَسْأَلُكَ مِنْ خَيْرِ مَا تَعْلَمُ، وَأَعُوْذُ بِكَ مِنَ شَرِّ مَا تَعْلَمُ وَأَسْتَغْفِرُكَ مِنْ كُلِّ مَا تَعْلَمُ إِنَّكَ أَنْتَ عَلاَّمُ الغُيُوْب لاَ إِلهَ إِلاَّ اللهُ المَلِكُ الحَقُّ المُبِيْنُ، مُحَمَّدٌ رَسُوْلُ اللهِ صَادِقُ الوَعْدِ الأَمِيْنُ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ كَمَا هَدَيْتَنِيْ لِلإسْلَامِ أَنْ لاَ تَنْزِعَهُ مِنِّيْ حَتَّى تَوَفَّنِيْ وَأَنَا مُسْلِمٌ اللَّهُمَّ اجْعَلْ في قَلْبِي نُوراً، وَفِي لِسَانِي نُورًا، وَاجْعَلْ في سَمْعِي نُوراً، وَفِي بَصَرِيْ نُورًا اللَّهُمَّ اشْرَحْ لِيْ صَدْرِيْ وَيَسِّرْلِيْ أَمْرِيْ، وَأَعُوْذُ بِكَ مِنْ وَسَاوِسِ الصَّدْرِ وَشَتَاتِ الأَمْرِ وَفِتْنَةِ القَبْرِ اللَّهُمَّ إِنِّيْ أَعُوْذُ بِكَ مِنْ شَرِّ مَا يَلِجُ فِي اللَّيْلِ وَمِنْ شَرِّ مَا يَلِجُ فِي النَّهَارِ، وَمِنْ شَرِّ مَا تَهُبُّ بِهِ الرِّيَاحُ، يَا أَرْحَمَ الرَّاحِمِيْنَ سُبْحَانَكَ مَا عَبَدْنَاكَ حَقَّ عِبَادَتِكَ يَا اللهُ، سُبْحَانَكَ مَا ذَكَرْنَاكَ حَقَّ ذِكْرِكَ يَا ا");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji hanya bagi Allah. Ya Allah, Tuhanku, aku mohon pada-Mu dari kebaikan yang Engkau tahu dan berlindung pada-Mu dari kejahatan yang Engkau tahu, dan aku mohon ampun pada-Mu dari segala kesalahan yang Engkau ketahui, sesungguhnya Engkau Maha Mengetahui yang gaib. Tidak ada Tuhan selain Allah Maha Raja yang sebenar-benarnya. Muhammad utusan Allah yang selalu menempati janji lagi terpercaya. Ya Allah sebagaimana Engkau telah menunjuki aku memilih Islam, maka aku mohon kepada-Mu untuk mencabutnya, sehingga aku meninggal dalam keadaan Muslim. Ya Allah, berilah cahaya terang dalam hati, telinga dan penglihatanku. Ya Allah lapangkanlah dadaku dan mudahkanlah bagiku segala urusan. Dan Aku berlindung pada-Mu dari godaan bisikan hati, kekacauan urusan dan fitnah kubur. Ya Allah, aku berlindung pada-Mu dari kejahatan yang tersembunyi di waktu malam dan siang hari, serta kejahatan yang dibawa angin lalu, Wahai Tuhan Yang Maha Pengasih dari segenap yang pengasih. Ya Allah, Maha Suci Engkau, kami tidak bisa menyembah-Mu dengan pengabdian yang semestinya. Ya Allah, Maha Suci Engkau, kami tidak bisa menyebut-Mu (dzikir) dengan semestinya.");
+        }else if(no == 5){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_5));
+            txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ. سُبْحَانَكَ مَا شَكَرْنَاكَ حَقَّ شُكْرِكَ يَا اللهُ، سُبْحَانَكَ مَا أَعْلَى شَأْنِكَ يَا اللهُ اللَّهُمَّ حَبِّبْ إِلَيَّ الإِيمَانَ وَزَيِّنْهُ فِي قَلْبِيْ، وَكَرِّهْ إِلَيَّ الْكُفْرَ وَالْفُسُوقَ وَالْعِصْيَانَ، وَاجْعَلْنِيْ مِنَ الرَّاشِدِينَ");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji hanya untuk Allah Maha Suci Engkau, kami tidak mensyukuri-Mu dengan syukur yang semestinya. Ya Allah Maha Suci Engkau. Alangkah Agung Zat-Mu Ya Allah. Ya Allah, cintakanlah kami kepada iman dan hiaskanlah dihati kami, tanamkanlah kebencian pada diri kami pada perbuatan kufur, fasik dan durhaka. Jadikanlah kami dari golongan orang-orang yang mendapat petunjuk.");
+        }else if(no == 6){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_6));
+            txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، لاَ إِلهَ إِلاَّ اللهُ وَحْدَهُ، صَدَقَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الأَحْزَابَ وَحْدَهُ، لاَ إِلَهَ إِلاَّ اللّه مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الكافِرُونَ اللَّهُمَّ إنِّي أسألُكَ الهُدَى والتُّقَى والعَفَافَ وَالغِنَى اللَّهُمَّ لَكَ الحَمْدُ كَالَّذِيْ تَقُوْلُ وَخَيْرًا مِمَّا نَقُوْلُ اللَّهُمَّ إنِّي أسألُكَ رِضَاكَ وَالجَنَّةَ وَأَعُوْذُ بِكَ مِنْ سَخَطِكَ وَالنَّارِ وَمَا يُقَرِّبُنِيْ إِلَيْهَا مِنْ قَوْلٍ أَوْ فِعْلٍ أَوْ عَمَلٍ اللَّهُمَّ بِنُوْرِكَ اهْتَدَيْنَا، وَبِفَضْلِكَ اسْتَغْنَيْنَا، وَفِي كَنَفِكَ وَإِنْعَامِكَ وَعَطَائِكَ وَإِحْسَانِكَ أَصْبَحْنَا وَأَمْسَيْنَا أَنْتَ الأوَّلُ فَلاَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الآخِرُ فَلاَ بَعْدَكَ شَيْءٌ، وَالظَّاهِرُ فَلاَ شَيْئَ فَوْقَكَ، وَالبَاطِنُ فَلاَ شَيْءَ دُوْنَكَ نَعُوْذُ بِكَ مِنْ الفَشَلِ وَالكِسَلِ، وَمِنْ عَذَابِ القَبْرِ وَمِنْ فِتْنَةِ الغِنَى، وَنَسْألُكَ الفَوْزَ بِالجَنَّةِ وَالنَّجَاةَ مِنْ النَّارِ");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji hanya untuk Allah. Tidak ada Tuhan selain Allah Yang Maha Esa, yang menempati janji-Nya, menolong hamba-Nya dan mengalahkan sendiri musuh-musuh-Nya. Tiada Tuhan selain Allah. Dan kami tidak menyembah selain Dia dengan memurnikan kepatuhan kepada-Nya, sekalipun orang-orang kafir membenci. Ya Allah, aku memohon pada-Mu petunjuk, ketakwaan, pengendalian diri dan kekayaan. Ya Allah pada-Mu-lah segala puji seperti yang kami ucapkan dan bahkan lebih baik dari yang kami ucapkan. Ya Allah, aku mohon pada-Mu ridha-Mu dan surga, aku berlindung pada-Mu dari murka-Mu dan siksa neraka dan apapun yang dapat mendekatkan daku padanya (neraka), baik ucapan atau pun amal perbuatan. Ya Allah hanya dengan nur cahaya-Mu kami ini mendapat petunjuk, dengan pemberian-Mu kami merasa cukup, dan dalam naungan-Mu, nikmat-Mu, anugerah-Mu dan kebajikan-Mu jauhlah kami berada diwaktu pagi dan petang. Engkau-lah yang mula pertama, tidak ada sesuatu pun yang ada sebelum-Mu dan Engkau pulalah yang paling akhir dan tidak ada sesuatupun yang ada dibelakang (sesudah)-Mu, Engkaulah yang lahir (nyata), maka tidak ada sesuatu pun yang ada di atas Engkau. Engkau pulalah yang batin, maka tidak ada sesuatupun dibawah-Mu. Kami berlindung pada-Mu dari pailit, malas, siksa kubur dan fitnah kekayaan serta kami mohon pada-Mu kemenangan memperoleh surga, dan keselamatan dari api neraka.");
+        }else if(no == 7){
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_7));
+            txtArab.setText("اللهُ أَكْبَرُ، اللهُ أَكْبَرُ، اللهُ أَكْبَرُ كَبِيْرًا، وَالحَمْدُ لِلهِ كَثِيْرًا اللَّهُمَّ حَبِّبْ إِلَيَّ الإِيمَانَ وَزَيِّنْهُ فِي قَلْبِيْ، وَكَرِّهْ إِلَيَّ الْكُفْرَ وَالْفُسُوقَ وَالْعِصْيَانَ، وَاجْعَلْنِيْ مِنَ الرَّاشِدِينَ");
+            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji bagi Allah dengan pujian yang tidak terhingga. Ya Allah, cintakanlah aku kepada iman dan hiaskanlah ia di kalbuku. Tanamkanlah kebencian padaku perbuatan kufur fasiq dan durhaka. Dan jadikanlah pula aku dari golongan orang yang mendapat petunjuk.");
+        }else{
+            progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_0));
+            txtArab.setText("");
+            txtArti.setText("");
+        }
+
+    }
+
 
     //play
     Handler monitorHandler = new Handler(){
@@ -527,7 +427,7 @@ public class sai extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else{
-//            Toast.makeText(sai.this,
+//            Toast.makeText(ViewPanduan.this,
 //                    "Invalid State@cmdPrepare() - skip",
 //                    Toast.LENGTH_LONG).show();
         }
@@ -543,7 +443,7 @@ public class sai extends AppCompatActivity {
             mediaPlayer.start();
             mediaPlayerState = sai.MP_State.Started;
         }else{
-//            Toast.makeText(sai.this,
+//            Toast.makeText(ViewPanduan.this,
 //                    "Invalid State@cmdStart() - skip",
 //                    Toast.LENGTH_LONG).show();
         }
@@ -557,7 +457,7 @@ public class sai extends AppCompatActivity {
             mediaPlayer.pause();
             mediaPlayerState = sai.MP_State.Paused;
         }else{
-//            Toast.makeText(sai.this,
+//            Toast.makeText(ViewPanduan.this,
 //                    "Invalid State@cmdPause() - skip",
 //                    Toast.LENGTH_LONG).show();
         }
@@ -574,7 +474,7 @@ public class sai extends AppCompatActivity {
             mediaPlayer.stop();
             mediaPlayerState = sai.MP_State.Stopped;
         }else{
-//            Toast.makeText(sai.this,
+//            Toast.makeText(ViewPanduan.this,
 //                    "Invalid State@cmdStop() - skip",
 //                    Toast.LENGTH_LONG).show();
         }
@@ -619,5 +519,4 @@ public class sai extends AppCompatActivity {
                 state.setText("Unknown!");
         }
     }
-
 }
