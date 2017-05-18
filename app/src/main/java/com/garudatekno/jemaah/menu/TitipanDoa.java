@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
@@ -24,6 +25,9 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -194,6 +198,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 String id = jo.getString(AppConfig.KEY_ID);
                 String message = jo.getString(AppConfig.KEY_MESSAGE);
                 String time = jo.getString(AppConfig.KEY_TIME);
+                String userId = jo.getString(AppConfig.KEY_USERID);
                 String from = jo.getString(AppConfig.KEY_FROM);
                 String jum = jo.getString(AppConfig.KEY_JUMLAH);
 //                HashMap<String,String> data = new HashMap<>();
@@ -202,7 +207,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 //                data.put(AppConfig.KEY_MESSAGE,message);
 //                data.put(AppConfig.KEY_FROM,from);
 //                data.put(AppConfig.KEY_JUMLAH,jum);
-                list.add(new items(id,message,time,from,jum));
+                list.add(new items(id,message,time,userId,from,jum));
             }
 
         } catch (JSONException e) {
@@ -276,7 +281,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 JSON_STRING = s;
                 showData();
 
-//                Toast.makeText(TitipanDoa.this, s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TitipanDoa.this, "Terimakasih telah mendoakan", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -324,6 +329,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             }
 
 
+            CircleImageView imgDoa = (CircleImageView) itemView.findViewById(R.id.imgprofile_doa);
             TextView no = (TextView)itemView.findViewById(R.id.txtNO);
             TextView message = (TextView)itemView.findViewById(R.id.txtMESSAGE);
             TextView time = (TextView)itemView.findViewById(R.id.txtTIME);
@@ -343,6 +349,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             final String strID = list.get(position).getId();
             String strMessage = list.get(position).getMessage();
             String strTime = list.get(position).getTime();
+            String strIdUser = list.get(position).getUserid();
             String strFrom = list.get(position).getFrom();
             String strJum = list.get(position).getJum();
             no.setText(strID);
@@ -350,6 +357,8 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             time.setText(strTime);
             from.setText(strFrom);
             jum.setText(strJum);
+
+            Picasso.with(getContext()).load(AppConfig.URL_HOME+"/uploads/profile/"+strIdUser+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgDoa);
 
             btndoakan.setOnClickListener(new View.OnClickListener() {
                 @Override

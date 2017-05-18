@@ -27,7 +27,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:src="@drawable/profile"
-            android:id="@+id/imgprofile"
+            android:id="@+id/imgprofile_doa"
             android:layout_width="0dp"
             android:layout_weight="0.2"
             android:padding="3dp"
