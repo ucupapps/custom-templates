@@ -17,9 +17,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,9 +40,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Document;
 
@@ -58,7 +52,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 
-public class go extends AppCompatActivity {
+public class go extends AppCompatActivity implements OnMapReadyCallback {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
     private Button btnbus, btnhotel, btnmeeting, btnpintu;
     private Bitmap bitmap;
@@ -88,7 +82,7 @@ public class go extends AppCompatActivity {
         name = i.getStringExtra(AppConfig.KEY_NAME);
 
         TextView txtpesan= (TextView) findViewById(R.id.txtpesan);
-        txtpesan.setText("X  Arah Ke Lokasi "+ name);
+        txtpesan.setText("  Arah Ke Lokasi "+ name);
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -97,43 +91,10 @@ public class go extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         } else {
-            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync((OnMapReadyCallback) this);
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            // get the last know location from your location manager.
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                return;
-            }
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location != null) {
-                LatLng fromPosition = new LatLng(location.getLatitude(), location.getLongitude());
-//
-                database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
-                Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
-                c.moveToFirst();
-                DecimalFormat df = new DecimalFormat("#.####");
-                String lats = c.getString(2);
-                String lngs = c.getString(3);
-//                String lngs = df.format(Float.parseFloat(c.getString(3)));
-//                Log.d("hasilnya",lats+" - "+c.getString(2));
-//                Log.d("hasilnya",lngs+" - "+c.getString(3));
-                LatLng toPosition = new LatLng(Double.parseDouble(lats), Double.parseDouble(lngs));
-
-//            LatLng fromPosition = new LatLng(-6.3039, 106.8267);
-//            LatLng toPosition = new LatLng(-6.29436, 106.8859);
-                md = new GMapV2Direction();
-
-//            LatLng coordinates = new LatLng(-6.3039, 106.8267);
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
-
-                mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                        .title("Lokasi Saya"));
-                mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
-                getDirectionMap(fromPosition, toPosition);
-            }else{
-                Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-            }
-            mMap.setMyLocationEnabled(true);
+//            ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync((OnMapReadyCallback) this);
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
 
         }
 
@@ -267,6 +228,50 @@ public class go extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location != null) {
+            LatLng fromPosition = new LatLng(location.getLatitude(), location.getLongitude());
+//
+            database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+            Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
+            c.moveToFirst();
+            DecimalFormat df = new DecimalFormat("#.####");
+            String lats = c.getString(2);
+            String lngs = c.getString(3);
+//                String lngs = df.format(Float.parseFloat(c.getString(3)));
+//                Log.d("hasilnya",lats+" - "+c.getString(2));
+//                Log.d("hasilnya",lngs+" - "+c.getString(3));
+            LatLng toPosition = new LatLng(Double.parseDouble(lats), Double.parseDouble(lngs));
+
+//            LatLng fromPosition = new LatLng(-6.3039, 106.8267);
+//            LatLng toPosition = new LatLng(-6.29436, 106.8859);
+            md = new GMapV2Direction();
+
+//            LatLng coordinates = new LatLng(-6.3039, 106.8267);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
+
+            mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                    .title("Lokasi Saya"));
+            mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
+            getDirectionMap(fromPosition, toPosition);
+        }else{
+            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
+        }
+        mMap.setMyLocationEnabled(true);
+
+    }
+
     private class LongOperation extends AsyncTask<LatLng, Void, Document> {
         @Override
         protected Document doInBackground(LatLng... params) {
@@ -299,8 +304,8 @@ public class go extends AppCompatActivity {
         String copy_right = md.getCopyRights(doc);
 
         ArrayList<LatLng> directionPoint = md.getDirection(doc);
-        PolylineOptions rectLine = new PolylineOptions().width(3).color(
-                Color.RED);
+        PolylineOptions rectLine = new PolylineOptions().width(10).color(
+                Color.BLUE);
 
         for (int i = 0; i < directionPoint.size(); i++) {
             rectLine.add(directionPoint.get(i));
