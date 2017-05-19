@@ -26,13 +26,13 @@ android {
 
 dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:23.4.0'
     //noinspection GradleCompatible
     compile 'com.android.support:design:23.4.0'
-//    compile 'org.apache.httpcomponents:httpclient:4.5'
+    //    compile 'org.apache.httpcomponents:httpclient:4.5'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
@@ -49,6 +49,8 @@ dependencies {
     compile 'me.anwarshahriar:calligrapher:1.0'
     //video
     compile 'com.github.rtoshiro.fullscreenvideoview:fullscreenvideoview:1.1.2'
+    compile 'me.leolin:ShortcutBadger:1.1.16@aar'
+    compile files('libs/android-viewbadger.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

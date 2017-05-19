@@ -20,8 +20,12 @@ import android.widget.Toast;
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.BackgroundService;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,13 +60,21 @@ public class sai extends AppCompatActivity {
     final static int RQS_OPEN_AUDIO_MP3 = 1;
     MediaPlayer mediaPlayer;
     LinearLayout menu_play,menu_next,menu_back,judul,isi,vplay;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sai);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        //tracker
+        AppController application = (AppController) getApplication();
+        Tracker mTracker = application.getDefaultTracker();
+        // [START screen_view_hit]
+        mTracker.setScreenName("Sai");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+        //end
 
         // session manager
         session = new SessionManager(getApplicationContext());
@@ -124,7 +136,7 @@ public class sai extends AppCompatActivity {
                 srcPath="/sdcard/android/data/com.garudatekno.jemaah/sai/"+ids+".mp3";
                 File cek = new File(srcPath);
                 if (!cek.exists()) {
-                    srcPath=AppConfig.URL_HOME+"/media/doa_harian/0"+ids+"_perjalanan_sa'i_"+ids+".mp3";
+                    srcPath=AppConfig.URL_HOME+"/uploads/panduan/sai/"+ids+".mp3";
                 }
                 cmdReset();
                 cmdSetDataSource(srcPath);
@@ -228,7 +240,7 @@ public class sai extends AppCompatActivity {
                 srcPath="/sdcard/android/data/com.garudatekno.jemaah/sai/"+ids;
                 File cek = new File(srcPath);
                 if (!cek.exists()) {
-                    srcPath=AppConfig.URL_HOME+"/media/doa_harian/"+ids;
+                    srcPath=AppConfig.URL_HOME+"/uploads/panduan/sai/"+ids;
                 }
                 cmdReset();
                 cmdSetDataSource(srcPath);
@@ -262,7 +274,7 @@ public class sai extends AppCompatActivity {
                 vname.setText("Doa mendaki bukit safa");
                 varab.setText("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ، أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ وَرَسُوْلُهُ. إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
                 varti.setText("Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Aku mulai dengan apa yang telah dimulai oleh Allah dan Rasul-Nya. Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
-                vaudio.setText("08_doa_mendaki_bukit_safa.mp3");
+                vaudio.setText("8 doa mendaki bukit safa.mp3");
                 rankDialog.show();
             }
         });
@@ -273,7 +285,7 @@ public class sai extends AppCompatActivity {
                 vname.setText("Doa ketika mendekati bukit safa marwa");
                 varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
                 varti.setText("Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
-                vaudio.setText("11_doa_ketika_mendekati_bukit_safa_marwa.mp3");
+                vaudio.setText("9 doa ketika mendekati bukit safa marwah.mp3");
                 rankDialog.show();
             }
         });
@@ -283,7 +295,7 @@ public class sai extends AppCompatActivity {
                 vname.setText("Doa diantara 2 pilar hijab");
                 varab.setText("رَبّ اغْفِرْ وَارْحَمْ، وَاعْفُ وَتَكَرَّمْ، وَتَجَاوَزْ عَمَّا تَعْلَمُ، إنَّكَ تَعْلَمُ مَالاَ نَعْلَمْ، إنَّكَ أَنْتَ اللهُ الأَعَزُّ الأَكْرَمُ");
                 varti.setText("Ya Allah ampunilah, sayangilah, ma’afkanlah, bermurah hatilah dan hapuskanlah apa-apa yang Engkau ketahui. Sesungguhnya Engkau Maha Mengetahui apa-apa yang kami sendiri tidak tahu. Sesungguhnya Engkau Ya Allah Maha Mulia dan Maha Pemurah. ");
-                vaudio.setText("10_doa_diantara_2_pilar_hijab.mp3");
+                vaudio.setText("10 doa diantara 2 pilar hijau.mp3");
                 rankDialog.show();
             }
         });

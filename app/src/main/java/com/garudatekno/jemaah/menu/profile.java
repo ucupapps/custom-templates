@@ -22,8 +22,12 @@ import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -37,6 +41,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class profile extends AppCompatActivity implements OnClickListener {
     private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing,
@@ -47,6 +52,8 @@ public class profile extends AppCompatActivity implements OnClickListener {
     //user
     private SQLiteHandler db;
     private SessionManager session;
+    View target ;
+    BadgeView badge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,11 +65,30 @@ public class profile extends AppCompatActivity implements OnClickListener {
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-//        session = new SessionManager(getApplicationContext());
+        //tracker
+        AppController application = (AppController) getApplication();
+        Tracker mTracker = application.getDefaultTracker();
+        // [START screen_view_hit]
+        mTracker.setScreenName("Profile");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
 
+        // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
+        //end
+
+//        session = new SessionManager(getApplicationContext());
+
         emailUser = user.get("email");
 
         //HEADER
@@ -185,7 +211,6 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtPemimpinPhone = (TextView) findViewById(R.id.pemimpin_phone);
         txtEmailProfile = (TextView) findViewById(R.id.emailProfile);
 
-        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -243,13 +268,13 @@ public class profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loading = ProgressDialog.show(profile.this,"Mohon tunggu..."," ",false,false);
+                loading = ProgressDialog.show(profile.this,"","Harap Tunggu...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-//                loading.dismiss();
+                loading.dismiss();
                 showData(s);
             }
 
@@ -334,6 +359,41 @@ public class profile extends AppCompatActivity implements OnClickListener {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 
 }

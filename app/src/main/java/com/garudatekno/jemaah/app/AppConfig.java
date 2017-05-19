@@ -45,6 +45,8 @@ public class AppConfig {
 	public static String URL_PUSATBANTUAN= "https://dev.gohajj.id/api/jemaah-free/pusat-bantuan";
 	public static String URL_GET_PUSATBANTUAN= "https://dev.gohajj.id/api/jemaah-free/get-pusat-bantuan?id=";
 	public static String URL_LAPORKAN_MASALAH= "https://dev.gohajj.id/api/jemaah-free/laporkan-masalah";
+	public static String URL_COUNT_INBOX= "https://dev.gohajj.id/api/jemaah-free/count-inbox?id=";
+	public static String URL_STATUS_INBOX= "https://dev.gohajj.id/api/jemaah-free/status-inbox?id=";
 
 	public static final String KEY_PHONE= "phone";
 	public static final String KEY_MESSAGE= "message";

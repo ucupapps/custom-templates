@@ -49,6 +49,13 @@ public class CustomList extends SimpleAdapter {
         String strMessage = (String) data.get(AppConfig.KEY_MESSAGE);
         String strTime = (String) data.get(AppConfig.KEY_TIME);
         String strFrom = (String) data.get(AppConfig.KEY_FROM);
+        String status = (String) data.get(AppConfig.KEY_STATUS);
+        if(status.equals("SEND")){
+            message.setTypeface(null, Typeface.BOLD);
+        }else{
+            message.setTypeface(null, Typeface.NORMAL);
+        }
+
         no.setText(strID);
         no.setVisibility(View.GONE);;
         message.setText(strMessage);

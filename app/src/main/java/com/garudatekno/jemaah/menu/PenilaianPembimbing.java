@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -40,6 +42,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static java.lang.Boolean.FALSE;
 import static java.sql.Types.NULL;
@@ -54,6 +57,8 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
     //user
     private SQLiteHandler db;
     private SessionManager session;
+    View target ;
+    BadgeView badge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +72,19 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
 
         TextView bullet=(TextView) findViewById(R.id.bullet3);
         bullet.setBackgroundResource(R.drawable.circle_sai_green);
@@ -252,7 +267,7 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PenilaianPembimbing.this,"","",false,false);
+                loading = ProgressDialog.show(PenilaianPembimbing.this,"","Mengirim...",false,false);
             }
 
             @Override
@@ -282,4 +297,38 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         startActivity(new Intent(PenilaianPembimbing.this, panduan.class));
     }
 
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
 }

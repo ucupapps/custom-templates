@@ -31,8 +31,12 @@ import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.BackgroundService;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -80,13 +84,22 @@ public class thawaf extends AppCompatActivity {
     final static int RQS_OPEN_AUDIO_MP3 = 1;
     MediaPlayer mediaPlayer;
     LinearLayout menu_play,menu_next,menu_back,judul,isi,vplay;
-
+    private Tracker mTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thawaf);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        //tracker
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        // [START screen_view_hit]
+        mTracker.setScreenName("Thawaf");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+        //end
 
         // session manager
         session = new SessionManager(getApplicationContext());
@@ -153,7 +166,7 @@ public class thawaf extends AppCompatActivity {
                 srcPath="/sdcard/android/data/com.garudatekno.jemaah/thawaf/"+ids+".mp3";
                 File cek = new File(srcPath);
                 if (!cek.exists()) {
-                    srcPath=AppConfig.URL_HOME+"/media/doa_harian/0"+ids+"_doa_tawaf_"+ids+".mp3";
+                    srcPath=AppConfig.URL_HOME+"/uploads/panduan/thawaf/"+ids+".mp3";
                 }
                 cmdReset();
                 cmdSetDataSource(srcPath);
@@ -257,7 +270,7 @@ public class thawaf extends AppCompatActivity {
                 srcPath="/sdcard/android/data/com.garudatekno.jemaah/thawaf/"+ids;
                 File cek = new File(srcPath);
                 if (!cek.exists()) {
-                    srcPath=AppConfig.URL_HOME+"/media/doa_harian/"+ids;
+                    srcPath=AppConfig.URL_HOME+"/uploads/panduan/thawaf/"+ids;
                 }
                 cmdReset();
                 cmdSetDataSource(srcPath);
@@ -289,9 +302,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa Istilam");
-                varab.setText("");
-                varti.setText("");
-                vaudio.setText("");
+                varab.setText("بِسْمِ اللهِ، اَللهُ اَكْبَرُ");
+                varti.setText("Dengan nama Allah, (saya memulai thawaf) Allah Maha Besar");
+                vaudio.setText("8 doa istilam.mp3");
                 rankDialog.show();
             }
         });
@@ -300,9 +313,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa diantara rukun yamani dan hajar aswad");
-                varab.setText("رَبَّنَا اَتِنَا فِى الدُّنْيَا حَسَنَةً وَفِى الْأَخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ وَاَدْ خِلْنَا الْجَنَّةَ مَعَ الْأَبْرَارِ. يَاعَزِيْزُ يَاغَفَّارُ يَارَبَّ الْعَالَمِيْنَ");
+                varab.setText("رَبَّنَا آتِنَا/ فِيْ الدُّ نْيَا حَسَنَةً/ وَفِيْ الْآخِرَةِ حَسَنَةً/ وَقِنَا عَذَابَ النَّارِ/ وَأَدْخِلْنَا الْجَنَّةَ/ مَعَ الْأَبْرَارِ/ يَا عَزِيْزُ يَا غَفَارُ/ يَا رَبَّ الْعَا لَمِيْنَ");
                 varti.setText("Wahai Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan hindarkanlah kami dari siksa neraka Dan masukkanlah kami ke dalam surga bersama orang-orang yang berbuat baik, wahai Tuhan Yang Maha Perkasa, Maha Pengampun dan Tuhan yang menguasai seluruh alam");
-                vaudio.setText("08_doa_diantara_rukun_yamani_dan_hajar_aswad.mp3");
+                vaudio.setText("9 doa diantara rukun yamani dan hajar aswad.mp3");
                 rankDialog.show();
             }
         });
@@ -310,9 +323,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa saat di Multazam");
-                varab.setText("اَللّٰهُمَّ يَا رَبَّ الْبَيْتَ الْعَتِيْقِ أَعْتِقْ رِقَابَنَا وَرِقَابَ اٰبَآئِنَا وَأُمَّهَاتِنَا وَإِخْوَانِنَا وَأَوْلَادِنَا مِنَ النَّارِ يَاذَا اْلجُوْدِ وَالْكَرَمِ وَالْفَضْلِ وَاْلمَنِّ وَالْعَطَاءِ وَاْلإِحْسَانِ. اَللّٰهُمَّ أَحْسِنْ عَا قِبَتَنَا فِى اْلأُمُوْرِ كُلِّهَا وَأَجِرْنَا مِنْ خِزْيِ الدُّنْيَا وَعَذَابِ اْلاٰخِرَةِ. اَللّٰهُمَّ إِنِّيْ عَبْدُكَ وَابْنُ عَبْدِكَ وَاقِفٌ تَحْتَ بَابِكَ مُلْتَزِمٌ بِِأَعْتَا بِكَ مُتَذَلِّلٌ بَيْنَ يَدَيْكَ أَرْجُوْ رَحْمَتَكَ وَأَخْشَى عَذَابَكَ يَا قَدِيْمَ اْلإِحْسَانِ. اَللّٰهُمَّ إِنِّيْ أَسْأَلُكَ أَنْ تَرْفَعَ ذِكْرِيْ وَتَضَعَ وِزْرِيْ وَ تُصْلِحَ أَمْرِيْ وَتُطَهِّرَ قَلْبِيْ وَتُنَوِّرَ لِيْ فِى قَبْرِيْ وَتَغْفِرَ لِيْ ذَنْبِيْ وَأَسْأَلُكَ الدَّرَجَاتِ الْعُلَى ىفِ الْجَنَّةِ");
+                varab.setText("اللَّهُمَّ يَارَبَّ الْبَيْتِ الْعَتِيْقِ/ أَعْتِقْ رِقَابَنَا/ وَرِقَابَ آبَائِنَا/ وَأُمَّهَاتِنَا/ وَإِخْوَانِنَا/ وَأَوْلاَدِنَا/ مِنَ النَّارِ/ يَاذَاالْجُوْدِ وَالْكَرَمِ/ وَالْفَضْلِ وَالْمَنِّ/ وَالْعَطَاءِ وَالْأِحْسَانِ/ اللَّهُمَّ أَحْسِنْ عَقِبَتَنَا/ فِيْ الْأُمُوْرِ كُلِّهَا/ وَأَجِرْنَا مِنْ خِزْيِ الدُّنْيَا/ وَعَذَا بِ الْآخِرَةِ/ اللَّهُمَّ إِنِّيْ عَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَاقِفٌ تَحْتَ بَابِكَ/ مُلْتَزِمٌ بِأَعْتَابِكَ/ مُتَذَلِّلٌ بَيْنَ يَدَيْكَ/ أَرْجُوْ رَحْمَتَكَ/ وَأَخْشَ عَذَابَكَ/ يَا قَدِيْمَ الْإِحْسَانِ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ أَنْ تَرْفَعَ ذِكْرِيْ/ وَتَضَعَ وِزْرِيْ/ وَتُصْلِحَ أَمْرِيْ/ وَتُطَهِّرَ قَلْبِيْ/ وَتُنَوِّرَ لِيْ فِيْ قَبْرِيْ/ وَتَغْفِرَلِيْ ذَنْبِيْ/ وَأَسْأَلُكَ الدَّرَ جَاتِ الْعُلَى/ مِنَ الْجَنَّةِ");
                 varti.setText("Ya Allah Tuhanku yang memelihara Ka’bah ini, merdekakanlah diri kami, bapak dan ibu kami, saudara-saudara dan anak-anak kami dari siksa neraka. Wahai Tuhan Yang Maha Pemurah, yang mempunyai keutamaan, kelebihan, anugerah dan kebaikan. Ya Allah Tuhanku sesungguhnya aku ini hambaMu, anak dari hambaMu tegak berdiri di bawah pintu Ka’bahMu, menundukan diri di hadapanMu, sambil mengharapkan rahmatMu, kasih sayangMu, aku takut akan siksaMu, wahai Tuhan Yang Maha Tahu yang punya segala kebaikan. Ya Allah, Tuhanku, aku mohon padaMu, agar engkau tinggikan namaku, hapuskan dosaku, perbaiki segala urusanku, bersihkan hatiku, berilah cahaya kelak dalam kuburku. Berilah ampun dosaku dan aku mohon padaMu martabat yang tinggi di dalam syurga.");
-                vaudio.setText("10_doa_saat_di_Multazam.mp3");
+                vaudio.setText("10 doa saat di Multazam.mp3");
                 rankDialog.show();
             }
         });
@@ -320,9 +333,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa mencium hajar aswad");
-                varab.setText("بِسْمِ اللهِ ، وَاللهُ أَكْبَر اللَّهُمَّ إِيمَاناً بِكَ ، وَتَصْدِيقًا بِكِتَابِكَ ، وَوَفَاءً بِعَهْدِكَ ، وَاتِّبَاعاً لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ صَلَّى الله عليه وسلم");
+                varab.setText("بِسْمِ اللهِ/ وَاللهُ أَكْبَرُ،/ اللَّهُمَّ إِيْمَانًا بِكَ/ وَتَصْدِ يْقًا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ/ نَبِيِّكَ مُحَمَّدٍ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ");
                 varti.setText("Dengan menyebut nama Allah, Allah maha besar. Ya Allah, dengan keimanan kepadaMu, membenarkan kitabMu, menepati janji kepadaMu, serta mengikuti sunah nabiMu shallallahu alaihi wa sallam.");
-                vaudio.setText("09_doa_mencium_hajar_aswad.mp3");
+                vaudio.setText("11 doa mencium hajar aswad.mp3");
                 rankDialog.show();
             }
         });
@@ -330,9 +343,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa setelah shalat sunnah tawaf");
-                varab.setText("اللَّهُمَّ إِنَّكَ تَعْلَمُ سِرِّيْ وَعَلَانِيَتِيْ فَاقْبَلْ مَعْذِرَتِيْ، وَتَعْلَمُ حَاجَتِيْ فَاعْطِنِيْ سُؤْلِيْ، وَتَعْلَمُ مَا فِيْ نَفْسِيْ فَاغْفِرْ لِيْ ذُنُوْبِيْ اللَّهُمَّ إِنِّيْ أَسْألُكَ إِيْمَانًا دَائِمًا يُبَاشِرُ قَلْبِيْ، وَيَقِيْنًا صَادِقاً حَتَّى أَعْلَمَ أَنَّهُ لاَ يُصِيْبُنِيْ إِلاَّ مَاكَتَبْتَ لِيْ رِضًا مِنْكَ بِمَا قَسَمْتَ لِيْ، أَنْتَ وَلِيِّ فِيْ الدُنْيَا وَالآخِرَةِ. تَوَفَّنِيْ مُسْلِمِينَ وَأَلْحِقْنِى اللَّهُمَّ لَا تَدَعْ لَنَا فِي مَقَامِنَا هَذَا ذَنْبًا إلَّا غَفَرْتَهُ، وَلَا هَمًّا إلَّا فَرَّجْتَهُ،، وَلَا حَاجَةً إلَّا قَضَيْتَهَا وَيَسَّرْتَهَا، فَيَسِّرْ أُمُوْرَنَا وَاشْرَحْ صُدُوْرَنَا، وَنَوِّرْ قُلُوْبَنَا، وَاخْتِمْ بِالصَّالِحَاتِ أَعْمَالَنَا اللَّهُمَّ تَوَفَّنَا مُسْلِمِينَ وَأَحْيِنَا مُسْلِمِينَ وَأَلْحِقْنَا بِالصَّالِحِينَ غَيْرَ خَزَايَا وَلَا مَفْتُوْنِينَ");
+                varab.setText("اللَّهُمَّ إِنَّكَ/ تَعْلَمُ سِرِّيْ/ وَعَلَا نِيَتِيِ فَاقْبَلْ مَعْذِرَتِيِ/ وَتَعْلَمُ حَاجَتِيْ/ فَأَعْطِنِيْ سُؤْلِيْ/ وَتَعْلَمُ مَا فِيْ نَفْسِيْ/ فَاغْفِرْلِيْ ذُنُوْبِيْ،/ اللَّهُمَّ/ إِنِّيْ أَسْأَلُكَ/ إِيْمَانًا دَائِمًا/ يُبَاشِّرُ قَلْبِيْ/ وَيَقِيْنًا صَادِقًا/ حَتَّى أَعْلَمُ/ أَنَّهُ لاَيُسِيْبُنِيْ/ إِلاَّمَا كَتَبْتَهُ عَلَيَّ/ وَرَضِّنِيْ/ بِمَا قَسَّمْتَهُ لِيْ/ يَا أَرْحَمَ الرَّاحِمِيْنَ،/ أَنْتَ وَلِيِّيْ/ فِيْ الدُّنْيَا وَالْآخِرَةِ/ تَوَفَّنِيْ مُسْلِمًا/ وَأَلْحِقْنِيْ بِالصَّالِحِيْنَ،/ اللَّهُمَّ/ لاَتَدَعْ لَنَا/ فِيْ مَقَامِنَا هَذَا ذَنْبًا اِلاَّغَفَرْتَهُ/ وَلاَ هَمَّا اِلاَّ فَرَّجْتَهُ/ وَلاَحَاجَةً اِلاَّقَضَيْتَهَا/ وَيَسَّرْتَهَا فَيَسِّرْ أُمُوْرَنَا/ وَاشْرَحْ صُدُوْرَنَا/ وَنَوِّرْقُلُوْبَنَا/ اللَّهُمَّ تَوَفَّنَا مُسْلِمِيْنَ/ وَأَحْيِنَا مُسْلِمِيْنَ/ وَأَلْحِقْنَا بِالصَّالِحِيْنَ/ غَيْرَ خَزَايَا/ وَلاَمَفْتُوْنِيْنَ");
                 varti.setText("Ya Allah, sesungguhnya Engkau Maha Mengetahui rahasiaku yang tersembunyi dan amal perbuatanku yang nyata, maka terimalah ratapanku. Engkau Maha Mengetahui keperluanku, kabulkanlah permohonanku. Engkau Maha Mengetahui apapun yang terkandung dalam hatiku, maka ampunilah dosaku. Ya Allah, aku ini mohon pada-Mu iman yang tetap yang melekat terus di hati, keyakinan yang sungguh-sungguh sehingga aku dapat mengetahui bahwa tiada suatu yang menimpa daku selain dari yang Engkau tetapkan bagiku. Jadikanlah aku rela terhadap apapun yang Engkau bagikan padaku. Wahai Tuhan yang Maha Pengasih dari segala yang pengasih. Engkau adalah pelindungku di dunia dan di akhirat. Wafatkanlah aku dalam keadaan muslim dan gabungkanlah kami kedalam orang-orang shaleh. Ya Allah, janganlah Engkau biarkan di tempat kami itu suatu dosapun kecuali Engkau ampunkan, tiada suatu kesusahan hati, kecuali Engkau lapangkan, tiada satu hajat keperluan kecuali Engkau penuhi dan mudahkan, maka mudahkanlah segenap urusan kami dan lapangkanlah dada kami, terangkan hati kami dan sudahilah semua amal perbuatan kami dengan amal yang shaleh. Ya Allah matikanlah kami dalam keadaan muslim, hidupkanlah kami dalam keadaan muslim, dan masukkanlah kami kedalam golongan orang-orang yang shaleh tanpa kenistaan dan fitnah.");
-                vaudio.setText("11_doa_setelah_shalat_sunnah_tawaf.mp3");
+                vaudio.setText("12 doa setelah shalat sunnah tawaf.mp3");
                 rankDialog.show();
             }
         });
@@ -340,9 +353,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa minum air zam zam");
-                varab.setText("اَللّٰهُمَّ إِنِّيْ أْسْأَلُكَ عِلْمً نَافِعًا وَرِزْقًا وَاسِعًا وَشِفَآءً مِنْ كُلِّ دَآءٍ وَسَقَمٍ بِرَحْمَتِكَ يَآ أَرْحَمَ الرَّاحِمِيْنَ");
+                varab.setText("اللَّهُمَّ/ إِنِّيْ أَسْأَلُكَ/ عِلْمًا نَافِعًا/ وَرِزْقَا وَاسِعًا/ وَشِفَاءً مِنْ كُلِّ دَاءٍ/ وَسَقَمٍ/ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِيْنَ");
                 varti.setText("Ya Allah, aku mohon kepadaMu ilmu pengetahuan yang bermanfaat, rizki yang luas dan sembuh dari segala sakit dan penyakit pikun dengan rahmatMu ya Allah yang Maha Pengasih lagi Maha Penyayang.");
-                vaudio.setText("12_doa_minum_air_zam_zam.mp3");
+                vaudio.setText("13 doa minum air zam zam.mp3");
                 rankDialog.show();
             }
         });
@@ -350,9 +363,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa tawaf wada");
-                varab.setText("بِسْمِ اللهِ اللهُ أكْبَرُ، سُبْحَانَ اللَّهِ، والحَمْدُ لِلَّهِ، وَلَا إِلهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلَا حَوْلَ وَلاَ قُوَّةَ إِلاَّ بِاللّهِ العَلِيِّ العَظِيمِ. وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُوْلِ اللّهِ صَلَّى اللّهُ عَلَيْهِ وَسَلَّمَ . اللَّهُمَّ إِيْمَاناً بِكَ وَتَصْدِيقاً بِكِتَابِكَ، وَوَفَاءً بِعَهْدِكَ وَاتِّبَاعاً لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللّهُ عَلَيْهِ وَسَلَّمَ. {إِنَّ الَّذِي فَرَضَ عَلَيْكَ الْقُرْآنَ لَرَادُّكَ إِلَى مَعَادٍ} يَا مُعِيْدُ أَعِدْنِيْ، يَا سَمِيْعُ أَسْمِعْنِيْ، يَا جَبَّارُ اجْبُرْنِيْ، يَا سَتَّارُ اسْتُرْنِيْ، يَا رَحْمَنُ ارْحَمْنِيْ، يَا رَدَّادُ ارْدُدْنِيْ إِلَى بَيْتِكَ هَذَا، وَارْزُقْنِيَ العَوْدَةَ ثُمَّ العَوْدَ كَرَّاتٍ بَعْدَ مَرَّاتٍ، تَائِبُوْنَ عَابِدُوْنَ سَائِحُوْنَ لِرَبِّنَا حَامِدُوْنَ. صَدَقَ اللهُ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الأَحْزَابَ وَحْدَهُ. اللَّهُمَّ احْفَظْنِيْ عَنْ يَمِيْنِيْ وَعَنْ يَسَارِيْ، وَمِنْ قُدَّامِيْ وَمِنْ وَرَاءِ ظَهْرِيْ، وَمِنْ فَوْقِيْ وَمِنْ تَحْتِيْ حَتَّى تُوَصِّلَنِيْ إِلَى أَهْلِيْ وَبَلَدِي. اللَّهُمَّ هَوِّنْ عَلَيْنَا السَّفَرَ وَأَطْوِ لَنَا بُعْدَ الْأَرْضِ، اللَّهُمَّ اصْحَبْنَا فِى سَفَرِنَا وَاخْلُفْنَا فِى أَهْلِنَا يَا أَرْحَمَ الرَّاحِمِيْنَ، وَ يَا رَبَّ العَالَمِيْنَ");
+                varab.setText("بِسْمِ اللهِ اَللهُ اَكْبَرُ/ سُبْحَانَ اللهِ/ وَالْحَمْدُلِلهِ/ وَلاَاِلَهَ اِلاَّاللهُ/ وَاللهُ أَكْبَرُ،/ وَلاَحَوْلَ/ وَلاَقُوَّةَ/ اِلاَّبِاللهِ الْعَلِيِّ الْعَظِيْمِ،/ وَالصَّلَاةُ وَالسَّلَامُ/ عَلَى رَسُوْلِ اللهِ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ،/ أَللَّهُمَّ إِيْمَانَابِكَ/ وَتَصْدِيْقَا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ،/ إِنَّ الَّذِيْ/ فَرَضَ عَلَيْكَ الْقُرْآنَ/ لَرَآدُّوْكَ اِلَى مَعَادٍ،/ يَامُعِيْدُ/ اَعِدْنِيْ، يَاسَمِيْعُ/ أُسْمِعْنِيْ،/ يَاجَبَّارُ/ أُجْبُرْنِيْ،/ يَاسَتَّارُ/ اُسْتُرْنِيْ،/ يَارَحْمَنُ/ اِرْحَمْنِيْ،/ يَا رَدَّادُ/ اُرْدُدْنِيْ اِلَى بَيْتِكَ هَذَا/ وَرْزُقْنِيْ الْعَوْدَ/ ثُمَّ الْعَوْدَ/ كَرّاتٍ بَعْدَ مَرَّاتٍ/ تَاءِبُوْنَ/ عَابِدُوْنَ/ سَائِحُوْنَ/ لِرَبِّناَ حَامِدُوْنَ/ صَدَقَ اللهُ وَعْدَهُ/ وَنَصَرَعَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ./ اللَّهُمَّ احْفَظْنِيْ/ عَنْ يَمِيْنِيْ/ وَعَنْ يَسَارِيْ/ وَمِنْ قُدَّامِيْ/ وَمِنْ وَرَاءِظَهْرِيْ/ وَمِنْ فَوْقِيْ/ وَمِنْ تَحْتِيْ،/ حَتَّى تُوَصِّلَنِيْ/ اِلَى اَهْلِيْ/ وَبَلَدِيْ./ اللَّهُمَّ هَوِّنْ عَلَيْنَا السَّفَرَ/ وَاطْوِلَنَا الْأَرْضَ،/ اللَّهُمَّ أَصْحِبْنَا/ فِيْ سَفَرِنَا/ وَخْلُفْنَا فِيْ أَهْلِهَا/ يَا أَرْحَمَ الرَّاحِمِيْنَ./ رَبَّنَا آتِنَا فِيْ الدُّنْيَا حَسَنَةً/ وَقِنَا عَذَا بَ النَّارِ/ وَأَدْخِلْنَا الْجَنَّةَ مَعَ الْأَبْرَارِ/ يَاعَزِيْزُيَا غَفَارَيَارَبَّ الْعَالَمِيْنَ");
                 varti.setText("Dengan nama Allah, Allah Maha Besar, Maha Suci Allah dan segala puji hanya kepada Allah tidak ada Tuhan selain Allah Yang Maha Besar, tidak daya (untuk memperoleh manfaat) dan tiada kekuatan (untuk menolak kesulitan) kecuali dengan pertolongan dari Allah Yang Maha Tinggi lagi Maha Besar. Shalawat dan salam bagi junjungan Rasulullah Saw. Ya Allah, aku datang kemari karena iman kepada-Mu, membenarkan kitab-Mu, memenuhi janji-Mu dan karena menuruti sunnah Nabi-Mu Muhammad Saw. Sesungguhnya Tuhan yang menurunkan al-Qur’an kepadamu niscaya memulangkanmu ke tempat kembali, wahai Tuhan yang Kuasa mengembalikan, kembalikan aku ke tempatku, wahai Tuhan yang Maha Mendengar, dengarlah (kabulkanlah) permohonanku wahai Tuhan Yang Maha Memperbaiki, perbaikilah aku, wahai Tuhan Yang Maha Pelindung, tutupilah aibku, wahai Tuhan Yang Maha Kasih Sayang, sayangilah aku, wahai Tuhan Yang Maha Kuasa Mengembalikan, kembalikanlah aku ke Ka’bah ini dan berilah aku rizqi untuk mengulanginya berkali-kali, dalam keadaan bertaubat dan beribadat, berlayar menuju Tuhan kami sambil memuji, Allah Maha menepati janji-Nya membantu hamba-hamba-Nya, yang menghancurkan sendiri musuh-musuh-Nya. Ya Allah, peliharalah aku dari kanan, kiri, depan dan belakang, dari sebelah atas dan bawah sampai Engkau mengembalikan aku kepada keluarga dan tanah airku. Ya Allah, mundahkanlah perjalanan kami, lipatkan bumi untuk kami. Ya Allah sertailah kami dalam perjalanan, dan gantilah kedudukan kami dalam keluarga yang ditinggal, wahai Tuhan Yang Maha Pengasih melebihi segala pengasih, wahai Tuhan Yang Memelihara seluruh alam.");
-                vaudio.setText("13_doa_tawaf_wada.mp3");
+                vaudio.setText("14 doa tawaf wada.mp3");
                 rankDialog.show();
             }
         });
@@ -360,9 +373,9 @@ public class thawaf extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 vname.setText("Doa setelah selesai tawaf wada");
-                varab.setText("للَّهُمَّ إِنَّ البَيْتَ بَيْتُكَ، وَالعَبْدَ عَبْدُكَ، وَابْنُ عَبْدِكَ وَابْنُ أَمَتِكَ، حَمَلْتَنِيْ عَلى مَا سَخَّرْتَ لِىْ مِنْ خَلْقِكَ حَتَّى سَيَّرْتَنِيْ إِلَى بِلاَدِكَ، وَبَلَّغْتَنِيْ بِنِعْمَتِكَ حَتَّى أَعَنْتَنِيْ عَلَى قَضَاءِ مَنَاسِكِكَ. فَإِنْ كُنْتَ رَضِيْتَ عَنِّيْ فَازْدَدْ عَنِّيْ رِضًا، وَإلاَّ فَمُنَّ الآنَ عَلَيَّ قَبْلَ تَبَاعُدِيْ عَنْ بَيْتِكَ. هَذَا أَوَانُ انْصِرَافِيْ إِنْ أَذَنْتَ لِيْ غَيْرَ مُسْتَبْدَلٍ بِكَ وَلاَ بِبَيْتِكَ وَلاَ رَاغِبًا عَنْكَ وَلاَ عَن بَيْتكَ. اللَّهُمَّ اصْحِبْنِيْ بِالعَافِيَةِ فِيْ بَدَنِيْ وَالعِصْمَةَ فِي دِيْنِيْ، وَأَحْسِنْ مُنْقَلَبِيْ وَارْزُقْنِيْ طَاعَتَكَ مَا أَبْقَيْتَنِي. وَاجْمَعْ لِيْ خَيْرَ الدُّنْيَا وَالآخِرَةِ إنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ. اللَّهُمَّ لاَ تَجْعَلْ هَذَا آخِرَ العَهْدِ بِبَيْتِكَ الحَرَامِ، وَإِنْ جَعَلْتَهُ آخِرَ العَهْدِ فَعَوِّضْنِيْ عَنْهُ الجَنَّةَ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِيْنَ. امِيْنَ يَا رَبَّ الْعَالَمِيْنَ");
+                varab.setText("اللَّهُمَّ/ إِنَّ الْبَيْتَ/ بَيْتُكَ/ وَالْعَبْدَ/ عَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَابْنُ أَمَتِكَ/ حَمَلْتَنِيْ/ عَلَى مَا سَخَّرْ تَنِيْ لِيْ/ مِنْ خَلْقِكَ/ حَتَّى سَيَّرْتَنِيْ فِيْ بِلَادِكَ/ وَبَلَغْتَنِيْ بِنِعْمَتِكَ/ حَتَّى اَعَنْتَنِيْ/ عَلَى قَضَاءِ مَنَاسِكَ،/ فَإِنْ كُنْتَ رَضِيْتَ عَنِّيْ/ فَازْدَدْ عَنِّيْ رِضًا/ وَاِلاَّ فَمُنَّ الآنَ/ قَبْلَ تَبَاعُدِيْ عَنْ بَيْتِكَ./ هَذَا أَوَانُ انْصَرَافِيْ/ إِنْ أَذِنْتَ لِيْ/ غَيْرَمُسْتَبْدِلِ بِكَ/ وَلاَبِبَيْتِكَ/ وَلاَرَاغِبَ عَنْكَ/ وَلاَ عَنْ بَيْتِكَ./ اللَّهُمَّ اَصْحِبْنِيْ العَافِيَةَ/ فِيْ بَدَنِيْ/ وَالْعِصْمَةَ فِيْ دِيْنِيْ/ وَحُسْنَ مُنْقَلَبِيْ/ وَارْزُقْنِيْ/ طَاعَتَكَ أَبَدًا مَا اَبْقَيْتَنِيْ/ وَاجْمَعْ لِيْ/ خَيْرَيِ الدُّنْيَاوَالْآخِرَةِ/ إِنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ./ اللَّهُمَّ لاَتَجْعَلْ/ هَذَا آخِرَالعَهْدِ بِبَيْتِكَ الْحَرَامِ/ وَإِنْ جَعَلْتَهُ آخِرَ الْعَهْدِ/ فَعَوِّضْنِيْ عَنْهُ الْجَنَّةَ/ بِرَحْمَتِكَ يَااَرْحَمَ الرَّحِمِيْنَ/ آمِيْنَ يَا رَبَّ الْعَالَمِيْنَ");
                 varti.setText("Ya Allah, rumah ini adalah rumah-Mu, aku ini hamba-Mu anak hamba-Mu yang lelaki dan anak hamba-Mu yang perempuan. Engkau telah membawa aku di dalam hal yang Engkau sendiri memudahkan untukku sehingga Engkau jalankan aku negeri-Mu ini Engkau telah menyampaikan aku dengan nikmat-Mu juga, sehingga Engkau menolong aku untuk menunaikan ibadah haji Kalau Engkau rela padaku, maka tambahkanlah keridahaan itu padaku, maka tambahkanlah keridhaan itu padaku. Jika tidak maka tuntaskan sekarang sebelum aku jauh dari rumah-Mu ini. Sekarang sudah waktunya aku pulang, jika Engkau izinkan aku dengan tidak menukar sesuatu dengan Engkau (Dzat-Mu) ataupun rumah-Mu tidak benci pada-Mu dan tidak juga benci pada rumah-Mu Ya Allah, berikanlah aku ini dengan afiat pada tubuhku, tetap menjaga agamaku, baik kepulanganku, dan berilah aku taat setia pada-Mu selama-lamanya selama Engkau membiarkan aku hidup dan kumpulkanlah bagiku kebajikan dunia dan akhirat. Sesungguhnya Engkau Maha Kuasa atas segala sesuatu Ya Allah, janganlah Engkau jadikan waktu ini masa terakhir bagiku dengan rumah-Mu. Sekiranya Engkau jadikan bagiku masa terakhir, maka gantilah surga untukku, dengan rahmat-Mu, wahai Tuhan yang Maha Pengasih dari segala yang pengasih Amin, wahai Tuhan Pemelihara seru sekalian alam");
-                vaudio.setText("14_doa_setelah_selesai_tawaf_wada.mp3");
+                vaudio.setText("15 doa setelah selesai tawaf wada.mp3");
                 rankDialog.show();
             }
         });
@@ -372,31 +385,31 @@ public class thawaf extends AppCompatActivity {
     private void SetProgess(int no){
       if(no == 1){
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_1));
-          txtArab.setText("سُبْحَانَ اللَّهِ، والحَمْدُ لِلَّهِ، وَلا إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ باللَّهِ العَلِيِّ العَظِيمِ وَالصَّلاَةُ وَِِالسَلاَمُ عَلَى رَسُوْلِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إيمَاناً بِكَ وَتَصدِيقاً بِكِتابِكَ، وَوَفاءً بِعَهْدِكَ وَاتِّباعاً لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إنِّي أَسألُكَ العَفْوَ وَالعَافِيَةَ، وَالمُعَافَاةَ الدَّائِمَةَ فِى الدِّيْنِ وَالدُّنْيَا وَالْآخِرَةِ، وَالْفَوْزَ بِالْجَنَّةِ، وَالنَّجَاةَ مِنَ النَّارِ");
+          txtArab.setText("سُبْحَانَ اللهِ/ وَالْحَمْدُلِلهِ/ وَلاَاِلَهَ اِلاَّاللهُ/ وَاللهُ أَكْبَرُ،/ وَلاَحَوْلَ/ وَلاَقُوَّةَ/ اِلاَّبِاللهِ الْعَلِيِّ الْعَظِيْمِ،/ وَالصَّلَاةُ وَالسَّلَامُ/ عَلَى رَسُوْلِ اللهِ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ،/ أَللَّهُمَّ إِيْمَانَابِكَ/ وَتَصْدِيْقَا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ،/ اَللَّهُمَّ إِنِّيْ/ أَسْأَلُكَالعَفْوَ/ وَالعَافِيَةَ/ وَالْمُعَافَاةَ الدَّائِمَةَ/ فِيْ الدِّيْنِ وَالدُّنْيَا وَالْآخِرَةِ/ وَالْفَوْزَبِالْجَنَّةِ/ وَالنَّجَاةِ مِنَالنَّارِ");
           txtArti.setText("Maha suci Allah, segala puji bagi Allah, sagala puji bagi Allah, tidak ada Tuhan selain Allah, Allah Maha Besar Tiada daya (untuk memperoleh manfaat) dan tiada kemampuan (untuk menolak bahaya) kecuali dengan pertolongan Allah Yang Maha Mulia dan Maha Agung. Shalawat dan salam bagi Rasulullah Saw. Ya Allah, aku thawaf ini karena beriman kepada-Mu membenarkan kitab-Mu dan memenuhi janji-Mu dan mengikuti sunnah Nabi-Mu, Muhammad Saw. Ya Allah sesungguhnya aku mohon kepada-Mu ampunan, kesehatan, dan perlindungan yang kekal dalam menjalankan agama, di dunia dan akhirat dan beruntung memperoleh surga dan terhindar dari siksa neraka.");
       }else if(no == 2){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_2));
-            txtArab.setText("اَللَّهُمَّ إِنَّ هَذَا الْبَيْتَ بَيْتُكَ، وَالْحَرَمَ حَرَمُكَ، وَالْأَمْنَ أَمْنُكَ، وَالْعَبْدَ عَبْدُكَ وَأَنَا عَبْدُكَ، وَابْنُ عَبْدُكَ وَهَذَا مَقَامُ الْعَائِذِ بِك مِنْ النَّارِ. فَحَرِّمْ لُحُومَنَا وَبَشَرَتَنَا عَلَى النَّارِ");
+            txtArab.setText("اللَّهُمَّ إِنِّ هَذَا الْبَيْتَ بَيْتُكَ/ وَالْحَرَمَ حَرَمُكَ/ وَالْأَمْنُكَ/ وَالْعَبْدَ عَبْدُكَ/ وَأَنَاعَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَهَذَامَقَامُ العَائِذِبِكَ مِنَ النَّارِ/ فَحَرَّمْ لُحُوْمَنَا/ وَبَشَرَتَنَاعَلَى النَّارِ،/ اللَّهُمَّ حَبِّبْ إِلَيْنَا الْإِيْمَانَ/ وَزَيِّنْهُ فِيْ قُلُوْبِنَا/ وَكَرِّهْ إِلَيْنَاالكُفْرَ/ وَالْفُسُوْقَ/ وَالْعِصْيَانَ/ وَاجْعَلْنَا مِنَ الرَّاشِدِيْنَ،/ اللَّهُمَّ قِنِيْ عَذَابَكَ/ يَوْمَ تَبْعَثُ عِبَادَكَ،/ اللَّهُمَّ ارْزُقْنِيْ الجَنَّةَ بِغَيْرِ حِسَاب");
             txtArti.setText("Ya Allah, sesungguhnya Bait ini rumah-Mu, tanah mulia ini tanah-Mu, negeri aman ini negeri-Mu, hamba ini hamba-Mu anak dari hamba-Mu dan tempat ini adalah tempat orang berlindung pada-Mu dari siksa neraka, maka haramkanlah daging dan kulit kami dari siksa api neraka.");
       }else if(no == 3){
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_3));
-          txtArab.setText("اَللَّهُمَّ إِنِّيْ أَعُوْذُ بِكَ مِنَ الشَّكِّ وَالشِّرْكِ، وَالشِّقَاقِ وَالنِّفَاقِ، وَسُوْءِ الْأَخْلَاقِ، وَسُوءِ المَنْظَرِ وَالْمُنْقَلَبِ، فِي الْمَالِ وَالْأَهْلِ وَالْوَلَدِ اَللَّهُمَّ إِنَّيْ اَسْأَلُكَ رِضَاكَ وَالجَنَّةَ وَاَعُوذُ بِكَ مِنْ سَخَطِكَ وَالنَّارِ اَللَّهُمَّ إِنِّي أَعُوذُ بِك مِنْ فِتْنَةِ الْقَبْرِ وَأَعُوْذُ بِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ");
+          txtArab.setText("اللَّهُمَّ إِنِّيْ أَعُوْذُبِكَ/ مِنَ الشَّكِّ/ وَالشِّرْكِ/ وَاشَّقَاقِ/ وَالنِّفَاقِ/ وَسُوْءِالْأَخْلَاقِ/ وَسُوْءِالْمَنْظَرِ/ وَالْمُنْقَلَبُ فِيْ الْمَالِ وَالْأَهْلِ وَالْوَلَدِ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ رِضَاكَ وَالْجَنَّةَ/ وَأَعُوْذُبِكَ/ مِنْ سَخَطِكَ وَالنَّارِ،/ أَللَّهُمَّ إِنَّيْ أَعُوْذُبِكَ/ مِنْ فِتْنَةِ الْقَبْرِ/ وَأَعُوْذُبِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ");
           txtArti.setText("Ya Allah aku berlindung kepada-MU dari keraguan, syirik, percekcokan, kemunafikan, buruk budi pekerti dan penampilan dan kepulangan yang jelek dalam hubungan dengan harta benda, keluarga dan anak-anak. Ya Allah, sesungguhnya aku mohon kepada-Mu keridhaan-Mu dan surga. Dan aku berlindung pada-Mu dari pada murka-Mu dan siksa neraka. Ya Allah aku berlindung pada-Mu dari fitnah kubur, dan aku berlindung pada-Mu dari fitnah kehidupan dan derita kematian.");
       }else if(no == 4){
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_4));
-          txtArab.setText("اللَّهُمَّ اجْعَلْهُ حَجًّا مَبْرُوْرًا، وَسَعْيًا مَشْكُوْرًا، وَذَنْبًا مَغْفُوْرًا، وَعَمَلاً صَالِحًا مَقْبُوْلاً، وَتِجَارَةً لَنْ تَبُوْرَ، يَا عَالِمَ مَا فِيْ الصُّدُوْرِ أَخْرِجْنِيْ يَا اللهُ مِنْ الظُلُمَاتِ إِلَى النُوْرِ اللَّهُمَّ إنِّي أَسألُكَ مُوجِبَاتِ رَحْمَتِكَ، وَعَزَائِمَ مَغْفِرَتِكَ، وَالسَّلامَةَ مِنْ كُلِّ إثْمٍ، وَالفَوْزَ بالجَنَّةِ، وَالنَّجاةَ مِنَ النَّارِ اللَّهُمَّ قَنِّعْنِيْ بِمَا رَزَقْتَنِيْ، وَبَارِكْ لِيْ فِيْمَا أَعْطَيْتَنِيْ، وَاخْلُفْ عَلَيَّ كُلَّ غَائِبَةٍ لِيْ مِنْكَ بِخَيْرٍ");
+          txtArab.setText("اللَّهُمَّ اجْعَلْهُ حَجَّا مَبْرُوْرًا/ وَسَعْيًا مَشْكُوْرًا/ وَذَنْبًا مَغْفُوْرًا/ وَعَمَلًاصَالِحًا مَقْبُوْلاً/ وَتِجَارَةً لَنْ تَبُوْرًا،/ يَاعَالِمَ مَافِيْ الصُّدُوْرِ/ أَخْرِجْنِيْ يَا أَللهُ/ مِنَ الظُّلُمَاتِ إِلَى النُّوْرِ،/ أَللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ مُوْجِبَاتِ رَحْمَتِكَ/ وَعَزَائِمَ مَغْفِرَتِكَ/ وَالسَّلَامَةِ مِنْ كُلِّ إِثْمٍ/ وَالْغَنِيْمَةَ مِنْ كُلِّ بِرِّ/ وَالْفَوْزَبِالجَنَّةِ/ وَالنَّجَاةَ مِنَ النَّارِ،/ رَبِّ قَنِّعْنِيْ بِمَا رَزَقْتَنِيْ/ وَبَارِكْ لِىْ فِيْمَا أَعْطَيْتَنِيْ/ وَاخْلُفْ عَلَيَّ/ كُلَّ غَائِبَةٍ لِيْ مِنْكَ بِخَيْرٍٍ");
           txtArti.setText("Ya Allah karuniakanlah haji yang mabrur, sa‘i yang diterima, dosa yang diampuni, amal saleh yang diterima dan usaha yang tidak akan mengalami rugi. Wahai Tuhan yang Maha Mengetahui apa-apa yang terkandung dalam hati sanubari. Keluarkanlah aku dari kegelapan ke cahaya yang terang benderang. Ya Allah aku mohon kepada–Mu segala hal yang mendatangkan rahmat-Mu dan keteguhan ampunan-Mu selamat dari segala dosa dan beruntung dengan mendapat berbagai kebaikan, beruntung memperoleh surga, terhindar dari siksa neraka. Tuhanku, puaskanlah aku dengan anugerah yang telah Engkau berikan, berkatilah untukku atas semua yang Engkau anugerahkan kepadaku dan gantilah apa-apa yang ghaib dari pandanganku dengan kebajikan dari-Mu.");
       }else if(no == 5){
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_5));
-          txtArab.setText("اللَّهُمَّ أَظِلَّنِيْ تَحْتَ ظِلِّ عَرْشِكَ يَوْمَ لاَ ظِلَّ إلاَّ ظِلُّكَ، وَلاَ بَاقِيَ إلاَّ وَجْهُكَ، وَاسْقِنِيْ مِنْ حَوْضِ نَبِيَّكَ مُحَمَّدٍ شُرْبَةً هَنِيْئَةً مَرِيْئَةً لاَ أَظْمَأُ بَعْدَهَا أبَدًا اللَّهُمَّ إِنِّيْ أَسْألُكَ مِنْ خَيْرِ مَا سَألَكَ منْهُ نَبِيُّكَ مُحَمَّدٌ صلى اللّه عليه وسلم، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا اسْتَعاذَكَ مِنْهُ نَبِيُّكَ مُحَمَّدٌ صلى اللّه عليه وسلم اللَّهُمَّ إِنِّيْ أَسْألُكَ الجَنَّةَ وَنَعِيْمَهَا وَمَا يُقَرِّبُنِيْ إِلَيْهَا مِنْ قَوْلٍ أَوْ فِعْلٍ أوْ عَمَلٍ، وأعُوذُ بِكَ مِنَ النَّارِ وَمَا يُقَرِّبُنِيْ إلَيْها مِنْ قَوْلٍ أَوْ فِعْلٍ أوْ عَمَلٍ");
+          txtArab.setText("اللَّهُمَّ أَظِلَنِيْ/ تَحْتَ ظِلِّ عَرْشِكَ/ يَوْمَ لاَظِلَّ اِلاَّظِلُّكَ/ وَلاَبَاقِيَ إِلاَّوَجْهِكَ/ وَأَسْقِنِيْ مِنْ حَوْضِ نَبِيِّكَ/ مُحَمَّدٍ صَلَى اللهُ عَلَيْهِ وَسَلَمَ،/ شُرْبَةً هَنِيْئَةً مَرِيْئَةً/ لاَأَظْمَأُبَعْدَهَا اَبَدًا،/ اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ مِنْ خَيْرِ/ مَا أَسْأَلُكَ مِنْهُ نَبِيُّكَ مُحَمَّدٌ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ/ وَأَعُوْذُبِكَ/ مِنْ شَرِّ/ مَا اسْتَعَاذُكَ مِنْهُ نَبِيِّكَ مُحَمَّدٌ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ/ اللَّهُمَّ أِنِّيْ/ أَسْأَلُكَ الْجَنَّةَ/ وَنَعِيْمَهَا/ وَمَا يُقَرِّبُنِيْ اِلَيْهَا/ مِنْ قَوْلٍ أَوْفِعْلٍ أَوْعَمَلٍ/ وَأَعُوْذُبِكَ مِنَ النَّارِ/ وَمَا يُقَرِّبُنِيْ اِلَيْهَا/ مِنْ قَوْلٍ اَوْ فِعْلٍ اَوِعَمَالٍ");
           txtArti.setText("Ya Allah, lindungilah aku di bawah naungan singgasana-Mu pada hari yang tidak ada naungan selain naungan-Mu, dan tidak ada yang kekal kecuali Zat-Mu, dan berikanlah aku minuman dari telaga Nabi Muhammad Saw. dengan suatu minuman yang lezat, segar dan nyaman, sesudah itu aku tidak akan haus untuk selamanya. Ya Allah, aku mohon pada-Mu kebaikan yang dimohonkan oleh Nabi-Mu Muhammad Saw. dan aku berlindung pada-Mu dari kejahatan yang dimintakan perlindungan oleh Nabi-Mu , Muhammad Saw. Ya Allah, aku mohon pada-Mu surga serta ni'matnya dan apapun yang dapat mendekatkan aku kepadanya baik ucapan maupun amal perbuatan dan aku berlindung kepada-Mu dari neraka serta apapun yang mendekatkan aku kepadanya baik ucapan ataupun amal perbuatan.");
       }else if(no == 6){
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_6));
-          txtArab.setText("اللَّهُمَّ إنَّ لَكَ عَلَيَّ حُقُوْقاً كَثِيْرَةً فِيْمَا بَيْنِيْ وَبَيْنَكَ، وَحُقُوْقاً كَثِيْرَةً فِيْمَا بَيْنِيْ وَبَيْنَ خَلْقِكَ");
-          txtArti.setText("Ya Allah sesungguhnya Engkau mempunyai hak kepadaku banyak sekali dalam hubunganku dengan Engkau. Dan Engkau juga mempunyai hak banyak sekali dalam hubunganku dengan mahluk-Mu. Ya Allah apa yang menjadi hak-Mu kepada mahluk-Mu maka tanggunglah diriku, cukupkanlah aku dengan rizki-Mu yang halal, terhindar dari pada haram, dengan ta'at kapada-Mu terhindar dari kemaksiatan, dengan anugerah-Mu terhindar dari pada mengharapkan dari orang lain selain dari pada-Mu, Wahai Tuhan yang Maha Pengampun. Ya Allah, sesungguhnya rumah-Mu (Baitullah) ini agung. Zat-Mu pun Mulia, Engkau Maha Penyabar, Maha Pemurah, Maha Agung yang sangat suka memberi ampun, maka ampunilah aku.");
+          txtArab.setText("اللَّهُمَّ إِنَّ لَكَ عَلَيَّ/ حُقُوْقًا كَثِيْرَةً/ فِيْمَا بَيْنِيْ وَبَيْنَكَ/ وَحُقُوْقًا كَثِيْرَةً/ فِيْمَا بَيْنِيْ وَبَيْنَ خَلْقِكَ/ اللَّهُمَّ مَا كَانَ لَكَ مِنْهَا/ فَاغْفِرْهُ لِيْ/ وَمَا كَانَ لِخَلْقِكَ/ فَتَحَمَّلْهُ عَنِّيْ/ وَأَغْنِنِيْ بِحَلَا لِكَ/ عَنْ حَرَامِكَ/ وَبِطَاعَتِكَ/ عَنْ مضعْصِيَتِكَ/ وَبِفَضْلِكَ/ عَمَّنْ سِوَاكَ/ يَا وَاسِعَ الْمَغْفِرَةِ/ اللَّهُمَّ/ إِنَّ بَيْتَكَ عَظِيْمٌ،/ وَوَجْهَكَ كَرِيْمٌ،/ وَأَنْتَ يَاَاللهُ حَلِيْمٌ كَرِيْمٌ عَظِيْمٌ/ تُحِبُّ العَفْوَ فَاعْفُ عَنِّيْ");
+          txtArti.setText("Ya Allah, sesungguhnya Engaku memberikan beberapa kewajiban pada diriku yang terletak diantaraku dengan Engkau dan kewajiban-kewajiban yang ada padaku dengan makhluk-Mu. Ya Allah, apapun hak-Mu padaku ampunilah aku dan apapun menjadi hak makhluk-Mu, hapuskanlah dariku, cukupkanlah aku dengan rezeki-Mu yang halal, dari yang haram, dan dengan berbuat taat kepada-Mu dari perbuatan durhaka, dan dengan nikmat kelebihan-Mu, dari pada mengharapkan orang lain selain dari Engakau saja. Wahai Tuhan yang Maha Pengampun danEngakau Maha Bijak yang sangat suka member ampunan maka ampunilah aku");
       }else if(no == 7){
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_7));
-          txtArab.setText("اللَّهُمَّ إِنِّيْ أَسْألُكَ إيْمَانًا كَامِلاً، وَيَقِيْنًا صَادِقاً، وَرِزْقاً وَاسِعاً، وَقَلْباً خَاشِعاً، وَلِسَاناً ذَاكِرًا، وَحَلاَلاً طَيِّباً، وَتَوْبَةً نَصُوْحاً، وَتَوْبَةً قَبْلَ المَوْتِ، وَرَاحَةً عِنْدَ المَوْتِ، وَمَغْفِرَةً وَرَحْمَةً بَعْدَ المَوْتِ، وَالفَعْوَ عِنْدَ الحِسَابِ، وَالفَوْزَ بِالجَنَّةِ وَالنَّجَاةَ مِنَ النَّارِ، بِرَحْمَتِكَ يَا عَزِيْزُ يَا غَفَّارُ. رَبِّ زِدْنِيْ عِلْماً، وَألْحِقْنِيْ بِالصَّالِحِيْنَ");
+          txtArab.setText("اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ إِيْمَانًا كَامِلًا/ وَيَقِيْنًا صَادِقًا/ وَرِزْقًا وَاسِعًا/ وَقَلْبًا خَا شِعًا/ وَلِسَانًا ذَاكِرًا/ وَحَلَالاً طَيِّبًا/ وَتَوْبَةً نَصُوْحًا/ وَتَوْبَةً قَبْلَ الْمَوْتِ/ وَرَاحْةً عِنْدَ الْمَوْتِ/ وَمَغْفِرَةً وَرَحْمَةً بَعْدَ الْمَوْتِ/ وَالْعَفْوَ عِنْدَ الْحِسَابِ/ وَالْفَوْزَبِالْجَنَّةِ/ وَالنَّجَاةَ مِنَ النَّارِ،/ بِرَحْمَتِكَ يَا عَزِيْزُ/ يَا غَفَارُ،/ رَبِّ زِدْنِيْ عِلْمًا/ وَأَلْحِقْنِيْ بِاالصَّا لِحِيْنَ");
           txtArti.setText("Ya Allah, aku mohon pada-Mu iman yang sempurna, keyakinan yang benar, rizki yang luas, hati yang khusyu', lidah yang selalu berdzikir (menyebut nama Allah), rizki yang halal dan baik, taubat yang diterima dan taubat sebelum mati, ketenangan ketika mati, keampunan dan rahmat sesudah mati, keampunan ketika dihisab, keberuntungan memperoleh surga dan terhindar dari neraka dengan rahmat kasih sayang-Mu, wahai Tuhan Yang Maha Perkasa, Yang Maha Pengampun. Tuhanku, berilah aku tambahan ilmu Pengetahuan dan gabungkanlah aku ke dalam golongan orang-orang yang shaleh.");
       }else{
           progress.setImageDrawable(getResources().getDrawable(R.drawable.thawaf_0));

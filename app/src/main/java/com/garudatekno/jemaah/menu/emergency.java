@@ -39,13 +39,17 @@ import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -60,6 +64,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static java.lang.Boolean.FALSE;
 
@@ -80,7 +85,8 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     private GoogleMap mMap;
     Location location;
     private final int PICK_CONTACT = 1;
-
+    View target ;
+    BadgeView badge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +95,26 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        //tracker
+        AppController application = (AppController) getApplication();
+        Tracker mTracker = application.getDefaultTracker();
+        // [START screen_view_hit]
+        mTracker.setScreenName("Emergency");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
         session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -210,10 +235,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             logoutUser();
         }
 
-        db = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
         phone = user.get("family_phone");
         //user
         editTextuser.setText(uid);
@@ -445,7 +466,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(emergency.this,"Sending Message","...",false,false);
+                loading = ProgressDialog.show(emergency.this,"","Mengirim Pesan...",false,false);
             }
 
             @Override
@@ -537,4 +558,38 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         }
     }
 
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
 }

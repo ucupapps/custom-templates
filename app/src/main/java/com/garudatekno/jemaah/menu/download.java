@@ -34,12 +34,6 @@ public class download extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download);
-        startBtn = (Button)findViewById(R.id.startBtn);
-        startBtn.setOnClickListener(new OnClickListener(){
-            public void onClick(View v) {
-                startDownload();
-            }
-        });
     }
 
     private void startDownload() {

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -35,6 +36,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.CustomListPanduan3;
 import com.garudatekno.jemaah.activity.LoginActivity;
@@ -47,16 +54,30 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.readystatesoftware.viewbadger.BadgeView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
@@ -71,9 +92,11 @@ import java.util.TimeZone;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
 import static java.lang.Boolean.FALSE;
+import static org.apache.http.params.CoreProtocolPNames.USER_AGENT;
 
 
 public class panduan extends AppCompatActivity implements ListView.OnItemClickListener {
@@ -101,6 +124,8 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             /* ETC.. */
     };
     private Tracker mTracker;
+    View target ;
+    BadgeView badge ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +135,21 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         AppController application = (AppController) getApplication();
         mTracker = application.getDefaultTracker();
         sendScreenImageName("Home");
-        //end tracker
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
+
+        //end
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
@@ -140,12 +179,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         th.start();
 
-        session = new SessionManager(getApplicationContext());
-
-        // SqLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
         File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
@@ -194,6 +227,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
 
         ImageView img = (ImageView) findViewById(R.id.img_panduan);
         img.setBackgroundResource(R.drawable.circle_green_active);
@@ -631,5 +665,40 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //
 //        });
 
+    }
+
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 }

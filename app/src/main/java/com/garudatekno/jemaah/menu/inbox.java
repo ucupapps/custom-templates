@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,14 +19,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.chat.CustomList;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -40,18 +46,21 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static java.lang.Boolean.FALSE;
 
 public class inbox extends AppCompatActivity implements ListView.OnItemClickListener {
 
-    private static final String TAG = "MyUser";
+    private static final String TAG = "INBOX";
 
     private ListView listView;
     String uid;
     private String JSON_STRING;
     private SessionManager session;
     private SQLiteHandler db;
+    View target ;
+    BadgeView badge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +71,28 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         session = new SessionManager(getApplicationContext());
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
+
+        //tracker
+        AppController application = (AppController) getApplication();
+        Tracker mTracker = application.getDefaultTracker();
+        // [START screen_view_hit]
+        mTracker.setScreenName("Pesan");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+        //end
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -162,10 +193,6 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
             logoutUser();
         }
 
-        // SqLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
         getJSON();
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
@@ -190,11 +217,13 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
                 String message = jo.getString(AppConfig.KEY_MESSAGE);
                 String time = jo.getString(AppConfig.KEY_TIME);
                 String from = jo.getString(AppConfig.KEY_FROM);
+                String status = jo.getString(AppConfig.KEY_STATUS);
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_ID,id);
                 data.put(AppConfig.KEY_MESSAGE,message);
                 data.put(AppConfig.KEY_TIME,time);
                 data.put(AppConfig.KEY_FROM,from);
+                data.put(AppConfig.KEY_STATUS,status);
                 list.add(data);
             }
 
@@ -203,7 +232,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         }
 
         CustomList adapter = new CustomList(this, list,
-                R.layout.list_chat, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM },
+                R.layout.list_chat, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM,AppConfig.KEY_STATUS },
                 new int[] { R.id.txtNO,R.id.txtMESSAGE,R.id.txtTIME,R.id.txtFROM });
 
         listView.setAdapter(adapter);
@@ -217,13 +246,13 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-//                loading = ProgressDialog.show(inbox.this,"Mohon tunggu","",false,false);
+                loading = ProgressDialog.show(inbox.this,"","Harap Tunggu...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-//                loading.dismiss();
+                loading.dismiss();
                 JSON_STRING = s;
                 showData();
             }
@@ -253,10 +282,74 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ViewInbox.class);
         HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
         String empId = map.get(AppConfig.TAG_ID).toString();
-        intent.putExtra(AppConfig.TAG_ID,empId);
+        StatusInbox(empId);
+    }
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
+
+    protected void StatusInbox(final String statID){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                Log.e(TAG,statID );
+                String s = rh.sendGetRequestParam(AppConfig.URL_STATUS_INBOX,statID);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+
+        Intent intent = new Intent(this, ViewInbox.class);
+        intent.putExtra(AppConfig.TAG_ID,statID);
         startActivity(intent);
     }
+
 }
