@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,8 +24,12 @@ import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -39,6 +44,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClickListener {
 
@@ -54,12 +60,35 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
+    private Tracker mTracker;
+    View target ;
+    BadgeView badge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doa);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        //tracker
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        sendScreenImageName("Titip Doa");
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
+
+        //end
 
         session = new SessionManager(getApplicationContext());
         listView = (ListView) findViewById(R.id.listView);
@@ -168,10 +197,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             logoutUser();
         }
 
-        // SqLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
         File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
@@ -222,6 +247,13 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         doaLinear.addView(listView);
     }
 
+    private void sendScreenImageName(String name) {
+        // [START screen_view_hit]
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+    }
+
     private void getJSON(){
         class GetJSON extends AsyncTask<Void,Void,String>{
 
@@ -229,7 +261,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
+                loading = ProgressDialog.show(TitipanDoa.this,"","Harap Tunggu...",false,false);
             }
 
             @Override
@@ -271,7 +303,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(TitipanDoa.this,"","",false,false);
+                loading = ProgressDialog.show(TitipanDoa.this,"","Mengirim...",false,false);
             }
 
             @Override
@@ -379,5 +411,40 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             return itemView;
 
         }
+    }
+
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 }

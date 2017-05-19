@@ -31,6 +31,7 @@ import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -48,6 +49,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class edit_profile extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
@@ -72,6 +74,8 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
     //date time
     Calendar cdate = Calendar.getInstance();
     Calendar ctime = Calendar.getInstance();
+    View target ;
+    BadgeView badge ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,20 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         setContentView(R.layout.profile_edit);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
 
 //        session = new SessionManager(getApplicationContext());
 
@@ -194,13 +212,10 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         editTextuser = (EditText) findViewById(R.id.userid);
         editTextuser.setVisibility(View.GONE);
 
-        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
 
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
         nama = user.get("name");
         email = user.get("email");
@@ -314,7 +329,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(edit_profile.this,"Fetching...","Wait...",false,false);
+                loading = ProgressDialog.show(edit_profile.this,"","Harap Tunggu...",false,false);
             }
 
             @Override
@@ -640,4 +655,38 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
         startActivity(new Intent(edit_profile.this, profile.class));
     }
 
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
 }

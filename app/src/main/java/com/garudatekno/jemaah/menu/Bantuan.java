@@ -2,9 +2,11 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.helper.SQLiteHandler;
+import com.garudatekno.jemaah.helper.SessionManager;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,12 +27,17 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class Bantuan extends AppCompatActivity {
 
     private static final String TAG = "MyUser";
     LinearLayout txtpusatbantuan,txtlayanan,txtlaporkan;
 
+    View target ;
+    BadgeView badge ;
+    private SessionManager session;
+    private SQLiteHandler db;
 
     private String JSON_STRING,uid;
     @Override
@@ -36,6 +46,20 @@ public class Bantuan extends AppCompatActivity {
         setContentView(R.layout.activity_bantuan);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            CountInbox();
+        }
 // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
@@ -127,5 +151,38 @@ public class Bantuan extends AppCompatActivity {
         });
     }
 
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
 
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
 }

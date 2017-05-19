@@ -73,8 +73,8 @@
                 <ImageView
                     android:id="@+id/image"
                     android:layout_gravity="center"
-                    android:layout_width="120dp"
-                    android:background="@drawable/camera"
+                    android:layout_width="86dp"
+                    android:src="@drawable/camera"
                     android:layout_height="160dp" />
                 <Button
                     android:layout_width="100dp"

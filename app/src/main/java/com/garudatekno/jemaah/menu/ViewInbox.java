@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.chat.CustomListView;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -41,6 +43,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static java.lang.Boolean.FALSE;
 
@@ -52,6 +55,8 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
     private SQLiteHandler db;
     private SessionManager session;
     private ListView listView;
+    View target ;
+    BadgeView badge ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,17 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+
         session = new SessionManager(getApplicationContext());
+
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
@@ -166,10 +181,6 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
             logoutUser();
         }
 
-        db = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
         phone = user.get("family_phone");
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
