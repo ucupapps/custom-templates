@@ -20,10 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -37,7 +34,6 @@ import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.AppUtils;
 import com.garudatekno.jemaah.activity.FetchAddressIntentService;
 import com.garudatekno.jemaah.activity.LoginActivity;
-import com.garudatekno.jemaah.activity.MapsActivity;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
@@ -58,19 +54,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
-
-import static java.lang.Boolean.FALSE;
 
 public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
@@ -79,7 +68,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
-    String pesan, phone, uid;
+    String pesan, phone, uid, txtlatHotel, txtlngHotel;
     private int PICK_IMAGE_REQUEST = 1;
     private Uri filePath;
     //user
@@ -142,6 +131,10 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
         mLocationText = (TextView) findViewById(R.id.Locality);
         txtsetLocation = (TextView) findViewById(R.id.setLocation);
+
+        Intent latLong = getIntent();
+        txtlatHotel = latLong.getStringExtra("lat");
+        txtlngHotel = latLong.getStringExtra("lng");
 
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -450,10 +443,19 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
-                txtMessage.setText("HOTEL");insertIntoDB();
+
+                Intent intent = new Intent(getApplicationContext(), Hotel.class);
+//                intent.putExtra(AppConfig.KEY_NAME,"BUS");
+                startActivity(intent);
+
+                Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
+
+                txtMessage.setText("HOTEL");
+//                insertIntoDB();
                 txthotel.setBackgroundResource(R.drawable.button);
                 txthotel.setText("Arahkan");
             }else if(txthotel.getText().toString().equals("Arahkan")) {
+                insertIntoDB();
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"HOTEL");
                 startActivity(intent);
@@ -541,10 +543,16 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
     }
 
     protected void insertIntoDB(){
+        String lat,lng;
         final String idUser = editTextuser.getText().toString().trim();
-        final String lat = txtlat.getText().toString().trim();
-        final String lng = txtlng.getText().toString().trim();
         final String name = txtMessage.getText().toString().trim();
+        if(name.equals("HOTEL")) {
+            lat = txtlatHotel;
+            lng = txtlngHotel;
+        }else{
+            lat = txtlat.getText().toString().trim();
+            lng = txtlng.getText().toString().trim();
+        }
 
         Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
         mCount.moveToFirst();

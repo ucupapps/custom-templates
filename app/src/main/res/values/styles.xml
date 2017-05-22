@@ -54,4 +54,9 @@
         <item name="android:padding">2dp</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/indigo</item>
+        <item name="colorControlActivated">@color/violet</item>
+    </style>
+
 </resources>

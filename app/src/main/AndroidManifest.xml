@@ -134,6 +134,30 @@
             android:launchMode="singleTop">
         </activity>
         <activity
+            android:name="com.garudatekno.jemaah.menu.Hotel"
+            android:label="Hotel"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.add_hotel"
+            android:label="Tambah Hotel"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.MapsActivity"
+            android:label="Maps"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name="com.garudatekno.jemaah.menu.sai"
+            android:label="SAI"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
             android:name="com.garudatekno.jemaah.menu.download"
             android:label="Download"
             android:screenOrientation="portrait"
@@ -215,11 +239,6 @@
         <activity
             android:name="com.garudatekno.jemaah.menu.setting"
             android:label="Setting"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name="com.garudatekno.jemaah.menu.sai"
-            android:label="Sai"
             android:screenOrientation="portrait">
         </activity>
         <activity

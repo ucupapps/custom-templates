@@ -17,6 +17,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="str_btn_find">Find</string>
     <string name="hnt_et_location">Enter location</string>
+    <string name="hnt_et_hotel">Cari Nama Hotel</string>
     <string name="txt_from">From</string>
 
     <string name="latitude_label">Latitude</string>
