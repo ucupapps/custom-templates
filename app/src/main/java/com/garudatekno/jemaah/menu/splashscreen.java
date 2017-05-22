@@ -6,8 +6,11 @@ package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ public class splashscreen extends Activity {
             Manifest.permission.READ_CONTACTS
             /* ETC.. */
     };
+    private SQLiteDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +55,24 @@ public class splashscreen extends Activity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else {
+        createDatabase();
 
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
                     // TODO Auto-generated method stub
-                    Intent i = new Intent(splashscreen.this, panduan.class);
-                    startActivity(i);
+                    Cursor mCount= database.rawQuery("select count(*) from loader where status=1", null);
+                    mCount.moveToFirst();
+                    int count= mCount.getInt(0);
+                    if(count > 0) {
+                        Intent i = new Intent(splashscreen.this, panduan.class);
+                        startActivity(i);
+                    }else {
+                        Intent i = new Intent(splashscreen.this, AndroidImageSlider.class);
+                        startActivity(i);
+                    }
+
                     //jeda selesai Splashscreen
                     this.finish();
                 }
@@ -71,6 +85,12 @@ public class splashscreen extends Activity {
         }
 
     };
+
+    protected void createDatabase(){
+        database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS loader(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, status INTEGER);");
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public boolean hasPermissions(@NonNull String... permissions) {

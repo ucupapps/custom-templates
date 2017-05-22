@@ -109,7 +109,8 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
             if (cek_status(getApplicationContext()))

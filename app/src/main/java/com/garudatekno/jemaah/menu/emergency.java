@@ -140,10 +140,15 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+
+                CountInbox();
+            }
         }
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);

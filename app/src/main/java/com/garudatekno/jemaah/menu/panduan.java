@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -126,11 +127,15 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private Tracker mTracker;
     View target ;
     BadgeView badge ;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        String query = "INSERT INTO loader (status) VALUES(1);";
+        database.execSQL(query);
         //tracker
         AppController application = (AppController) getApplication();
         mTracker = application.getDefaultTracker();
@@ -143,7 +148,8 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
             if (cek_status(getApplicationContext()))

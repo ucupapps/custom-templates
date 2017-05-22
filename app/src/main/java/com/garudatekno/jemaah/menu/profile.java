@@ -112,7 +112,8 @@ public class profile extends AppCompatActivity implements OnClickListener {
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
             if (cek_status(getApplicationContext()))
