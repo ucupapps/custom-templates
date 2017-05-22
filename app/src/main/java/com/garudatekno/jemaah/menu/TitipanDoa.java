@@ -1,10 +1,13 @@
 package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -63,12 +66,41 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     private Tracker mTracker;
     View target ;
     BadgeView badge ;
+    TextView txtkoneksi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doa);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+        doaLinear = (LinearLayout) findViewById(R.id.linearDoa);
+//
+        th.start();
 
         //tracker
         AppController application = (AppController) getApplication();
@@ -84,8 +116,13 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         uid = user.get("uid");
 
         session = new SessionManager(getApplicationContext());
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+             CountInbox();
+            }
         }
 
         //end
@@ -95,7 +132,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         listView.destroyDrawingCache();
         listView.setOnItemClickListener(this);
 
-        doaLinear = (LinearLayout) findViewById(R.id.linearDoa);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -410,6 +446,18 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
             return itemView;
 
+        }
+    }
+
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
         }
     }
 

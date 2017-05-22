@@ -1,9 +1,12 @@
 package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,6 +67,35 @@ public class profile extends AppCompatActivity implements OnClickListener {
         }
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+        final LinearLayout konten= (LinearLayout) findViewById(R.id.konten);
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    konten.setVisibility(View.GONE);
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    konten.setVisibility(View.VISIBLE);
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        th.start();
 
         //tracker
         AppController application = (AppController) getApplication();
@@ -83,7 +115,10 @@ public class profile extends AppCompatActivity implements OnClickListener {
 
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+                CountInbox();
+            }
         }
         //end
 
@@ -231,6 +266,18 @@ public class profile extends AppCompatActivity implements OnClickListener {
         buttonAdd.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
 
+    }
+
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
+        }
     }
 
     public void onClick(View v){

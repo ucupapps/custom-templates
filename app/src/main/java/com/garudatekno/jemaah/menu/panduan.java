@@ -104,7 +104,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private static final String TAG = "MyHOME";
 
     private ListView listView;
-    private TextView txtid,txtkoneksi,jak_degree,jak_cuaca,jak_date,jak_time,mek_degree,mek_cuaca,mek_date,mek_time;
+    private TextView txtid,jak_degree,jak_cuaca,jak_date,jak_time,mek_degree,mek_cuaca,mek_date,mek_time;
     private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
@@ -146,13 +146,16 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+                CountInbox();
+            }
         }
 
         //end
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-        txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
         Thread th = new Thread() {
 
             @Override
