@@ -47,10 +47,10 @@ public class AppConfig {
 	public static String URL_LAPORKAN_MASALAH= "https://dev.gohajj.id/api/jemaah-free/laporkan-masalah";
 	public static String URL_COUNT_INBOX= "https://dev.gohajj.id/api/jemaah-free/count-inbox?id=";
 	public static String URL_STATUS_INBOX= "https://dev.gohajj.id/api/jemaah-free/status-inbox?id=";
-	public static String URL_ADD_HOTEL= "http://192.168.43.203/api/jemaah-free/add-hotel";
-	public static String URL_SET_LOCATION= "http://192.168.43.203/api/jemaah-free/set-location";
-	public static String URL_LIST_HOTEL= "http://192.168.43.203/api/jemaah-free/all-hotel";
-	public static String URL_FIND_HOTEL= "http://192.168.43.203/api/jemaah-free/find-hotel?name=";
+	public static String URL_ADD_HOTEL= "https://dev.gohajj.id/api/jemaah-free/add-hotel";
+	public static String URL_SET_LOCATION= "https://dev.gohajj.id/api/jemaah-free/set-location";
+	public static String URL_LIST_HOTEL= "https://dev.gohajj.id/api/jemaah-free/all-hotel";
+	public static String URL_FIND_HOTEL= "https://dev.gohajj.id/api/jemaah-free/find-hotel?name=";
 
 	public static final String KEY_PHONE= "phone";
 	public static final String KEY_MESSAGE= "message";
@@ -68,6 +68,7 @@ public class AppConfig {
 	public static final String KEY_EMAIL = "email";
 	public static final String KEY_DISTANCE = "distance";
 	public static final String KEY_ADDRESS = "address";
+	public static final String KEY_ALAMAT = "alamat";
 	public static final String KEY_TOWN = "town";
 	public static final String KEY_PROVINCE = "province";
 	public static final String UPLOAD_KEY = "image";
