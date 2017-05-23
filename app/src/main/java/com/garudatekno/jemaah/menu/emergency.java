@@ -1,9 +1,7 @@
 package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +16,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -25,8 +25,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -39,6 +37,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
+import com.garudatekno.jemaah.activity.AppUtils;
+import com.garudatekno.jemaah.activity.FetchAddressIntentService;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
@@ -47,15 +47,21 @@ import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.readystatesoftware.viewbadger.BadgeView;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,9 +75,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-import static java.lang.Boolean.FALSE;
-
-public class emergency extends AppCompatActivity implements OnClickListener, OnMapReadyCallback  {
+public class emergency extends AppCompatActivity implements OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private EditText editTextuser,txtMessage,txtphone,txtlng,txtlat;
     private Button buttonAdd,buttonAdd2,btnaddcontact;
     EditText contact;
@@ -90,6 +94,27 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     private final int PICK_CONTACT = 1;
     View target ;
     BadgeView badge ;
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static String TAG = "MAP LOCATION";
+    Context mContext;
+    TextView mLocationMarkerText,txtsetLocation;
+    private LatLng mCenterLatLong;
+    private GoogleApiClient mGoogleApiClient;
+
+    /**
+     * Receiver registered with this activity to get the response from FetchAddressIntentService.
+     */
+    private AddressResultReceiver mResultReceiver;
+    /**
+     * The formatted location address.
+     */
+    protected String mAddressOutput;
+    protected String mAreaOutput;
+    protected String mCityOutput;
+    protected String mStateOutput;
+    TextView mLocationText,mLocationAddress;
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,33 +187,13 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
         }
+        buildGoogleApiClient();
 
-
-        //HEADER
-//        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-//        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-//        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-//        txt_thowaf.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(i);
-//            }
-//        });
-//        txt_sai.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), sai.class);
-//                startActivity(i);
-//            }
-//        });
-//        txt_emergency.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), emergency.class);
-//                startActivity(i);
-//            }
-//        });
+        mResultReceiver = new AddressResultReceiver(new Handler());
+        mLocationAddress = (TextView) findViewById(R.id.Address);
+        mLocationMarkerText = (TextView) findViewById(R.id.locationMarkertext);
+        mLocationText = (TextView) findViewById(R.id.Locality);
+        txtsetLocation = (TextView) findViewById(R.id.setLocation);
 
         // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
@@ -261,10 +266,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         txtMessage = (EditText) findViewById(R.id.message);
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
-        editTextuser.setVisibility(View.GONE);
         txtphone.setVisibility(View.GONE);
-        txtlat.setVisibility(View.GONE);
-        txtlng.setVisibility(View.GONE);
 
         if (!session.isLoggedIn()) {
             logoutUser();
@@ -288,37 +290,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(intent, PICK_CONTACT);
-//                addkontak.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        int id = item.getItemId();
-//                        if(id == 1) {
-//                            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-//                            startActivityForResult(intent, PICK_CONTACT);
-//                        }if(id == 2) {
-//                            final Dialog rankDialog = new Dialog(emergency.this);
-//                            rankDialog.setContentView(R.layout.kontak_dialog);
-//                            rankDialog.setCancelable(true);
-//                            Button btnok = (Button) rankDialog.findViewById(R.id.btnOK);
-//                            final EditText nophone=(EditText) rankDialog.findViewById(R.id.nophone);
-//
-//                            btnok.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                               String cNumber= nophone.getText().toString().trim();
-//                                String no=contact.getText().toString().trim();
-//                                no += cNumber+",";
-//                                contact.setText(no);
-//                                contact.setSelection(contact.getText().length());
-//                                rankDialog.dismiss();
-//                            }
-//                        });
-//                            rankDialog.getWindow().setLayout(700, 450);
-//                            rankDialog.show();
-//                        }
-//                        return true;
-//                    }
-//                });
-//            addkontak.show();
             }
         });
         btnaddcontact.setTypeface(null, Typeface.BOLD);
@@ -334,7 +305,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
         }
-        getCurrentLocation(); getData();
+         getData();
     }
 
     public boolean cek_status(Context cek) {
@@ -349,60 +320,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        // get the last know location from your location manager.
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Log.d("Mylat", "lat: " + location);
-        Double lat;
-        Double lng;
-        if (location != null) {
-            lat=location.getLatitude(); lng=location.getLongitude();
-            LatLng jakarta = new LatLng(lat,lng);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(jakarta));
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(jakarta, 17));
-        }else{
-            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-        }
-        mMap.setMyLocationEnabled(true);
-//        if (mMap != null) {
-//            mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-//
-//                @Override
-//                public void onMyLocationChange(Location arg0) {
-//                    // TODO Auto-generated method stub
-//
-//                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
-//                }
-//            });
-//        }
-
-    }
-
-    private void getCurrentLocation(){
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        // get the last know location from your location manager.
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        txtlat.setText("" + location.getLatitude());
-                    txtlng.setText("" + location.getLongitude());
-
-        txtMessage.setText("\n\n\n Location: https://maps.google.com/?q="+ location.getLatitude()+"," + location.getLongitude()+"");
-//        Toast.makeText(
-//                emergency.this,
-//                "Lat " + location.getLatitude() + " "
-//                        + "Long " + location.getLongitude(),
-//                Toast.LENGTH_LONG).show();
-    }
 
     private void logoutUser() {
         if (session.isLoggedIn()) {
@@ -436,7 +353,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
 
     public void onClick(View v){
         if(v == buttonAdd2){
-            getCurrentLocation();
 //            if(contact.getText().toString().equals("") || contact.getText().toString().equals(","))
 //            {
 //                Toast.makeText(this, "No tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
@@ -456,7 +372,11 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 String phoneNumber = contact.getText().toString();
                 String message = txtMessage.getText().toString();
                 sendSMS(phoneNumber, message);
-                addBarcode();
+                Toast.makeText(this, "Pesan telah dikirim", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(emergency.this, emergency.class);
+                finish();
+                startActivity(intent);
+//                addBarcode();
             }
         }
         if(v == btnaddcontact){
@@ -496,6 +416,28 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     }
                 }
                 break;
+            case (REQUEST_CODE_AUTOCOMPLETE):
+                if (resultCode == RESULT_OK) {
+                    // Get the user's selected place from the Intent.
+                    Place place = PlaceAutocomplete.getPlace(mContext, data);
+                    LatLng latLong;
+                    latLong = place.getLatLng();
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLong).zoom(19f).tilt(70).build();
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                        return;
+                    }
+                    mMap.setMyLocationEnabled(true);
+                    mMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+                }
+                break;
+            case (PlaceAutocomplete.RESULT_ERROR):
+                Status status = PlaceAutocomplete.getStatus(mContext, data);
+                break;
+
         }
     }
 
@@ -519,8 +461,10 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
+                Log.e(TAG, "onPostExecute: "+s );
                 loading.dismiss();
-                Toast.makeText(emergency.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Pesan telah dikirim", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(emergency.this, s, Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -639,4 +583,259 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         GetJSON gj = new GetJSON();
         gj.execute();
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "OnMapReady");
+        mMap = googleMap;
+
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                Log.d("Camera postion change" + "", cameraPosition + "");
+                mCenterLatLong = cameraPosition.target;
+                mMap.clear();
+
+                try {
+                    Location mLocation = new Location("");
+                    mLocation.setLatitude(mCenterLatLong.latitude);
+                    mLocation.setLongitude(mCenterLatLong.longitude);
+
+                    startIntentService(mLocation);
+                    mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
+                    txtlng.setText("" + mCenterLatLong.latitude + "");
+                    txtlat.setText("" + mCenterLatLong.longitude+ "");
+                    txtMessage.setText("\n\n\n Location: https://maps.google.com/?q="+ mCenterLatLong.latitude+"," + mCenterLatLong.longitude+"");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(            mGoogleApiClient);
+        if (mLastLocation != null) {
+            changeMap(mLastLocation);
+            Log.d(TAG, "ON connected");
+
+        } else
+            try {
+                LocationServices.FusedLocationApi.removeLocationUpdates(
+                        mGoogleApiClient, this);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        try {
+            LocationRequest mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(10000);
+            mLocationRequest.setFastestInterval(5000);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, mLocationRequest, this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(TAG, "Connection suspended");
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        try {
+            if (location != null)
+                changeMap(location);
+            LocationServices.FusedLocationApi.removeLocationUpdates(
+                    mGoogleApiClient, this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            mGoogleApiClient.connect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                //finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void changeMap(Location location) {
+
+        Log.d(TAG, "Reaching map" + mMap);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+
+        // check if map is created successfully or not
+        if (mMap != null) {
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+            LatLng latLong;
+
+            latLong = new LatLng(location.getLatitude(), location.getLongitude());
+            Log.d(TAG, "Reaching map" + mMap);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLong).zoom(19f).tilt(70).build();
+
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
+
+            mLocationMarkerText.setText("Lat : " + location.getLatitude() + "," + "Long : " + location.getLongitude());
+            txtlng.setText("" + location.getLatitude() + "");
+            txtlat.setText("" + location.getLongitude()+ "");
+            startIntentService(location);
+
+
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+    }
+
+
+    /**
+     * Receiver for data sent from FetchAddressIntentService.
+     */
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        /**
+         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
+         */
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+
+            // Display the address string or an error message sent from the intent service.
+            mAddressOutput = resultData.getString(AppUtils.LocationConstants.RESULT_DATA_KEY);
+
+            mAreaOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_AREA);
+
+            mCityOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_CITY);
+            mStateOutput = resultData.getString(AppUtils.LocationConstants.LOCATION_DATA_STREET);
+
+            displayAddressOutput();
+
+            // Show a toast message if an address was found.
+            if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
+                //  showToast(getString(R.string.address_found));
+            }
+        }
+
+    }
+
+    /**
+     * Updates the address in the UI.
+     */
+    protected void displayAddressOutput() {
+        //  mLocationAddressTextView.setText(mAddressOutput);
+        try {
+            if (mAreaOutput != null)
+                // mLocationText.setText(mAreaOutput+ "");
+
+                mLocationAddress.setText(mAddressOutput);
+            //mLocationText.setText(mAreaOutput);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates an intent, adds location data to it as an extra, and starts the intent service for
+     * fetching an address.
+     */
+    protected void startIntentService(Location mLocation) {
+        // Create an intent for passing to the intent service responsible for fetching the address.
+        Intent intent = new Intent(this, FetchAddressIntentService.class);
+
+        // Pass the result receiver as an extra to the service.
+        intent.putExtra(AppUtils.LocationConstants.RECEIVER, mResultReceiver);
+
+        // Pass the location data as an extra to the service.
+        intent.putExtra(AppUtils.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
+
+        // Start the service. If the service isn't already running, it is instantiated and started
+        // (creating a process for it if needed); if it is running then it remains running. The
+        // service kills itself automatically once all intents are processed.
+        startService(intent);
+    }
+
+
+
+
 }
