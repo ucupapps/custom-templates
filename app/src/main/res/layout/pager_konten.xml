@@ -6,21 +6,21 @@
 
     <ImageView
         android:id="@+id/gambar"
-        android:src="@drawable/slide1"
+        android:src="@drawable/slide2"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <Button
+    <TextView
         android:id="@+id/tombol"
-        android:visibility="gone"
-        android:textAllCaps="false"
         android:textColor="@color/white"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/button"
-        android:layout_centerInParent="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:text="Go Home"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp" />
+        android:visibility="gone"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_marginBottom="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
