@@ -38,6 +38,7 @@ public class AppConfig {
 	public static String URL_RATING= "https://dev.gohajj.id/api/jemaah-free/rating";
 	public static String URL_DOAKAN= "https://dev.gohajj.id/api/jemaah-free/doakan";
 	public static String URL_POI= "https://dev.gohajj.id/api/jemaah-free/poi";
+	public static String URL_POI_CAT= "https://dev.gohajj.id/api/jemaah-free/poi-category";
 	public static String URL_GET_POI= "https://dev.gohajj.id/api/jemaah-free/get-poi?id=";
 	public static String URL_KAMUS= "https://dev.gohajj.id/api/jemaah-free/kamus";
 	public static String URL_LIST_KAMUS= "https://dev.gohajj.id/api/jemaah-free/list-kamus";

@@ -287,8 +287,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     markerOptions.title("Set Location");
                     markerOptions.draggable(true);
                     marker = mMap.addMarker(markerOptions);
+                    marker.showInfoWindow();
                 } else {
                     marker.setPosition(latLng);
+                    marker.showInfoWindow();
                 }
                 LatLng latLngAdd = marker.getPosition();
                 Double latAdd = latLngAdd.latitude;

@@ -4,22 +4,21 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -27,24 +26,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.garudatekno.jemaah.R;
-import com.garudatekno.jemaah.activity.CustomListDoa;
 import com.garudatekno.jemaah.activity.CustomListPoi;
-import com.garudatekno.jemaah.activity.GMapV2Direction;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
-import com.squareup.picasso.Picasso;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,53 +43,78 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
-
-import static java.lang.Boolean.FALSE;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class Poi extends AppCompatActivity implements ListView.OnItemClickListener {
 
-    private static final String TAG = "MyUser";
+    private static final String TAG = "POI";
 
     private ListView listView;
     Double Mylat,Mylng;
     private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private static SQLiteDatabase database;
+
+    private static final String[] requiredPermissions = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            /* ETC.. */
+    };
+    BadgeView badge ;
+    View target ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.doa);
+        setContentView(R.layout.poi);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        th.start();
 
         session = new SessionManager(getApplicationContext());
-        //enable GPS
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean enabled = service
-                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        }else{
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            // get the last know location from your location manager.
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                return;
-            }
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if (location != null) {
-                Mylat=location.getLatitude(); Mylng=location.getLongitude();
-            }else{
-                Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-            }
-        }
 
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setOnItemClickListener(this);
+//        listView = (ListView) findViewById(R.id.listView);
+//        listView.setOnItemClickListener(this);
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -202,12 +217,28 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         }
 
 
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
         // SqLite database handler
+        createDatabase();
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn()) {
+            if (cek_status(getApplicationContext()))
+            {
+                CountInbox();
+            }
+        }
 
-        getJSON();
+        //end
+
+//        getJSON();
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
         File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/profile.png");
@@ -291,6 +322,18 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         gj.execute();
     }
 
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     private void logoutUser() {
         if (session.isLoggedIn()) {
             session.setLogin(false);
@@ -314,5 +357,106 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         intent.putExtra(AppConfig.KEY_LAT,lat);
         intent.putExtra(AppConfig.KEY_LNG,lng);
         startActivity(intent);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        Poi.ViewPagerAdapter adapter = new Poi.ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new SejarahFragment(), "Sejarah Islam");
+        adapter.addFragment(new OlehOlehFragment(), "Oleh-oleh");
+        adapter.addFragment(new FasilitasUmumFragment(), "Fasilitas Umum");
+        adapter.addFragment(new ObjekWisataFragment(), "Objek Wisata");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Log.d(TAG, mFragmentTitleList.get(position).toString());
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
+
+    protected void createDatabase(){
+        database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,lat VARCHAR,lng VARCHAR);");
+    }
+
+    public static void insertIntoDB(String name, String lat, String lng){
+
+        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        if(count > 0) {
+            String query = "UPDATE locations SET lat='" + lat + "',lng='" + lng + "' WHERE name='" + name + "';";
+            database.execSQL(query);
+        }else {
+            String query = "INSERT INTO locations (name,lat,lng) VALUES('" + name + "', '" + lat + "', '" + lng + "');";
+            database.execSQL(query);
+        }
+//        Toast.makeText(getApplicationContext(),"Location "+name+ " Berhasil di simpan", Toast.LENGTH_LONG).show();
+        Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
+
+        c.moveToFirst();
+        String nama=c.getString(1);
+        String lats=c.getString(2);
+        String lngs=c.getString(3);
+        Log.d("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
     }
 }

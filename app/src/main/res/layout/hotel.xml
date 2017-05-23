@@ -48,6 +48,16 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_black"
                     android:padding="4dp"
+                    android:visibility="gone"
+                    android:text=" Tidak ada koneksi internet. Cek jaringan anda"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/txtJudul"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_black"
                     android:text=" Hotel"
                     android:textColor="@color/white"
                     android:textSize="15dp" />

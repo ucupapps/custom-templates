@@ -345,8 +345,8 @@
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:textAlignment="center"
-                        android:background="@drawable/button"
-                        android:text="Arahkan"
+                        android:background="@drawable/button_red"
+                        android:text="Set Lokasi"
                         android:textColor="#fff" />
                     <ImageView
                         android:id="@+id/arrow_poi"

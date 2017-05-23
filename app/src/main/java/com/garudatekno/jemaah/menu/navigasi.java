@@ -74,7 +74,7 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
     private TextView txtbus, txthotel, txtbertemu, txtmasjid,txtpoi;
-    private ImageView imgbus,imghotel,imgpintu,imgbertemu;
+    private ImageView imgbus,imghotel,imgpintu,imgbertemu,imgPoi;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
@@ -329,11 +329,13 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         imghotel=(ImageView) findViewById(R.id.arrow_hotel);
         imgpintu=(ImageView) findViewById(R.id.arrow_pintu);
         imgbertemu=(ImageView) findViewById(R.id.arrow_bertemu);
+        imgPoi=(ImageView) findViewById(R.id.arrow_poi);
 
         imgbertemu.setOnClickListener(this);
         imgpintu.setOnClickListener(this);
         imgbus.setOnClickListener(this);
         imghotel.setOnClickListener(this);
+        imgPoi.setOnClickListener(this);
 
         txtbus = (TextView) findViewById(R.id.txtbus);
         txthotel = (TextView) findViewById(R.id.txthotel);
@@ -352,6 +354,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         cekData("HOTEL",txthotel);
         cekData("NO PINTU MASJID",txtmasjid);
         cekData("TEMPAT BERTEMU",txtbertemu);
+        cekData("POI",txtpoi);
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
@@ -568,9 +571,31 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }
 
         if (v == txtpoi) {
-            Intent intent = new Intent(getApplicationContext(), Poi.class);
-            startActivity(intent);
+            if(txtpoi.getText().toString().equals("Set Lokasi")){
+                if(txtlat.getText().toString().equals(""))
+                {
+                    Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
+                }
+
+                Intent intent = new Intent(getApplicationContext(), Poi.class);
+                startActivity(intent);
+
+//                Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
+
+                txtMessage.setText("POI");
+                txthotel.setBackgroundResource(R.drawable.button);
+                txthotel.setText("Arahkan");
+            }else if(txthotel.getText().toString().equals("Arahkan")) {
+                Intent intent = new Intent(getApplicationContext(), go.class);
+                intent.putExtra(AppConfig.KEY_NAME,"POI");
+                startActivity(intent);
+            }
         }
+
+//        if (v == txtpoi) {
+//            Intent intent = new Intent(getApplicationContext(), Poi.class);
+//            startActivity(intent);
+//        }
 
         //arrow
         if (v == imghotel) {
@@ -598,6 +623,13 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             if(txtbertemu.getText().toString().equals("Arahkan")){
                 txtbertemu.setBackgroundResource(R.drawable.button_red);
                 txtbertemu.setText("Set Lokasi");
+            }
+        }
+
+        if (v == imgPoi) {
+            if(txtpoi.getText().toString().equals("Arahkan")){
+                txtpoi.setBackgroundResource(R.drawable.button_red);
+                txtpoi.setText("Set Lokasi");
             }
         }
     }
