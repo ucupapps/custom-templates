@@ -71,22 +71,19 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
-    private SeekBar seekbar;
+    private SeekBar timeLine;
     LinearLayout timeFrame;
-    TextView ltime, rtime;
+    TextView timePos, timeDur;
+    private String JSON_STRING; MediaPlayer mediaPlayer;
+    String srcPath = null;
+    enum MP_State {
+        Idle, Initialized, Prepared, Started, Paused,
+        Stopped, PlaybackCompleted, End, Error, Preparing}
 
-    private double startTime = 0;
-    private double finalTime = 0;
-    final static int RQS_OPEN_AUDIO_MP3 = 1;
-
-    private boolean playPause;
-    private String JSON_STRING;
-    private MediaPlayer mediaPlayer;
+    ViewPanduanDoa.MP_State mediaPlayerState;
 
     private SQLiteHandler db;
     private SessionManager session;
-    String srcPath = null;
-    private boolean intialStage = true;
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private ProgressDialog mProgressDialog;
     View target ;
@@ -219,10 +216,12 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
         txtarab= (TextView) findViewById(R.id.txtArab);
-        ltime= (TextView) findViewById(R.id.ltime);
-        rtime= (TextView) findViewById(R.id.rtime);
 
-        seekbar = (SeekBar)findViewById(R.id.seekBar);
+        timeLine = (SeekBar)findViewById(R.id.seekbartimeline);
+        timeFrame = (LinearLayout)findViewById(R.id.timeframe);
+        timePos = (TextView)findViewById(R.id.pos);
+        timeDur = (TextView)findViewById(R.id.dur);
+        state = (TextView)findViewById(R.id.state);
 
         buttonStart = (Button) findViewById(R.id.btnPlay);
         buttonSave = (Button) findViewById(R.id.btnSimpan);
@@ -234,9 +233,21 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             buttonSave.setVisibility(View.GONE);
             srcPath="/sdcard/android/data/com.garudatekno.jemaah/doa/"+file;
         }
-        Log.d("PATH", srcPath);
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
+
+        myScheduledExecutorService.scheduleWithFixedDelay(
+                new Runnable(){
+                    @Override
+                    public void run() {
+                        monitorHandler.sendMessage(monitorHandler.obtainMessage());
+                    }},
+                200, //initialDelay
+                200, //delay
+                TimeUnit.MILLISECONDS);
+        cmdReset();
+        cmdSetDataSource(srcPath);
+
         buttonStart.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
         getData();
@@ -320,17 +331,18 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
 
         if(v == buttonStart){
             if(buttonStart.getText().toString().trim().equals("Mainkan Audio")){
-                 new Player()
-                            .execute(srcPath);
-                    mediaPlayer.start();
-
-                buttonStart.setText("Stop");
-                playPause = true;
+                if(srcPath == null){
+                    Toast.makeText(ViewPanduanDoa.this,
+                            "No file selected",
+                            Toast.LENGTH_LONG).show();
+                }else{
+                    cmdPrepare();
+                    cmdStart();
+                    buttonStart.setText("Stop");
+                }
             }else{
+                cmdPause();
                 buttonStart.setText("Mainkan Audio");
-                mediaPlayer.stop();
-                mediaPlayer.reset();
-                playPause = false;
             }
         }
 
@@ -344,88 +356,205 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    class Player extends AsyncTask<String, Void, Boolean> {
-        private ProgressDialog progress;
+    Handler monitorHandler = new Handler(){
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        public void handleMessage(Message msg) {
+            mediaPlayerMonitor();
+        }
+    };
+
+    private void mediaPlayerMonitor(){
+        if (mediaPlayer == null){
+            timeLine.setVisibility(View.INVISIBLE);
+            timeFrame.setVisibility(View.INVISIBLE);
+        }else{
+            if(mediaPlayer.isPlaying()){
+                timeLine.setVisibility(View.VISIBLE);
+                timeFrame.setVisibility(View.VISIBLE);
+
+                int mediaDuration = mediaPlayer.getDuration();
+                int mediaPosition = mediaPlayer.getCurrentPosition();
+                timeLine.setMax(mediaDuration);
+                timeLine.setProgress(mediaPosition);
+                int minutes = mediaPosition/1000 / 60;
+                int seconds = mediaPosition/1000 % 60;
+                int minutes2 = mediaDuration/1000 / 60;
+                int seconds2 = mediaDuration/1000 % 60;
+                timePos.setText(String.format("%02d:%02d", minutes, seconds));
+                timeDur.setText(String.format("%02d:%02d", minutes2, seconds2));
+//                timePos.setText(String.valueOf( minutes+":"+seconds));
+//                timeDur.setText(String.valueOf( minutes2+":"+seconds2));
+
+            }else{
+                timeLine.setVisibility(View.GONE);
+                timeFrame.setVisibility(View.INVISIBLE);
+                buttonStart.setText("Mainkan Audio");
+            }
+        }
+    }
+
+    OnErrorListener mediaPlayerOnErrorListener
+            = new OnErrorListener(){
+
+        @Override
+        public boolean onError(MediaPlayer mp, int what, int extra) {
             // TODO Auto-generated method stub
-            Boolean prepared;
+
+            mediaPlayerState = ViewPanduanDoa.MP_State.Error;
+            showMediaPlayerState();
+
+            return false;
+        }};
+
+
+    private void cmdReset(){
+        if (mediaPlayer == null){
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnErrorListener(mediaPlayerOnErrorListener);
+        }
+        mediaPlayer.reset();
+        mediaPlayerState = ViewPanduanDoa.MP_State.Idle;
+        showMediaPlayerState();
+    }
+
+    private void cmdSetDataSource(String path){
+        if(mediaPlayerState == ViewPanduanDoa.MP_State.Idle){
             try {
-
-                mediaPlayer.setDataSource(params[0]);
-
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        // TODO Auto-generated method stub
-                        intialStage = true;
-                        playPause=false;
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
-                    }
-                });
-                mediaPlayer.prepare();
-                prepared = true;
+                mediaPlayer.setDataSource(path);
+                mediaPlayerState = ViewPanduanDoa.MP_State.Initialized;
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
-                Log.d("IllegarArgument", e.getMessage());
-                prepared = false;
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                // TODO Auto-generated catch block
-                prepared = false;
-                e.printStackTrace();
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
             } catch (IllegalStateException e) {
-                // TODO Auto-generated catch block
-                prepared = false;
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+            } catch (IOException e) {
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
+            }
+        }else{
+//            Toast.makeText(ViewPanduan.this,
+//                    "Invalid State@cmdSetDataSource - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+
+        showMediaPlayerState();
+    }
+
+    private void cmdPrepare(){
+
+        if(mediaPlayerState == ViewPanduanDoa.MP_State.Initialized
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Stopped){
+            try {
+                mediaPlayer.prepare();
+                mediaPlayerState = ViewPanduanDoa.MP_State.Prepared;
+            } catch (IllegalStateException e) {
+                Toast.makeText(ViewPanduanDoa.this,
+                        e.toString(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                prepared = false;
-                e.printStackTrace();
+//                Toast.makeText(ViewPanduan.this,
+//                        e.toString(), Toast.LENGTH_LONG).show();
+//                e.printStackTrace();
             }
-            return prepared;
+        }else{
+//            Toast.makeText(ViewPanduan.this,
+//                    "Invalid State@cmdPrepare() - skip",
+//                    Toast.LENGTH_LONG).show();
         }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-            // TODO Auto-generated method stub
-            super.onPostExecute(result);
-            if (progress.isShowing()) {
-                progress.cancel();
-            }
-            Log.d("Prepared", "//" + result);
+        showMediaPlayerState();
+    }
+
+    private void cmdStart(){
+        if(mediaPlayerState == ViewPanduanDoa.MP_State.Prepared
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Started
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Paused
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.PlaybackCompleted){
             mediaPlayer.start();
-
-            intialStage = false;
+            mediaPlayerState = ViewPanduanDoa.MP_State.Started;
+        }else{
+//            Toast.makeText(ViewPanduan.this,
+//                    "Invalid State@cmdStart() - skip",
+//                    Toast.LENGTH_LONG).show();
         }
 
-        public Player() {
-            progress = new ProgressDialog(ViewPanduanDoa.this);
+        showMediaPlayerState();
+    }
+
+    private void cmdPause(){
+        if(mediaPlayerState == ViewPanduanDoa.MP_State.Started
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Paused){
+            mediaPlayer.pause();
+            mediaPlayerState = ViewPanduanDoa.MP_State.Paused;
+        }else{
+//            Toast.makeText(ViewPanduan.this,
+//                    "Invalid State@cmdPause() - skip",
+//                    Toast.LENGTH_LONG).show();
         }
+        showMediaPlayerState();
+    }
 
-        @Override
-        protected void onPreExecute() {
-            // TODO Auto-generated method stub
-            super.onPreExecute();
-//            this.progress.setMessage("Playing...");
-//            this.progress.show();
+    private void cmdStop(){
 
+        if(mediaPlayerState == ViewPanduanDoa.MP_State.Prepared
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Started
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Stopped
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.Paused
+                ||mediaPlayerState == ViewPanduanDoa.MP_State.PlaybackCompleted){
+            mediaPlayer.stop();
+            mediaPlayerState = ViewPanduanDoa.MP_State.Stopped;
+        }else{
+//            Toast.makeText(ViewPanduan.this,
+//                    "Invalid State@cmdStop() - skip",
+//                    Toast.LENGTH_LONG).show();
+        }
+        showMediaPlayerState();
+
+    }
+
+    private void showMediaPlayerState(){
+
+        switch(mediaPlayerState){
+            case Idle:
+                state.setText("Idle");
+                break;
+            case Initialized:
+                state.setText("Initialized");
+                break;
+            case Prepared:
+                state.setText("Prepared");
+                break;
+            case Started:
+                state.setText("Started");
+                break;
+            case Paused:
+                state.setText("Paused");
+                break;
+            case Stopped:
+                state.setText("Stopped");
+                break;
+            case PlaybackCompleted:
+                state.setText("PlaybackCompleted");
+                break;
+            case End:
+                state.setText("End");
+                break;
+            case Error:
+                state.setText("Error");
+                break;
+            case Preparing:
+                state.setText("Preparing");
+                break;
+            default:
+                state.setText("Unknown!");
         }
     }
 
-    @Override
-    protected void onPause() {
-        // TODO Auto-generated method stub
-        super.onPause();
-        if (mediaPlayer != null) {
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
 
     private void showJson(){
         JSONObject jsonObject = null;
