@@ -284,7 +284,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if(marker == null) {
                     markerOptions = new MarkerOptions();
                     markerOptions.position(latLng);
-                    markerOptions.title("Set Location");
+                    markerOptions.title("Set Lokasi");
                     markerOptions.draggable(true);
                     marker = mMap.addMarker(markerOptions);
                     marker.showInfoWindow();
