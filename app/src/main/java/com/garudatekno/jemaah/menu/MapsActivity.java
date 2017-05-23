@@ -61,7 +61,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
 
-    private String JSON_STRING,hotel_id;
+    private String JSON_STRING,hotel_id, navigasi;
 
     private TextView mLocationAddress;
 
@@ -93,7 +93,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
         Intent j = getIntent();
-        hotel_id = j.getStringExtra("id");
+        hotel_id = j.getStringExtra(AppConfig.KEY_ID);
+        navigasi = j.getStringExtra(AppConfig.KEY_NAVIGASI);
 
         mResultReceiver = new AddressResultReceiverHotel(new Handler());
 
@@ -537,12 +538,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         args.putParcelable("longLat_dataPrivider", marker.getPosition());
         args.putString("address", marker.getTitle());
 
+        String lat_nav = Double.toString(marker.getPosition().latitude);
+        String lng_nav = Double.toString(marker.getPosition().longitude);
+
 //        Intent i = new Intent(this, SearchActivity.class);
 //        i.putExtras(args);
 //        startActivity(i);
-        setLocation();
-        Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT).show();
+        if(navigasi.equals("HOTEL")) {
+            setLocation();
+        }else{
+            insertIntoDB(navigasi,lat_nav,lng_nav);
+            Intent intent = new Intent(MapsActivity.this,
+                    navigasi.class);
+            startActivity(intent);
+        }
+//        Toast.makeText(this, "Info window clicked",
+//                Toast.LENGTH_SHORT).show();
     }
 
     protected void createDatabase(){

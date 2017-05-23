@@ -97,6 +97,7 @@ public class AppConfig {
 	public static final String KEY_PERTANYAAN = "pertanyaan";
 	public static final String KEY_JAWABAN = "jawaban";
 	public static final String KEY_MASALAH = "masalah";
+	public static final String KEY_NAVIGASI = "navigasi";
 
 
 	public static final String KEY_JUMLAH= "jumlah";

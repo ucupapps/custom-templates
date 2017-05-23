@@ -428,7 +428,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
-                txtMessage.setText("BUS"); insertIntoDB();
+                Intent intentBus = new Intent(getApplicationContext(), MapsActivity.class);
+                intentBus.putExtra(AppConfig.KEY_NAVIGASI,"BUS");
+                startActivity(intentBus);
+
+                txtMessage.setText("BUS");
+//                insertIntoDB();
                 txtbus.setBackgroundResource(R.drawable.button);
                 txtbus.setText("Arahkan");
             }else if(txtbus.getText().toString().equals("Arahkan")) {
@@ -445,13 +450,11 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 }
 
                 Intent intent = new Intent(getApplicationContext(), Hotel.class);
-//                intent.putExtra(AppConfig.KEY_NAME,"BUS");
                 startActivity(intent);
 
                 Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
 
                 txtMessage.setText("HOTEL");
-//                insertIntoDB();
                 txthotel.setBackgroundResource(R.drawable.button);
                 txthotel.setText("Arahkan");
             }else if(txthotel.getText().toString().equals("Arahkan")) {
@@ -467,11 +470,14 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             {
                 Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
             }
-            txtMessage.setText("NO PINTU MASJID");insertIntoDB();
+                Intent intentPintu = new Intent(getApplicationContext(), PintuMasjid.class);
+                startActivity(intentPintu);
+                txtMessage.setText("NO PINTU MASJID");
+                insertIntoDB();
                 txtmasjid.setBackgroundResource(R.drawable.button);
-                txtmasjid.setText("Arahkan");
-            }else if(txtmasjid.getText().toString().equals("Arahkan")) {
-                Intent intent = new Intent(getApplicationContext(), go.class);
+                txtmasjid.setText("Lihat");
+            }else if(txtmasjid.getText().toString().equals("Lihat")) {
+                Intent intent = new Intent(getApplicationContext(), LihatPintuMasjid.class);
                 intent.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
                 startActivity(intent);
             }
@@ -482,7 +488,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
-                txtMessage.setText("TEMPAT BERTEMU");insertIntoDB();
+
+                Intent intentBertemu = new Intent(getApplicationContext(), MapsActivity.class);
+                intentBertemu.putExtra(AppConfig.KEY_NAVIGASI,"TEMPAT BERTEMU");
+                startActivity(intentBertemu);
+                txtMessage.setText("TEMPAT BERTEMU");
+//                insertIntoDB();
                 txtbertemu.setBackgroundResource(R.drawable.button);
                 txtbertemu.setText("Arahkan");
             }else if(txtbertemu.getText().toString().equals("Arahkan")) {
@@ -513,7 +524,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }
 
         if (v == imgpintu) {
-            if(txtmasjid.getText().toString().equals("Arahkan")){
+            if(txtmasjid.getText().toString().equals("Lihat")){
                 txtmasjid.setBackgroundResource(R.drawable.button_red);
                 txtmasjid.setText("Set Lokasi");
             }
@@ -534,7 +545,11 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         if(count > 0) {
             tv.setBackgroundResource(R.drawable.button);
             tv.setPadding(5,5,5,5);
-            tv.setText("Arahkan");
+            if(name.equals("NO PINTU MASJID")){
+                tv.setText("Lihat");
+            }else {
+                tv.setText("Arahkan");
+            }
         }
     }
     protected void createDatabase(){

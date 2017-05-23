@@ -10,10 +10,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -545,6 +543,11 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 //                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
 
                         //save image to sdcard
+                        File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/images");
+                        if (!folder.exists()) {
+                            folder.mkdirs();
+                        }
+
                         File sdCardDirectory = Environment.getExternalStorageDirectory();
                         File image = new File(sdCardDirectory+"/android/data/com.garudatekno.jemaah/images/", "profile.png");
                         // Encode the file as a PNG image.

@@ -269,6 +269,7 @@ public class add_hotel extends AppCompatActivity implements OnClickListener {
                         Intent intent = new Intent(add_hotel.this,
                                 MapsActivity.class);
                         intent.putExtra(AppConfig.KEY_ID,id);
+                        intent.putExtra(AppConfig.KEY_NAVIGASI,"HOTEL");
                         startActivity(intent);
                         finish();
                     } else {

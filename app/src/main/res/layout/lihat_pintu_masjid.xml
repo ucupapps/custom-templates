@@ -42,67 +42,30 @@
                 android:layout_centerInParent="true"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="20dp"
+                android:padding="10dp"
                 android:weightSum="1"
                 tools:context=".sample.input">
 
                 <ImageView
                     android:id="@+id/cameraPintu"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.75"
+                    android:layout_margin="5dp"
                     android:src="@drawable/camera" />
 
-                <EditText
-                    android:id="@+id/captionPintu"
+                <TextView
+                    android:id="@+id/captionLihatPintu"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="top"
-                    android:layout_weight="0.25"
-                    android:background="#f7f6f6"
-                    android:ems="100"
-                    android:gravity="top"
-                    android:hint="No Pintu"
-                    android:inputType="textMultiLine"
-                    android:layout_marginTop="5dp"
-                    android:padding="5dp"
-                    android:textColorHint="#d4d4d4"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textSize="18dp"
                     android:layout_weight="0.25"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/buttonSimpanPintu"
-                        android:layout_width="100dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/button"
-                        android:padding="10dp"
-                        android:text="Simpan"
-                        android:textAllCaps="false"
-                        android:textColor="#FFF" />
-
-                    <Button
-                        android:id="@+id/buttonCancelPintu"
-                        android:layout_width="100dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/button_red"
-                        android:padding="10dp"
-                        android:text="Batal"
-                        android:textAllCaps="false"
-                        android:textColor="#FFF" />
-                </LinearLayout>
+                    android:text="TextView" />
 
             </LinearLayout>
         </RelativeLayout>
