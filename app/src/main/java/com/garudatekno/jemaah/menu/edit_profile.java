@@ -264,21 +264,21 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 
         public void onClick(View v){
         if(v == buttonAdd){
-            if(imgProfile.getDrawable() == null)
-            {
-                Toast.makeText(this, "Image cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtfamily1.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Family Contact cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtName.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Name cannot null", Toast.LENGTH_SHORT).show();
-            }else if(txtName.getText().toString().equals(""))
-            {
-                Toast.makeText(this, "Address cannot null", Toast.LENGTH_SHORT).show();
-            } else {
+//            if(imgProfile.getDrawable() == null)
+//            {
+//                Toast.makeText(this, "Image cannot null", Toast.LENGTH_SHORT).show();
+//            }else if(txtfamily1.getText().toString().equals(""))
+//            {
+//                Toast.makeText(this, "Family Contact cannot null", Toast.LENGTH_SHORT).show();
+//            }else if(txtName.getText().toString().equals(""))
+//            {
+//                Toast.makeText(this, "Name cannot null", Toast.LENGTH_SHORT).show();
+//            }else if(txtName.getText().toString().equals(""))
+//            {
+//                Toast.makeText(this, "Address cannot null", Toast.LENGTH_SHORT).show();
+//            } else {
                 addBarcode();
-            }
+//            }
         }if(v == imgProfile){
                 selectedProfile = "selected";
                 selectedAgent = null;

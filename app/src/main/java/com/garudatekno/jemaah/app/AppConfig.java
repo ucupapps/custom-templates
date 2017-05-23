@@ -52,6 +52,7 @@ public class AppConfig {
 	public static String URL_SET_LOCATION= "https://dev.gohajj.id/api/jemaah-free/set-location";
 	public static String URL_LIST_HOTEL= "https://dev.gohajj.id/api/jemaah-free/all-hotel";
 	public static String URL_FIND_HOTEL= "https://dev.gohajj.id/api/jemaah-free/find-hotel?name=";
+	public static String URL_GET_DIR= "https://dev.gohajj.id/api/jemaah-free/get-dir?name=";
 
 	public static final String KEY_PHONE= "phone";
 	public static final String KEY_MESSAGE= "message";
