@@ -319,6 +319,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }
 
         createDatabase();
+        createDatabaseMasjid();
 
         phone = user.get("family_phone");
         //user
@@ -352,7 +353,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         //cek
         cekData("BUS",txtbus);
         cekData("HOTEL",txthotel);
-        cekData("NO PINTU MASJID",txtmasjid);
+        cekDataMasjid(uid,txtmasjid);
         cekData("TEMPAT BERTEMU",txtbertemu);
         cekData("POI",txtpoi);
 
@@ -500,9 +501,10 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 startActivity(intentBus);
 
                 txtMessage.setText("BUS");
+                cekData("BUS",txtbus);
 //                insertIntoDB();
-                txtbus.setBackgroundResource(R.drawable.button);
-                txtbus.setText("Arahkan");
+//                txtbus.setBackgroundResource(R.drawable.button);
+//                txtbus.setText("Arahkan");
             }else if(txtbus.getText().toString().equals("Arahkan")) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"BUS");
@@ -522,10 +524,11 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
 
                 txtMessage.setText("HOTEL");
-                txthotel.setBackgroundResource(R.drawable.button);
-                txthotel.setText("Arahkan");
+                cekData("HOTEL",txthotel);
+//                txthotel.setBackgroundResource(R.drawable.button);
+//                txthotel.setText("Arahkan");
             }else if(txthotel.getText().toString().equals("Arahkan")) {
-                insertIntoDB();
+//                insertIntoDB();
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"HOTEL");
                 startActivity(intent);
@@ -540,9 +543,10 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 Intent intentPintu = new Intent(getApplicationContext(), PintuMasjid.class);
                 startActivity(intentPintu);
                 txtMessage.setText("NO PINTU MASJID");
-                insertIntoDB();
-                txtmasjid.setBackgroundResource(R.drawable.button);
-                txtmasjid.setText("Lihat");
+//                insertIntoDB();
+//                txtmasjid.setBackgroundResource(R.drawable.button);
+//                txtmasjid.setText("Lihat");
+                cekDataMasjid(uid,txtmasjid);
             }else if(txtmasjid.getText().toString().equals("Lihat")) {
                 Intent intent = new Intent(getApplicationContext(), LihatPintuMasjid.class);
                 intent.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
@@ -560,9 +564,10 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 intentBertemu.putExtra(AppConfig.KEY_NAVIGASI,"TEMPAT BERTEMU");
                 startActivity(intentBertemu);
                 txtMessage.setText("TEMPAT BERTEMU");
+                cekData("TEMPAT BERTEMU",txtbertemu);
 //                insertIntoDB();
-                txtbertemu.setBackgroundResource(R.drawable.button);
-                txtbertemu.setText("Arahkan");
+//                txtbertemu.setBackgroundResource(R.drawable.button);
+//                txtbertemu.setText("Arahkan");
             }else if(txtbertemu.getText().toString().equals("Arahkan")) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"TEMPAT BERTEMU");
@@ -583,9 +588,10 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 //                Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
 
                 txtMessage.setText("POI");
-                txthotel.setBackgroundResource(R.drawable.button);
-                txthotel.setText("Arahkan");
-            }else if(txthotel.getText().toString().equals("Arahkan")) {
+//                txthotel.setBackgroundResource(R.drawable.button);
+//                txthotel.setText("Arahkan");
+                cekData("POI",txtpoi);
+            }else if(txtpoi.getText().toString().equals("Arahkan")) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"POI");
                 startActivity(intent);
@@ -646,11 +652,35 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }else {
                 tv.setText("Arahkan");
             }
+        }else{
+            tv.setBackgroundResource(R.drawable.button_red);
+            tv.setPadding(5,5,5,5);
+            tv.setText("Set Lokasi");
+        }
+    }
+
+    protected void cekDataMasjid(String user_id,TextView tm){
+        Cursor mCount= database.rawQuery("select count(*) from pintu_masjid where user_id='" + user_id + "'", null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        if(count > 0) {
+            tm.setBackgroundResource(R.drawable.button);
+            tm.setPadding(5,5,5,5);
+            tm.setText("Lihat");
+        }else{
+            tm.setBackgroundResource(R.drawable.button_red);
+            tm.setPadding(5,5,5,5);
+            tm.setText("Set Lokasi");
         }
     }
     protected void createDatabase(){
         database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,lat VARCHAR,lng VARCHAR);");
+    }
+
+    protected void createDatabaseMasjid(){
+        database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        database.execSQL("CREATE TABLE IF NOT EXISTS pintu_masjid(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id VARCHAR,no_pintu VARCHAR);");
     }
 
     protected void insertIntoDB(){
