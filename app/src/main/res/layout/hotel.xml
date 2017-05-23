@@ -22,100 +22,116 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.garudatekno.jemaah.menu.edit_profile" >
+        tools:context="com.garudatekno.jemaah.menu.edit_profile"
+        android:layout_below="@+id/toolbar">
 
         <include layout="@layout/footer"
             android:id="@+id/footerHotel" />
 
         <RelativeLayout
             android:id="@+id/circle_menu"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/footerHotel"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="105dp"
-            android:layout_above="@+id/footerHotel">
+            android:layout_alignParentTop="true">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:map="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/contentHotel"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
+                <TextView
+                    android:id="@+id/txtkoneksi"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="horizontal" >
+                    android:background="@drawable/button_black"
+                    android:padding="4dp"
+                    android:text=" Hotel"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/Address"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:padding="3dp"-->
-                        <!--android:hint="Address"-->
-                        <!--/>-->
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/contentHotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
-                    <Button
-                        android:id="@+id/btn_find_hotel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cari"
-                        android:layout_alignParentRight="true" />
-
-                    <EditText
-                        android:id="@+id/et_hotel"
+                    <RelativeLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="@string/hnt_et_hotel"
-                        android:layout_toLeftOf="@id/btn_find_hotel" />
+                        android:layout_margin="5dp"
+                        android:orientation="horizontal" >
 
-                </RelativeLayout>
-                        <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-                            <!--xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"-->
-                            <!--android:orientation="vertical"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:background="@color/colorSilver"-->
-                            <!--android:id="@+id/linearHotel"-->
-                            <!--tools:context=".sample.input">-->
+                        <!--<TextView-->
+                            <!--android:id="@+id/Address"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:padding="3dp"-->
+                            <!--android:hint="Address"-->
+                            <!--/>-->
 
-                            <ListView
-                                android:id="@+id/listViewHotel"
-                                android:layout_width="fill_parent"
-                                android:layout_height="match_parent"
-                                />
+                        <Button
+                            android:id="@+id/btn_find_hotel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cari"
+                            android:layout_alignParentRight="true" />
 
-                            <LinearLayout
-                                android:id="@+id/LinearHotelNotFound"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:visibility="gone"
-                                >
-                                <TextView
+                        <EditText
+                            android:id="@+id/et_hotel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:hint="@string/hnt_et_hotel"
+                            android:layout_toLeftOf="@id/btn_find_hotel" />
+
+                    </RelativeLayout>
+                            <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                                <!--xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"-->
+                                <!--android:orientation="vertical"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:background="@color/colorSilver"-->
+                                <!--android:id="@+id/linearHotel"-->
+                                <!--tools:context=".sample.input">-->
+
+                                <ListView
+                                    android:id="@+id/listViewHotel"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="match_parent"
+                                    />
+
+                                <LinearLayout
+                                    android:id="@+id/LinearHotelNotFound"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:textAlignment="center"
-                                    android:layout_margin="20dp"
-                                    android:textSize="16dp"
-                                    android:text="Maaf, hotel yang Anda cari belum terdaftar"/>
-                                <Button
-                                    android:id="@+id/btnAddHotel"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="30dp"
-                                    android:layout_gravity="center"
-                                    android:layout_margin="5dp"
-                                    android:background="@drawable/button"
-                                    android:text="Daftarkan"
-                                    android:textAllCaps="false"
-                                    android:textColor="@color/white" />
-                            </LinearLayout>
-                        <!--</LinearLayout>-->
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    >
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:textAlignment="center"
+                                        android:layout_margin="20dp"
+                                        android:textSize="16dp"
+                                        android:text="Maaf, hotel yang Anda cari belum terdaftar"/>
+                                    <Button
+                                        android:id="@+id/btnAddHotel"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="30dp"
+                                        android:layout_gravity="center"
+                                        android:layout_margin="5dp"
+                                        android:background="@drawable/button"
+                                        android:text="Daftarkan"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/white" />
+                                </LinearLayout>
+                            <!--</LinearLayout>-->
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
