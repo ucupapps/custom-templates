@@ -71,9 +71,12 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
-    private SeekBar timeLine;
+    private SeekBar seekbar;
     LinearLayout timeFrame;
-    TextView timePos, timeDur;
+    TextView ltime, rtime;
+
+    private double startTime = 0;
+    private double finalTime = 0;
     final static int RQS_OPEN_AUDIO_MP3 = 1;
 
     private boolean playPause;
@@ -216,6 +219,10 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
         txtarab= (TextView) findViewById(R.id.txtArab);
+        ltime= (TextView) findViewById(R.id.ltime);
+        rtime= (TextView) findViewById(R.id.rtime);
+
+        seekbar = (SeekBar)findViewById(R.id.seekBar);
 
         buttonStart = (Button) findViewById(R.id.btnPlay);
         buttonSave = (Button) findViewById(R.id.btnSimpan);

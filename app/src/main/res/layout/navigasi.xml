@@ -43,6 +43,17 @@
                     android:paddingTop="110dp"
                     android:weightSum="1"
                     tools:context=".sample.input">
+                    <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtkoneksi"
+                    android:visibility="gone"
+                    android:text=" Tidak ada koneksi internet. Cek jaringan anda"
+                    android:padding="4dp"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_black"/>
 
                     <TextView
                         android:id="@+id/Address"

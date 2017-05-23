@@ -1,6 +1,7 @@
 package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,7 +11,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,9 +38,13 @@ import com.garudatekno.jemaah.R;
 import com.garudatekno.jemaah.activity.AppUtils;
 import com.garudatekno.jemaah.activity.FetchAddressIntentService;
 import com.garudatekno.jemaah.activity.LoginActivity;
+import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.app.AppController;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -54,12 +62,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.io.File;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
@@ -109,6 +119,9 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             /* ETC.. */
     };
 
+    private Tracker mTracker;
+    View target ;
+    BadgeView badge ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,15 +129,52 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        th.start();
+        //tracker
+        AppController application = (AppController) getApplication();
+        mTracker = application.getDefaultTracker();
+        sendScreenImageName("Navigasi");
+        //badge
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+
+        // SqLite database handler
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
-        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
-            Toast.makeText(this, "Please grant all permissions", Toast.LENGTH_LONG).show();
-            //permission
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            Uri uri = Uri.fromParts("package", getPackageName(), null);
-            intent.setData(uri);
-            startActivity(intent);
+        if (session.isLoggedIn()) {
+            if (cek_status(getApplicationContext()))
+            {
+                CountInbox();
+            }
         }
 
         mLocationAddress = (TextView) findViewById(R.id.Address);
@@ -264,16 +314,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         txtlng = (EditText) findViewById(R.id.lng);
         editTextuser.setVisibility(View.GONE);
 
-        session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
 
         createDatabase();
 
-        db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        uid = user.get("uid");
         phone = user.get("family_phone");
         //user
         editTextuser.setText(uid);
@@ -315,6 +361,18 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }else{
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
+        }
+    }
+
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
         }
     }
 
@@ -392,6 +450,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 //
 //    }
 
+    private void sendScreenImageName(String name) {
+        // [START screen_view_hit]
+        mTracker.setScreenName(name);
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        // [END screen_view_hit]
+    }
 
     private void getCurrentLocation(){
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -933,6 +997,41 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             // Indicates that the activity closed before a selection was made. For example if
             // the user pressed the back button.
         }
+    }
+
+    protected void CountInbox(){
+        class GetJSON extends AsyncTask<Void,Void,String> {
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                String hsl = s.trim();
+                Integer a = Integer.parseInt(hsl);
+                if(a > 0){
+                    badge.setText(hsl);
+                    badge.show();
+                    ShortcutBadger.applyCount(getApplicationContext(), a);
+                }else {
+                    ShortcutBadger.removeCount(getApplicationContext());
+                    badge.hide();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 
 }

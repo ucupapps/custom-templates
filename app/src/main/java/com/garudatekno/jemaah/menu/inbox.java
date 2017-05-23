@@ -1,9 +1,12 @@
 package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -71,6 +74,33 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         session = new SessionManager(getApplicationContext());
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
+
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        th.start();
         //badge
         target = findViewById(R.id.img_inbox);
         badge = new BadgeView(this, target);
@@ -79,10 +109,14 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+                CountInbox();
+            }
         }
 
         //tracker
@@ -202,6 +236,18 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         }else{
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
+        }
+    }
+
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
         }
     }
 

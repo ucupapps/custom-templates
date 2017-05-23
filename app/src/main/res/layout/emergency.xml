@@ -58,7 +58,19 @@
             android:textSize="20dp"
             android:textAlignment="center"
             android:textColor="@color/white"/>
+
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtkoneksi"
+        android:visibility="gone"
+        android:text=" Tidak ada koneksi internet. Cek jaringan anda"
+        android:padding="4dp"
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_black"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

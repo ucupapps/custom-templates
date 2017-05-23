@@ -263,7 +263,7 @@ public class sai extends AppCompatActivity {
         arrow_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    cmdReset();
+                cmdReset();cmdPrepare();
                 rankDialog.dismiss();
             }
         });

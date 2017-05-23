@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -95,6 +98,33 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        Thread th = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(10);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!cek_status(getApplicationContext()))
+                                {
+                                    txtkoneksi.setVisibility(View.VISIBLE);
+                                }else{
+                                    txtkoneksi.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        th.start();
+
         //tracker
         AppController application = (AppController) getApplication();
         Tracker mTracker = application.getDefaultTracker();
@@ -110,10 +140,15 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+
+                CountInbox();
+            }
         }
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -300,6 +335,18 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             imgp.setImageBitmap(bmp);
         }
         getCurrentLocation(); getData();
+    }
+
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
+        }
     }
 
     @Override

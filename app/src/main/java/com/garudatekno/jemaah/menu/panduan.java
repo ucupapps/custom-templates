@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -104,7 +105,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private static final String TAG = "MyHOME";
 
     private ListView listView;
-    private TextView txtid,txtkoneksi,jak_degree,jak_cuaca,jak_date,jak_time,mek_degree,mek_cuaca,mek_date,mek_time;
+    private TextView txtid,jak_degree,jak_cuaca,jak_date,jak_time,mek_degree,mek_cuaca,mek_date,mek_time;
     private String JSON_STRING,uid;
     private SQLiteHandler db;
     private SessionManager session;
@@ -126,11 +127,15 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private Tracker mTracker;
     View target ;
     BadgeView badge ;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        String query = "INSERT INTO loader (status) VALUES(1);";
+        database.execSQL(query);
         //tracker
         AppController application = (AppController) getApplication();
         mTracker = application.getDefaultTracker();
@@ -143,16 +148,20 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-
+        ShortcutBadger.removeCount(getApplicationContext());
+        badge.hide();
         session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
-            CountInbox();
+            if (cek_status(getApplicationContext()))
+            {
+                CountInbox();
+            }
         }
 
         //end
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-        txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
+        final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
         Thread th = new Thread() {
 
             @Override
