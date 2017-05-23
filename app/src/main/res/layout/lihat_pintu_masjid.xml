@@ -35,38 +35,54 @@
             android:background="@color/white"
             android:gravity="center">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:weightSum="1"
-                tools:context=".sample.input">
-
-                <ImageView
-                    android:id="@+id/cameraPintu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.75"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/camera" />
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/captionLihatPintu"
+                    android:id="@+id/txtkoneksi"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textSize="18dp"
-                    android:layout_weight="0.25"
-                    android:text="TextView" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_black"
+                    android:padding="4dp"
+                    android:text=" Masjid (Pintu Masuk)"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
 
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:weightSum="1"
+                    tools:context=".sample.input">
+
+                    <ImageView
+                        android:id="@+id/cameraPintu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0.75"
+                        android:src="@drawable/camera" />
+
+                    <TextView
+                        android:id="@+id/captionLihatPintu"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:layout_weight="0.25"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
