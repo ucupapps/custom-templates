@@ -17,9 +17,9 @@
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
-        android:background="@color/colorSilver"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorSilver"
         tools:context="com.garudatekno.jemaah.menu.edit_profile">
 
         <include layout="@layout/footer2" />
@@ -31,173 +31,185 @@
             android:layout_above="@id/footer"
             android:gravity="center">
 
-            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/colorSilver"
+                android:orientation="vertical"
+                android:paddingTop="50dp"
+                tools:context=".sample.input">
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
+                <LinearLayout
+                    android:id="@+id/judul"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:background="@color/colorSilver"
-                    android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:paddingTop="50dp"
-                    android:weightSum="1"
-                    tools:context=".sample.input">
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:weightSum="1">
 
                     <LinearLayout
-                        android:id="@+id/judul"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/white"
-                        android:padding="10dp"
-                        android:weightSum="1">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="0.1"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/circle"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/circle"
-                                android:gravity="center"
-                                android:text=""
-                                android:textColor="@color/white"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:id="@+id/circle"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
                             android:layout_gravity="center"
-                            android:layout_weight="0.9"
-                            android:paddingLeft="10dp"
-                            android:text="Do'a Sa'i"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"
+                            android:background="@drawable/circle"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/isi"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.9"
                         android:paddingLeft="10dp"
-                        android:background="@color/white"
-                        android:paddingRight="10dp"
-                        android:orientation="vertical">
+                        android:text="Do'a Sa'i"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+ <!--isi-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1">
 
-                        <TextView
-                            android:id="@+id/txtArab"
+                <LinearLayout
+                    android:id="@+id/isi"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:textSize="24dp"
-                            android:lineSpacingExtra="5dp"
-                            android:textColor="@color/black"
-                            android:padding="8dp"
-                            android:text="سُبْحَانَ اللَّهِ، والحَمْدُ لِلَّهِ، وَلا إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ باللَّهِ العَلِيِّ العَظِيمِ وَالصَّلاَةُ وَِِالسَلاَمُ عَلَى رَسُوْلِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إيمَاناً بِكَ وَتَصدِيقاً بِكِتابِكَ، وَوَفاءً بِعَهْدِكَ وَاتِّباعاً لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إنِّي أَسألُكَ العَفْوَ وَالعَافِيَةَ، وَالمُعَافَاةَ الدَّائِمَةَ فِى الدِّيْنِ وَالدُّنْيَا وَالْآخِرَةِ، وَالْفَوْزَ بِالْجَنَّةِ، وَالنَّجَاةَ مِنَ النَّارِ"
-                            android:textAlignment="gravity" />
+                            android:layout_height="fill_parent"
+                            android:background="@color/white"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
 
-                        <TextView
-                            android:id="@+id/txtArti"
-                            android:lineSpacingExtra="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="Maha suci Allah, segala puji bagi Allah, sagala puji bagi Allah, tidak ada Tuhan selain Allah, Allah Maha Besar Tiada daya (untuk memperoleh manfaat) dan tiada kemampuan (untuk menolak bahaya) kecuali dengan pertolongan Allah Yang Maha Mulia dan Maha Agung. Shalawat dan salam bagi Rasulullah Saw. Ya Allah, aku thawaf ini karena beriman kepada-Mu membenarkan kitab-Mu dan memenuhi janji-Mu dan mengikuti sunnah Nabi-Mu, Muhammad Saw. Ya Allah sesungguhnya aku mohon kepada-Mu ampunan, kesehatan, dan perlindungan yang kekal dalam menjalankan agama, di dunia dan akhirat dan beruntung memperoleh surga dan terhindar dari siksa neraka."
-                            android:textAlignment="gravity"
-                            android:paddingBottom="10dp"/>
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/txtArab"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:lineSpacingExtra="5dp"
+                                android:padding="8dp"
+                                android:text="سُبْحَانَ اللَّهِ، والحَمْدُ لِلَّهِ، وَلا إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ باللَّهِ العَلِيِّ العَظِيمِ وَالصَّلاَةُ وَِِالسَلاَمُ عَلَى رَسُوْلِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إيمَاناً بِكَ وَتَصدِيقاً بِكِتابِكَ، وَوَفاءً بِعَهْدِكَ وَاتِّباعاً لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إنِّي أَسألُكَ العَفْوَ وَالعَافِيَةَ، وَالمُعَافَاةَ الدَّائِمَةَ فِى الدِّيْنِ وَالدُّنْيَا وَالْآخِرَةِ، وَالْفَوْزَ بِالْجَنَّةِ، وَالنَّجَاةَ مِنَ النَّارِ"
+                                android:textAlignment="gravity"
+                                android:textColor="@color/black"
+                                android:textSize="24dp" />
 
-                    <LinearLayout
+                            <TextView
+                                android:id="@+id/txtArti"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="2dp"
+                                android:paddingBottom="10dp"
+                                android:text="Maha suci Allah, segala puji bagi Allah, sagala puji bagi Allah, tidak ada Tuhan selain Allah, Allah Maha Besar Tiada daya (untuk memperoleh manfaat) dan tiada kemampuan (untuk menolak bahaya) kecuali dengan pertolongan Allah Yang Maha Mulia dan Maha Agung. Shalawat dan salam bagi Rasulullah Saw. Ya Allah, aku thawaf ini karena beriman kepada-Mu membenarkan kitab-Mu dan memenuhi janji-Mu dan mengikuti sunnah Nabi-Mu, Muhammad Saw. Ya Allah sesungguhnya aku mohon kepada-Mu ampunan, kesehatan, dan perlindungan yang kekal dalam menjalankan agama, di dunia dan akhirat dan beruntung memperoleh surga dan terhindar dari siksa neraka."
+                                android:textAlignment="gravity"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_weight="0.35"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/progress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="10dp"
-                        android:weightSum="7">
-
-                        <ImageView
-                            android:id="@+id/progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:src="@drawable/sai_0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
-                        <TableLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <TableRow android:background="@color/white">
-                                <TextView
-                                    android:id="@+id/txt_doa1"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Mendaki Bukit Safa"
-                                    android:gravity="center"
-                                    android:padding="4dp"
-                                    android:background="@drawable/button2"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa2"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Ketika Mendekati Bukit Safa atau Marwah"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa3"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa di Antara Dua Pilar Hijau"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                            </TableRow>
-
-                        </TableLayout>
-
-                    </LinearLayout>
+                        android:layout_margin="7dp"
+                        android:src="@drawable/sai_0" />
 
                 </LinearLayout>
-            </ScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.15"
+                    android:orientation="horizontal">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableRow android:background="@color/white">
+
+                            <TextView
+                                android:id="@+id/txt_doa1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/button2"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text="Doa Mendaki Bukit Safa"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/txt_doa2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/button2"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text="Doa Ketika Mendekati Bukit Safa atau Marwah"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/txt_doa3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/button2"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:padding="4dp"
+                                android:text="Doa di Antara Dua Pilar Hijau"
+                                android:textColor="@color/white" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+<!--end isi-->
+            </LinearLayout>
+
             <TextView
-                android:visibility="gone"
                 android:id="@+id/state"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
         </RelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
