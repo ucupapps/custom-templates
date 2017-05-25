@@ -164,7 +164,7 @@ public class View_PusatBantuan extends AppCompatActivity {
             String tanya = c.getString(AppConfig.KEY_PERTANYAAN);
             String jawab = c.getString(AppConfig.KEY_JAWABAN);
             pertanyaan.setText(tanya);
-            jawaban.loadData(jawab, "text/html", "utf-8");
+            jawaban.loadData(jawab, "text/html; charset=utf-8", "utf-8");
 
         } catch (JSONException e) {
             e.printStackTrace();

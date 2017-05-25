@@ -49,27 +49,33 @@
                     android:textSize="17dp"
                     android:textColor="@color/white"
                     android:background="@drawable/button_orange"/>
-                <ImageView
-                    android:id="@+id/imgview"
-                    android:layout_width="fill_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:scaleType="fitXY"
-                    android:layout_height="160dp"/>
 
                 <ScrollView
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:background="@color/white"
                     android:layout_height="match_parent">
 
+                  <LinearLayout
+                      android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+                      <ImageView
+                          android:id="@+id/imgview"
+                          android:layout_width="fill_parent"
+                          android:layout_gravity="center"
+                          android:layout_margin="5dp"
+                          android:scaleType="fitXY"
+                          android:layout_height="160dp"/>
+
                     <WebView
-                        android:layout_margin="13dp"
+                        android:layout_margin="8dp"
                         android:id="@+id/data"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text=""
                         android:textColor="@color/black"
                         android:textSize="15dp" />
+                  </LinearLayout>
                 </ScrollView>
             </LinearLayout>
             <TextView

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -58,7 +59,8 @@ import static java.lang.Boolean.FALSE;
 public class ViewPanduankamus extends AppCompatActivity implements View.OnClickListener,ListView.OnItemClickListener {
 
 
-    private TextView txtname,txtid,txtFile, state,txtdesc,txtarab,txtIndonesia;
+    private TextView txtname,txtid,txtFile, state;
+    WebView txtdesc,txtarab,txtIndonesia;
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
@@ -199,11 +201,11 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         id = intent.getStringExtra(AppConfig.EMP_ID);
 
-        txtdesc = (TextView) findViewById(R.id.txtDesc);
+        txtdesc = (WebView) findViewById(R.id.txtDesc);
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
-        txtarab= (TextView) findViewById(R.id.txtArab);
-        txtIndonesia= (TextView) findViewById(R.id.txtIndonesia);
+        txtarab= (WebView) findViewById(R.id.txtArab);
+        txtIndonesia= (WebView) findViewById(R.id.txtIndonesia);
         txtFile= (TextView) findViewById(R.id.txtFile);
         getData();
 
@@ -281,9 +283,9 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             String file = c.getString(AppConfig.KEY_FILE);
             txtid.setText(id);
             txtname.setText(" "+name);
-            txtdesc.setText(arti);
-            txtarab.setText(arab);
-            txtIndonesia.setText(ina);
+            txtarab.loadData(arab, "text/html; charset=utf-8", "utf-8");
+            txtdesc.loadData(arti, "text/html; charset=utf-8", "utf-8");
+            txtIndonesia.loadData(ina, "text/html; charset=utf-8", "utf-8");
             txtFile.setText(file);
 
             getJSON(id);

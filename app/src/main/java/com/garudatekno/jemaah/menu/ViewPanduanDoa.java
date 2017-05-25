@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -67,7 +68,8 @@ import static java.lang.Boolean.FALSE;
 public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickListener,ListView.OnItemClickListener {
 
 
-    private TextView txtname,txtid,info, state,txtdesc,txtarab;
+    private TextView txtname,txtid,info, state;
+    WebView txtdesc,txtarab;
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
@@ -212,10 +214,10 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         id = intent.getStringExtra(AppConfig.EMP_ID);
         file = intent.getStringExtra(AppConfig.KEY_FILE);
 
-        txtdesc = (TextView) findViewById(R.id.txtDesc);
+        txtdesc = (WebView) findViewById(R.id.txtDesc);
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
-        txtarab= (TextView) findViewById(R.id.txtArab);
+        txtarab= (WebView) findViewById(R.id.txtArab);
 
         timeLine = (SeekBar)findViewById(R.id.seekbartimeline);
         timeFrame = (LinearLayout)findViewById(R.id.timeframe);
@@ -316,8 +318,8 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             String arab = c.getString(AppConfig.KEY_ARAB);
             txtid.setText(id);
             txtname.setText(" "+name);
-            txtdesc.setText(desc);
-            txtarab.setText(arab);
+            txtdesc.loadData(desc, "text/html; charset=utf-8", "utf-8");
+            txtarab.loadData(arab, "text/html; charset=utf-8", "utf-8");
 
             getJSON(jenis,ctg,id);
 
