@@ -219,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(LoginActivity.this,"Mohon tunggu..."," ",false,false);
+                loading = ProgressDialog.show(LoginActivity.this,"","Mohon tunggu...",false,false);
             }
 
             @Override

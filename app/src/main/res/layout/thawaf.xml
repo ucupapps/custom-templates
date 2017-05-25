@@ -22,7 +22,7 @@
         android:background="@color/colorSilver"
         tools:context="com.garudatekno.jemaah.menu.edit_profile">
 
-        <include layout="@layout/footer2" />
+        <include layout="@layout/footer_thawaf" />
 
         <RelativeLayout
             android:id="@+id/circle_menu"
@@ -93,7 +93,7 @@
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.5">
+                        android:layout_weight="1">
                         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent">
@@ -129,136 +129,7 @@
                             </LinearLayout>
                         </ScrollView>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="0.15"
-                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/progress"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/thawaf_0" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.35"
-                        android:orientation="horizontal">
-
-                        <TableLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <TableRow android:background="@color/white">
-                                <TextView
-                                    android:id="@+id/txt_doa1"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Istilam"
-                                    android:gravity="center"
-                                    android:padding="4dp"
-                                    android:background="@drawable/button2"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa2"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa di antara Rukun Yamani dan Hajar Aswad"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa3"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Saat di Multazam"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa4"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Ketika Mencium Hajar Aswad"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_marginTop="5dp"
-                                android:background="@color/white">
-                                <TextView
-                                    android:id="@+id/txt_doa5"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Setelah Shalat Sunnah Tawaf"
-                                    android:gravity="center"
-                                    android:padding="4dp"
-                                    android:background="@drawable/button2"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa6"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Minum Air Zamzam"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa7"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Thawaf Wada"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="5dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                                <TextView
-                                    android:id="@+id/txt_doa8"
-                                    android:clickable="true"
-                                    android:textColor="@color/white"
-                                    android:text="Doa Setelah Selesai Thawaf Wada"
-                                    android:gravity="center"
-                                    android:background="@drawable/button2"
-                                    android:padding="4dp"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent" />
-                            </TableRow>
-
-                        </TableLayout>
-                    </LinearLayout>
                 </LinearLayout>
                 <!--end isi-->
             </LinearLayout>

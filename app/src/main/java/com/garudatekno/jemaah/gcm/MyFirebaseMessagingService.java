@@ -57,14 +57,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        intent.putExtra(AppConfig.EMP_ID,id);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Intent intent = new Intent(this, inbox.class);
-        intent.putExtra(AppConfig.EMP_ID,id);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("CDP Message")
+                .setSmallIcon(R.drawable.logo_apps)
+                .setContentTitle("GoHajj")
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,9 +67,9 @@ import static java.lang.Boolean.FALSE;
 public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickListener {
 
 
-    private TextView txtData,txtid,info, txtfile,txtName;
+    private TextView txtid,info, txtfile,txtName;
     private Button buttonSave;
-
+    WebView txtdata;
     private String id,msg,uid;
     private SeekBar timeLine;
     LinearLayout timeFrame;
@@ -222,7 +223,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         file = intent.getStringExtra(AppConfig.KEY_FILE);
 
         txtName = (TextView) findViewById(R.id.txtNAME);
-        txtData = (TextView) findViewById(R.id.data);
+        txtdata = (WebView) findViewById(R.id.data);
         txtid= (TextView) findViewById(R.id.txtid);
         getData();
         buttonSave= (Button) findViewById(R.id.btnSimpan);
@@ -315,7 +316,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
             String name = c.getString(AppConfig.KEY_NAME);
             String data = c.getString(AppConfig.KEY_DESCRIPTION);
             txtid.setText(id);
-            txtData.setText(data);
+            txtdata.loadData(data, "text/html", "utf-8");
             txtName.setText(" "+ name);
 
         } catch (JSONException e) {
