@@ -51,14 +51,14 @@
                     android:textColor="@color/white"
                     android:background="@drawable/button_purple"/>
             <ScrollView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:fillViewport="true">
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     tools:context=".sample.input"
                     android:background="@color/colorSilver"
                     android:layout_alignParentTop="true"
@@ -142,17 +142,12 @@
                     android:layout_height="30dp"
                     />
                 </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ListView
+                    <com.garudatekno.jemaah.menu.NonScrollListView
                         android:id="@+id/listView"
                         android:background="@color/white"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="fill_parent"/>
                     </LinearLayout>
-            </LinearLayout>
                 </ScrollView>
             </LinearLayout>
 

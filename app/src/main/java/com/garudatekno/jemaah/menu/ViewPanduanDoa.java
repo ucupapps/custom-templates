@@ -5,19 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -35,10 +30,8 @@ import com.garudatekno.jemaah.activity.CustomListPanduan1;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
-import com.garudatekno.jemaah.chat.CustomListView;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
-import com.google.android.gms.games.Player;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import org.json.JSONArray;
@@ -62,8 +55,6 @@ import java.util.concurrent.TimeUnit;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
-
-import static java.lang.Boolean.FALSE;
 
 public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickListener,ListView.OnItemClickListener {
 
@@ -317,7 +308,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             String desc = c.getString(AppConfig.KEY_DESCRIPTION);
             String arab = c.getString(AppConfig.KEY_ARAB);
             txtid.setText(id);
-            txtname.setText(" "+name);
+            txtname.setText(name);
             txtdesc.loadData(desc, "text/html; charset=utf-8", "utf-8");
             txtarab.loadData(arab, "text/html; charset=utf-8", "utf-8");
 
@@ -356,6 +347,26 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             startDownload();
         }
 
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        if(mediaPlayer.isPlaying())
+            mediaPlayer.stop();
+        else
+            return;
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        if(mediaPlayer.isPlaying())
+            mediaPlayer.stop();
+        else
+            return;
     }
 
     Handler monitorHandler = new Handler(){

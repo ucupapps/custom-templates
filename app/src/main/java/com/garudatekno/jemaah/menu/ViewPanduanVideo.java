@@ -317,7 +317,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
             String data = c.getString(AppConfig.KEY_DESCRIPTION);
             txtid.setText(id);
             txtdata.loadData(data, "text/html; charset=utf-8", "utf-8");
-            txtName.setText(" "+ name);
+            txtName.setText(name);
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -282,7 +282,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             String ina = c.getString(AppConfig.KEY_INDONESIA);
             String file = c.getString(AppConfig.KEY_FILE);
             txtid.setText(id);
-            txtname.setText(" "+name);
+            txtname.setText(name);
             txtarab.loadData(arab, "text/html; charset=utf-8", "utf-8");
             txtdesc.loadData(arti, "text/html; charset=utf-8", "utf-8");
             txtIndonesia.loadData(ina, "text/html; charset=utf-8", "utf-8");
@@ -392,15 +392,35 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
         }
     }
 
+//    @Override
+//    protected void onPause() {
+//        // TODO Auto-generated method stub
+//        super.onPause();
+//        if (mediaPlayer != null) {
+//            mediaPlayer.reset();
+//            mediaPlayer.release();
+//            mediaPlayer = null;
+//        }
+//    }
+
     @Override
-    protected void onPause() {
-        // TODO Auto-generated method stub
+    public void onPause()
+    {
         super.onPause();
-        if (mediaPlayer != null) {
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
+        if(mediaPlayer.isPlaying())
+            mediaPlayer.stop();
+        else
+            return;
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        if(mediaPlayer.isPlaying())
+            mediaPlayer.stop();
+        else
+            return;
     }
 
     private void showJson(){
