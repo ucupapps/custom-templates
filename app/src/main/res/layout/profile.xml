@@ -117,7 +117,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="No. Passport:"/>
+            android:text="Nomor Paspor:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -138,7 +138,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="No. Ponsel:"/>
+            android:text="Nomor Telepon:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -225,7 +225,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Travel Agent:"/>
+            android:text="Agen Perjalanan:"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -267,7 +267,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Travel Agent:"/>
+            android:text="Nomor Telepon Agen Perjalanan:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -347,7 +347,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Ponsel Pemimpin Tur:"/>
+            android:text="Nomor Telepon Pemimpin Tur:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -425,7 +425,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Ponsel Pembimbing:"/>
+            android:text="Nomor Telepon Pembimbing:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -448,15 +448,16 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Hotel di Mekkah:"/>
+            android:text="Nomor Telepon Keluarga 1:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
             android:textSize="18dp"
-            android:id="@+id/hotel_mekkah"/>
+            android:id="@+id/pFamily1"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -470,15 +471,151 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Hotel di Madinah:"/>
+            android:text="Email Keluarga 1:"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
             android:text=" "
             android:textSize="18dp"
-            android:id="@+id/hotel_madinah"/>
+            android:id="@+id/eFamily1"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nomor Telepon Keluarga 2:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pFamily2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Email Keluarga 2:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/eFamily2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Nomor Telepon Keluarga 3:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pFamily3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="Email Keluarga 3:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/eFamily3"/>
+    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/border"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hotel di Mekkah:"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=" "-->
+            <!--android:textSize="18dp"-->
+            <!--android:id="@+id/hotel_mekkah"/>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/border"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hotel di Madinah:"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=" "-->
+            <!--android:textSize="18dp"-->
+            <!--android:id="@+id/hotel_madinah"/>-->
+    <!--</LinearLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

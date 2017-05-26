@@ -48,7 +48,7 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class profile extends AppCompatActivity implements OnClickListener {
     private TextView txtpemimpin,txtName, txtPhone, txtPassport, editTextuser, txtEmail,txtAddress,txtTwon,txtProvince,txttravel,txtmekkah,txtmadinah,txtpembimbing,
-                        txtTravelPhone,txtPemimpinPhone,txtPembimbingPhone,txtEmailProfile;
+                        txtTravelPhone,txtPemimpinPhone,txtPembimbingPhone,txtEmailProfile,pFamily1,eFamily1,pFamily2,eFamily2,pFamily3,eFamily3;
     private Button buttonAdd, buttonLogout,buttonpembimbing,buttonPemimpin;
     private CircleImageView imgProfile,imgAgentProfile,imgPemimpinProfile,imgPembimbingProfile;
     String lat,lng,uid,emailUser;
@@ -237,8 +237,8 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtProvince = (TextView) findViewById(R.id.province);
         txttravel = (TextView) findViewById(R.id.travel_agent);
         txtTravelPhone = (TextView) findViewById(R.id.travel_agent_phone);
-        txtmekkah = (TextView) findViewById(R.id.hotel_mekkah);
-        txtmadinah = (TextView) findViewById(R.id.hotel_madinah);
+//        txtmekkah = (TextView) findViewById(R.id.hotel_mekkah);
+//        txtmadinah = (TextView) findViewById(R.id.hotel_madinah);
         txtpembimbing = (TextView) findViewById(R.id.pembimbing);
         txtPembimbingPhone = (TextView) findViewById(R.id.pembimbing_phone);
         txtTwon = (TextView) findViewById(R.id.town);
@@ -246,6 +246,12 @@ public class profile extends AppCompatActivity implements OnClickListener {
         txtpemimpin = (TextView) findViewById(R.id.pemimpin);
         txtPemimpinPhone = (TextView) findViewById(R.id.pemimpin_phone);
         txtEmailProfile = (TextView) findViewById(R.id.emailProfile);
+        pFamily1 = (TextView) findViewById(R.id.pFamily1);
+        eFamily1 = (TextView) findViewById(R.id.eFamily1);
+        pFamily2 = (TextView) findViewById(R.id.pFamily2);
+        eFamily2 = (TextView) findViewById(R.id.eFamily2);
+        pFamily3 = (TextView) findViewById(R.id.pFamily3);
+        eFamily3 = (TextView) findViewById(R.id.eFamily3);
 
         if (!session.isLoggedIn()) {
             logoutUser();
@@ -358,6 +364,12 @@ public class profile extends AppCompatActivity implements OnClickListener {
 //            String nilai_pemb = c.getString(AppConfig.KEY_NILAI_PEMBIMBING);
             String pemimpin = c.getString(AppConfig.KEY_PEMIMPIN_TUR);
             String pemimpin_phone = c.getString(AppConfig.KEY_PEMIMPIN_PHONE);
+            String tfamily1 = c.getString(AppConfig.KEY_PHONE_FAMILY1);
+            String tfamily2 = c.getString(AppConfig.KEY_PHONE_FAMILY2);
+            String tfamily3 = c.getString(AppConfig.KEY_PHONE_FAMILY3);
+            String efamily1 = c.getString(AppConfig.KEY_EMAIL_FAMILY1);
+            String efamily2 = c.getString(AppConfig.KEY_EMAIL_FAMILY2);
+            String efamily3 = c.getString(AppConfig.KEY_EMAIL_FAMILY3);
 //            String nilai_pemim = c.getString(AppConfig.KEY_NILAI_PEMIMPIN_TUR);
 //            if(!nilai_pemb.equals("-")){
 //                buttonpembimbing.setVisibility(View.GONE);
@@ -395,14 +407,20 @@ public class profile extends AppCompatActivity implements OnClickListener {
             txtProvince.setText(province);
             txtTwon.setText(town);
             txttravel.setText(travel);
-            txtmekkah.setText(mekkah);
-            txtmadinah.setText(madinah);
+//            txtmekkah.setText(mekkah);
+//            txtmadinah.setText(madinah);
             txtpembimbing.setText(pembimbing);
             txtpemimpin.setText(pemimpin);
             txtPemimpinPhone.setText(pemimpin_phone);
             txtPembimbingPhone.setText(pembimbing_phone);
             txtTravelPhone.setText(travel_phone);
             txtEmailProfile.setText(emailUser);
+            pFamily1.setText(tfamily1);
+            pFamily2.setText(tfamily2);
+            pFamily3.setText(tfamily3);
+            eFamily1.setText(efamily1);
+            eFamily2.setText(efamily2);
+            eFamily3.setText(efamily3);
 
         } catch (JSONException e) {
             e.printStackTrace();

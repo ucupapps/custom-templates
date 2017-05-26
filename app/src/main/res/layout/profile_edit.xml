@@ -57,7 +57,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fullname" />
+        android:text="Nama" />
 
     <EditText
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Passport" />
+        android:text="Nomor Paspor" />
 
     <EditText
         android:layout_width="match_parent"
@@ -80,7 +80,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mobile Phone" />
+        android:text="Nomor Telepon" />
 
     <EditText
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address" />
+        android:text="Alamat" />
 
     <EditText
         android:layout_width="match_parent"
@@ -101,7 +101,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Town" />
+        android:text="Kota" />
 
     <EditText
         android:layout_width="match_parent"
@@ -113,7 +113,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Province" />
+        android:text="Provinsi" />
 
     <EditText
         android:layout_width="match_parent"
@@ -124,7 +124,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Agent Travel" />
+        android:text="Agen Perjalanan" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -154,7 +154,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nomor Telepon Agent Travel" />
+        android:text="Nomor Telepon Agen Perjalanan" />
 
     <EditText
         android:layout_width="match_parent"
@@ -195,7 +195,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nomor Ponsel Pemimpin Tur" />
+        android:text="Nomor Telepon Pemimpin Tur" />
 
     <EditText
         android:layout_width="match_parent"
@@ -236,7 +236,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nomor Ponsel Pembimbing" />
+        android:text="Nomor Telepon Pembimbing" />
 
     <EditText
         android:layout_width="match_parent"
@@ -247,7 +247,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Family Phone 1" />
+        android:text="Nomor Telepon Keluarga 1" />
 
     <EditText
         android:layout_width="match_parent"
@@ -258,7 +258,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Family Email 1" />
+        android:text="Email Keluarga 1" />
 
     <EditText
         android:layout_width="match_parent"
@@ -270,7 +270,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Family Phone 2" />
+        android:text="Nomor Telepon Keluarga 2" />
 
     <EditText
         android:layout_width="match_parent"
@@ -281,7 +281,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Family Email 2" />
+        android:text="Email Keluarga 2" />
 
     <EditText
         android:layout_width="match_parent"
@@ -293,7 +293,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Family Phone 3" />
+        android:text="Nomor Telepon Keluarga 3" />
 
     <EditText
         android:layout_width="match_parent"
@@ -304,7 +304,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Family Email 3" />
+        android:text="Email Keluarga 3" />
 
     <EditText
         android:layout_width="match_parent"
