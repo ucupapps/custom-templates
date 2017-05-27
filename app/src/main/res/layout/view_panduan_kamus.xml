@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="7dp">
                         <TableRow>
-                            <WebView
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="5"
@@ -87,18 +87,19 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:layout_weight="5">
-                                <WebView
+                                <TextView
+                                    android:id="@+id/txtArab"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtArab"
-                                    android:gravity="right"
-                                    android:padding="10dp"
-                                    android:textSize="24dp"
-                                    android:background="@color/white"
+                                    android:lineSpacingExtra="5dp"
+                                    android:padding="8dp"
+                                    android:textAlignment="gravity"
+                                    android:textColor="@color/black"
                                     android:layout_marginTop="7dp"
                                     android:layout_marginRight="7dp"
-                                    android:textColor="@color/black"/>
-                                <WebView
+                                    android:background="@color/white"
+                                    android:textSize="24dp" />
+                                <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/txtIndonesia"

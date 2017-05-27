@@ -59,8 +59,8 @@ import me.leolin.shortcutbadger.ShortcutBadger;
 public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickListener,ListView.OnItemClickListener {
 
 
-    private TextView txtname,txtid,info, state;
-    WebView txtdesc,txtarab;
+    private TextView txtname,txtid,info, state,txtarab;
+    WebView txtdesc;
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
@@ -208,7 +208,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         txtdesc = (WebView) findViewById(R.id.txtDesc);
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
-        txtarab= (WebView) findViewById(R.id.txtArab);
+        txtarab= (TextView) findViewById(R.id.txtArab);
 
         timeLine = (SeekBar)findViewById(R.id.seekbartimeline);
         timeFrame = (LinearLayout)findViewById(R.id.timeframe);
@@ -275,7 +275,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduanDoa.this,"","Tunggu...",false,false);
+                loading = ProgressDialog.show(ViewPanduanDoa.this,"","Harap Tunggu...",false,false);
             }
 
             @Override
@@ -309,8 +309,8 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             String arab = c.getString(AppConfig.KEY_ARAB);
             txtid.setText(id);
             txtname.setText(name);
+            txtarab.setText(arab);
             txtdesc.loadData(desc, "text/html; charset=utf-8", "utf-8");
-            txtarab.loadData(arab, "text/html; charset=utf-8", "utf-8");
 
             getJSON(jenis,ctg,id);
 

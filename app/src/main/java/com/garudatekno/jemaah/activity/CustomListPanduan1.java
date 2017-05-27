@@ -56,7 +56,7 @@ public class CustomListPanduan1 extends SimpleAdapter {
         String strJenis = (String) data.get(AppConfig.KEY_JENIS);
         no.setText(strID);
         name.setText(strName);
-        name.setTypeface(null, Typeface.BOLD);
+//        name.setTypeface(null, Typeface.BOLD);
         txtImg.setText(strJenis);
 
         if(strJenis.equals("Video")){

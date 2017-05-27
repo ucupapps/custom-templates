@@ -47,6 +47,7 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
@@ -54,7 +55,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class go extends AppCompatActivity implements OnMapReadyCallback {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
-    private Button btnbus, btnhotel, btnmeeting, btnpintu;
+    private Button btnbus, btnhotel, btnmeeting, btnArahkan;
     private Bitmap bitmap;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
@@ -197,12 +198,25 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         editTextuser = (EditText) findViewById(R.id.userid);
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
+        btnArahkan = (Button) findViewById(R.id.btnArahkan);
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
             logoutUser();
         }
 
+        btnArahkan.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+                Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
+                c.moveToFirst();
+                DecimalFormat df = new DecimalFormat("#.####");
+                String strLocation = c.getString(2)+","+c.getString(3);
+                String uri = String.format(Locale.ENGLISH, "geo:"+strLocation+"?q="+strLocation+"(Lokasi+"+name+")");
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                startActivity(intent);
+            }
+        });
 
         db = new SQLiteHandler(getApplicationContext());
         session = new SessionManager(getApplicationContext());

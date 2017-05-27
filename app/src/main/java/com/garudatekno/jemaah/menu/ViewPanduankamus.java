@@ -59,8 +59,7 @@ import static java.lang.Boolean.FALSE;
 public class ViewPanduankamus extends AppCompatActivity implements View.OnClickListener,ListView.OnItemClickListener {
 
 
-    private TextView txtname,txtid,txtFile, state;
-    WebView txtdesc,txtarab,txtIndonesia;
+    private TextView txtname,txtid,txtFile, state,txtarab,txtdesc,txtIndonesia;
     private Button buttonStart,buttonSave;
     private ListView listView;
     private String id,file,uid;
@@ -201,11 +200,11 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         id = intent.getStringExtra(AppConfig.EMP_ID);
 
-        txtdesc = (WebView) findViewById(R.id.txtDesc);
+        txtdesc = (TextView) findViewById(R.id.txtDesc);
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
-        txtarab= (WebView) findViewById(R.id.txtArab);
-        txtIndonesia= (WebView) findViewById(R.id.txtIndonesia);
+        txtarab= (TextView) findViewById(R.id.txtArab);
+        txtIndonesia= (TextView) findViewById(R.id.txtIndonesia);
         txtFile= (TextView) findViewById(R.id.txtFile);
         getData();
 
@@ -247,7 +246,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduankamus.this,"","Tunggu...",false,false);
+                loading = ProgressDialog.show(ViewPanduankamus.this,"","Harap Tunggu...",false,false);
             }
 
             @Override
@@ -283,9 +282,9 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             String file = c.getString(AppConfig.KEY_FILE);
             txtid.setText(id);
             txtname.setText(name);
-            txtarab.loadData(arab, "text/html; charset=utf-8", "utf-8");
-            txtdesc.loadData(arti, "text/html; charset=utf-8", "utf-8");
-            txtIndonesia.loadData(ina, "text/html; charset=utf-8", "utf-8");
+            txtarab.setText(arab);
+            txtdesc.setText(arti);
+            txtIndonesia.setText(ina);
             txtFile.setText(file);
 
             getJSON(id);
