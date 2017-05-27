@@ -23,6 +23,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -112,12 +113,9 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
     private static final String[] requiredPermissions = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.SEND_SMS,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            /* ETC.. */
+            Manifest.permission.ACCESS_COARSE_LOCATION
     };
+    static final Integer READ_EXST = 0x4;
 
     private Tracker mTracker;
     View target ;
@@ -129,6 +127,15 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
+        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
+            //permission
+            askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,READ_EXST);
+        }
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
         Thread th = new Thread() {
 
@@ -136,7 +143,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -169,7 +176,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         uid = user.get("uid");
         ShortcutBadger.removeCount(getApplicationContext());
         badge.hide();
-        session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
             if (cek_status(getApplicationContext()))
             {
@@ -313,10 +319,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         txtlat = (EditText) findViewById(R.id.lat);
         txtlng = (EditText) findViewById(R.id.lng);
         editTextuser.setVisibility(View.GONE);
-
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
 
         createDatabase();
         createDatabaseMasjid();
@@ -715,14 +717,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         Log.d("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public boolean hasPermissions(@NonNull String... permissions) {
-        for (String permission : permissions)
-            if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(permission))
-                return false;
-        return true;
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "OnMapReady");
@@ -1096,4 +1090,44 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         gj.execute();
     }
 
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            // Launching the login activity
+            Intent intent = new Intent(navigasi.this, navigasi.class);
+            finish();
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public boolean hasPermissions(@NonNull String... permissions) {
+        for (String permission : permissions)
+            if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(permission))
+                return false;
+        return true;
+    }
 }

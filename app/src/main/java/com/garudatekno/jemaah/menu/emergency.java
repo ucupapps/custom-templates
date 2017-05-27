@@ -15,12 +15,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.telephony.SmsManager;
@@ -115,6 +119,15 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     protected String mStateOutput;
     TextView mLocationText,mLocationAddress;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 3;
+
+    private static final String[] requiredPermissions = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_CONTACTS,
+    };
+    static final Integer READ_EXST = 0x4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +136,22 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
+        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
+            //permission
+            if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.SEND_SMS, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
+            }
+        }
+
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
         Thread th = new Thread() {
 
@@ -130,10 +159,11 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 if (!cek_status(getApplicationContext()))
                                 {
                                     txtkoneksi.setVisibility(View.VISIBLE);
@@ -167,7 +197,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         uid = user.get("uid");
         ShortcutBadger.removeCount(getApplicationContext());
         badge.hide();
-        session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
             if (cek_status(getApplicationContext()))
             {
@@ -268,9 +297,6 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         txtlng = (EditText) findViewById(R.id.lng);
         txtphone.setVisibility(View.GONE);
 
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
 
         phone = user.get("family_phone");
         //user
@@ -835,7 +861,60 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         startService(intent);
     }
 
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
 
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.SEND_SMS, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
+            }
+        }else{
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.SEND_SMS, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
+            }else{
+                // Launching the login activity
+                Intent intent = new Intent(emergency.this, emergency.class);
+                finish();
+                startActivity(intent);
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public boolean hasPermissions(@NonNull String... permissions) {
+        for (String permission : permissions)
+            if (PackageManager.PERMISSION_GRANTED != checkSelfPermission(permission))
+                return false;
+        return true;
+    }
 
 }

@@ -74,6 +74,11 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
         txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
         Thread th = new Thread() {
 
@@ -81,7 +86,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -115,7 +120,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
 
-        session = new SessionManager(getApplicationContext());
         ShortcutBadger.removeCount(getApplicationContext());
         badge.hide();
         if (session.isLoggedIn()) {
@@ -229,9 +233,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             }
         });
 
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
@@ -242,7 +243,9 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
             imgp.setImageBitmap(bmp);
         }
-        getJSON();
+        if (session.isLoggedIn()) {
+            getJSON();
+        }
 
     }
 

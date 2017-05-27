@@ -1,6 +1,8 @@
 package com.garudatekno.jemaah.menu;
 
 import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,12 +19,16 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -36,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -117,22 +124,29 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private ViewPager viewPager;
 
     private static final String[] requiredPermissions = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.SEND_SMS,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            /* ETC.. */
+            Manifest.permission.RECORD_AUDIO,
     };
     private Tracker mTracker;
     View target ;
     BadgeView badge ;
     private SQLiteDatabase database;
+    static final Integer READ_EXST = 0x4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
+        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
+            //permission
+            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
+            }
+        }
+
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         String query = "INSERT INTO loader (status) VALUES(1);";
         database.execSQL(query);
@@ -168,10 +182,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                updateTime();
                                 if (!cek_status(getApplicationContext()))
                                 {
                                     txtkoneksi.setVisibility(View.VISIBLE);
@@ -338,26 +353,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        Thread t = new Thread() {
 
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateTime();
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        t.start();
     }
 
     private void sendScreenImageName(String name) {
@@ -709,5 +705,44 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         }
         GetJSON gj = new GetJSON();
         gj.execute();
+    }
+
+    private void askForPermission(String permission, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+
+                //This is called if user has denied the permission before
+                //In this case I am just asking the permission again
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{permission}, requestCode);
+            }
+        } else {
+            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
+            }
+        }else{
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
+            }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
+            }
+        }
     }
 }

@@ -60,7 +60,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
-    String pesan, phone, uid,name;
+    String pesan, phone, uid, name;
     private int PICK_IMAGE_REQUEST = 1;
     private Uri filePath;
     //user
@@ -76,14 +76,14 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.go);
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
 
         Intent i = getIntent();
         name = i.getStringExtra(AppConfig.KEY_NAME);
 
-        TextView txtpesan= (TextView) findViewById(R.id.txtpesan);
-        txtpesan.setText("  Arah Ke Lokasi "+ name);
+        TextView txtpesan = (TextView) findViewById(R.id.txtpesan);
+        txtpesan.setText("  Arah Ke Lokasi " + name);
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -100,9 +100,9 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         }
 
 //HEADER
-        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
+        TextView txt_emergency = (TextView) findViewById(R.id.txt_emergency);
+        TextView txt_thowaf = (TextView) findViewById(R.id.txt_thowaf);
+        TextView txt_sai = (TextView) findViewById(R.id.txt_sai);
         txt_thowaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,20 +126,20 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         });
 
         // FOOTER
-        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
-        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
-        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
-        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
-        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
-        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
-        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
-        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
-        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+        LinearLayout menu_panduan = (LinearLayout) findViewById(R.id.menu_panduan);
+        TextView txt_panduan = (TextView) findViewById(R.id.txt_panduan);
+        LinearLayout menu_doa = (LinearLayout) findViewById(R.id.menu_doa);
+        TextView txt_doa = (TextView) findViewById(R.id.txt_doa);
+        LinearLayout menu_navigasi = (LinearLayout) findViewById(R.id.menu_navigasi);
+        TextView txt_navigasi = (TextView) findViewById(R.id.txt_emergency);
+        LinearLayout menu_profile = (LinearLayout) findViewById(R.id.menu_profile);
+        TextView txt_profile = (TextView) findViewById(R.id.txt_profile);
+        LinearLayout menu_inbox = (LinearLayout) findViewById(R.id.menu_inbox);
+        TextView txt_inbox = (TextView) findViewById(R.id.txt_inbox);
 
         ImageView img = (ImageView) findViewById(R.id.img_navigasi);
         img.setBackgroundResource(R.drawable.circle_green_active);
-        img.setPadding(22,22,22,22);
+        img.setPadding(22, 22, 22, 22);
         img.setImageDrawable(getResources().getDrawable(R.drawable.navigasi_active));
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +178,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
             }
         });
 
-        final ImageView img_home=(ImageView) findViewById(R.id.img_home);
+        final ImageView img_home = (ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +186,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
                 startActivity(i);
             }
         });
-        final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
+        final ImageView img_setting = (ImageView) findViewById(R.id.img_setting);
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,11 +210,26 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
                 database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
                 Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
                 c.moveToFirst();
-                DecimalFormat df = new DecimalFormat("#.####");
-                String strLocation = c.getString(2)+","+c.getString(3);
-                String uri = String.format(Locale.ENGLISH, "geo:"+strLocation+"?q="+strLocation+"(Lokasi+"+name+")");
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                startActivity(intent);
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                if (ActivityCompat.checkSelfPermission(go.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(go.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    return;
+                }
+                Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (location != null) {
+                    String sourceLatitude = ""+location.getLatitude();
+                    String sourceLongitude = ""+location.getLongitude();
+
+                    String destinationLatitude = c.getString(2);
+                    String destinationLongitude = c.getString(3);
+
+                    String uri = "http://maps.google.com/maps?saddr=" + sourceLatitude + "," + sourceLongitude + "(Lokasi+Anda)&daddr=" + destinationLatitude + "," + destinationLongitude + "(Lokasi+"+name+")";
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setPackage("com.google.android.apps.maps");
+                    startActivity(intent);
+                }
+
+
             }
         });
 

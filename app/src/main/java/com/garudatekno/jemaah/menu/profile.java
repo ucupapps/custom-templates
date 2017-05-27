@@ -61,6 +61,10 @@ public class profile extends AppCompatActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+        session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
         File folder = new File("/sdcard/android/data/com.garudatekno.jemaah/images");
         if (!folder.exists()) {
             folder.mkdirs();
@@ -75,7 +79,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(10);
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -114,7 +118,6 @@ public class profile extends AppCompatActivity implements OnClickListener {
         uid = user.get("uid");
         ShortcutBadger.removeCount(getApplicationContext());
         badge.hide();
-        session = new SessionManager(getApplicationContext());
         if (session.isLoggedIn()) {
             if (cek_status(getApplicationContext()))
             {
@@ -253,11 +256,10 @@ public class profile extends AppCompatActivity implements OnClickListener {
         pFamily3 = (TextView) findViewById(R.id.pFamily3);
         eFamily3 = (TextView) findViewById(R.id.eFamily3);
 
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
-        getData();
 
+        if (session.isLoggedIn()) {
+            getData();
+        }
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
 //        buttonpembimbing = (Button) findViewById(R.id.btnpembimbing);

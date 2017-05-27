@@ -235,7 +235,7 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewInbox.this,"","",false,false);
+                loading = ProgressDialog.show(ViewInbox.this,"","Harap Tunggu...",false,false);
             }
 
             @Override

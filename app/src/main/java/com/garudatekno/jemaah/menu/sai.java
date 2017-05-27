@@ -44,7 +44,7 @@ public class sai extends AppCompatActivity {
     public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private ProgressDialog mProgressDialog;
     private TextView state,txt_play,txt_back,txt_next,
-            circle,txtArab,txtArti,txt_doa1,txt_doa2,txt_doa3,
+            circle,txtArab,txtArti,txt_doa1,txt_doa2,txt_doa3,txt_doa4,txt_doa5,
             vname,varab,varti,vaudio,v_play;
     ImageView img_back,img_next,progress,img_play,arrow_back,img_vplay;
     String srcPath = null;
@@ -105,6 +105,8 @@ public class sai extends AppCompatActivity {
         txt_doa1 = (TextView) findViewById(R.id.txt_doa1);
         txt_doa2 = (TextView) findViewById(R.id.txt_doa2);
         txt_doa3 = (TextView) findViewById(R.id.txt_doa3);
+        txt_doa4 = (TextView) findViewById(R.id.txt_doa4);
+        txt_doa5 = (TextView) findViewById(R.id.txt_doa5);
 
         progress = (ImageView) findViewById(R.id.progress);
         img_next = (ImageView) findViewById(R.id.img_next);
@@ -271,6 +273,7 @@ public class sai extends AppCompatActivity {
         txt_doa1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa mendaki bukit safa");
                 varab.setText("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ، أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ وَرَسُوْلُهُ. إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
                 varti.setText("Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Aku mulai dengan apa yang telah dimulai oleh Allah dan Rasul-Nya. Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
@@ -282,6 +285,29 @@ public class sai extends AppCompatActivity {
         txt_doa2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                vname.setText("Doa saat di bukit safa");
+                varab.setText("اَللهُ أَكْبَرُ، اَللهُ أَكْبَرُ، اَللهُ أَكْبَرُ، وَلِلَّهِ الحَمْدُ. اللَّهُ أَكْبَرُ عَلَى مَا هَدَانَا، وَالحَمْدُ لِلَّهِ عَلَى مَا أَوْلاَناَ. لَا إلَهَ إِلاَّ اللهُ ، وَحْدَهُ لَا شَرِيكَ لَهُ ، لَهُ الْمُلْكُ ، وَلَهُ الْحَمْدُ يُحْيي ويُمِيْتُ، بِيَدِهِ الخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لاَ إِلَهَ إِلاَّ اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الأَحْزَابَ وَحْدَهُ، لَا إلَهَ إِلاَّ اللهُ ، وَلاَ نَعْبُدُ إِلاَّ إِيَّاهُ مُخْلِصِيْنَ لَهُ الدِّيْنَ، وَلَوْ كَرِهَ الكَافِرُوْنَ");
+                varti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji bagi Allah, Allah Maha Besar, atas petunjuk yang diberikan-Nya kepada kami, segala puji bagi Allah atas karunia yang telah dianugerahkan-Nya kepada kami, tidak ada Tuhan selain Allah Yang Maha Esa, tidak ada sekutu bagi-Nya. Bagi-Nya kerajaan dan pujian. Dialah yang menghidupkan dan mematikan, pada kekuasaan-Nya lah segala kebaikan dan Dia berkuasa atas segala sesuatu. Tiada Tuhan selain Allah Yang Maha Esa, tidak ada sekutu bagiNya, yang telah menempati janji-Nya, menolong hamba-Nya dan menghancurkan sendiri musuh-musuh-Nya. Tidak ada Tuhan selain Allah dan kami tidak menyembah kecuali kepada-Nya dengan memurnikan (ikhlas) kepatuhan semata kepada-Nya walaupun orang-orang kafir membenci.");
+                vaudio.setText("11 doa saat dibukit safa.mp3");
+                rankDialog.show();
+            }
+        });
+        txt_doa3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                vname.setText("Doa diantara 2 pilar hijab");
+                varab.setText("رَبّ اغْفِرْ وَارْحَمْ، وَاعْفُ وَتَكَرَّمْ، وَتَجَاوَزْ عَمَّا تَعْلَمُ، إنَّكَ تَعْلَمُ مَالاَ نَعْلَمْ، إنَّكَ أَنْتَ اللهُ الأَعَزُّ الأَكْرَمُ");
+                varti.setText("Ya Allah ampunilah, sayangilah, ma’afkanlah, bermurah hatilah dan hapuskanlah apa-apa yang Engkau ketahui. Sesungguhnya Engkau Maha Mengetahui apa-apa yang kami sendiri tidak tahu. Sesungguhnya Engkau Ya Allah Maha Mulia dan Maha Pemurah. ");
+                vaudio.setText("10 doa diantara 2 pilar hijau.mp3");
+                rankDialog.show();
+            }
+        });
+        txt_doa4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa ketika mendekati bukit safa marwa");
                 varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
                 varti.setText("Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
@@ -289,13 +315,14 @@ public class sai extends AppCompatActivity {
                 rankDialog.show();
             }
         });
-        txt_doa3.setOnClickListener(new View.OnClickListener() {
+        txt_doa5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vname.setText("Doa diantara 2 pilar hijab");
-                varab.setText("رَبّ اغْفِرْ وَارْحَمْ، وَاعْفُ وَتَكَرَّمْ، وَتَجَاوَزْ عَمَّا تَعْلَمُ، إنَّكَ تَعْلَمُ مَالاَ نَعْلَمْ، إنَّكَ أَنْتَ اللهُ الأَعَزُّ الأَكْرَمُ");
-                varti.setText("Ya Allah ampunilah, sayangilah, ma’afkanlah, bermurah hatilah dan hapuskanlah apa-apa yang Engkau ketahui. Sesungguhnya Engkau Maha Mengetahui apa-apa yang kami sendiri tidak tahu. Sesungguhnya Engkau Ya Allah Maha Mulia dan Maha Pemurah. ");
-                vaudio.setText("10 doa diantara 2 pilar hijau.mp3");
+                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                vname.setText("Doa selesai sai");
+                varab.setText("اللَّهُمَّ رَبَّنَا تَقَبَّلْ مِنَّا وَعَافِنَا وَاعْفُ عَنَّا وَعَلَى طَاعَتِكَ وَشُكْرِكَ أَعِنَّا، وَعَلَى غَيْرِكَ لاَ تَكِلْنَا، وَعَلَى الإِيْمَانِ وَالإِسْلاَمِ الكَامِلِ جَمِيْعًا تَوَفَّنَا وَأَنْتَ رَاضٍ عَنَّا اللَّهُمَّ ارْحَمْنِيْ بِتَرْكِ المَعَاصِيْ أَبَدًا مَا أَبْقَيْتَنِيْ، وَارْحَمْنِيْ أَنْ أَتَكَلَّفَ مَالاَ يَعْنِيْنِيْ، وَارْزُقْنِيْ حُسْنَ النَّظَرِ فِيْمَا يُرْضِيْكَ عَنِّيْ يَا أَرْحَمَ الرَاحِمِيْنَ");
+                varti.setText("Ya Allah ya Tuhan kami, terimalah amalan kami, berilah perlindungan kepada kami, maafkanlah kesalahan kami dan berilah pertolongan kepada kami untuk taat dan bersyukur kepada-Mu. Janganlah Engkau jadikan kami bergantung selain kepada-Mu. Matikanlah kami dalam iman dan Islam secara sempurna dalam keridhaan-Mu. Ya Allah rahmatilah kami sehingga mampu meninggalkan segala kejahatan selama hidup kami, dan rahmatilah kami sehingga tidak berbuat hal yang tidak berguna. Karuniakanlah kepada kami sikap pandang yang baik terhadap apa-apa yang membuat-Mu ridha terhadap kami. Wahai Tuhan Yang Maha Pengasih dari segala yang pengasih.");
+                vaudio.setText("12 doa selesai sa'i.mp3");
                 rankDialog.show();
             }
         });
