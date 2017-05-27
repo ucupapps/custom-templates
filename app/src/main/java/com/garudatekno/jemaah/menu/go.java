@@ -252,8 +252,8 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     private void getDirectionMap(LatLng from, LatLng to) {
-       LatLng fromto[] = { from, to };
-       new LongOperation().execute(fromto);
+        LatLng fromto[] = { from, to };
+        new LongOperation().execute(fromto);
 
     }
 
@@ -312,7 +312,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
 
         @Override
         protected void onPostExecute(Document result) {
-           setResult(result);
+            setResult(result);
         }
 
         @Override
