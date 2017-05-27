@@ -50,14 +50,16 @@ public class CustomListPanduan1 extends SimpleAdapter {
         Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
         name.setTypeface(font);
         txtaudio.setTypeface(font);
+        txtJenis.setTypeface(font);
+        txtImg.setTypeface(font);
 
         final String strID = (String) data.get(AppConfig.KEY_ID);
         String strName = (String) data.get(AppConfig.KEY_NAME);
         String strJenis = (String) data.get(AppConfig.KEY_JENIS);
         no.setText(strID);
         name.setText(strName);
-//        name.setTypeface(null, Typeface.BOLD);
         txtImg.setText(strJenis);
+//        name.setTypeface(null, Typeface.BOLD);
 
         if(strJenis.equals("Video")){
             txtImg.setBackgroundResource(R.drawable.circle_blue);

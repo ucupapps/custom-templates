@@ -50,6 +50,7 @@ public class CustomListPanduan2 extends SimpleAdapter {
         Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/helvetica.ttf");
         name.setTypeface(font);
         txtaudio.setTypeface(font);
+        txtJenis.setTypeface(font);
         txtImg.setTypeface(font);
 
         final String strID = (String) data.get(AppConfig.KEY_ID);

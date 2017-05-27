@@ -56,7 +56,6 @@
                 android:id="@+id/txtJenis"
                 android:layout_width="match_parent"
                 android:layout_margin="2dp"
-                android:textStyle="italic"
                 android:textSize="10sp"
                 android:layout_gravity="center"
                 android:gravity="start"
