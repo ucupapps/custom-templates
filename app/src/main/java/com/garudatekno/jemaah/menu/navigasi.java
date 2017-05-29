@@ -137,31 +137,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,READ_EXST);
         }
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
-        Thread th = new Thread() {
-
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(100);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!cek_status(getApplicationContext()))
-                                {
-                                    txtkoneksi.setVisibility(View.VISIBLE);
-                                }else{
-                                    txtkoneksi.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        th.start();
+        if (!cek_status(getApplicationContext()))
+        {
+            txtkoneksi.setVisibility(View.VISIBLE);
+        }else{
+            txtkoneksi.setVisibility(View.GONE);
+        }
         //tracker
         AppController application = (AppController) getApplication();
         mTracker = application.getDefaultTracker();
