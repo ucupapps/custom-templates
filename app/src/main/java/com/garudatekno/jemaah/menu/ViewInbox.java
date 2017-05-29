@@ -1,7 +1,9 @@
 package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -57,6 +59,7 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
     private ListView listView;
     View target ;
     BadgeView badge ;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +67,15 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
         setContentView(R.layout.view_inbox);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-
+        //update
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        String query = "UPDATE badge SET jumlah=0 where id=1;";
+        database.execSQL(query);
         target = findViewById(R.id.img_inbox);
         badge = new BadgeView(this, target);
         ShortcutBadger.removeCount(getApplicationContext());
         badge.hide();
+
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();

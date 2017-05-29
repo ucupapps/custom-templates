@@ -3,6 +3,8 @@ package com.garudatekno.jemaah.menu;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -64,6 +66,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
     private SQLiteHandler db;
     View target ;
     BadgeView badge ;
+    private SQLiteDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,24 +104,12 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         };
 
         th.start();
-        //badge
-        target = findViewById(R.id.img_inbox);
-        badge = new BadgeView(this, target);
-
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-        ShortcutBadger.removeCount(getApplicationContext());
-        badge.hide();
-        session = new SessionManager(getApplicationContext());
-        if (session.isLoggedIn()) {
-            if (cek_status(getApplicationContext()))
-            {
-                CountInbox();
-            }
-        }
-
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        CountInbox();
         //tracker
         AppController application = (AppController) getApplication();
         Tracker mTracker = application.getDefaultTracker();
@@ -332,39 +323,22 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         String empId = map.get(AppConfig.TAG_ID).toString();
         StatusInbox(empId);
     }
+
     protected void CountInbox(){
-        class GetJSON extends AsyncTask<Void,Void,String>{
-
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                String hsl = s.trim();
-                Integer a = Integer.parseInt(hsl);
-                if(a > 0){
-                    badge.setText(hsl);
-                    badge.show();
-                    ShortcutBadger.applyCount(getApplicationContext(), a);
-                }else {
-                    ShortcutBadger.removeCount(getApplicationContext());
-                    badge.hide();
-                }
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
-                return s;
-            }
+        Cursor c= database.rawQuery("select * from badge where id=1 ", null);
+        c.moveToFirst();
+        int jumlah=c.getInt(1);
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+        //badge
+        if(jumlah > 0) {
+            badge.setText("" + jumlah);
+            badge.show();
+            ShortcutBadger.applyCount(getApplicationContext(), jumlah);
+        }else{
+            ShortcutBadger.removeCount(getApplicationContext());
+            badge.hide();
         }
-        GetJSON gj = new GetJSON();
-        gj.execute();
     }
 
     protected void StatusInbox(final String statID){

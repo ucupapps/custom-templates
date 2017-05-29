@@ -65,7 +65,7 @@ public class SyaratKetentuan extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(SyaratKetentuan.this,"","Tunggu...",false,false);
+                loading = ProgressDialog.show(SyaratKetentuan.this,"","Harap Tunggu...",false,false);
             }
 
             @Override

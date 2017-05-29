@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -128,6 +129,8 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     };
     static final Integer READ_EXST = 0x4;
 
+    private SQLiteDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,23 +190,14 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         mTracker.setScreenName("Emergency");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
-        //badge
-        target = findViewById(R.id.img_inbox);
-        badge = new BadgeView(this, target);
 
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
-        ShortcutBadger.removeCount(getApplicationContext());
-        badge.hide();
-        if (session.isLoggedIn()) {
-            if (cek_status(getApplicationContext()))
-            {
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        CountInbox();
 
-                CountInbox();
-            }
-        }
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -576,38 +570,20 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     }
 
     protected void CountInbox(){
-        class GetJSON extends AsyncTask<Void,Void,String>{
-
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                String hsl = s.trim();
-                Integer a = Integer.parseInt(hsl);
-                if(a > 0){
-                    badge.setText(hsl);
-                    badge.show();
-                    ShortcutBadger.applyCount(getApplicationContext(), a);
-                }else {
-                    ShortcutBadger.removeCount(getApplicationContext());
-                    badge.hide();
-                }
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
-                return s;
-            }
+        Cursor c= database.rawQuery("select * from badge where id=1 ", null);
+        c.moveToFirst();
+        int jumlah=c.getInt(1);
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+        //badge
+        if(jumlah > 0) {
+            badge.setText("" + jumlah);
+            badge.show();
+            ShortcutBadger.applyCount(getApplicationContext(), jumlah);
+        }else{
+            ShortcutBadger.removeCount(getApplicationContext());
+            badge.hide();
         }
-        GetJSON gj = new GetJSON();
-        gj.execute();
     }
 
     @Override

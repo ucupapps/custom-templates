@@ -69,6 +69,8 @@ public class splashscreen extends Activity {
                         Intent i = new Intent(splashscreen.this, panduan.class);
                         startActivity(i);
                     }else {
+                        String query = "INSERT INTO badge (jumlah) VALUES(1);";
+                        database.execSQL(query);
                         Intent i = new Intent(splashscreen.this, AndroidImageSlider.class);
                         startActivity(i);
                     }
@@ -89,6 +91,7 @@ public class splashscreen extends Activity {
     protected void createDatabase(){
         database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS loader(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, status INTEGER);");
+        database.execSQL("CREATE TABLE IF NOT EXISTS badge(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, jumlah INTEGER);");
 
     }
 
