@@ -76,33 +76,13 @@ public class profile extends AppCompatActivity implements OnClickListener {
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         final LinearLayout konten= (LinearLayout) findViewById(R.id.konten);
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
-        Thread th = new Thread() {
 
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(100);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!cek_status(getApplicationContext()))
-                                {
-                                    konten.setVisibility(View.GONE);
-                                    txtkoneksi.setVisibility(View.VISIBLE);
-                                }else{
-                                    konten.setVisibility(View.VISIBLE);
-                                    txtkoneksi.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        th.start();
+        if (!cek_status(getApplicationContext()))
+        {
+            txtkoneksi.setVisibility(View.VISIBLE);
+        }else{
+            txtkoneksi.setVisibility(View.GONE);
+        }
 
         //tracker
         AppController application = (AppController) getApplication();

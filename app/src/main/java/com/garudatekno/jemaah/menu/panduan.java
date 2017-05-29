@@ -167,32 +167,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
-        Thread th = new Thread() {
-
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(100);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                updateTime();
-                                if (!cek_status(getApplicationContext()))
-                                {
-                                    txtkoneksi.setVisibility(View.VISIBLE);
-                                }else{
-                                    txtkoneksi.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        th.start();
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
@@ -353,36 +327,66 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        updateTime();
 
-        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+        if (!cek_status(getApplicationContext()))
+        {
+            txtkoneksi.setVisibility(View.VISIBLE);
+        }else{
+            txtkoneksi.setVisibility(View.GONE);
+        }
 
-//                cityField.setText(weather_city);
-//                updatedField.setText(weather_updatedOn);
-                jak_cuaca.setText(weather_description);
-                jak_degree.setText(weather_temperature+ " \u2103");
-//                humidity_field.setText("Humidity: "+weather_humidity);
-//                pressure_field.setText("Pressure: "+weather_pressure);
-//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+        Thread th = new Thread() {
 
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(60*1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateTime();
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
             }
-        });
-        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
+        };
+
+        th.start();
+
+
+//        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
+//            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
 //
-        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
-
-//                cityField.setText(weather_city);
-//                updatedField.setText(weather_updatedOn);
-                mek_cuaca.setText(weather_description);
-                mek_degree.setText(weather_temperature+ " \u2103" );
-//                humidity_field.setText("Humidity: "+weather_humidity);
-//                pressure_field.setText("Pressure: "+weather_pressure);
-//                weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-            }
-        });
-        asyncTask2.execute("21.4267", "39.8261");
+////                cityField.setText(weather_city);
+////                updatedField.setText(weather_updatedOn);
+//                jak_cuaca.setText(weather_description);
+//                jak_degree.setText(weather_temperature+ " \u2103");
+////                humidity_field.setText("Humidity: "+weather_humidity);
+////                pressure_field.setText("Pressure: "+weather_pressure);
+////                weatherIcon.setText(Html.fromHtml(weather_iconText));
+//
+//            }
+//        });
+//        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
+////
+//        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
+//            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+//
+////                cityField.setText(weather_city);
+////                updatedField.setText(weather_updatedOn);
+//                mek_cuaca.setText(weather_description);
+//                mek_degree.setText(weather_temperature+ " \u2103" );
+////                humidity_field.setText("Humidity: "+weather_humidity);
+////                pressure_field.setText("Pressure: "+weather_pressure);
+////                weatherIcon.setText(Html.fromHtml(weather_iconText));
+//
+//            }
+//        });
+//        asyncTask2.execute("21.4267", "39.8261");
 
     }
 

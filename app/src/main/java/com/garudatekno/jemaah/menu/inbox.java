@@ -79,31 +79,12 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         listView.setOnItemClickListener(this);
 
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
-        Thread th = new Thread() {
-
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(10);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!cek_status(getApplicationContext()))
-                                {
-                                    txtkoneksi.setVisibility(View.VISIBLE);
-                                }else{
-                                    txtkoneksi.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        th.start();
+        if (!cek_status(getApplicationContext()))
+        {
+            txtkoneksi.setVisibility(View.VISIBLE);
+        }else{
+            txtkoneksi.setVisibility(View.GONE);
+        }
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();

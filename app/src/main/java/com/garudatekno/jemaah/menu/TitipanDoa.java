@@ -83,33 +83,15 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         }
 
         txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
-        Thread th = new Thread() {
 
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(100);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!cek_status(getApplicationContext()))
-                                {
-                                    txtkoneksi.setVisibility(View.VISIBLE);
-                                }else{
-                                    txtkoneksi.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
+        if (!cek_status(getApplicationContext()))
+        {
+            txtkoneksi.setVisibility(View.VISIBLE);
+        }else{
+            txtkoneksi.setVisibility(View.GONE);
+        }
+
         doaLinear = (LinearLayout) findViewById(R.id.linearDoa);
-//
-        th.start();
-
         //tracker
         AppController application = (AppController) getApplication();
         mTracker = application.getDefaultTracker();
