@@ -109,6 +109,7 @@ public class thawaf extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
@@ -117,6 +118,7 @@ public class thawaf extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);
                 startActivity(i);
+                finish();
             }
         });
 

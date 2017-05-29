@@ -2,7 +2,10 @@ package com.garudatekno.jemaah.menu;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -81,6 +84,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
     private MediaPlayer mp;
     View target ;
     BadgeView badge ;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,19 +93,14 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
-        //badge
-        target = findViewById(R.id.img_inbox);
-        badge = new BadgeView(this, target);
-
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
 
         session = new SessionManager(getApplicationContext());
-        if (session.isLoggedIn()) {
-            CountInbox();
-        }
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        CountInbox();
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
@@ -111,6 +110,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
+                finish();
             }
         });
         txt_sai.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +118,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), sai.class);
                 startActivity(i);
+                finish();
             }
         });
         txt_emergency.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +126,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), emergency.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -149,6 +151,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_panduan.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +159,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_doa.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +167,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_navigasi.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +175,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_inbox.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +183,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -186,6 +193,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
@@ -194,6 +202,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);
                 startActivity(i);
+                finish();
             }
         });
 //        if (!session.isLoggedIn()) {
@@ -287,38 +296,20 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
     }
 
     protected void CountInbox(){
-        class GetJSON extends AsyncTask<Void,Void,String>{
-
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                String hsl = s.trim();
-                Integer a = Integer.parseInt(hsl);
-                if(a > 0){
-                    badge.setText(hsl);
-                    badge.show();
-                    ShortcutBadger.applyCount(getApplicationContext(), a);
-                }else {
-                    ShortcutBadger.removeCount(getApplicationContext());
-                    badge.hide();
-                }
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
-                return s;
-            }
+        Cursor c= database.rawQuery("select * from badge where id=1 ", null);
+        c.moveToFirst();
+        int jumlah=c.getInt(1);
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+        //badge
+        if(jumlah > 0) {
+            badge.setText("" + jumlah);
+            badge.show();
+            ShortcutBadger.applyCount(getApplicationContext(), jumlah);
+        }else{
+            ShortcutBadger.removeCount(getApplicationContext());
+            badge.hide();
         }
-        GetJSON gj = new GetJSON();
-        gj.execute();
     }
 
 }

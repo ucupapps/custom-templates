@@ -214,6 +214,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
+                finish();
             }
         });
         txt_sai.setOnClickListener(new View.OnClickListener() {
@@ -221,6 +222,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), sai.class);
                 startActivity(i);
+                finish();
             }
         });
         txt_emergency.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +230,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), emergency.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -254,6 +257,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_panduan.setOnClickListener(new View.OnClickListener() {
@@ -261,6 +265,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_doa.setOnClickListener(new View.OnClickListener() {
@@ -275,6 +280,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_inbox.setOnClickListener(new View.OnClickListener() {
@@ -282,6 +288,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -316,6 +323,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
@@ -324,6 +332,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -344,6 +353,36 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+//                cityField.setText(weather_city);
+//                updatedField.setText(weather_updatedOn);
+                jak_cuaca.setText(weather_description);
+                jak_degree.setText(weather_temperature+ " \u2103");
+//                humidity_field.setText("Humidity: "+weather_humidity);
+//                pressure_field.setText("Pressure: "+weather_pressure);
+//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
+//
+        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
+            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
+
+//                cityField.setText(weather_city);
+//                updatedField.setText(weather_updatedOn);
+                mek_cuaca.setText(weather_description);
+                mek_degree.setText(weather_temperature+ " \u2103" );
+//                humidity_field.setText("Humidity: "+weather_humidity);
+//                pressure_field.setText("Pressure: "+weather_pressure);
+//                weatherIcon.setText(Html.fromHtml(weather_iconText));
+
+            }
+        });
+        asyncTask2.execute("21.4267", "39.8261");
 
     }
 
@@ -448,36 +487,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         mek_date.setText("" + m_date);
         mek_time.setText("" + m_time);
-
-        weather.placeIdTask asyncTask =new weather.placeIdTask(new weather.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
-
-//                cityField.setText(weather_city);
-//                updatedField.setText(weather_updatedOn);
-                jak_cuaca.setText(weather_description);
-                jak_degree.setText(weather_temperature+ " \u2103");
-//                humidity_field.setText("Humidity: "+weather_humidity);
-//                pressure_field.setText("Pressure: "+weather_pressure);
-//                weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-            }
-        });
-        asyncTask.execute("-6.2147", "106.8451"); //  asyncTask.execute("Latitude", "Longitude")
-
-        weather.placeIdTask asyncTask2 =new weather.placeIdTask(new weather.AsyncResponse() {
-            public void processFinish(String weather_city, String weather_description, String weather_temperature, String weather_humidity, String weather_pressure, String weather_updatedOn, String weather_iconText, String sun_rise) {
-
-//                cityField.setText(weather_city);
-//                updatedField.setText(weather_updatedOn);
-                mek_cuaca.setText(weather_description);
-                mek_degree.setText(weather_temperature+ " \u2103" );
-//                humidity_field.setText("Humidity: "+weather_humidity);
-//                pressure_field.setText("Pressure: "+weather_pressure);
-//                weatherIcon.setText(Html.fromHtml(weather_iconText));
-
-            }
-        });
-        asyncTask2.execute("21.4267", "39.8261");
 
     }
 

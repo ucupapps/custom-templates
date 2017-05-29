@@ -76,6 +76,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_panduan.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_doa.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +92,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_navigasi.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +100,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_inbox.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +108,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -113,6 +118,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
@@ -121,6 +127,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -130,6 +137,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), PusatBantuan.class);
                 startActivity(i);
+                finish();
             }
         });
         txtlayanan=(LinearLayout) findViewById(R.id.txtlayanan);
@@ -138,6 +146,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), layanan.class);
                 startActivity(i);
+                finish();
             }
         });
         txtlaporkan=(LinearLayout) findViewById(R.id.txtlaporkan);
@@ -146,6 +155,7 @@ public class Bantuan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), laporkanmasalah.class);
                 startActivity(i);
+                finish();
             }
         });
     }

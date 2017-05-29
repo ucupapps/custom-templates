@@ -1,7 +1,10 @@
 package com.garudatekno.jemaah.menu;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -46,6 +49,7 @@ public class kirimlaporan extends AppCompatActivity {
     View target ;
     BadgeView badge ;
     private SessionManager session;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +58,6 @@ public class kirimlaporan extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-        //badge
-        target = findViewById(R.id.img_inbox);
-        badge = new BadgeView(this, target);
 
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -64,9 +65,8 @@ public class kirimlaporan extends AppCompatActivity {
         uid = user.get("uid");
 
         session = new SessionManager(getApplicationContext());
-        if (session.isLoggedIn()) {
-            CountInbox();
-        }
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        CountInbox();
 // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
@@ -84,6 +84,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_panduan.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +92,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_doa.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +100,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_navigasi.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +108,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
+                finish();
             }
         });
         menu_inbox.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +116,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -121,6 +126,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
+                finish();
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
@@ -129,6 +135,7 @@ public class kirimlaporan extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -229,39 +236,22 @@ public class kirimlaporan extends AppCompatActivity {
         Intent intent = new Intent(kirimlaporan.this, laporkanmasalah.class);
         startActivity(intent);
     }
+
     protected void CountInbox(){
-        class GetJSON extends AsyncTask<Void,Void,String>{
-
-            ProgressDialog loading;
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                String hsl = s.trim();
-                Integer a = Integer.parseInt(hsl);
-                if(a > 0){
-                    badge.setText(hsl);
-                    badge.show();
-                    ShortcutBadger.applyCount(getApplicationContext(), a);
-                }else {
-                    ShortcutBadger.removeCount(getApplicationContext());
-                    badge.hide();
-                }
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_COUNT_INBOX,uid);
-                return s;
-            }
+        Cursor c= database.rawQuery("select * from badge where id=1 ", null);
+        c.moveToFirst();
+        int jumlah=c.getInt(1);
+        target = findViewById(R.id.img_inbox);
+        badge = new BadgeView(this, target);
+        //badge
+        if(jumlah > 0) {
+            badge.setText("" + jumlah);
+            badge.show();
+            ShortcutBadger.applyCount(getApplicationContext(), jumlah);
+        }else{
+            ShortcutBadger.removeCount(getApplicationContext());
+            badge.hide();
         }
-        GetJSON gj = new GetJSON();
-        gj.execute();
     }
 
 }
