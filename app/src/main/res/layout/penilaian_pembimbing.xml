@@ -233,6 +233,13 @@
                             android:padding="4dp"
                             android:text=" " />
 
+                       <LinearLayout
+                           android:layout_gravity="center"
+                           android:gravity="center"
+                           android:layout_width="match_parent"
+                           android:padding="10dp"
+                           android:layout_height="wrap_content">
+
                         <RatingBar
                             android:id="@+id/dialog_ratingbar"
                             style="?android:attr/ratingBarStyle"
@@ -246,6 +253,7 @@
                             android:numStars="5"
                             android:rating="0"
                             android:stepSize="1.0" />
+                       </LinearLayout>
 
                         <EditText
                             android:id="@+id/komen"

@@ -305,7 +305,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
             mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
             getDirectionMap(fromPosition, toPosition);
         }else{
-            Toast.makeText(getApplicationContext(),"Location : "+location, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Silakan tunggu beberapa saat sampai lokasi GPS tersedia.", Toast.LENGTH_LONG).show();
         }
         mMap.setMyLocationEnabled(true);
 

@@ -31,6 +31,7 @@ public class AppConfig {
 	public static String URL_PANDUAN = "https://gohajj.id/api/jemaah-free/panduan";
 	public static String URL_PANDUAN_JENIS = "https://gohajj.id/api/jemaah-free/panduan-jenis";
 	public static String URL_TITIPAN_DOA = "https://gohajj.id/api/jemaah-free/titipan-doa";
+	public static String URL_WEATHER = "https://gohajj.id/api/jemaah-free/weather";
 	public static String URL_EMERGENCY = "https://gohajj.id/api/jemaah-free/emergency";
 	public static String URL_GET_FAMILY_PHONE = "https://gohajj.id/api/jemaah-free/family-phone?id=";
 	public static String URL_GET_INBOX = "https://gohajj.id/api/jemaah-free/get-inbox?id=";
@@ -100,6 +101,8 @@ public class AppConfig {
 	public static final String KEY_JAWABAN = "jawaban";
 	public static final String KEY_MASALAH = "masalah";
 	public static final String KEY_NAVIGASI = "navigasi";
+	public static final String KEY_DESC = "desc";
+	public static final String KEY_TEMP = "temp";
 
 
 	public static final String KEY_JUMLAH= "jumlah";
@@ -130,12 +133,6 @@ public class AppConfig {
 	//JSON Tags
 	public static final String TAG_JSON_ARRAY="result";
 	public static final String TAG_ID = "id";
-	public static final String TAG_NAME = "name";
-	public static final String TAG_LAT = "lat";
-	public static final String TAG_LNG = "lng";
-	public static final String TAG_NO= "no";
-	public static final String TAG_TYPE = "type";
-	public static final String TAG_SIZE = "size";
 
 	//employee id to pass with intent
 	public static final String EMP_ID = "emp_id";

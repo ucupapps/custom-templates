@@ -58,6 +58,7 @@ import com.garudatekno.jemaah.activity.MapsActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
 import com.garudatekno.jemaah.app.AppController;
+import com.garudatekno.jemaah.app.MIUIUtils;
 import com.garudatekno.jemaah.gcm.weather;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
@@ -139,6 +140,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.panduan);
+
         if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
             //permission
             if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -328,6 +330,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         updateTime();
+        getWeather();
 
         if (!cek_status(getApplicationContext()))
         {
@@ -395,6 +398,62 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         mTracker.setScreenName(name);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         // [END screen_view_hit]
+    }
+
+    private void showWeather() {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(JSON_STRING);
+            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+            for (int i = 0; i < result.length(); i++) {
+//                ArrayList<items> list = new ArrayList<>();
+                JSONObject jo = result.getJSONObject(i);
+                String id = jo.getString(AppConfig.KEY_ID);
+                String name = jo.getString(AppConfig.KEY_NAME);
+                String desc = jo.getString(AppConfig.KEY_DESC);
+                String temp = jo.getString(AppConfig.KEY_TEMP);
+
+                if(name.equals("Jakarta")){
+                 jak_cuaca.setText(desc);
+                 jak_degree.setText(temp);
+                }
+
+                if(name.equals("Mekkah")){
+                    mek_cuaca.setText(desc);
+                    mek_degree.setText(temp);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getWeather(){
+        class GetJSON extends AsyncTask<Void,Void,String>{
+
+            ProgressDialog loading;
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                JSON_STRING = s;
+                showWeather();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequest(AppConfig.URL_WEATHER);
+                return s;
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
     }
 
     public boolean cek_status(Context cek) {
@@ -721,6 +780,22 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
             }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
+            }else{
+                int REQUEST_OVERLAY_PERMISSION=1;
+                if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
+                    Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
+                    startActivityForResult(MIUIUtils.toFloatWindowPermission(getApplicationContext(), getPackageName()), REQUEST_OVERLAY_PERMISSION);
+                } else if (Build.VERSION.SDK_INT >= 23 && MIUIUtils.isMIUI() && !Settings.canDrawOverlays(getApplicationContext())) {
+                    Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
+                    startActivityForResult(new Intent(
+                                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+                                    Uri.parse("package:" +getPackageName()))
+                            , REQUEST_OVERLAY_PERMISSION
+                    );
+                } else {
+                    Log.i(TAG, "SKK_INT < 19 or Have overlay permission");
+
+                }
             }
         }else{
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -728,6 +803,22 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
             }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
+            }else{
+                int REQUEST_OVERLAY_PERMISSION=1;
+                if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
+                    Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
+                    startActivityForResult(MIUIUtils.toFloatWindowPermission(getApplicationContext(), getPackageName()), REQUEST_OVERLAY_PERMISSION);
+                } else if (Build.VERSION.SDK_INT >= 23 && MIUIUtils.isMIUI() && !Settings.canDrawOverlays(getApplicationContext())) {
+                    Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
+                    startActivityForResult(new Intent(
+                                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+                                    Uri.parse("package:" +getPackageName()))
+                            , REQUEST_OVERLAY_PERMISSION
+                    );
+                } else {
+                    Log.i(TAG, "SKK_INT < 19 or Have overlay permission");
+
+                }
             }
         }
     }

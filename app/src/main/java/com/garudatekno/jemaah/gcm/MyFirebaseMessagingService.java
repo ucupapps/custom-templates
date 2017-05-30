@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -39,7 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // message, here is where that should be initiated. See sendNotification method below.
 //        Log.d(TAG, "From: " + remoteMessage.getFrom());
         Map<String, String> data = remoteMessage.getData();
-        String id = data.get("id");
+        String id = data.get("jumlah");
 
         sendNotification(remoteMessage.getNotification().getBody(),id);
 
@@ -52,7 +54,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody,String id) {
-        Log.d(TAG, "ID: " + id);
+        SQLiteDatabase database;
+        Log.d(TAG, "Jum: " + id);
+        database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+        Cursor c= database.rawQuery("select * from badge where id=1 ", null);
+        c.moveToFirst();
+        int jumlah=c.getInt(1);
+        int jumlah2= Integer.parseInt(id);
+        int total=jumlah+jumlah2;
+        String query = "UPDATE badge SET jumlah="+total+" where id=1;";
+        database.execSQL(query);
 //        Intent intent = new Intent(this, ViewData.class);
 //        intent.putExtra(AppConfig.EMP_ID,id);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

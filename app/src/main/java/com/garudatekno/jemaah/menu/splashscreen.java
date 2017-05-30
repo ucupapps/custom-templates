@@ -69,7 +69,7 @@ public class splashscreen extends Activity {
                         Intent i = new Intent(splashscreen.this, panduan.class);
                         startActivity(i);
                     }else {
-                        String query = "INSERT INTO badge (jumlah) VALUES(1);";
+                        String query = "INSERT INTO badge (jumlah) VALUES(0);";
                         database.execSQL(query);
                         Intent i = new Intent(splashscreen.this, AndroidImageSlider.class);
                         startActivity(i);

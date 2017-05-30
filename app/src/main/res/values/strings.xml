@@ -7,9 +7,9 @@
     <string name="hint_password">Password</string>
     <string name="hint_name">Username</string>
     <string name="btn_login">Masuk</string>
-    <string name="btn_register">REGISTER</string>
+    <string name="btn_register">Register</string>
     <string name="btn_link_to_register">Daftar GoHajj</string>
-    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="btn_link_to_login">Sudah daftar? Login Sekarang !</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>

@@ -40,8 +40,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp"
+                android:textSize="12dp"
                 android:background="@color/white"
-                android:hint="Fullname"
+                android:hint="Nama Lengkap"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
@@ -55,6 +56,7 @@
                 android:padding="10dp"
                 android:background="@color/white"
                 android:hint="Email"
+                android:textSize="12dp"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint" />
@@ -67,6 +69,7 @@
                 android:inputType="textPassword"
                 android:background="@color/white"
                 android:hint="Password"
+                android:textSize="12dp"
                 android:padding="10dp"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
@@ -78,7 +81,7 @@
                 android:id="@+id/btnRegister"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="20dip"
+                android:textAllCaps="false"
                 android:background="@drawable/button"
                 android:text="@string/btn_register"
                 android:textColor="@color/white" />

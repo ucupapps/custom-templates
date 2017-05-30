@@ -88,7 +88,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
-    String lat, phone, uid;
+    String lat, phone, uid,nama_user;
     private int PICK_IMAGE_REQUEST = 1;
     private Uri filePath;
     //user
@@ -175,6 +175,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
+        nama_user = user.get("name");
         uid = user.get("uid");
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         CountInbox();
@@ -595,7 +596,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
                     txtlng.setText("" + mCenterLatLong.latitude + "");
                     txtlat.setText("" + mCenterLatLong.longitude+ "");
-                    txtMessage.setText("\n\n\n Location: https://maps.google.com/?q="+ mCenterLatLong.latitude+"," + mCenterLatLong.longitude+"");
+                    txtMessage.setText("Tolong temukan saya " +nama_user+"\n Location: https://maps.google.com/?q="+ mCenterLatLong.latitude+"," + mCenterLatLong.longitude+"");
 
                 } catch (Exception e) {
                     e.printStackTrace();

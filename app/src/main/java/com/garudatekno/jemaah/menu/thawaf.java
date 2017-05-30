@@ -1,8 +1,10 @@
 package com.garudatekno.jemaah.menu;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,8 +19,10 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -202,22 +206,28 @@ public class thawaf extends AppCompatActivity {
         menu_back.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                  cmdStop(); txt_play.setText("Mainkan");
-                  img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                  final String ids = circle.getText().toString();
-                  if(Integer.parseInt(ids) > 1){
-                      int no= Integer.parseInt(ids) - 1;  circle.setText(""+no+""); SetProgess(no);
-                  }else{
-                      isi.setVisibility(View.GONE);
-                      img_next.setVisibility(View.GONE);
-                      img_back.setVisibility(View.GONE);
-                      txt_back.setVisibility(View.GONE);
-                      txt_next.setVisibility(View.GONE);
-                      txt_next.setVisibility(View.GONE);
-                      txt_play.setText("Mulai");
-                      SetProgess(0);
-                      circle.setBackground(getResources().getDrawable(R.drawable.circle));
-                      circle.setText("");
+                  String tply=txt_play.getText().toString();
+                  if (!tply.equals("Mulai")) {
+                      cmdStop();
+                      txt_play.setText("Mainkan");
+                      img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                      final String ids = circle.getText().toString();
+                      if (Integer.parseInt(ids) > 1) {
+                          int no = Integer.parseInt(ids) - 1;
+                          circle.setText("" + no + "");
+                          SetProgess(no);
+                      } else {
+                          isi.setVisibility(View.GONE);
+                          img_next.setVisibility(View.GONE);
+                          img_back.setVisibility(View.GONE);
+                          txt_back.setVisibility(View.GONE);
+                          txt_next.setVisibility(View.GONE);
+                          txt_next.setVisibility(View.GONE);
+                          txt_play.setText("Mulai");
+                          SetProgess(0);
+                          circle.setBackground(getResources().getDrawable(R.drawable.circle));
+                          circle.setText("");
+                      }
                   }
               }
         });
@@ -225,22 +235,50 @@ public class thawaf extends AppCompatActivity {
         menu_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdStop(); txt_play.setText("Mainkan");
-                img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                final String ids = circle.getText().toString();
-                if(Integer.parseInt(ids) < 7){
-                    int no= Integer.parseInt(ids) + 1;  circle.setText(""+no+""); SetProgess(no);
-                }else{
-                    isi.setVisibility(View.GONE);
-                    img_next.setVisibility(View.GONE);
-                    img_back.setVisibility(View.GONE);
-                    txt_back.setVisibility(View.GONE);
-                    txt_next.setVisibility(View.GONE);
-                    txt_next.setVisibility(View.GONE);
-                    txt_play.setText("Mulai");
-                    SetProgess(0);
-                    circle.setBackground(getResources().getDrawable(R.drawable.circle));
-                    circle.setText("");
+                String tply=txt_play.getText().toString();
+                if (!tply.equals("Mulai")) {
+                    cmdStop();
+                    txt_play.setText("Mainkan");
+                    img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                    final String ids = circle.getText().toString();
+                    if (Integer.parseInt(ids) < 7) {
+                        int no = Integer.parseInt(ids) + 1;
+                        circle.setText("" + no + "");
+                        SetProgess(no);
+                    } else {
+                        isi.setVisibility(View.GONE);
+                        img_next.setVisibility(View.GONE);
+                        img_back.setVisibility(View.GONE);
+                        txt_back.setVisibility(View.GONE);
+                        txt_next.setVisibility(View.GONE);
+                        txt_next.setVisibility(View.GONE);
+                        txt_play.setText("Mulai");
+                        SetProgess(0);
+                        circle.setBackground(getResources().getDrawable(R.drawable.circle));
+                        circle.setText("");
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(thawaf.this);
+                        alertDialogBuilder.setMessage("Ibadah Thawaf sudah selesai, silakan melanjutkan Ibadah Sa'i");
+                        alertDialogBuilder.setPositiveButton("Ya",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        Intent i = new Intent(getApplicationContext(), sai.class);
+                                        startActivity(i);
+                                        finish();
+                                    }
+                                });
+
+                        alertDialogBuilder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                            finish();
+                            }
+                        });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    }
                 }
             }
         });
@@ -248,7 +286,7 @@ public class thawaf extends AppCompatActivity {
         //popup
         final Dialog rankDialog = new Dialog(thawaf.this);
         rankDialog.setContentView(R.layout.view_dialog);
-        rankDialog.setCancelable(false);
+        rankDialog.setCanceledOnTouchOutside(false);
         Typeface font = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/helvetica.ttf");
         vname = (TextView) rankDialog.findViewById(R.id.vname);
         varab = (TextView) rankDialog.findViewById(R.id.vArab);
@@ -263,6 +301,20 @@ public class thawaf extends AppCompatActivity {
         varti.setTypeface(font);
         v_play.setTypeface(font);
         v_play.setText("Mainkan");
+
+        rankDialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    cmdReset();cmdPrepare();
+                    rankDialog.dismiss();
+                }
+                return true;
+            }
+        });
 
         vplay.setOnClickListener(new View.OnClickListener() {
             @Override

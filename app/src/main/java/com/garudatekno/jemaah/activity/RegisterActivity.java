@@ -77,9 +77,20 @@ public class RegisterActivity extends Activity {
 
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
                     regUser(name, email, password);
-                } else {
+                }else if(name.isEmpty()) {
+                    // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            "Nama Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            .show();
+                }else if(email.isEmpty()) {
+                    // Prompt user to enter credentials
+                    Toast.makeText(getApplicationContext(),
+                            "Email Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            .show();
+                }else if(password.isEmpty()) {
+                    // Prompt user to enter credentials
+                    Toast.makeText(getApplicationContext(),
+                            "Password Tidak Boleh Kosong", Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -109,7 +120,7 @@ public class RegisterActivity extends Activity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(RegisterActivity.this,"Register...","Wait...",false,false);
+                loading = ProgressDialog.show(RegisterActivity.this,"Register...","Mohon Tunggu...",false,false);
             }
 
             @Override

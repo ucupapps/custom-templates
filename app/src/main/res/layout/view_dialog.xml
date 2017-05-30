@@ -30,8 +30,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="6dp"
         android:src="@drawable/arrow_left"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/vname"
