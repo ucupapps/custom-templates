@@ -144,6 +144,9 @@ public class download extends Activity {
         unduh_sai=(Button) findViewById(R.id.unduh_sai);
         unduh_thawaf =(Button) findViewById(R.id.unduh_thawaf);
         unduh_all =(Button) findViewById(R.id.unduh_all);
+        final String down1=unduh_doa.getText().toString();
+        final String down2=unduh_sai.getText().toString();
+        final String down3=unduh_thawaf.getText().toString();
         remove =(Button) findViewById(R.id.remove);
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,21 +165,21 @@ public class download extends Activity {
         unduh_doa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getJSON("doa");
+                 if(down1.equals("Unduh"))getJSON("doa",unduh_doa);
             }
         });
 
         unduh_sai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getJSON("sai");
+                if(down2.equals("Unduh"))getJSON("sai",unduh_sai);
             }
         });
 
         unduh_thawaf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getJSON("thawaf");
+                if(down3.equals("Unduh"))getJSON("thawaf",unduh_thawaf);
             }
         });
 //        unduh_all.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +192,7 @@ public class download extends Activity {
 //        });
     }
 
-    private void showJson(final String folder){
+    private void showJson(final String folder,final Button tombol){
         String notif = null;
 //        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
         if(folder.equals("doa")){
@@ -201,6 +204,7 @@ public class download extends Activity {
         }
 
         try {
+            Toast.makeText(download.this,"Sedang Mengunduh",Toast.LENGTH_LONG).show();
             JSONObject jsonObject = null;
             jsonObject = new JSONObject(JSON_STRING);
             final JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
@@ -221,8 +225,7 @@ public class download extends Activity {
                                     JSONObject jo = result.getJSONObject(i);
                                     String file = jo.getString(AppConfig.KEY_NAME);
 
-                                    mBuilder.setContentText("Download "+no+" dari "+jumlah);
-
+                                    mBuilder.setContentText("Mengunduh "+no+" dari "+jumlah);
                                     URL url = new URL(AppConfig.URL_HOME + "/uploads/panduan/"+folder+"/"+file);
                                     URLConnection conexion = null;
                                     conexion = url.openConnection();
@@ -258,7 +261,7 @@ public class download extends Activity {
                             }
 
                             // When the loop is finished, updates the notification
-                            mBuilder.setContentText("Download complete")
+                            mBuilder.setContentText("Unduh Selesai")
                                     // Removes the progress bar
                                     .setProgress(0,0,false);
                             mNotifyManager.notify(id, mBuilder.build());
@@ -272,7 +275,7 @@ public class download extends Activity {
         }
     }
 
-    private void getJSON(final String name){
+    private void getJSON(final String name,final Button tombol){
         class GetJSON extends AsyncTask<Void,Void,String>{
 
             ProgressDialog loading;
@@ -285,7 +288,7 @@ public class download extends Activity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 JSON_STRING=s;
-                showJson(name);
+                showJson(name,tombol);
             }
 
             @Override

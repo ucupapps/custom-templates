@@ -37,6 +37,7 @@ import java.util.HashMap;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 import static com.garudatekno.jemaah.app.AppConfig.URL_HOME;
+import static java.sql.Types.NULL;
 
 
 public class OneFragment extends Fragment implements ListView.OnItemClickListener {
@@ -79,29 +80,29 @@ public class OneFragment extends Fragment implements ListView.OnItemClickListene
         try {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
-            for(int i = 0; i<result.length(); i++){
-                JSONObject jo = result.getJSONObject(i);
-                String id = jo.getString(AppConfig.KEY_ID);
-                String name = jo.getString(AppConfig.KEY_NAME);
-                String jenis = jo.getString(AppConfig.KEY_JENIS);
-                String file = jo.getString(AppConfig.KEY_FILE);
-                HashMap<String,String> data = new HashMap<>();
-                data.put(AppConfig.KEY_ID,id);
-                data.put(AppConfig.KEY_NAME,name);
-                data.put(AppConfig.KEY_JENIS,jenis);
-                data.put(AppConfig.KEY_FILE,file);
-                list.add(data);
-            }
+                for (int i = 0; i < result.length(); i++) {
+                    JSONObject jo = result.getJSONObject(i);
+                    String id = jo.getString(AppConfig.KEY_ID);
+                    String name = jo.getString(AppConfig.KEY_NAME);
+                    String jenis = jo.getString(AppConfig.KEY_JENIS);
+                    String file = jo.getString(AppConfig.KEY_FILE);
+                    HashMap<String, String> data = new HashMap<>();
+                    data.put(AppConfig.KEY_ID, id);
+                    data.put(AppConfig.KEY_NAME, name);
+                    data.put(AppConfig.KEY_JENIS, jenis);
+                    data.put(AppConfig.KEY_FILE, file);
+                    list.add(data);
+                }
+
+                CustomListPanduan1 adapter = new CustomListPanduan1(getContext(), list,
+                        R.layout.list_panduan, new String[]{AppConfig.KEY_ID, AppConfig.KEY_NAME, AppConfig.KEY_JENIS, AppConfig.KEY_FILE},
+                        new int[]{R.id.txtNO, R.id.txtNAME, R.id.txtImg});
+                listView.setAdapter(adapter);
+                ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        CustomListPanduan1 adapter = new CustomListPanduan1(getContext(), list,
-                R.layout.list_panduan, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME,AppConfig.KEY_JENIS,AppConfig.KEY_FILE },
-                new int[] { R.id.txtNO,R.id.txtNAME,R.id.txtImg });
-        listView.setAdapter(adapter);
-        ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
 
 
@@ -119,7 +120,9 @@ public class OneFragment extends Fragment implements ListView.OnItemClickListene
                 super.onPostExecute(s);
 //                loading.dismiss();
                 JSON_STRING = s;
-                showData();
+                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
+                    showData();
+                }
             }
 
             @Override

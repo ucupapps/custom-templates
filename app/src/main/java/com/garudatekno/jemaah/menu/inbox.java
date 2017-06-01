@@ -54,6 +54,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 import static java.lang.Boolean.FALSE;
+import static java.sql.Types.NULL;
 
 public class inbox extends AppCompatActivity implements ListView.OnItemClickListener {
 
@@ -255,9 +256,6 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
                 list.add(data);
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         CustomList adapter = new CustomList(this, list,
                 R.layout.list_chat, new String[] { AppConfig.KEY_ID,AppConfig.KEY_MESSAGE,AppConfig.KEY_TIME,AppConfig.KEY_FROM,AppConfig.KEY_STATUS },
@@ -265,6 +263,9 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
 
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getJSON(){
@@ -282,7 +283,9 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
-                showData();
+                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
+                    showData();
+                }
             }
 
             @Override

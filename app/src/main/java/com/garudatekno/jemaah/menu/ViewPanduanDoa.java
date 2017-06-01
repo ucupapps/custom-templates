@@ -33,6 +33,7 @@ import com.garudatekno.jemaah.activity.CustomListPanduan1;
 import com.garudatekno.jemaah.activity.LoginActivity;
 import com.garudatekno.jemaah.activity.RequestHandler;
 import com.garudatekno.jemaah.app.AppConfig;
+import com.garudatekno.jemaah.helper.ArabicUtilities;
 import com.garudatekno.jemaah.helper.SQLiteHandler;
 import com.garudatekno.jemaah.helper.SessionManager;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -319,7 +320,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             String arab = c.getString(AppConfig.KEY_ARAB);
             txtid.setText(id);
             txtname.setText(name);
-            txtarab.setText(arab);
+            txtarab.setText(ArabicUtilities.reshape(arab));
             txtdesc.loadData(desc, "text/html; charset=utf-8", "utf-8");
 
             getJSON(jenis,ctg,id);

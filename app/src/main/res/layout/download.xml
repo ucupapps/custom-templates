@@ -74,13 +74,12 @@
                         android:textStyle="bold"
                         android:layout_gravity="center"
                         android:layout_width="0dp"
-                        android:layout_weight="0.65"
+                        android:layout_weight="0.9"
                         android:layout_height="wrap_content"
                         android:text="Panduan Doa"/>
                     <Button
                         android:id="@+id/unduh_doa"
-                        android:layout_width="0dp"
-                        android:layout_weight="0.3"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button"
@@ -109,13 +108,12 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_width="0dp"
-                        android:layout_weight="0.65"
+                        android:layout_weight="0.9"
                         android:layout_height="wrap_content"
                         android:text="Doa Thawaf"/>
                     <Button
                         android:id="@+id/unduh_thawaf"
-                        android:layout_width="0dp"
-                        android:layout_weight="0.3"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button"
@@ -144,13 +142,12 @@
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:layout_width="0dp"
-                        android:layout_weight="0.65"
+                        android:layout_weight="0.9"
                         android:layout_height="wrap_content"
                         android:text="Doa Sai"/>
                     <Button
                         android:id="@+id/unduh_sai"
-                        android:layout_width="0dp"
-                        android:layout_weight="0.3"
+                        android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:background="@drawable/button"

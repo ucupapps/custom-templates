@@ -288,12 +288,12 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ViewInbox.class);
-        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
-        String empId = map.get(AppConfig.TAG_ID).toString();
-        intent.putExtra(AppConfig.TAG_ID,empId);
-        startActivity(intent);
-        finish();
+//        Intent intent = new Intent(this, ViewInbox.class);
+//        HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
+//        String empId = map.get(AppConfig.TAG_ID).toString();
+//        intent.putExtra(AppConfig.TAG_ID,empId);
+//        startActivity(intent);
+//        finish();
     }
 
 }

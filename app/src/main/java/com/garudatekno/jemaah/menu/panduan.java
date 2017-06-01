@@ -345,7 +345,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(60*1000);
+                        Thread.sleep(10*1000);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

@@ -185,8 +185,10 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         boolean enabled = service
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+            if (session.isLoggedIn()) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
         }else{
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
@@ -750,9 +752,9 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
 
 
         } else {
-            Toast.makeText(getApplicationContext(),
-                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-                    .show();
+//            Toast.makeText(getApplicationContext(),
+//                    "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+//                    .show();
         }
 
     }

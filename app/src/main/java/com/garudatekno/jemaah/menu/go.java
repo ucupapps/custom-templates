@@ -337,10 +337,10 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void setResult(Document doc) {
-        int duration = md.getDurationValue(doc);
-        String distance = md.getDistanceText(doc);
-        String start_address = md.getStartAddress(doc);
-        String copy_right = md.getCopyRights(doc);
+//        int duration = md.getDurationValue(doc);
+//        String distance = md.getDistanceText(doc);
+//        String start_address = md.getStartAddress(doc);
+//        String copy_right = md.getCopyRights(doc);
 
         ArrayList<LatLng> directionPoint = md.getDirection(doc);
         PolylineOptions rectLine = new PolylineOptions().width(10).color(

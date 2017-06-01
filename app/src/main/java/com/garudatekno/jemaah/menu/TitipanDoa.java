@@ -51,6 +51,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static java.sql.Types.NULL;
+
 public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private static final String TAG = "MyUser";
@@ -241,6 +243,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         try {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+
             for(int i = 0; i<result.length(); i++){
 //                ArrayList<items> list = new ArrayList<>();
                 JSONObject jo = result.getJSONObject(i);
@@ -259,9 +262,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 list.add(new items(id,message,time,userId,from,jum));
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 //        adapter = new CustomListDoa(TitipanDoa.this, R.layout.list_doa,list);
         doaLinear.removeAllViews();
@@ -269,6 +269,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         doaLinear.addView(listView);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void sendScreenImageName(String name) {
@@ -293,7 +297,9 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
-                showData();
+                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
+                    showData();
+                }
             }
 
             @Override

@@ -49,6 +49,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static java.sql.Types.NULL;
+
 public class Poi extends AppCompatActivity implements ListView.OnItemClickListener {
 
     private static final String TAG = "POI";
@@ -266,6 +268,7 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         try {
             jsonObject = new JSONObject(JSON_STRING);
             JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+
             for(int i = 0; i<result.length(); i++){
                 JSONObject jo = result.getJSONObject(i);
                 String id = jo.getString(AppConfig.KEY_ID);
@@ -288,9 +291,6 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
                 list.add(data);
             }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         CustomListPoi adapter = new CustomListPoi(this, list,
                 R.layout.list_poi, new String[] { AppConfig.KEY_ID,AppConfig.KEY_NAME,AppConfig.KEY_DESCRIPTION,AppConfig.KEY_CATEGORY,AppConfig.KEY_DISTANCE},
@@ -298,6 +298,9 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
 
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getJSON(){
@@ -315,7 +318,9 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
                 super.onPostExecute(s);
 //                loading.dismiss();
                 JSON_STRING = s;
-                showData();
+                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
+                    showData();
+                }
             }
 
             @Override

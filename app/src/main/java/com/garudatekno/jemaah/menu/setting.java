@@ -180,7 +180,6 @@ public class setting extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), download.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -211,7 +210,6 @@ public class setting extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), Bantuan.class);
                 startActivity(i);
-                finish();
             }
         });
         txtpenilaian.setOnClickListener(new View.OnClickListener() {
@@ -219,7 +217,6 @@ public class setting extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), PenilaianTravel.class);
                 startActivity(i);
-                finish();
             }
         });
         txtcekvisa.setOnClickListener(new View.OnClickListener() {
