@@ -34,6 +34,9 @@ import com.readystatesoftware.viewbadger.BadgeView;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
@@ -131,8 +134,18 @@ public class sai extends AppCompatActivity {
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
         //service
-        startService(new Intent(sai.this, BackgroundService.class));
+//        startService(new Intent(sai.this, BackgroundService.class));
+        ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
 
+//        myScheduledExecutorService.scheduleWithFixedDelay(
+//                new Runnable(){
+//                    @Override
+//                    public void run() {
+//                        monitorHandler.sendMessage(monitorHandler.obtainMessage());
+//                    }},
+//                200, //initialDelay
+//                200, //delay
+//                TimeUnit.MILLISECONDS);
 
         menu_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +180,7 @@ public class sai extends AppCompatActivity {
                     img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
                     txt_play.setText("Mainkan");
                 }else if(play.equals("Mainkan")) {
+//                    mProgressDialog = ProgressDialog.show(sai.this,"","Harap Tunggu...",false,false);
                     cmdPrepare();
                     cmdStart();
                     txt_play.setText("Pause");
@@ -300,6 +314,7 @@ public class sai extends AppCompatActivity {
                     img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                     v_play.setText("Mainkan");
                 }else if(play.equals("Mainkan")) {
+//                    mProgressDialog = ProgressDialog.show(sai.this,"","Harap Tunggu...",false,false);
                     cmdPrepare();
                     cmdStart();
                     v_play.setText("Pause");
@@ -320,10 +335,11 @@ public class sai extends AppCompatActivity {
         txt_doa1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cmdReset();cmdPrepare();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                vname.setText("Doa mendaki bukit safa");
+                vname.setText("Doa Mendaki Bukit Safa");
                 varab.setText("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ، أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ وَرَسُوْلُهُ. إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
-                varti.setText("Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Aku mulai dengan apa yang telah dimulai oleh Allah dan Rasul-Nya. Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
+                varti.setText("Bismillaahir rahmaani rahiim, abda’u bimaa bada-allaahu bihii wa rasuuluhuu, innash shafaa wal marwata min sya-‘aa-irillaah, faman hajjal baita awi’tamara falaa junaaha ‘alaihi ayyatthawwafa bihimma wa man tathawwa’a khairan fainnallaaha syaakirun ‘aliimun");
                 vaudio.setText("8 doa mendaki bukit safa.mp3");
                 rankDialog.show();
             }
@@ -332,10 +348,11 @@ public class sai extends AppCompatActivity {
         txt_doa2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cmdReset();cmdPrepare();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                vname.setText("Doa saat di bukit safa");
+                vname.setText("Doa Saat di Bukit Safa");
                 varab.setText("اَللهُ أَكْبَرُ، اَللهُ أَكْبَرُ، اَللهُ أَكْبَرُ، وَلِلَّهِ الحَمْدُ. اللَّهُ أَكْبَرُ عَلَى مَا هَدَانَا، وَالحَمْدُ لِلَّهِ عَلَى مَا أَوْلاَناَ. لَا إلَهَ إِلاَّ اللهُ ، وَحْدَهُ لَا شَرِيكَ لَهُ ، لَهُ الْمُلْكُ ، وَلَهُ الْحَمْدُ يُحْيي ويُمِيْتُ، بِيَدِهِ الخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لاَ إِلَهَ إِلاَّ اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الأَحْزَابَ وَحْدَهُ، لَا إلَهَ إِلاَّ اللهُ ، وَلاَ نَعْبُدُ إِلاَّ إِيَّاهُ مُخْلِصِيْنَ لَهُ الدِّيْنَ، وَلَوْ كَرِهَ الكَافِرُوْنَ");
-                varti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji bagi Allah, Allah Maha Besar, atas petunjuk yang diberikan-Nya kepada kami, segala puji bagi Allah atas karunia yang telah dianugerahkan-Nya kepada kami, tidak ada Tuhan selain Allah Yang Maha Esa, tidak ada sekutu bagi-Nya. Bagi-Nya kerajaan dan pujian. Dialah yang menghidupkan dan mematikan, pada kekuasaan-Nya lah segala kebaikan dan Dia berkuasa atas segala sesuatu. Tiada Tuhan selain Allah Yang Maha Esa, tidak ada sekutu bagiNya, yang telah menempati janji-Nya, menolong hamba-Nya dan menghancurkan sendiri musuh-musuh-Nya. Tidak ada Tuhan selain Allah dan kami tidak menyembah kecuali kepada-Nya dengan memurnikan (ikhlas) kepatuhan semata kepada-Nya walaupun orang-orang kafir membenci.");
+                varti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, Allaahu Akbar ‘alaa maa hadaana walhamdulillaahi ‘ala maa aulaanaa, laa ilaaha illallaahu wahdahuu la syariikalahuu, lahul mulku wa lahul hamdu yuhyii wa yumiitu biyadihil khairu wa huwa ‘alaa kulli syai-in qadiir, laa ilaaha illallaahu wahdahuu la syariikalahuu anjaza wa’dahuu wa nashara ‘abdahuu wa hazamal ahzaaba wahdahuu laa ilaaha illallaahu walaa na’budu illa iyyahu mukhlishiina lahuddiina walau karihal kaafiruun");
                 vaudio.setText("11 doa saat dibukit safa.mp3");
                 rankDialog.show();
             }
@@ -343,10 +360,11 @@ public class sai extends AppCompatActivity {
         txt_doa3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cmdReset();cmdPrepare();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                vname.setText("Doa diantara 2 pilar hijab");
+                vname.setText("Doa di Antara 2 Pilar Hijau");
                 varab.setText("رَبّ اغْفِرْ وَارْحَمْ، وَاعْفُ وَتَكَرَّمْ، وَتَجَاوَزْ عَمَّا تَعْلَمُ، إنَّكَ تَعْلَمُ مَالاَ نَعْلَمْ، إنَّكَ أَنْتَ اللهُ الأَعَزُّ الأَكْرَمُ");
-                varti.setText("Ya Allah ampunilah, sayangilah, ma’afkanlah, bermurah hatilah dan hapuskanlah apa-apa yang Engkau ketahui. Sesungguhnya Engkau Maha Mengetahui apa-apa yang kami sendiri tidak tahu. Sesungguhnya Engkau Ya Allah Maha Mulia dan Maha Pemurah. ");
+                varti.setText("Rabbighfir warham wa’fu wa takarram ‘amma ta’lam, innaka ta’lamu maa laa na’lamu, innakallahul a-‘azzul akramu");
                 vaudio.setText("10 doa diantara 2 pilar hijau.mp3");
                 rankDialog.show();
             }
@@ -354,10 +372,11 @@ public class sai extends AppCompatActivity {
         txt_doa4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cmdReset();cmdPrepare();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                vname.setText("Doa ketika mendekati bukit safa marwa");
+                vname.setText("Doa Ketika Mendekati Bukit Safa atau Marwah");
                 varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
-                varti.setText("Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui.");
+                varti.setText("Innash shafaa wal marwata min sya-‘aa-irillaah, faman hajjal baita awi’tamara falaa junaaha ‘alaihi ayyathowwafa bihimma wa man tathawwa’a khairan fainnallaaha syaakirun ‘aliimun");
                 vaudio.setText("9 doa ketika mendekati bukit safa marwah.mp3");
                 rankDialog.show();
             }
@@ -365,10 +384,11 @@ public class sai extends AppCompatActivity {
         txt_doa5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cmdReset();cmdPrepare();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                vname.setText("Doa selesai sai");
+                vname.setText("Doa Selesai Sai");
                 varab.setText("اللَّهُمَّ رَبَّنَا تَقَبَّلْ مِنَّا وَعَافِنَا وَاعْفُ عَنَّا وَعَلَى طَاعَتِكَ وَشُكْرِكَ أَعِنَّا، وَعَلَى غَيْرِكَ لاَ تَكِلْنَا، وَعَلَى الإِيْمَانِ وَالإِسْلاَمِ الكَامِلِ جَمِيْعًا تَوَفَّنَا وَأَنْتَ رَاضٍ عَنَّا اللَّهُمَّ ارْحَمْنِيْ بِتَرْكِ المَعَاصِيْ أَبَدًا مَا أَبْقَيْتَنِيْ، وَارْحَمْنِيْ أَنْ أَتَكَلَّفَ مَالاَ يَعْنِيْنِيْ، وَارْزُقْنِيْ حُسْنَ النَّظَرِ فِيْمَا يُرْضِيْكَ عَنِّيْ يَا أَرْحَمَ الرَاحِمِيْنَ");
-                varti.setText("Ya Allah ya Tuhan kami, terimalah amalan kami, berilah perlindungan kepada kami, maafkanlah kesalahan kami dan berilah pertolongan kepada kami untuk taat dan bersyukur kepada-Mu. Janganlah Engkau jadikan kami bergantung selain kepada-Mu. Matikanlah kami dalam iman dan Islam secara sempurna dalam keridhaan-Mu. Ya Allah rahmatilah kami sehingga mampu meninggalkan segala kejahatan selama hidup kami, dan rahmatilah kami sehingga tidak berbuat hal yang tidak berguna. Karuniakanlah kepada kami sikap pandang yang baik terhadap apa-apa yang membuat-Mu ridha terhadap kami. Wahai Tuhan Yang Maha Pengasih dari segala yang pengasih.");
+                varti.setText("Allaahumma rabbanaa taqabbal minnaa wa’aafinaa wa’fu ‘annaa wa ‘alaa thaa-‘atika wa syukrika a’innaa wa ‘alaa ghairika laa takilnaa wa ‘alal iimaani wal islaami kaamili jamii’an tawaffanaa wa anta raadhin ‘annaa, Allaahummarhamnii bitarki ma’aashii abadam maa abqaitanii warhamnii warzuqnii husnan nazhari fii maa yurdhiika ‘annii ya arhamar raahimiin");
                 vaudio.setText("12 doa selesai sa'i.mp3");
                 rankDialog.show();
             }
@@ -380,31 +400,31 @@ public class sai extends AppCompatActivity {
         if(no == 1){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_1));
             txtArab.setText("اللهُ اَكْبَرُ/ اللهُ اَكْبَرُاللهُ/ اَكْبَرُ اللهُ اَكْبَرُ كَبِيْرًا وَالْحَمْدُلِلهِ كَثِيْرًا/ وَسُبْحَانَ اللهِ الْعَظِيْمِ/ وَبِحَمْدِهِ الْكَرِيْمِ/ بُكْرَةً وَأَصِيْلًا/ وَمِنَ اللَّيْلِ فَاسْجُدْ لَهُ/ وَسَبِّحْهُ لَيْلًا طَوِيْلًا/ لَااِلَهَ اِلاَاللهُ وَحْدَهُ/ أَنْجَزَ وَعْدَهُ/ وَنَصَرَ عَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ/ لاَشَيْءَ قَبْلَهُ وَلاَ بَعْدَهُ/ يُحْيِيْ وَيُمِيْتُ/ وَهُوَ حَيٌّ دَائِمً/ لاَيَمُوْتُ وَلاَيَفُوْتُ أَبَدًا/ بِيَهْدِهِ الْخَيْرُ/ وَاِلَيْهِ الْمَصِيْرُ/ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرُ");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar, dengan segala kebesaran-Nya, segala puji bagi Allah yang Maha Agung dengan segala pujian-Nya yang tidak terhingga, Maha Suci Allah dengan pujian yang Maha Mulia di waktu pagi dan petang, bersujud dan bertasbih pada-Nya sepanjang malam, tidak ada Tuhan selain Allah yang Maha Esa, yang menepati janji-Nya, membela hamba-hamba-Nya, yang menghancurkan musuh-musuh-Nya dengan ke-Esa-an-Nya, tidak ada sesuatu sebelum-Nya ataupun sesudah-Nya, Dia-lah yang menghidupkan dan mematikan, dan Dia adalah Maha Hidup Kekal tiada mati dan tiada musnah untuk selam-lamanya, hanya di tengah-Nya lah terletak kebaikan dan kepada-Nya lah tempat kembali dan hanya Dia-lah yang Maha Kuasa atas segala sesuatu");
+            txtArti.setText("Allaahu akbar Allaahu akbar Allaahu akbar Allaahu akbar kabiraw walhamdulillaahi katsiiraw wa subhaanallaahil ‘adziimi wa bihamdihil kariim bukrataw wa ashiilan wa minal laili fasjud lahuu wa sabbihhu lailan thawiilan laa ilaaha illaahu wahdahuu anjaza wa’dahuu wa nashara ‘abdahuu wa hazamal ahzaaba wahdahuu laa syai-a qablahuu wa laa ba’dahuu yuhyii wa yumiitu wahuwa hayyun daa-imun laa yamuutu wa laa yafuutu Abadan biyadihil khairu wa ilaihil mashiir wa huwa alaa kulli syai-in qadiir");
         }else if(no == 2){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_2));
             txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، لاَ إِلهَ إِلاَّ اللهُ الوَاحِدُ الفَرْدُ الصَّمَدُ الذِيْ لَمْ يّتَّخٍذ صَاحِبَةً وَلَا وَلَدًاْ وَلَمْ يَكُنْ لَهُ شَرِيكٌ فِي الْمُلْكِ وَلَمْ يَكُنْ لَهُ وَلِيٌّ مِنَ الذُّلِّ وَكَبِّرْهُ تَكْبِيرًا اللَّهُمَّ إِنَّكَ قُلْتَ فِيْ كِتَابِكَ المُنَزَّلِ اُدْعُوْنِي أسْتَجِبْ لَكُمْ، دَعَوْنَاكَ رَبَّنَا فَاغْفِرْ لَنَا كَمَا أَمَرْتَنَا إِنَّكَ لا تُخْلِفُ المِيْعَادَ رَبَّنَا إِنَّنَا سَمِعْنَا مُنَادِيًا يُنَادِي لِلْإِيمَانِ أَنْ آَمِنُوا بِرَبِّكُمْ فَآَمَنَّا رَبَّنَا فَاغْفِرْ لَنَا ذُنُوبَنَا وَكَفِّرْ عَنَّا سَيِّئَاتِنَا وَتَوَفَّنَا مَعَ الْأَبْرَارِ رَبَّنَا وَآَتِنَا مَا وَعَدْتَنَا عَلَى رُسُلِكَ وَلَا تُخْزِنَا يَوْمَ الْقِيَامَةِ إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ رَبَّنَا عَلَيْكَ تَوَكَّلْنَا وَإِلَيْكَ أَنَبْنَا وَإِلَيْكَ الْمَصِيرُ. رَبَّنَا اغفِر لَنَا وَ لِأِخوانِنَا الَّذِينَ سَبَقُونَا بِالاِيمَانِ وَ لاَ تَجعَل فىِ قُلُوبِنَا غِلاًّ لِلَّذِينَ ءَامَنُوا رَبَّنَا اِنَّكَ رَءُوفٌ رَحِيمٌ");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar, hanya bagi Allahlah segala pujian. Tidak ada Tuhan selain Allah yang Maha Esa, tunggal dan tumpuan segala maksud dan hajat, yang tidak beristri dan tidak beranak, tidak bersekutu dalam kekuasaan. Tidak menjadi pelindung kehinaan. Agungkanlah Dia dengan segenap kebesaran.");
+            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu akbar, wa lillaahil hamdu, laa ilaaha illallaahul waahidul fardhus shamad, alladzii lam yattakhidz shaahibataw wa laa waladaw wa lam yakul lahuu syariikun fil mulki wa lam yakul lahuu waliyyunm minadz dzulli wa kabbirhu takbiiran, Allaahumma innaka qulta fii kitaabikal minzali ud-‘uunii astajib lakum, da-aunaaka rabbanaa faghfirlanaa kamaa amartanaa innaka laa tukhliful mii’aad, rabbanaa innanaa sami’naa munaadiyay yunaadii lil iimaani an aaminuu birabbikum fa aamannaa, rabbanaa faghfirlanaa dzunuubanaa wa kaffir ‘annaa sayyiaatinaa wa tawaffanaa ma’al abraar, rabbanaa wa aatinaa maa wa’attinaa ‘alaa rusulika wa laa tukhzinaa yaumal qiyaamati innaka laa tukhliful mii’aad,rabbanaa ‘alaika tawakkalnaa wa ilaika anabnaa wa ilaikal mashiir, rabbanaghfirlanaa wa li ikhwaaninal ladziina sabaquunaa bil iimaan wa laa taj’al fii quluubinaa ghillal lillaadziina aamanuu rabbanaa innaka ra’uufur rahiim");
         }else if(no == 3){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_3));
             txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا إِنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ الخَيْرَ كُلَّهُ عَاجِلَهُ وآجِلَهُ، وَأَسْتَغْفِرُكَ لِذَنْبِيْ، وَأَسْأَلُكَ رَحْمَتَكَ يَا أَرْحَمَ الرَّاحِمِيْنَ");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Hanya bagi Allah semua pujian. Ya Allah, sempurnakanlah cahaya terang bagi kami, ampunilah kami, sesungguhnya Engkau Maha Kuasa atas segala sesuatu. Ya Allah, sesungguhnya aku mohon pada-Mu segala kebaikan yang sekarang dan masa yang akan datang dan aku mohon ampunan pada-Mu dan dosaku serta aku mohon pada-Mu rahmat-Mu Wahai Tuhan Yang Maha Pengasih dari segala yang pengasih.");
+            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, wa lillaahilhamd. Rabbanaa atmim lanaa nuuranaa waghfirlanaa innaka ‘alaa kuli syai’ingqadiir. Allaahumma inni as’alukalkhaira kullahu ‘aajilahu wa’aajilahu wastaghfiruka lidzambii wa as’aluka rahmataka yaa arhamarraahimiin");
         }else if(no == 4){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_4));
             txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، اللَّهُمَّ إِنِّيْ أَسْأَلُكَ مِنْ خَيْرِ مَا تَعْلَمُ، وَأَعُوْذُ بِكَ مِنَ شَرِّ مَا تَعْلَمُ وَأَسْتَغْفِرُكَ مِنْ كُلِّ مَا تَعْلَمُ إِنَّكَ أَنْتَ عَلاَّمُ الغُيُوْب لاَ إِلهَ إِلاَّ اللهُ المَلِكُ الحَقُّ المُبِيْنُ، مُحَمَّدٌ رَسُوْلُ اللهِ صَادِقُ الوَعْدِ الأَمِيْنُ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ كَمَا هَدَيْتَنِيْ لِلإسْلَامِ أَنْ لاَ تَنْزِعَهُ مِنِّيْ حَتَّى تَوَفَّنِيْ وَأَنَا مُسْلِمٌ اللَّهُمَّ اجْعَلْ في قَلْبِي نُوراً، وَفِي لِسَانِي نُورًا، وَاجْعَلْ في سَمْعِي نُوراً، وَفِي بَصَرِيْ نُورًا اللَّهُمَّ اشْرَحْ لِيْ صَدْرِيْ وَيَسِّرْلِيْ أَمْرِيْ، وَأَعُوْذُ بِكَ مِنْ وَسَاوِسِ الصَّدْرِ وَشَتَاتِ الأَمْرِ وَفِتْنَةِ القَبْرِ اللَّهُمَّ إِنِّيْ أَعُوْذُ بِكَ مِنْ شَرِّ مَا يَلِجُ فِي اللَّيْلِ وَمِنْ شَرِّ مَا يَلِجُ فِي النَّهَارِ، وَمِنْ شَرِّ مَا تَهُبُّ بِهِ الرِّيَاحُ، يَا أَرْحَمَ الرَّاحِمِيْنَ سُبْحَانَكَ مَا عَبَدْنَاكَ حَقَّ عِبَادَتِكَ يَا اللهُ، سُبْحَانَكَ مَا ذَكَرْنَاكَ حَقَّ ذِكْرِكَ يَا ا");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji hanya bagi Allah. Ya Allah, Tuhanku, aku mohon pada-Mu dari kebaikan yang Engkau tahu dan berlindung pada-Mu dari kejahatan yang Engkau tahu, dan aku mohon ampun pada-Mu dari segala kesalahan yang Engkau ketahui, sesungguhnya Engkau Maha Mengetahui yang gaib. Tidak ada Tuhan selain Allah Maha Raja yang sebenar-benarnya. Muhammad utusan Allah yang selalu menempati janji lagi terpercaya. Ya Allah sebagaimana Engkau telah menunjuki aku memilih Islam, maka aku mohon kepada-Mu untuk mencabutnya, sehingga aku meninggal dalam keadaan Muslim. Ya Allah, berilah cahaya terang dalam hati, telinga dan penglihatanku. Ya Allah lapangkanlah dadaku dan mudahkanlah bagiku segala urusan. Dan Aku berlindung pada-Mu dari godaan bisikan hati, kekacauan urusan dan fitnah kubur. Ya Allah, aku berlindung pada-Mu dari kejahatan yang tersembunyi di waktu malam dan siang hari, serta kejahatan yang dibawa angin lalu, Wahai Tuhan Yang Maha Pengasih dari segenap yang pengasih. Ya Allah, Maha Suci Engkau, kami tidak bisa menyembah-Mu dengan pengabdian yang semestinya. Ya Allah, Maha Suci Engkau, kami tidak bisa menyebut-Mu (dzikir) dengan semestinya.");
+            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, wa lillaahil hamdu, Allaahumma innii as-aluka min khairim maa ta’lamu wa a-‘uudzu bika min syarri maa ta’lamu wa astghfiruka min kulli maa ta’lamu innaka anta ‘allaamul ghuyub, laa ilaaha illallaahul malikul haqqul mubiin Muhammadur rasuulullaah, shaadiqul wa’dilamiin, Allaahumma innii as-aluka kamma hadaitanii lil islaami an laa tunzi ‘anhu minnii hattaa tawaffanii wa anaa muslim. Allaahummaj-‘al fi qalbi nuuran, wa fii sam’ii nuuran wa fii basharii nuuran, Allaahummasyraah lii shadrii wa yassir lii amrii wa a-‘uudzubika min wasaawisis shadri wasyasyattaatil amri wafitnatil qabrii, Allaahumma innii a-‘uudzubika min syarri maa yaliju fillaili wa syarri maa yaliju fin nahaari wa min syarri maa tahubbu bihir riyaahu yaa arhamar raahimiin, subhaanaka maa ‘abadnaaka haqqa ‘ibaadatika yaa Allaahu subhaanaka maa dzakarnaaka haqqa dzikrika yaa Allaah");
         }else if(no == 5){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_5));
             txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ. سُبْحَانَكَ مَا شَكَرْنَاكَ حَقَّ شُكْرِكَ يَا اللهُ، سُبْحَانَكَ مَا أَعْلَى شَأْنِكَ يَا اللهُ اللَّهُمَّ حَبِّبْ إِلَيَّ الإِيمَانَ وَزَيِّنْهُ فِي قَلْبِيْ، وَكَرِّهْ إِلَيَّ الْكُفْرَ وَالْفُسُوقَ وَالْعِصْيَانَ، وَاجْعَلْنِيْ مِنَ الرَّاشِدِينَ");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji hanya untuk Allah Maha Suci Engkau, kami tidak mensyukuri-Mu dengan syukur yang semestinya. Ya Allah Maha Suci Engkau. Alangkah Agung Zat-Mu Ya Allah. Ya Allah, cintakanlah kami kepada iman dan hiaskanlah dihati kami, tanamkanlah kebencian pada diri kami pada perbuatan kufur, fasik dan durhaka. Jadikanlah kami dari golongan orang-orang yang mendapat petunjuk.");
+            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, subhaanaka maa syakarnaaka haqqa syukrika ya Allaah, Subhaanaka maa a’laa sya’naka yaa Allaah, Allaahumma habbib ilainal iimaana wa zayyinhu fii quluubinaa wa karrih ilainal kufra wal fusuuqa wal ‘ishyaana, waj-‘alnaa minar raasyidiin");
         }else if(no == 6){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_6));
             txtArab.setText("اللهُ أكْبَرُ اللهُ أكْبَرُ اللهُ أكْبَرُ ولِلَّهِ الحَمْدُ، لاَ إِلهَ إِلاَّ اللهُ وَحْدَهُ، صَدَقَ وَعْدَهُ، وَنَصَرَ عَبْدَهُ، وَهَزَمَ الأَحْزَابَ وَحْدَهُ، لاَ إِلَهَ إِلاَّ اللّه مُخْلِصِينَ لَهُ الدِّينَ وَلَوْ كَرِهَ الكافِرُونَ اللَّهُمَّ إنِّي أسألُكَ الهُدَى والتُّقَى والعَفَافَ وَالغِنَى اللَّهُمَّ لَكَ الحَمْدُ كَالَّذِيْ تَقُوْلُ وَخَيْرًا مِمَّا نَقُوْلُ اللَّهُمَّ إنِّي أسألُكَ رِضَاكَ وَالجَنَّةَ وَأَعُوْذُ بِكَ مِنْ سَخَطِكَ وَالنَّارِ وَمَا يُقَرِّبُنِيْ إِلَيْهَا مِنْ قَوْلٍ أَوْ فِعْلٍ أَوْ عَمَلٍ اللَّهُمَّ بِنُوْرِكَ اهْتَدَيْنَا، وَبِفَضْلِكَ اسْتَغْنَيْنَا، وَفِي كَنَفِكَ وَإِنْعَامِكَ وَعَطَائِكَ وَإِحْسَانِكَ أَصْبَحْنَا وَأَمْسَيْنَا أَنْتَ الأوَّلُ فَلاَ قَبْلَكَ شَيْءٌ، وَأَنْتَ الآخِرُ فَلاَ بَعْدَكَ شَيْءٌ، وَالظَّاهِرُ فَلاَ شَيْئَ فَوْقَكَ، وَالبَاطِنُ فَلاَ شَيْءَ دُوْنَكَ نَعُوْذُ بِكَ مِنْ الفَشَلِ وَالكِسَلِ، وَمِنْ عَذَابِ القَبْرِ وَمِنْ فِتْنَةِ الغِنَى، وَنَسْألُكَ الفَوْزَ بِالجَنَّةِ وَالنَّجَاةَ مِنْ النَّارِ");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji hanya untuk Allah. Tidak ada Tuhan selain Allah Yang Maha Esa, yang menempati janji-Nya, menolong hamba-Nya dan mengalahkan sendiri musuh-musuh-Nya. Tiada Tuhan selain Allah. Dan kami tidak menyembah selain Dia dengan memurnikan kepatuhan kepada-Nya, sekalipun orang-orang kafir membenci. Ya Allah, aku memohon pada-Mu petunjuk, ketakwaan, pengendalian diri dan kekayaan. Ya Allah pada-Mu-lah segala puji seperti yang kami ucapkan dan bahkan lebih baik dari yang kami ucapkan. Ya Allah, aku mohon pada-Mu ridha-Mu dan surga, aku berlindung pada-Mu dari murka-Mu dan siksa neraka dan apapun yang dapat mendekatkan daku padanya (neraka), baik ucapan atau pun amal perbuatan. Ya Allah hanya dengan nur cahaya-Mu kami ini mendapat petunjuk, dengan pemberian-Mu kami merasa cukup, dan dalam naungan-Mu, nikmat-Mu, anugerah-Mu dan kebajikan-Mu jauhlah kami berada diwaktu pagi dan petang. Engkau-lah yang mula pertama, tidak ada sesuatu pun yang ada sebelum-Mu dan Engkau pulalah yang paling akhir dan tidak ada sesuatupun yang ada dibelakang (sesudah)-Mu, Engkaulah yang lahir (nyata), maka tidak ada sesuatu pun yang ada di atas Engkau. Engkau pulalah yang batin, maka tidak ada sesuatupun dibawah-Mu. Kami berlindung pada-Mu dari pailit, malas, siksa kubur dan fitnah kekayaan serta kami mohon pada-Mu kemenangan memperoleh surga, dan keselamatan dari api neraka.");
+            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, laa ilaa illallaahu wahdahu, shadaqa wa’dahu, wa nashara ‘abdahuu, wa hazamal ahzaaba wahdahu, laa ilaaha illallaahu wa laa na’budu illaa iyyaahu, mukhlishiina lahud diin wa lawkarihal kaafiruun, Allaahumma innii asalukal  hudaa wat tuqaa wal ‘afaafa wal ghinaa, Allaahumma lakal hamdu kalladzii naquulu wa khairan mimma naquulu, Allaahumma inni as-aluka ridhaaka wal jannata wa a-‘uudzu bika min sakhatika wan-naar wa maa yuqaarribunii ilaihaa min qaulin wa fi’lin aw ‘amalin, Allaahumma bi nuurikahtadainaa wa bi fadhlikas taghnainaa wa fii kafanika wa in’aamika wa ‘athaa-ika wa ihsaanika ashbahnaa wa amsainaa, antal awwalu falaa qablaka syai-un, wal aakhiru falaa ba’daka syai-un, wadz-dzaahiru falaa syai-a duunaka, na-‘uudzubika minal falasi wal kasali wa ‘adzaabil qabri wa fitnatil ghinaa wan as-alukal fauza bil jannati");
         }else if(no == 7){
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_7));
             txtArab.setText("اللهُ أَكْبَرُ، اللهُ أَكْبَرُ، اللهُ أَكْبَرُ كَبِيْرًا، وَالحَمْدُ لِلهِ كَثِيْرًا اللَّهُمَّ حَبِّبْ إِلَيَّ الإِيمَانَ وَزَيِّنْهُ فِي قَلْبِيْ، وَكَرِّهْ إِلَيَّ الْكُفْرَ وَالْفُسُوقَ وَالْعِصْيَانَ، وَاجْعَلْنِيْ مِنَ الرَّاشِدِينَ");
-            txtArti.setText("Allah Maha Besar, Allah Maha Besar, Allah Maha Besar. Segala puji bagi Allah dengan pujian yang tidak terhingga. Ya Allah, cintakanlah aku kepada iman dan hiaskanlah ia di kalbuku. Tanamkanlah kebencian padaku perbuatan kufur fasiq dan durhaka. Dan jadikanlah pula aku dari golongan orang yang mendapat petunjuk.");
+            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, kabiiran, walhamdu lillaahi katsiiran, subhaanaka maa syakarnaaka haqqa syukrika yaa Allaah, subhaanaka maa a’laa sya’naka yaa Allah, Allaahumma habbib ilainal iimaana wa zayyinhu fii quluubinaa wa karrih ilainal kufra wal fusuuqa wal ‘isyaana, waj-‘alnaa minar raasyidiin");
         }else{
             progress.setImageDrawable(getResources().getDrawable(R.drawable.sai_0));
             txtArab.setText("");
@@ -425,22 +445,27 @@ public class sai extends AppCompatActivity {
 
     private void mediaPlayerMonitor(){
         if (mediaPlayer == null){
-            timeLine.setVisibility(View.INVISIBLE);
-            timeFrame.setVisibility(View.INVISIBLE);
+//            timeLine.setVisibility(View.INVISIBLE);
+//            timeFrame.setVisibility(View.INVISIBLE);
         }else{
             if(mediaPlayer.isPlaying()){
-                timeLine.setVisibility(View.VISIBLE);
-                timeFrame.setVisibility(View.VISIBLE);
-
-                int mediaDuration = mediaPlayer.getDuration();
-                int mediaPosition = mediaPlayer.getCurrentPosition();
-                timeLine.setMax(mediaDuration);
-                timeLine.setProgress(mediaPosition);
-                timePos.setText(String.valueOf((float)mediaPosition/1000) + "s");
-                timeDur.setText(String.valueOf((float)mediaDuration/1000) + "s");
+                mProgressDialog.dismiss();
+//                timeLine.setVisibility(View.VISIBLE);
+//                timeFrame.setVisibility(View.VISIBLE);
+//
+//                int mediaDuration = mediaPlayer.getDuration();
+//                int mediaPosition = mediaPlayer.getCurrentPosition();
+//                timeLine.setMax(mediaDuration);
+//                timeLine.setProgress(mediaPosition);
+//                timePos.setText(String.valueOf((float)mediaPosition/1000) + "s");
+//                timeDur.setText(String.valueOf((float)mediaDuration/1000) + "s");
             }else{
-                timeLine.setVisibility(View.INVISIBLE);
-                timeFrame.setVisibility(View.INVISIBLE);
+                txt_play.setText("Mainkan");
+                img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                v_play.setText("Mainkan");
+                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
+//                timeLine.setVisibility(View.INVISIBLE);
+//                timeFrame.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -464,6 +489,12 @@ public class sai extends AppCompatActivity {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setOnErrorListener(mediaPlayerOnErrorListener);
         }
+        if (!txt_play.getText().toString().equals("Mulai")){
+            txt_play.setText("Mainkan");
+            img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+        }
+        v_play.setText("Mainkan");
+        img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
         mediaPlayer.reset();
         mediaPlayerState = sai.MP_State.Idle;
         showMediaPlayerState();
@@ -604,5 +635,12 @@ public class sai extends AppCompatActivity {
             default:
                 state.setText("Unknown!");
         }
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        cmdReset();
     }
 }

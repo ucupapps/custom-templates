@@ -65,12 +65,14 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textColor="#FFF"
+                    android:textSize="20sp"
                 android:text="THAWAF"
                 android:layout_height="match_parent" />
 
                 <TextView
                 android:id="@+id/txt_sai"
                 android:text="SA'I"
+                    android:textSize="20sp"
                 android:background="@drawable/header_kanan"
                 android:textAlignment="center"
                 android:textColor="#FFF"
@@ -88,7 +90,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="#FFF"
-            android:textSize="12dp"
+            android:textSize="15dp"
             android:text="S.O.S"
             android:background="@drawable/circle_orange"/>
         </FrameLayout>

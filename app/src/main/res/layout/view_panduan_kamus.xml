@@ -126,6 +126,7 @@
 
                 <Button
                     android:id="@+id/btnPlay"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:text="Mainkan Audio"
                     android:layout_gravity="end"

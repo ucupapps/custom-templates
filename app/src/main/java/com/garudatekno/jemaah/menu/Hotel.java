@@ -429,8 +429,14 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
             nama.setText(strNama);
             alamat.setText(strAlamat);
             float rating = Float.parseFloat(strRating);
-            ratingHotel.setNumStars(Integer.parseInt(strRating));
+//            ratingHotel.setNumStars(Integer.parseInt(strRating));
             ratingHotel.setRating(rating);
+
+            if(strRating.equals("0")){
+                ratingHotel.setVisibility(View.GONE);
+            }else{
+                ratingHotel.setVisibility(View.VISIBLE);
+            }
 
 //            Picasso.with(getContext()).load(AppConfig.URL_HOME+"/uploads/profile/"+strIdUser+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgDoa);
 

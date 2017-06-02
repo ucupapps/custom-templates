@@ -292,12 +292,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onMapClick(LatLng latLng) {
                 if(marker == null) {
-                    markerOptions = new MarkerOptions();
-                    markerOptions.position(latLng);
-                    markerOptions.title("Set Lokasi");
-                    markerOptions.draggable(true);
-                    marker = mMap.addMarker(markerOptions);
-                    marker.showInfoWindow();
+//                    markerOptions = new MarkerOptions();
+//                    markerOptions.position(latLng);
+//                    markerOptions.title("Set Lokasi");
+//                    markerOptions.draggable(true);
+//                    marker = mMap.addMarker(markerOptions);
+//                    marker.showInfoWindow();
                 } else {
                     marker.setPosition(latLng);
                     marker.showInfoWindow();
@@ -362,9 +362,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //To create marker in map
 //        MarkerOptions markerOptions = new MarkerOptions();
 //        markerOptions.position(latLng);
-//        markerOptions.title("My Location");
+//        markerOptions.title("Set Lokasi");
 //        //adding marker to the map
 //        mMap.addMarker(markerOptions);
+
+        marker = mMap.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Set Lokasi")
+                .draggable(true)
+        );
+
+        marker.showInfoWindow();
+
+        LatLng latLngAdd = marker.getPosition();
+        Double latAdd = location.getLatitude();
+        Double lngAdd = location.getLongitude();
+        Location temp = new Location(LocationManager.GPS_PROVIDER);
+        temp.setLatitude(latAdd);
+        temp.setLongitude(lngAdd);
+        startIntentService(temp);
+
 //        getJSON();
 
         //opening position with some zoom level in the map

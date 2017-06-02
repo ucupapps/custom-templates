@@ -197,7 +197,7 @@ public class setting extends AppCompatActivity {
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "GoHajj");
                     String sAux = "\nPerjalanan haji dan umroh mabrur dengan  mudah, aman, tanpa ragu, " +
-                            "dan terpandu? Download aplikasi GoHajj, teman perjalanan ke Rumah Allah. https://play.google.com/store/apps/details?id=GoHajj.Soft\n";
+                            "dan terpandu? Download aplikasi GoHajj, teman perjalanan ke Rumah Allah. https://play.google.com/store/apps/details?id=GoHajj\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "choose one"));
                 } catch(Exception e) {
@@ -232,7 +232,6 @@ public class setting extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), SyaratKetentuan.class);
                 startActivity(i);
-                finish();
             }
         });
         txtdonasi.setOnClickListener(new View.OnClickListener() {

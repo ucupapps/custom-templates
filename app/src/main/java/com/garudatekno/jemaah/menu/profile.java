@@ -274,7 +274,6 @@ public class profile extends AppCompatActivity implements OnClickListener {
         if(v == buttonAdd){
             Intent i = new Intent(getApplicationContext(), edit_profile.class);
             startActivity(i);
-            finish();
          }if(v == buttonLogout){
             logoutUser();
         }

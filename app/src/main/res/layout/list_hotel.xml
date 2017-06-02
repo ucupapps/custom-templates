@@ -63,7 +63,7 @@
                 android:layout_marginTop="10dp"
                 android:clickable="false"
                 android:gravity="center"
-                android:isIndicator="false"
+                android:isIndicator="true"
                 android:numStars="5"
                 android:rating="0"
                 android:stepSize="1.0" />

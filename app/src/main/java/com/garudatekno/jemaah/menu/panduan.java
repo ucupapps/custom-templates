@@ -128,7 +128,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private static final String[] requiredPermissions = new String[]{
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO,
+//            Manifest.permission.RECORD_AUDIO,
     };
     private Tracker mTracker;
     View target ;
@@ -145,9 +145,10 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             //permission
             if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
-            }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
             }
+//            else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+//                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
+//            }
         }
 
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
@@ -190,7 +191,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), thawaf.class);
                 startActivity(i);
-                finish();
             }
         });
         txt_sai.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +198,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), sai.class);
                 startActivity(i);
-                finish();
             }
         });
         txt_emergency.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +205,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), emergency.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -233,7 +231,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
-                finish();
             }
         });
         menu_panduan.setOnClickListener(new View.OnClickListener() {
@@ -241,7 +238,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
-                finish();
             }
         });
         menu_doa.setOnClickListener(new View.OnClickListener() {
@@ -256,7 +252,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
                 startActivity(i);
-                finish();
             }
         });
         menu_inbox.setOnClickListener(new View.OnClickListener() {
@@ -264,7 +259,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -299,7 +293,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
                 startActivity(i);
-                finish();
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
@@ -308,7 +301,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);
                 startActivity(i);
-                finish();
             }
         });
 
@@ -778,8 +770,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
             if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
-            }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
             }else{
                 int REQUEST_OVERLAY_PERMISSION=1;
                 if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
@@ -801,8 +791,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
-            }else if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.RECORD_AUDIO, READ_EXST);
             }else{
                 int REQUEST_OVERLAY_PERMISSION=1;
                 if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {

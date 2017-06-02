@@ -284,11 +284,13 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             String email2 = txtEmail2.getText().toString().trim();
             String email3 = txtEmail3.getText().toString().trim();
             if(v == buttonAdd){
-                if(!email1.equals("") || !email2.equals("") || !email3.equals("")) {
-                    if (!email1.matches(emailPattern) || !email2.matches(emailPattern) || !email3.matches(emailPattern)) {
-                        Toast.makeText(getApplicationContext(), "Format Email Salah", Toast.LENGTH_SHORT).show();
-                    }
-                }else if (name.equals("")) {
+                if(!email1.equals("") && !email1.matches(emailPattern) ) {
+                        Toast.makeText(getApplicationContext(), "Format Email Keluarga 1 Salah", Toast.LENGTH_SHORT).show();
+                }else if(!email2.equals("") && !email2.matches(emailPattern)) {
+                        Toast.makeText(getApplicationContext(), "Format Email Keluarga 2 Salah", Toast.LENGTH_SHORT).show();
+                }else if(!email3.equals("") && !email3.matches(emailPattern)) {
+                        Toast.makeText(getApplicationContext(), "Format Email Keluarga 3 Salah", Toast.LENGTH_SHORT).show();
+                }else if(name.equals("")) {
                     Toast.makeText(getApplicationContext(), "Nama Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
                 }else if (Passport.equals("")) {
                     Toast.makeText(getApplicationContext(), "Nomor Paspor Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
@@ -296,11 +298,9 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     Toast.makeText(getApplicationContext(), "Nomor Telepon Keluarga 1 Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
                 }else if (email1.equals("")) {
                     Toast.makeText(getApplicationContext(), "Email Keluarga 1 Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
-                }
-                else if (!Passport.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !name.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !address.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !province.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !town.matches("[a-zA-Z0-9.?,/()&@-_' ]*")) {
+                }else if (!Passport.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !name.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !address.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !province.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !town.matches("[a-zA-Z0-9.?,/()&@-_' ]*")) {
                         Toast.makeText(getApplicationContext(), "Tidak Boleh Menggunakan Spesial Karakter", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                }else{
 //            if(imgProfile.getDrawable() == null)
 //            {
 //                Toast.makeText(this, "Image cannot null", Toast.LENGTH_SHORT).show();

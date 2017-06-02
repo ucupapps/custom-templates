@@ -52,7 +52,7 @@
                         android:textSize="26sp"
                         android:gravity="center"
                         android:layout_marginBottom="20dp"
-                        android:text="Pusat Bantuan"/>
+                        android:text="Pertanyaan Umum"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

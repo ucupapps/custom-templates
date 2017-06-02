@@ -144,7 +144,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"Titip Doa");
                 startActivity(i);
-                finish();
             }
         });
         navigasi.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +152,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"Navigasi");
                 startActivity(i);
-                finish();
             }
         });
         pesan.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +160,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"Pesan");
                 startActivity(i);
-                finish();
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +168,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"Profile");
                 startActivity(i);
-                finish();
             }
         });
         sai.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +176,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"Sai");
                 startActivity(i);
-                finish();
             }
         });
         sos.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +184,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"S.O.S");
                 startActivity(i);
-                finish();
             }
         });
         thawaf.setOnClickListener(new View.OnClickListener() {
@@ -198,7 +192,6 @@ public class laporkanmasalah extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
                 i.putExtra(AppConfig.EMP_ID,"Thawaf");
                 startActivity(i);
-                finish();
             }
         });
     }

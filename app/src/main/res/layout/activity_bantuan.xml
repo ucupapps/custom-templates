@@ -76,7 +76,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.85"
                     android:layout_height="wrap_content"
-                    android:text="Pusat Bantuan"/>
+                    android:text="Pertanyaan Umum"/>
                 <ImageView
                     android:id="@+id/arrow_poi"
                     android:layout_width="0dp"

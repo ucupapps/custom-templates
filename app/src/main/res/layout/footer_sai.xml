@@ -147,7 +147,7 @@
                     android:layout_weight="1"
                     android:layout_below="@id/img_doa"
                     android:layout_centerInParent="true"
-                    android:text="Selanjutnya"
+                    android:text="Sebelumnya"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="10sp"

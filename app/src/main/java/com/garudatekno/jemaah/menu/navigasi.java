@@ -487,7 +487,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 startActivity(intentBus);
 
                 txtMessage.setText("BUS");
-                cekData("BUS",txtbus);
+//                cekData("BUS",txtbus);
 //                insertIntoDB();
 //                txtbus.setBackgroundResource(R.drawable.button);
 //                txtbus.setText("Arahkan");
@@ -495,7 +495,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"BUS");
                 startActivity(intent);
-                finish();
             }
         }
         if (v == txthotel) {
@@ -507,12 +506,11 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
                 Intent intent = new Intent(getApplicationContext(), Hotel.class);
                 startActivity(intent);
-                finish();
 
                 Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
 
                 txtMessage.setText("HOTEL");
-                cekData("HOTEL",txthotel);
+//                cekData("HOTEL",txthotel);
 //                txthotel.setBackgroundResource(R.drawable.button);
 //                txthotel.setText("Arahkan");
             }else if(txthotel.getText().toString().equals("Arahkan")) {
@@ -520,7 +518,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"HOTEL");
                 startActivity(intent);
-                finish();
             }
         }
         if (v == txtmasjid) {
@@ -535,12 +532,11 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 //                insertIntoDB();
 //                txtmasjid.setBackgroundResource(R.drawable.button);
 //                txtmasjid.setText("Lihat");
-                cekDataMasjid(uid,txtmasjid);
+//                cekDataMasjid(uid,txtmasjid);
             }else if(txtmasjid.getText().toString().equals("Lihat")) {
                 Intent intent = new Intent(getApplicationContext(), LihatPintuMasjid.class);
                 intent.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
                 startActivity(intent);
-                finish();
             }
         }
         if (v == txtbertemu) {
@@ -555,7 +551,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 startActivity(intentBertemu);
                 finish();
                 txtMessage.setText("TEMPAT BERTEMU");
-                cekData("TEMPAT BERTEMU",txtbertemu);
+//                cekData("TEMPAT BERTEMU",txtbertemu);
 //                insertIntoDB();
 //                txtbertemu.setBackgroundResource(R.drawable.button);
 //                txtbertemu.setText("Arahkan");
@@ -563,7 +559,6 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"TEMPAT BERTEMU");
                 startActivity(intent);
-                finish();
             }
         }
 
@@ -576,19 +571,17 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
                 Intent intent = new Intent(getApplicationContext(), Poi.class);
                 startActivity(intent);
-                finish();
 
 //                Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
 
                 txtMessage.setText("POI");
 //                txthotel.setBackgroundResource(R.drawable.button);
 //                txthotel.setText("Arahkan");
-                cekData("POI",txtpoi);
+//                cekData("POI",txtpoi);
             }else if(txtpoi.getText().toString().equals("Arahkan")) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"POI");
                 startActivity(intent);
-                finish();
             }
         }
 
@@ -599,38 +592,33 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
         //arrow
         if (v == imghotel) {
-            if(txthotel.getText().toString().equals("Arahkan")){
-                txthotel.setBackgroundResource(R.drawable.button_red);
-                txthotel.setText("Set Lokasi");
-            }
+            arrowcekData("HOTEL",txthotel);
         }
 
         if (v == imgbus) {
-            if(txtbus.getText().toString().equals("Arahkan")){
-                txtbus.setBackgroundResource(R.drawable.button_red);
-                txtbus.setText("Set Lokasi");
-            }
+            arrowcekData("BUS",txtbus);
         }
 
         if (v == imgpintu) {
-            if(txtmasjid.getText().toString().equals("Lihat")){
-                txtmasjid.setBackgroundResource(R.drawable.button_red);
-                txtmasjid.setText("Set Lokasi");
+            File file = new File("/sdcard/android/data/com.garudatekno.jemaah/images/pintuMasjid.jpg");
+            if (file.exists()) {
+                if (txtmasjid.getText().toString().equals("Lihat")) {
+                    txtmasjid.setBackgroundResource(R.drawable.button_red);
+                    txtmasjid.setText("Set Lokasi");
+                }else{
+                    txtmasjid.setBackgroundResource(R.drawable.button);
+                    txtmasjid.setText("Lihat");
+                }
             }
         }
 
         if (v == imgbertemu) {
-            if(txtbertemu.getText().toString().equals("Arahkan")){
-                txtbertemu.setBackgroundResource(R.drawable.button_red);
-                txtbertemu.setText("Set Lokasi");
-            }
+
+            arrowcekData("TEMPAT BERTEMU",txtbertemu);
         }
 
         if (v == imgPoi) {
-            if(txtpoi.getText().toString().equals("Arahkan")){
-                txtpoi.setBackgroundResource(R.drawable.button_red);
-                txtpoi.setText("Set Lokasi");
-            }
+            arrowcekData("POI",txtpoi);
         }
     }
 
@@ -650,6 +638,24 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             tv.setBackgroundResource(R.drawable.button_red);
             tv.setPadding(5,5,5,5);
             tv.setText("Set Lokasi");
+        }
+    }
+
+    protected void arrowcekData(String name,TextView tv){
+
+        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+        mCount.moveToFirst();
+        int count= mCount.getInt(0);
+        if(count > 0) {
+            if(tv.getText().toString().equals("Arahkan") || tv.getText().toString().equals("Lihat")){
+                tv.setBackgroundResource(R.drawable.button_red);
+                tv.setText("Set Lokasi");
+            }else{
+                tv.setBackgroundResource(R.drawable.button);
+                tv.setText("Arahkan");
+            }
+        }else{
+
         }
     }
 

@@ -364,7 +364,6 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         Intent intent = new Intent(this, ViewInbox.class);
         intent.putExtra(AppConfig.TAG_ID,statID);
         startActivity(intent);
-        finish();
     }
 
 }
