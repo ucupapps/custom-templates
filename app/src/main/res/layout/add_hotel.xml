@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.garudatekno.jemaah.menu.edit_profile">
+    tools:context="salam.gohajj.id.menu.edit_profile">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.garudatekno.jemaah.menu.edit_profile"
+        tools:context="com.gohajj.id.salam.gohajj.id.menu.edit_profile"
         android:layout_below="@+id/toolbar">
 
         <include layout="@layout/footer"/>

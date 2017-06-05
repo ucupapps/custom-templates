@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "810027904434-anm1lqg2gk0mkmofiv8h2ppsp0fmuh9o.apps.googleusercontent.com",
+          "client_id": "810027904434-bd09i473r9s2f3bqafvocos2gb9cul7h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.garudatekno.jemaah",
-            "certificate_hash": "199519c1fc869e627d156311437af9e5a566f3b8"
+            "certificate_hash": "fd24a7946bca888b8782210690ee30c2f7be5838"
           }
         },
         {
@@ -54,6 +54,54 @@
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810027904434:android:908750e2b71a2c5e",
+        "android_client_info": {
+          "package_name": "salam.gohajj.id"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810027904434-0h2t7sbqr8pfin4lfu3u260m86dcb6eu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "salam.gohajj.id",
+            "certificate_hash": "199519c1fc869e627d156311437af9e5a566f3b8"
+          }
+        },
+        {
+          "client_id": "810027904434-tokvloq8bqmfvcm7etor57g6qceko9pq.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "810027904434-j7nqar4qt5uf4tkff0mv6o8jl4j615hu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh4xoFX85B_OddqKOtiIOHSTKWu3hRkGc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810027904434-tokvloq8bqmfvcm7etor57g6qceko9pq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

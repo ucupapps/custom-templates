@@ -5,11 +5,11 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "com.garudatekno.jemaah"
+        applicationId "salam.gohajj.id"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.0.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -51,6 +51,7 @@ dependencies {
     compile 'com.github.rtoshiro.fullscreenvideoview:fullscreenvideoview:1.1.2'
     compile 'me.leolin:ShortcutBadger:1.1.16@aar'
     compile files('libs/android-viewbadger.jar')
+    compile 'com.google.firebase:firebase-auth:10.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

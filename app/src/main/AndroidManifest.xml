@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.garudatekno.jemaah">
+    package="salam.gohajj.id">
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -18,7 +18,7 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <permission
-        android:name="com.garudatekno.jemaah.permission.MAPS_RECEIVE"
+        android:name="permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
     <uses-permission android:name="com.garudatekno.apps.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -29,7 +29,7 @@
     -->
 
     <application
-        android:name="com.garudatekno.jemaah.app.AppController"
+        android:name="salam.gohajj.id.app.AppController"
         android:allowBackup="true"
         android:icon="@drawable/logo_apps"
         android:label="@string/app_name"
@@ -38,7 +38,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".menu.splashscreen"
+            android:name="salam.gohajj.id.menu.splashscreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:noHistory="true" >
@@ -49,7 +49,7 @@
         </activity>
 
         <activity
-            android:name="com.garudatekno.jemaah.activity.LoginActivity"
+            android:name="salam.gohajj.id.activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -60,7 +60,7 @@
         </activity>
 
         <activity
-            android:name="com.garudatekno.jemaah.activity.RegisterActivity"
+            android:name="salam.gohajj.id.activity.RegisterActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:noHistory="true"
@@ -73,217 +73,217 @@
         </activity>
 
         <activity
-            android:name="com.garudatekno.jemaah.activity.MapsActivity"
+            android:name="salam.gohajj.id.activity.MapsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.ActionBar">
         </activity>
 
         <activity
-            android:name="com.garudatekno.jemaah.menu.AndroidImageSlider"
+            android:name="salam.gohajj.id.menu.AndroidImageSlider"
             android:label="Home"
             android:screenOrientation="portrait"
             android:noHistory="true">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.activity.MainActivity"
+            android:name="salam.gohajj.id.activity.MainActivity"
             android:label="Home"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.edit_profile"
+            android:name="salam.gohajj.id.menu.edit_profile"
             android:label="Profile"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.activity.SimpleMenu"
+            android:name="salam.gohajj.id.activity.SimpleMenu"
             android:label="Simple Menu"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.profile"
+            android:name="salam.gohajj.id.menu.profile"
             android:label="Profile"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.TitipanDoa"
+            android:name="salam.gohajj.id.menu.TitipanDoa"
             android:label="Doa"
             android:screenOrientation="portrait"
             android:noHistory="true"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.panduan"
+            android:name="salam.gohajj.id.menu.panduan"
             android:label="Panduan"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.emergency"
+            android:name="salam.gohajj.id.menu.emergency"
             android:label="Emergency"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.inbox"
+            android:name="salam.gohajj.id.menu.inbox"
             android:label="Inbox"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.go"
+            android:name="salam.gohajj.id.menu.go"
             android:label="GO"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.navigasi"
+            android:name="salam.gohajj.id.menu.navigasi"
             android:label="Navigasi"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.Hotel"
+            android:name="salam.gohajj.id.menu.Hotel"
             android:label="Hotel"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.add_hotel"
+            android:name="salam.gohajj.id.menu.add_hotel"
             android:label="Tambah Hotel"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.MapsActivity"
+            android:name="salam.gohajj.id.menu.MapsActivity"
             android:label="Maps"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.PintuMasjid"
+            android:name="salam.gohajj.id.menu.PintuMasjid"
             android:label="Masjid (Pintu Masuk)"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.LihatPintuMasjid"
+            android:name="salam.gohajj.id.menu.LihatPintuMasjid"
             android:label="Masjid (Pintu Masuk)"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.sai"
+            android:name="salam.gohajj.id.menu.sai"
             android:label="SAI"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.download"
+            android:name="salam.gohajj.id.menu.download"
             android:label="Download"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.ViewPanduanTips"
+            android:name="salam.gohajj.id.menu.ViewPanduanTips"
             android:label="View Panduan"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.ViewPanduanVideo"
+            android:name="salam.gohajj.id.menu.ViewPanduanVideo"
             android:label="View Panduan"
             android:configChanges="orientation|screenSize">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.ViewPanduanDoa"
+            android:name="salam.gohajj.id.menu.ViewPanduanDoa"
             android:label="View Panduan"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.ViewPanduankamus"
+            android:name="salam.gohajj.id.menu.ViewPanduankamus"
             android:label="View Panduan"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.thawaf"
+            android:name="salam.gohajj.id.menu.thawaf"
             android:label="Thawaf"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.ViewInbox"
+            android:name="salam.gohajj.id.menu.ViewInbox"
             android:label="View Inbox"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.Poi"
+            android:name="salam.gohajj.id.menu.Poi"
             android:label="POI"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.GoPoi"
+            android:name="salam.gohajj.id.menu.GoPoi"
             android:label="GO POI"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.PenilaianPembimbing"
+            android:name="salam.gohajj.id.menu.PenilaianPembimbing"
             android:label="Penilaian Pembimbing"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.PenilaianPemimpinTur"
+            android:name="salam.gohajj.id.menu.PenilaianPemimpinTur"
             android:label="Penilaian"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.PenilaianTravel"
+            android:name="salam.gohajj.id.menu.PenilaianTravel"
             android:label="Penilaian"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.SyaratKetentuan"
+            android:name="salam.gohajj.id.menu.SyaratKetentuan"
             android:label="SyaratKetentuan"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.Bantuan"
+            android:name="salam.gohajj.id.menu.Bantuan"
             android:label="Bantuan"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.setting"
+            android:name="salam.gohajj.id.menu.setting"
             android:label="Setting"
             android:screenOrientation="portrait">
         </activity>
         <activity
-        android:name="com.garudatekno.jemaah.menu.PusatBantuan"
-        android:label="Bantuan"
-        android:screenOrientation="portrait">
-    </activity>
-        <activity
-        android:name="com.garudatekno.jemaah.menu.laporkanmasalah"
-        android:label="Bantuan "
-        android:screenOrientation="portrait">
+            android:name="salam.gohajj.id.menu.PusatBantuan"
+            android:label="Bantuan"
+            android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.kirimlaporan"
+            android:name="salam.gohajj.id.menu.laporkanmasalah"
             android:label="Bantuan "
             android:screenOrientation="portrait">
-    </activity>
+        </activity>
         <activity
-        android:name="com.garudatekno.jemaah.menu.layanan"
-        android:label="Bantuan "
-        android:screenOrientation="portrait">
-    </activity>
+            android:name="salam.gohajj.id.menu.kirimlaporan"
+            android:label="Bantuan "
+            android:screenOrientation="portrait">
+        </activity>
         <activity
-            android:name="com.garudatekno.jemaah.menu.View_PusatBantuan"
+            android:name="salam.gohajj.id.menu.layanan"
+            android:label="Bantuan "
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="salam.gohajj.id.menu.View_PusatBantuan"
             android:label="Bantuan "
             android:screenOrientation="portrait">
         </activity>
@@ -309,21 +309,21 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name="com.garudatekno.jemaah.gcm.MyFirebaseMessagingService">
+            android:name="salam.gohajj.id.gcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name="com.garudatekno.jemaah.gcm.MyFirebaseInstanceIDService">
+            android:name="salam.gohajj.id.gcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".activity.FetchAddressIntentService"
+            android:name="salam.gohajj.id.activity.FetchAddressIntentService"
             android:exported="false" />
 
     </application>
