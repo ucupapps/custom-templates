@@ -349,6 +349,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             protected String doInBackground(Bitmap... params) {
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_ID, id);
+                data.put(AppConfig.KEY_USERID, uid);
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendPostRequest(AppConfig.URL_DOAKAN, data);
                 return res;
