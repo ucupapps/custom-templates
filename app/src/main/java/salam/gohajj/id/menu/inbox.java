@@ -204,7 +204,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         getJSON();
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{

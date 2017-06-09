@@ -143,7 +143,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -613,7 +613,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/android/data/com.gohajj.id/"+id+".mp3");
+                OutputStream output = new FileOutputStream("/sdcard/android/data/salam.gohajj.id/"+id+".mp3");
 
                 byte data[] = new byte[1024];
 
@@ -667,7 +667,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //
 //        final MediaPlayer mp = new MediaPlayer();
 //        try {
-//            mp.setDataSource("/sdcard/android/data/com.gohajj.id/" + strID + ".mp3");
+//            mp.setDataSource("/sdcard/android/data/salam.gohajj.id/" + strID + ".mp3");
 //            mp.prepare();
 //        } catch (IOException e) {
 //            e.printStackTrace();
@@ -738,46 +738,46 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
             Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
-            }else{
-                int REQUEST_OVERLAY_PERMISSION=1;
-                if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
-                    Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
-                    startActivityForResult(MIUIUtils.toFloatWindowPermission(getApplicationContext(), getPackageName()), REQUEST_OVERLAY_PERMISSION);
-                } else if (Build.VERSION.SDK_INT >= 23 && MIUIUtils.isMIUI() && !Settings.canDrawOverlays(getApplicationContext())) {
-                    Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
-                    startActivityForResult(new Intent(
-                                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
-                                    Uri.parse("package:" +getPackageName()))
-                            , REQUEST_OVERLAY_PERMISSION
-                    );
-                } else {
-                    Log.i(TAG, "SKK_INT < 19 or Have overlay permission");
-
-                }
-            }
+//            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
+//            }else{
+//                int REQUEST_OVERLAY_PERMISSION=1;
+//                if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
+//                    Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
+//                    startActivityForResult(MIUIUtils.toFloatWindowPermission(getApplicationContext(), getPackageName()), REQUEST_OVERLAY_PERMISSION);
+//                } else if (Build.VERSION.SDK_INT >= 23 && MIUIUtils.isMIUI() && !Settings.canDrawOverlays(getApplicationContext())) {
+//                    Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
+//                    startActivityForResult(new Intent(
+//                                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+//                                    Uri.parse("package:" +getPackageName()))
+//                            , REQUEST_OVERLAY_PERMISSION
+//                    );
+//                } else {
+//                    Log.i(TAG, "SKK_INT < 19 or Have overlay permission");
+//
+//                }
+//            }
         }else{
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
-            }else{
-                int REQUEST_OVERLAY_PERMISSION=1;
-                if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
-                    Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
-                    startActivityForResult(MIUIUtils.toFloatWindowPermission(getApplicationContext(), getPackageName()), REQUEST_OVERLAY_PERMISSION);
-                } else if (Build.VERSION.SDK_INT >= 23 && MIUIUtils.isMIUI() && !Settings.canDrawOverlays(getApplicationContext())) {
-                    Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
-                    startActivityForResult(new Intent(
-                                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
-                                    Uri.parse("package:" +getPackageName()))
-                            , REQUEST_OVERLAY_PERMISSION
-                    );
-                } else {
-                    Log.i(TAG, "SKK_INT < 19 or Have overlay permission");
-
-                }
-            }
+//            if (ContextCompat.checkSelfPermission(panduan.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, READ_EXST);
+//            }else{
+//                int REQUEST_OVERLAY_PERMISSION=1;
+//                if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(getApplicationContext())) {
+//                    Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
+//                    startActivityForResult(MIUIUtils.toFloatWindowPermission(getApplicationContext(), getPackageName()), REQUEST_OVERLAY_PERMISSION);
+//                } else if (Build.VERSION.SDK_INT >= 23 && MIUIUtils.isMIUI() && !Settings.canDrawOverlays(getApplicationContext())) {
+//                    Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
+//                    startActivityForResult(new Intent(
+//                                    "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+//                                    Uri.parse("package:" +getPackageName()))
+//                            , REQUEST_OVERLAY_PERMISSION
+//                    );
+//                } else {
+//                    Log.i(TAG, "SKK_INT < 19 or Have overlay permission");
+//
+//                }
+//            }
         }
     }
 }

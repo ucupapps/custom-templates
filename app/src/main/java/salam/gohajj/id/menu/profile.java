@@ -65,7 +65,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         if (!session.isLoggedIn()) {
             logoutUser();
         }
-        File folder = new File("/sdcard/android/data/com.gohajj.id/images");
+        File folder = new File("/sdcard/android/data/salam.gohajj.id/images");
         if (!folder.exists()) {
             folder.mkdirs();
         }
@@ -140,7 +140,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
         //useri
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -366,7 +366,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
 //            if(name.equals(NULL) || name.equals("")) {
 //                imgProfile.setImageResource(R.drawable.profile);
 //            }else{
-                File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+                File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
                 if (!file.exists()) {
                     imgProfile.setImageResource(R.drawable.profile);
                 }else{

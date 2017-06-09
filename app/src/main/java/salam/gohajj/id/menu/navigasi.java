@@ -342,7 +342,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -597,7 +597,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }
 
         if (v == imgpintu) {
-            File file = new File("/sdcard/android/data/com.gohajj.id/images/pintuMasjid.jpg");
+            File file = new File("/sdcard/android/data/salam.gohajj.id/images/pintuMasjid.jpg");
             if (file.exists()) {
                 if (txtmasjid.getText().toString().equals("Lihat")) {
                     txtmasjid.setBackgroundResource(R.drawable.button_red);

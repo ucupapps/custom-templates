@@ -296,20 +296,14 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         final PopupMenu addkontak = new PopupMenu(this, btnaddcontact);
         addkontak.getMenu().add(1, 1, 1, "Ambil dari kontak");
 //        addkontak.getMenu().add(1, 2, 2, "Ketik manual");
-        btnaddcontact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                startActivityForResult(intent, PICK_CONTACT);
-            }
-        });
+
         btnaddcontact.setTypeface(null, Typeface.BOLD);
         buttonAdd.setOnClickListener(this);
         buttonAdd2.setOnClickListener(this);
-//        btnaddcontact.setOnClickListener(this);
+        btnaddcontact.setOnClickListener(this);
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -380,19 +374,31 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 Toast.makeText(this, "No tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
             }else {
 //            String phoneNumber = "082113150425,085229296292,081328280585";
-                String phoneNumber = contact.getText().toString();
-                String message = txtMessage.getText().toString();
-                sendSMS(phoneNumber, message);
-                Toast.makeText(this, "Pesan telah dikirim", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(emergency.this, emergency.class);
-                finish();
-                startActivity(intent);
+                if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    askForPermission(Manifest.permission.SEND_SMS, READ_EXST);
+                }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                    askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
+                }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
+                }else{
+                    String phoneNumber = contact.getText().toString();
+                    String message = txtMessage.getText().toString();
+                    sendSMS(phoneNumber, message);
+                    Toast.makeText(this, "Pesan telah dikirim", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(emergency.this, emergency.class);
+                    finish();
+                    startActivity(intent);
+                }
 //                addBarcode();
             }
         }
         if(v == btnaddcontact){
-            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, PICK_CONTACT);
+            if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
+            }else{
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, PICK_CONTACT);
+            }
         }
     }
 
@@ -861,18 +867,18 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             }
         }else{
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-            if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.SEND_SMS, READ_EXST);
-            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
-            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
-            }else{
-                // Launching the login activity
-                Intent intent = new Intent(emergency.this, emergency.class);
-                finish();
-                startActivity(intent);
-            }
+//            if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+//                askForPermission(Manifest.permission.SEND_SMS, READ_EXST);
+//            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+//                askForPermission(Manifest.permission.READ_CONTACTS, READ_EXST);
+//            }else if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
+//            }else{
+//                // Launching the login activity
+//                Intent intent = new Intent(emergency.this, emergency.class);
+//                finish();
+//                startActivity(intent);
+//            }
         }
     }
 

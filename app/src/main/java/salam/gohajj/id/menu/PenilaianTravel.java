@@ -62,7 +62,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         setContentView(R.layout.penilaian_pembimbing);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         session = new SessionManager(getApplicationContext());
-        File folder = new File("/sdcard/android/data/com.gohajj.id/images");
+        File folder = new File("/sdcard/android/data/salam.gohajj.id/images");
         if (!folder.exists()) {
             folder.mkdirs();
         }
@@ -95,7 +95,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
         //useri
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{

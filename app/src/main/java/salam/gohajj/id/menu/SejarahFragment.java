@@ -166,7 +166,7 @@ public class SejarahFragment extends Fragment implements ListView.OnItemClickLis
 //                        startActivity(intent);
 //                    }
 //                    if(jenis.equals("Download")){
-//                        File folder = new File("/sdcard/android/data/com.gohajj.id/panduan1");
+//                        File folder = new File("/sdcard/android/data/salam.gohajj.id/panduan1");
 //                        boolean success = true;
 //                        if (!folder.exists()) {
 //                            folder.mkdirs();

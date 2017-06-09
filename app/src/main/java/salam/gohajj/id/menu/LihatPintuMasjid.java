@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import salam.gohajj.id.R;
 
 import salam.gohajj.id.helper.SQLiteHandler;
@@ -170,10 +171,20 @@ public class LihatPintuMasjid extends AppCompatActivity {
             }
         });
 
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file1 = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
+        if (!file1.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file1.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+
         image =(ImageView) findViewById(R.id.cameraPintu);
         txtCaptionLihatPintu = (TextView) findViewById(R.id.captionLihatPintu);
 
-        final File file = new File("/sdcard/android/data/com.gohajj.id/images/pintuMasjid.jpg");
+        final File file = new File("/sdcard/android/data/salam.gohajj.id/images/pintuMasjid.jpg");
         if (!file.exists()) {
             image.setImageResource(R.drawable.camera);
         }else{

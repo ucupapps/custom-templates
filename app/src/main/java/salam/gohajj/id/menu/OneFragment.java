@@ -207,7 +207,7 @@ public class OneFragment extends Fragment implements ListView.OnItemClickListene
                 Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/android/data/com.gohajj.id/panduan1/"+id+".mp3");
+                OutputStream output = new FileOutputStream("/sdcard/android/data/salam.gohajj.id/panduan1/"+id+".mp3");
 
                 byte data[] = new byte[1024];
 
@@ -272,7 +272,7 @@ public class OneFragment extends Fragment implements ListView.OnItemClickListene
                         startActivity(intent);
                     }
 //                    if(jenis.equals("Download")){
-//                        File folder = new File("/sdcard/android/data/com.gohajj.id/panduan1");
+//                        File folder = new File("/sdcard/android/data/salam.gohajj.id/panduan1");
 //                        boolean success = true;
 //                        if (!folder.exists()) {
 //                            folder.mkdirs();

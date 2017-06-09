@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -20,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
@@ -32,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import salam.gohajj.id.R;
 
 import salam.gohajj.id.activity.RequestHandler;
@@ -43,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
+import salam.gohajj.id.helper.SQLiteHandler;
 
 public class download extends Activity {
 
@@ -50,15 +55,20 @@ public class download extends Activity {
     private Button unduh_doa,unduh_thawaf,unduh_sai,remove,unduh_all;
     private ProgressDialog mProgressDialog;
 
-    private String JSON_STRING;
+    private String JSON_STRING,uid;
     View target ;
     BadgeView badge ;
     private SQLiteDatabase database;
+    private SQLiteHandler db;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download);
+
+        db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        uid = user.get("uid");
 
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         CountInbox();
@@ -116,6 +126,16 @@ public class download extends Activity {
             }
         });
 
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new OnClickListener() {
             @Override
@@ -146,9 +166,9 @@ public class download extends Activity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File folder1 = new File("/sdcard/android/data/com.gohajj.id/doa");
-                File folder2 = new File("/sdcard/android/data/com.gohajj.id/sai");
-                File folder3 = new File("/sdcard/android/data/com.gohajj.id/thawaf");
+                File folder1 = new File("/sdcard/android/data/salam.gohajj.id/doa");
+                File folder2 = new File("/sdcard/android/data/salam.gohajj.id/sai");
+                File folder3 = new File("/sdcard/android/data/salam.gohajj.id/thawaf");
                 deleteDirectory(folder1);
                 deleteDirectory(folder2);
                 deleteDirectory(folder3);
@@ -230,7 +250,7 @@ public class download extends Activity {
                                     Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                                     InputStream input = new BufferedInputStream(url.openStream());
-                                    OutputStream output = new FileOutputStream("/sdcard/android/data/com.gohajj.id/"+folder+"/"+file);
+                                    OutputStream output = new FileOutputStream("/sdcard/android/data/salam.gohajj.id/"+folder+"/"+file);
 
                                     byte data[] = new byte[1024];
 
@@ -288,7 +308,7 @@ public class download extends Activity {
 
             @Override
             protected String doInBackground(Void... params) {
-                File folder = new File("/sdcard/android/data/com.gohajj.id/"+name);
+                File folder = new File("/sdcard/android/data/salam.gohajj.id/"+name);
                 if (!folder.exists()) {
                     folder.mkdirs();
                 }

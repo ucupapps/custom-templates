@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import salam.gohajj.id.R;
 
 import salam.gohajj.id.helper.SQLiteHandler;
 import salam.gohajj.id.helper.SessionManager;
 import com.readystatesoftware.viewbadger.BadgeView;
 
+import java.io.File;
 import java.util.HashMap;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
@@ -101,6 +105,16 @@ public class Bantuan extends AppCompatActivity {
                 finish();
             }
         });
+
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {

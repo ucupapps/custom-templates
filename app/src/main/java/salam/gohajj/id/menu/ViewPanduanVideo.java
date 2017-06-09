@@ -222,15 +222,15 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         buttonSave= (Button) findViewById(R.id.btnSimpan);
         videoLayout = (FullscreenVideoLayout) findViewById(R.id.videoview);
 
-        File cek = new File("/sdcard/android/data/com.gohajj.id/panduan/"+file);
+        File cek = new File("/sdcard/android/data/salam.gohajj.id/panduan/"+file);
         if (!cek.exists()) {
 //            videoView.setVideoPath(AppConfig.URL_HOME+"/uploads/panduan/video/"+file);
             videoUri = Uri.parse(AppConfig.URL_HOME+"/uploads/panduan/video/"+file);
             buttonSave.setVisibility(View.VISIBLE);
         }else{
-            videoUri = Uri.parse("/sdcard/android/data/com.gohajj.id/panduan/"+file);
+            videoUri = Uri.parse("/sdcard/android/data/salam.gohajj.id/panduan/"+file);
             buttonSave.setVisibility(View.GONE);
-//            videoView.setVideoPath("/sdcard/android/data/com.gohajj.id/panduan/"+file);
+//            videoView.setVideoPath("/sdcard/android/data/salam.gohajj.id/panduan/"+file);
         }
 
         try {
@@ -242,7 +242,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File folder = new File("/sdcard/android/data/com.gohajj.id/panduan");
+                File folder = new File("/sdcard/android/data/salam.gohajj.id/panduan");
                         if (!folder.exists()) {
                             folder.mkdirs();
                         }
@@ -252,7 +252,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -366,7 +366,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
                 Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/android/data/com.gohajj.id/panduan/"+file);
+                OutputStream output = new FileOutputStream("/sdcard/android/data/salam.gohajj.id/panduan/"+file);
 
                 byte data[] = new byte[1024];
 

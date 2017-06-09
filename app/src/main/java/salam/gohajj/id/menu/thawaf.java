@@ -155,7 +155,7 @@ public class thawaf extends AppCompatActivity {
                 final String play = txt_play.getText().toString().trim();
 //                media/doa_harian/01_doa_tawaf_1.mp3
 
-                srcPath="/sdcard/android/data/com.gohajj.id/thawaf/"+ids+".mp3";
+                srcPath="/sdcard/android/data/salam.gohajj.id/thawaf/"+ids+".mp3";
                 File cek = new File(srcPath);
                 if (!cek.exists()) {
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/thawaf/"+ids+".mp3";
@@ -308,7 +308,7 @@ public class thawaf extends AppCompatActivity {
             public void onClick(View view) {
                 final String ids = vaudio.getText().toString().trim();
                 final String play = v_play.getText().toString().trim();
-                srcPath="/sdcard/android/data/com.gohajj.id/thawaf/"+ids;
+                srcPath="/sdcard/android/data/salam.gohajj.id/thawaf/"+ids;
                 File cek = new File(srcPath);
                 if (!cek.exists()) {
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/thawaf/"+ids;

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import salam.gohajj.id.R;
 import salam.gohajj.id.activity.RequestHandler;
 import salam.gohajj.id.app.AppConfig;
@@ -178,6 +180,16 @@ public class PintuMasjid extends AppCompatActivity {
             }
         });
 
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+
         image =(ImageView) findViewById(R.id.cameraPintu);
         txtCaptionPintu = (EditText) findViewById(R.id.captionPintu);
         Button buttonSimpan =(Button) findViewById(R.id.buttonSimpanPintu);
@@ -212,7 +224,7 @@ public class PintuMasjid extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CAMERA);
             }
         });
-//        File file = new File("/sdcard/android/data/com.gohajj.id/images/pintuMasjid.jpg");
+//        File file = new File("/sdcard/android/data/salam.gohajj.id/images/pintuMasjid.jpg");
 //        if (!file.exists()) {
 //            image.setImageResource(R.drawable.camera);
 //        }else{
@@ -270,12 +282,12 @@ public class PintuMasjid extends AppCompatActivity {
 //                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
 
                 //save image to sdcard
-                File folder = new File("/sdcard/android/data/com.gohajj.id/images");
+                File folder = new File("/sdcard/android/data/salam.gohajj.id/images");
                 if (!folder.exists()) {
                     folder.mkdirs();
                 }
                 File sdCardDirectory = Environment.getExternalStorageDirectory();
-                File image = new File(sdCardDirectory + "/android/data/com.gohajj.id/images/", "pintuMasjid.jpg");
+                File image = new File(sdCardDirectory + "/android/data/salam.gohajj.id/images/", "pintuMasjid.jpg");
                 // Encode the file as a PNG image.
                 FileOutputStream outStream;
 

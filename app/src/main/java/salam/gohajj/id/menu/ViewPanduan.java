@@ -210,7 +210,7 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         uid = user.get("uid");
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/profile.png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -231,12 +231,12 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
 
 //        mp = new MediaPlayer();
 //        try {
-//            mp.setDataSource("/sdcard/android/data/com.gohajj.id/"+id+".mp3");
+//            mp.setDataSource("/sdcard/android/data/salam.gohajj.id/"+id+".mp3");
 //            mp.prepare();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        srcPath="/sdcard/android/data/com.gohajj.id/panduan"+msg+"/"+id+".mp3";
+        srcPath="/sdcard/android/data/salam.gohajj.id/panduan"+msg+"/"+id+".mp3";
         cmdReset();
         cmdSetDataSource(srcPath);
 

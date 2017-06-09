@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import salam.gohajj.id.R;
 
 import salam.gohajj.id.app.AppConfig;
@@ -18,6 +21,7 @@ import salam.gohajj.id.helper.SQLiteHandler;
 import salam.gohajj.id.helper.SessionManager;
 import com.readystatesoftware.viewbadger.BadgeView;
 
+import java.io.File;
 import java.util.HashMap;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
@@ -57,6 +61,16 @@ public class laporkanmasalah extends AppCompatActivity {
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -229,13 +229,13 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
 
         buttonStart = (Button) findViewById(R.id.btnPlay);
         buttonSave = (Button) findViewById(R.id.btnSimpan);
-        File cek = new File("/sdcard/android/data/com.gohajj.id/doa/"+file);
+        File cek = new File("/sdcard/android/data/salam.gohajj.id/doa/"+file);
         if (!cek.exists()) {
             srcPath=AppConfig.URL_HOME+"/uploads/panduan/doa/"+file;
             buttonSave.setVisibility(View.VISIBLE);
         }else{
             buttonSave.setVisibility(View.GONE);
-            srcPath="/sdcard/android/data/com.gohajj.id/doa/"+file;
+            srcPath="/sdcard/android/data/salam.gohajj.id/doa/"+file;
         }
 
         ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
@@ -258,7 +258,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -351,7 +351,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         }
 
         if(v == buttonSave){
-            File folder = new File("/sdcard/android/data/com.gohajj.id/doa");
+            File folder = new File("/sdcard/android/data/salam.gohajj.id/doa");
             if (!folder.exists()) {
                 folder.mkdirs();
             }
@@ -700,7 +700,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                 Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/android/data/com.gohajj.id/doa/"+file);
+                OutputStream output = new FileOutputStream("/sdcard/android/data/salam.gohajj.id/doa/"+file);
 
                 byte data[] = new byte[1024];
 

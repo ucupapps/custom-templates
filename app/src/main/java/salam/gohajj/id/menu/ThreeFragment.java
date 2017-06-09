@@ -207,7 +207,7 @@ public class ThreeFragment extends Fragment implements ListView.OnItemClickListe
                 Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/android/data/com.gohajj.id/panduan3/"+id+".mp3");
+                OutputStream output = new FileOutputStream("/sdcard/android/data/salam.gohajj.id/panduan3/"+id+".mp3");
 
                 byte data[] = new byte[1024];
 

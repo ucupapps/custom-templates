@@ -235,7 +235,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
         if (!file.exists()) {
             imgp.setImageResource(R.drawable.profile);
         }else{
@@ -412,7 +412,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 //            if(name.equals(NULL) || name.equals("")) {
 //                imgProfile.setImageResource(R.drawable.profile);
 //            }else{
-                File file = new File("/sdcard/android/data/com.gohajj.id/images/profile.png");
+                File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
                 if (!file.exists()) {
                     imgProfile.setImageResource(R.drawable.profile);
                 }else{
@@ -580,13 +580,13 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 //                    data.put(AppConfig.UPLOAD_KEY, uploadImageProfile);
 
                         //save image to sdcard
-                        File folder = new File("/sdcard/android/data/com.gohajj.id/images");
+                        File folder = new File("/sdcard/android/data/salam.gohajj.id/images");
                         if (!folder.exists()) {
                             folder.mkdirs();
                         }
 
                         File sdCardDirectory = Environment.getExternalStorageDirectory();
-                        File image = new File(sdCardDirectory+"/android/data/com.gohajj.id/images/", "profile.png");
+                        File image = new File(sdCardDirectory+"/android/data/salam.gohajj.id/images/", uid+".png");
                         // Encode the file as a PNG image.
                         FileOutputStream outStream;
 
@@ -631,7 +631,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 //
 //                    //save image to sdcard
 //                    File sdCardDirectory = Environment.getExternalStorageDirectory();
-//                    File image = new File(sdCardDirectory+"/android/data/com.gohajj.id/images/", "profile.png");
+//                    File image = new File(sdCardDirectory+"/android/data/salam.gohajj.id/images/", "profile.png");
 //                    // Encode the file as a PNG image.
 //                    FileOutputStream outStream;
 //
@@ -646,7 +646,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 //                }
                 //save image to sdcard
 //                File sdCardDirectory = Environment.getExternalStorageDirectory();
-//                File image = new File(sdCardDirectory+"/android/data/com.gohajj.id/images/", "profile.png");
+//                File image = new File(sdCardDirectory+"/android/data/salam.gohajj.id/images/", "profile.png");
 //                // Encode the file as a PNG image.
 //                FileOutputStream outStream;
 //                try {
