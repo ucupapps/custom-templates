@@ -7,11 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,7 +40,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 
-public class sai extends AppCompatActivity {
+public class sai extends AppCompatActivity implements
+        MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener {
 
     private SQLiteHandler db;
     private SessionManager session;
@@ -57,6 +60,8 @@ public class sai extends AppCompatActivity {
         Stopped, PlaybackCompleted, End, Error, Preparing}
 
     sai.MP_State mediaPlayerState;
+    MediaPlayer mp;
+    ProgressDialog pd;
     private String id,uid;
     private SeekBar timeLine;
     LinearLayout timeFrame;
@@ -156,8 +161,6 @@ public class sai extends AppCompatActivity {
                 if (!cek.exists()) {
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/sai/"+ids+".mp3";
                 }
-                cmdReset();
-                cmdSetDataSource(srcPath);
 
                 if(play.equals("Mulai")) {
                     judul.setVisibility(View.VISIBLE);
@@ -172,16 +175,32 @@ public class sai extends AppCompatActivity {
                     SetProgess(1);
                     circle.setBackground(getResources().getDrawable(R.drawable.circle_sai_blue));
                 }else if(play.equals("Pause")) {
-//                    cmdStop();
-                    cmdPause();
+                    if(mp.isPlaying()){
+                        mp.pause();
+                    }
                     img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
                     txt_play.setText("Mainkan");
                 }else if(play.equals("Mainkan")) {
-//                    mProgressDialog = ProgressDialog.show(sai.this,"","Harap Tunggu...",false,false);
-                    cmdPrepare();
-                    cmdStart();
-                    txt_play.setText("Pause");
-                    img_play.setImageDrawable(getResources().getDrawable(R.drawable.stop));
+                    stopPlaying();
+                    try
+                    {
+                        pd = new ProgressDialog(sai.this);
+                        pd.setMessage("Mempersiapkan Audio.....");
+                        pd.show();
+                        mp = new MediaPlayer();
+                        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mp.setOnPreparedListener(sai.this);
+                        mp.setOnErrorListener(sai.this);
+                        mp.setDataSource(srcPath);
+                        mp.prepareAsync();
+                        mp.setOnCompletionListener(sai.this);
+                        txt_play.setText("Pause");
+                        img_play.setImageDrawable(getResources().getDrawable(R.drawable.stop));
+                    }
+                    catch(Exception e)
+                    {
+                        Log.e("StreamAudioDemo", e.getMessage());
+                    }
                 }
             }
         });
@@ -191,7 +210,7 @@ public class sai extends AppCompatActivity {
             public void onClick(View view) {
                 String tply=txt_play.getText().toString();
                 if (!tply.equals("Mulai")) {
-                cmdStop(); txt_play.setText("Mainkan");
+                    stopPlaying(); txt_play.setText("Mainkan");
                 img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 final String ids = circle.getText().toString();
                 if(Integer.parseInt(ids) > 1){
@@ -217,7 +236,7 @@ public class sai extends AppCompatActivity {
             public void onClick(View view) {
                 String tply=txt_play.getText().toString();
                 if (!tply.equals("Mulai")) {
-                cmdStop(); txt_play.setText("Mainkan");
+                    stopPlaying(); txt_play.setText("Mainkan");
                 img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 final String ids = circle.getText().toString();
                 if(Integer.parseInt(ids) < 7){
@@ -285,7 +304,7 @@ public class sai extends AppCompatActivity {
                                  KeyEvent event) {
                 // TODO Auto-generated method stub
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    cmdReset();cmdPrepare();
+                    stopPlaying();
                     rankDialog.dismiss();
                 }
                 return true;
@@ -302,18 +321,35 @@ public class sai extends AppCompatActivity {
                 if (!cek.exists()) {
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/sai/"+ids;
                 }
-                cmdReset();
-                cmdSetDataSource(srcPath);
 
                 if(play.equals("Pause")) {
-//                    cmdStop();
-                    cmdPause();
+                    if(mp.isPlaying()){
+                        mp.pause();
+                    }
                     img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                     v_play.setText("Mainkan");
                 }else if(play.equals("Mainkan")) {
-//                    mProgressDialog = ProgressDialog.show(sai.this,"","Harap Tunggu...",false,false);
-                    cmdPrepare();
-                    cmdStart();
+                    stopPlaying();
+                    try
+                    {
+                        pd = new ProgressDialog(sai.this);
+                        pd.setMessage("Mempersiapkan Audio.....");
+                        pd.show();
+                        mp = new MediaPlayer();
+                        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mp.setOnPreparedListener(sai.this);
+                        mp.setOnErrorListener(sai.this);
+                        mp.setDataSource(srcPath);
+                        mp.prepareAsync();
+                        mp.setOnCompletionListener(sai.this);
+                        v_play.setText("Pause");
+                        img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.stop));
+                    }
+                    catch(Exception e)
+                    {
+                        Log.e("StreamAudioDemo", e.getMessage());
+                    }
+
                     v_play.setText("Pause");
                     img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.stop));
                 }
@@ -324,7 +360,7 @@ public class sai extends AppCompatActivity {
         arrow_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdReset();cmdPrepare();
+                stopPlaying();
                 rankDialog.dismiss();
             }
         });
@@ -332,7 +368,7 @@ public class sai extends AppCompatActivity {
         txt_doa1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdReset();cmdPrepare();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa Mendaki Bukit Safa");
                 varab.setText("بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ، أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ وَرَسُوْلُهُ. إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
@@ -345,7 +381,7 @@ public class sai extends AppCompatActivity {
         txt_doa2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdReset();cmdPrepare();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa Saat di Bukit Safa");
                 varab.setText("اَللهُ أَكْبَرُ، اَللهُ أَكْبَرُ، اَللهُ أَكْبَرُ، وَلِلَّهِ الحَمْدُ. اللَّهُ أَكْبَرُ عَلَى مَا هَدَانَا، وَالحَمْدُ لِلَّهِ عَلَى مَا أَوْلاَناَ. لَا إلَهَ إِلاَّ اللهُ ، وَحْدَهُ لَا شَرِيكَ لَهُ ، لَهُ الْمُلْكُ ، وَلَهُ الْحَمْدُ يُحْيي ويُمِيْتُ، بِيَدِهِ الخَيْرُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ. لاَ إِلَهَ إِلاَّ اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، أَنْجَزَ وَعْدَهُ وَنَصَرَ عَبْدَهُ وَهَزَمَ الأَحْزَابَ وَحْدَهُ، لَا إلَهَ إِلاَّ اللهُ ، وَلاَ نَعْبُدُ إِلاَّ إِيَّاهُ مُخْلِصِيْنَ لَهُ الدِّيْنَ، وَلَوْ كَرِهَ الكَافِرُوْنَ");
@@ -357,7 +393,7 @@ public class sai extends AppCompatActivity {
         txt_doa3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdReset();cmdPrepare();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa di Antara 2 Pilar Hijau");
                 varab.setText("رَبّ اغْفِرْ وَارْحَمْ، وَاعْفُ وَتَكَرَّمْ، وَتَجَاوَزْ عَمَّا تَعْلَمُ، إنَّكَ تَعْلَمُ مَالاَ نَعْلَمْ، إنَّكَ أَنْتَ اللهُ الأَعَزُّ الأَكْرَمُ");
@@ -369,7 +405,7 @@ public class sai extends AppCompatActivity {
         txt_doa4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdReset();cmdPrepare();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa Ketika Mendekati Bukit Safa atau Marwah");
                 varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَائِرِ اللَّهِ فَمَنْ حَجَّ الْبَيْتَ أَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ أَنْ يَطَّوَّفَ بِهِمَا وَمَنْ تَطَوَّعَ خَيْرًا فَإِنَّ اللَّهَ شَاكِرٌ عَلِيمٌ");
@@ -381,7 +417,7 @@ public class sai extends AppCompatActivity {
         txt_doa5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cmdReset();cmdPrepare();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText("Mainkan");
                 img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
                 vname.setText("Doa Selesai Sai");
                 varab.setText("اللَّهُمَّ رَبَّنَا تَقَبَّلْ مِنَّا وَعَافِنَا وَاعْفُ عَنَّا وَعَلَى طَاعَتِكَ وَشُكْرِكَ أَعِنَّا، وَعَلَى غَيْرِكَ لاَ تَكِلْنَا، وَعَلَى الإِيْمَانِ وَالإِسْلاَمِ الكَامِلِ جَمِيْعًا تَوَفَّنَا وَأَنْتَ رَاضٍ عَنَّا اللَّهُمَّ ارْحَمْنِيْ بِتَرْكِ المَعَاصِيْ أَبَدًا مَا أَبْقَيْتَنِيْ، وَارْحَمْنِيْ أَنْ أَتَكَلَّفَ مَالاَ يَعْنِيْنِيْ، وَارْزُقْنِيْ حُسْنَ النَّظَرِ فِيْمَا يُرْضِيْكَ عَنِّيْ يَا أَرْحَمَ الرَاحِمِيْنَ");
@@ -431,213 +467,51 @@ public class sai extends AppCompatActivity {
     }
 
 
-    //play
-    Handler monitorHandler = new Handler(){
-
-        @Override
-        public void handleMessage(Message msg) {
-            mediaPlayerMonitor();
-        }
-    };
-
-    private void mediaPlayerMonitor(){
-        if (mediaPlayer == null){
-//            timeLine.setVisibility(View.INVISIBLE);
-//            timeFrame.setVisibility(View.INVISIBLE);
-        }else{
-            if(mediaPlayer.isPlaying()){
-                mProgressDialog.dismiss();
-//                timeLine.setVisibility(View.VISIBLE);
-//                timeFrame.setVisibility(View.VISIBLE);
-//
-//                int mediaDuration = mediaPlayer.getDuration();
-//                int mediaPosition = mediaPlayer.getCurrentPosition();
-//                timeLine.setMax(mediaDuration);
-//                timeLine.setProgress(mediaPosition);
-//                timePos.setText(String.valueOf((float)mediaPosition/1000) + "s");
-//                timeDur.setText(String.valueOf((float)mediaDuration/1000) + "s");
-            }else{
-                txt_play.setText("Mainkan");
-                img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
-                v_play.setText("Mainkan");
-                img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-//                timeLine.setVisibility(View.INVISIBLE);
-//                timeFrame.setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    MediaPlayer.OnErrorListener mediaPlayerOnErrorListener
-            = new MediaPlayer.OnErrorListener(){
-
-        @Override
-        public boolean onError(MediaPlayer mp, int what, int extra) {
-            // TODO Auto-generated method stub
-
-            mediaPlayerState = sai.MP_State.Error;
-            showMediaPlayerState();
-
-            return false;
-        }};
-
-
-    private void cmdReset(){
-        if (mediaPlayer == null){
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setOnErrorListener(mediaPlayerOnErrorListener);
-        }
-        if (!txt_play.getText().toString().equals("Mulai")){
-            txt_play.setText("Mainkan");
-            img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
-        }
-        v_play.setText("Mainkan");
-        img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
-        mediaPlayer.reset();
-        mediaPlayerState = sai.MP_State.Idle;
-        showMediaPlayerState();
-    }
-
-    private void cmdSetDataSource(String path){
-        if(mediaPlayerState == sai.MP_State.Idle){
-            try {
-                mediaPlayer.setDataSource(path);
-                mediaPlayerState = sai.MP_State.Initialized;
-            } catch (IllegalArgumentException e) {
-//                Toast.makeText(sai.this,
-//                        e.toString(), Toast.LENGTH_LONG).show();
-//                e.printStackTrace();
-            } catch (IllegalStateException e) {
-//                Toast.makeText(sai.this,
-//                        e.toString(), Toast.LENGTH_LONG).show();
-//                e.printStackTrace();
-            } catch (IOException e) {
-//                Toast.makeText(sai.this,
-//                        e.toString(), Toast.LENGTH_LONG).show();
-//                e.printStackTrace();
-            }
-        }else{
-//            Toast.makeText(sai.this,
-//                    "Invalid State@cmdSetDataSource - skip",
-//                    Toast.LENGTH_LONG).show();
-        }
-
-        showMediaPlayerState();
-    }
-
-    private void cmdPrepare(){
-
-        if(mediaPlayerState == sai.MP_State.Initialized
-                ||mediaPlayerState == sai.MP_State.Stopped){
-            try {
-                mediaPlayer.prepare();
-                mediaPlayerState = sai.MP_State.Prepared;
-            } catch (IllegalStateException e) {
-                Toast.makeText(sai.this,
-                        e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            } catch (IOException e) {
-                Toast.makeText(sai.this,
-                        e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
-        }else{
-//            Toast.makeText(ViewPanduan.this,
-//                    "Invalid State@cmdPrepare() - skip",
-//                    Toast.LENGTH_LONG).show();
-        }
-
-        showMediaPlayerState();
-    }
-
-    private void cmdStart(){
-        if(mediaPlayerState == sai.MP_State.Prepared
-                ||mediaPlayerState == sai.MP_State.Started
-                ||mediaPlayerState == sai.MP_State.Paused
-                ||mediaPlayerState == sai.MP_State.PlaybackCompleted){
-            mediaPlayer.start();
-            mediaPlayerState = sai.MP_State.Started;
-        }else{
-//            Toast.makeText(ViewPanduan.this,
-//                    "Invalid State@cmdStart() - skip",
-//                    Toast.LENGTH_LONG).show();
-        }
-
-        showMediaPlayerState();
-    }
-
-    private void cmdPause(){
-        if(mediaPlayerState == sai.MP_State.Started
-                ||mediaPlayerState == sai.MP_State.Paused){
-            mediaPlayer.pause();
-            mediaPlayerState = sai.MP_State.Paused;
-        }else{
-//            Toast.makeText(ViewPanduan.this,
-//                    "Invalid State@cmdPause() - skip",
-//                    Toast.LENGTH_LONG).show();
-        }
-        showMediaPlayerState();
-    }
-
-    private void cmdStop(){
-
-        if(mediaPlayerState == sai.MP_State.Prepared
-                ||mediaPlayerState == sai.MP_State.Started
-                ||mediaPlayerState == sai.MP_State.Stopped
-                ||mediaPlayerState == sai.MP_State.Paused
-                ||mediaPlayerState == sai.MP_State.PlaybackCompleted){
-            mediaPlayer.stop();
-            mediaPlayerState = sai.MP_State.Stopped;
-        }else{
-//            Toast.makeText(ViewPanduan.this,
-//                    "Invalid State@cmdStop() - skip",
-//                    Toast.LENGTH_LONG).show();
-        }
-        showMediaPlayerState();
-
-    }
-
-    private void showMediaPlayerState(){
-
-        switch(mediaPlayerState){
-            case Idle:
-                state.setText("Idle");
-                break;
-            case Initialized:
-                state.setText("Initialized");
-                break;
-            case Prepared:
-                state.setText("Prepared");
-                break;
-            case Started:
-                state.setText("Started");
-                break;
-            case Paused:
-                state.setText("Paused");
-                break;
-            case Stopped:
-                state.setText("Stopped");
-                break;
-            case PlaybackCompleted:
-                state.setText("PlaybackCompleted");
-                break;
-            case End:
-                state.setText("End");
-                break;
-            case Error:
-                state.setText("Error");
-                break;
-            case Preparing:
-                state.setText("Preparing");
-                break;
-            default:
-                state.setText("Unknown!");
-        }
-    }
 
     @Override
     public void onStop()
     {
         super.onStop();
-        cmdReset();
+        stopPlaying();
     }
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+//        pd.setMessage("Playing.....");
+        mp.start();
+        if(mp.isPlaying()) {
+            pd.dismiss();
+        }
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        pd.dismiss();
+        return false;
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+//        pd.dismiss();
+        final String play = txt_play.getText().toString().trim();
+        final String play2 = v_play.getText().toString().trim();
+        if(play.equals("Pause")){
+            txt_play.setText("Mainkan");
+            img_play.setImageDrawable(getResources().getDrawable(R.drawable.play));
+        }
+        if(play2.equals("Pause")) {
+            img_vplay.setImageDrawable(getResources().getDrawable(R.drawable.play));
+            v_play.setText("Mainkan");
+        }
+        Toast.makeText(getApplicationContext(), "Selesai", Toast.LENGTH_LONG).show();
+    }
+
+    private void stopPlaying() {
+        if (mp != null) {
+            mp.stop();
+            mp.release();
+            mp = null;
+        }
+    }
+
 }
+

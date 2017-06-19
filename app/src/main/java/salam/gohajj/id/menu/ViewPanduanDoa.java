@@ -70,6 +70,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
     private String id,file,uid;
     private SeekBar timeLine;
     LinearLayout timeFrame;
+    ProgressDialog pd;
     TextView timePos, timeDur;
     private String JSON_STRING; MediaPlayer mediaPlayer;
     String srcPath = null;
@@ -340,12 +341,15 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                             "No file selected",
                             Toast.LENGTH_LONG).show();
                 }else{
+                    pd = new ProgressDialog(ViewPanduanDoa.this);
+                    pd.setMessage("Mempersiapkan Audio.....");
+                    pd.show();
                     cmdPrepare();
                     cmdStart();
                     buttonStart.setText("Stop");
                 }
             }else{
-                cmdPause();
+                cmdStop();
                 buttonStart.setText("Mainkan Audio");
             }
         }
@@ -394,6 +398,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             timeFrame.setVisibility(View.INVISIBLE);
         }else{
             if(mediaPlayer.isPlaying()){
+                pd.dismiss();
                 timeLine.setVisibility(View.VISIBLE);
                 timeFrame.setVisibility(View.VISIBLE);
 
@@ -480,7 +485,8 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(ViewPanduanDoa.this,
                         e.toString(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
 //                Toast.makeText(ViewPanduan.this,
 //                        e.toString(), Toast.LENGTH_LONG).show();
 //                e.printStackTrace();
