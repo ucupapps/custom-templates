@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -331,6 +333,18 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    public boolean cek_status(Context cek) {
+
+        ConnectivityManager cm = (ConnectivityManager) cek.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        if (info != null && info.isConnected())
+        {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -341,12 +355,19 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                             "No file selected",
                             Toast.LENGTH_LONG).show();
                 }else{
-                    pd = new ProgressDialog(ViewPanduanDoa.this);
-                    pd.setMessage("Mempersiapkan Audio.....");
-                    pd.show();
-                    cmdPrepare();
-                    cmdStart();
-                    buttonStart.setText("Stop");
+                    if (!cek_status(getApplicationContext()))
+                    {
+                        Toast.makeText(ViewPanduanDoa.this,
+                                "Mohon Cek Koneksi Anda",
+                                Toast.LENGTH_SHORT).show();
+                    }else {
+                        pd = new ProgressDialog(ViewPanduanDoa.this);
+                        pd.setMessage("Mempersiapkan Audio...");
+                        pd.show();
+                        cmdPrepare();
+                        cmdStart();
+                        buttonStart.setText("Stop");
+                    }
                 }
             }else{
                 cmdStop();
@@ -398,7 +419,6 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             timeFrame.setVisibility(View.INVISIBLE);
         }else{
             if(mediaPlayer.isPlaying()){
-                pd.dismiss();
                 timeLine.setVisibility(View.VISIBLE);
                 timeFrame.setVisibility(View.VISIBLE);
 
@@ -412,6 +432,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                 int seconds2 = mediaDuration/1000 % 60;
                 timePos.setText(String.format("%02d:%02d", minutes, seconds));
                 timeDur.setText(String.format("%02d:%02d", minutes2, seconds2));
+                pd.dismiss();
 //                timePos.setText(String.valueOf( minutes+":"+seconds));
 //                timeDur.setText(String.valueOf( minutes2+":"+seconds2));
 
