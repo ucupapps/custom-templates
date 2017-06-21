@@ -302,24 +302,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener(){
             @Override
             public void onMapClick(LatLng latLng) {
-                if(marker == null) {
+                String almt=mLocationAddress.getText().toString();
+                if(almt.equals("")){
+                    Toast.makeText(getApplicationContext(), "Maaf Lokasi Anda Belum di Temukan !", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (marker == null) {
 //                    markerOptions = new MarkerOptions();
 //                    markerOptions.position(latLng);
 //                    markerOptions.title("Set Lokasi");
 //                    markerOptions.draggable(true);
 //                    marker = mMap.addMarker(markerOptions);
 //                    marker.showInfoWindow();
-                } else {
-                    marker.setPosition(latLng);
-                    marker.showInfoWindow();
+                    } else {
+                        marker.setPosition(latLng);
+                        marker.showInfoWindow();
+                    }
+                    LatLng latLngAdd = marker.getPosition();
+                    Double latAdd = latLngAdd.latitude;
+                    Double lngAdd = latLngAdd.longitude;
+                    Location temp = new Location(LocationManager.GPS_PROVIDER);
+                    temp.setLatitude(latAdd);
+                    temp.setLongitude(lngAdd);
+                    startIntentService(temp);
                 }
-                LatLng latLngAdd = marker.getPosition();
-                Double latAdd = latLngAdd.latitude;
-                Double lngAdd = latLngAdd.longitude;
-                Location temp = new Location(LocationManager.GPS_PROVIDER);
-                temp.setLatitude(latAdd);
-                temp.setLongitude(lngAdd);
-                startIntentService(temp);
 //                Toast.makeText(getApplicationContext(), latLng.toString(), Toast.LENGTH_LONG).show();
             }
         });
