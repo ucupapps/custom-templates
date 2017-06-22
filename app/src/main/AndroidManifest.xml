@@ -108,16 +108,33 @@
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.TitipanDoa"
-            android:label="Doa"
+            android:label="Titipan Doa"
             android:screenOrientation="portrait"
             android:noHistory="true"
             android:launchMode="singleTop">
+            <intent-filter android:label="Titipan Doa" android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "https://gohajj.id/titipandoa" -->
+                <data android:scheme="https"
+                    android:host="gohajj.id"
+                    android:pathPrefix="/titipandoa" />
+            </intent-filter>
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.panduan"
             android:label="Panduan"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
+            <intent-filter android:label="Panduan" android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
+                <data android:scheme="https"
+                    android:host="gohajj.id" />
+            </intent-filter>
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.emergency"
@@ -174,9 +191,18 @@
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.sai"
-            android:label="SAI"
+            android:label="Sai"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
+            <intent-filter android:label="SAI" android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
+                <data android:scheme="https"
+                    android:host="gohajj.id"
+                    android:pathPrefix="/doa" />
+            </intent-filter>
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.download"
@@ -212,6 +238,15 @@
             android:label="Thawaf"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
+            <intent-filter android:label="Thawaf" android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
+            <data android:scheme="https"
+                android:host="gohajj.id"
+                android:pathPrefix="/doa" />
+        </intent-filter>
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.ViewInbox"
@@ -227,7 +262,7 @@
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.GoPoi"
-            android:label="GO POI"
+            android:label="Go POI"
             android:screenOrientation="portrait"
             android:launchMode="singleTop">
         </activity>
@@ -249,7 +284,7 @@
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.SyaratKetentuan"
-            android:label="SyaratKetentuan"
+            android:label="Syarat Ketentuan"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -264,27 +299,27 @@
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.PusatBantuan"
-            android:label="Bantuan"
+            android:label="Pusat Bantuan"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.laporkanmasalah"
-            android:label="Bantuan "
+            android:label="Laporkan Masalah"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.kirimlaporan"
-            android:label="Bantuan "
+            android:label="Kirim Laporan"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.layanan"
-            android:label="Bantuan "
+            android:label="Layanan"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="salam.gohajj.id.menu.View_PusatBantuan"
-            android:label="Bantuan "
+            android:label="Pusat Bantuan"
             android:screenOrientation="portrait">
         </activity>
 
@@ -325,6 +360,7 @@
         <service
             android:name="salam.gohajj.id.activity.FetchAddressIntentService"
             android:exported="false" />
+
 
     </application>
 
