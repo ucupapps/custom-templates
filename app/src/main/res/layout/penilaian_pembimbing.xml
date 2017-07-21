@@ -7,14 +7,14 @@
     android:fitsSystemWindows="true"
     tools:context="salam.gohajj.id.menu.profile">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-            <include layout="@layout/header2"/>
-    </android.support.design.widget.AppBarLayout>
+            <!--<include layout="@layout/header2"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,12 +22,14 @@
         tools:context="com.gohajj.id.salam.gohajj.id.menu.profile">
 
         <include layout="@layout/footer" />
+        <include layout="@layout/header2"/>
 
         <RelativeLayout
             android:id="@+id/circle_menu"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@id/footer"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header2"
             android:gravity="center">
 
             <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingTop="60dp"
                     tools:context=".sample.input">
                     <TextView
                         android:layout_width="match_parent"

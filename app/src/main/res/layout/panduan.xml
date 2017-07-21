@@ -5,29 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="salam.gohajj.id.menu.TitipanDoa">
+    tools:context="salam.gohajj.id.menu.panduan">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-            android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+            <!--android:id="@+id/toolbar"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-        <!--<android.support.v7.widget.Toolbar-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="100dp"-->
-            <!--app:popupTheme="@style/AppTheme.PopupOverlay" >-->
-            <include layout="@layout/header"/>
-        <!--</android.support.v7.widget.Toolbar>-->
-    </android.support.design.widget.AppBarLayout>
+        <!--&lt;!&ndash;<android.support.v7.widget.Toolbar&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="100dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;app:popupTheme="@style/AppTheme.PopupOverlay" >&ndash;&gt;-->
+            <!--<include layout="@layout/header"/>-->
+        <!--&lt;!&ndash;</android.support.v7.widget.Toolbar>&ndash;&gt;-->
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:circle="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.gohajj.id.salam.gohajj.id.menu.TitipanDoa" >
+        tools:context="com.gohajj.id.salam.gohajj.id.menu.panduan" >
 
+        <include layout="@layout/header"/>
         <include layout="@layout/footer"/>
 
         <RelativeLayout
@@ -36,6 +37,7 @@
             android:layout_height="fill_parent"
             android:background="@color/colorSilver"
             android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
             android:gravity="center" >
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,7 +46,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:weightSum="1"
-                android:layout_marginTop="115dp"
                 tools:context=".sample.input">
                 <TextView
                     android:layout_width="match_parent"

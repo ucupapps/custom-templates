@@ -1,16 +1,17 @@
 package salam.gohajj.id.app;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import salam.gohajj.id.R;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
-public class AppController extends Application {
+import salam.gohajj.id.R;
+
+public class AppController extends MultiDexApplication {
 
 	private Tracker mTracker;
 	public static final String TAG = AppController.class.getSimpleName();

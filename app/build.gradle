@@ -10,7 +10,7 @@ android {
         targetSdkVersion 25
         versionCode 11
         versionName "1.0.3"
-        multiDexEnabled false
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -55,6 +55,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile 'com.google.firebase:firebase-appindexing:10.0.1'
+    compile 'com.android.support:multidex:1.0.1'
 
 }
 

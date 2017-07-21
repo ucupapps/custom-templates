@@ -7,14 +7,14 @@
     android:fitsSystemWindows="true"
     tools:context="salam.gohajj.id.menu.edit_profile">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-        <include layout="@layout/header"/>
-    </android.support.design.widget.AppBarLayout>
+        <!--<include layout="@layout/header"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:circle="http://schemas.android.com/apk/res-auto"
@@ -24,12 +24,14 @@
         tools:context="com.gohajj.id.salam.gohajj.id.menu.edit_profile" >
 
         <include layout="@layout/footer"/>
+        <include layout="@layout/header"/>
 
         <RelativeLayout
             android:id="@+id/circle_menu"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@id/footer"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
             android:gravity="center" >
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

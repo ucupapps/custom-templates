@@ -7,14 +7,14 @@
     android:fitsSystemWindows="true"
     tools:context="salam.gohajj.id.menu.edit_profile">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-        <include layout="@layout/header2"/>
-    </android.support.design.widget.AppBarLayout>
+        <!--<include layout="@layout/header2"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,12 +23,14 @@
         tools:context="com.gohajj.id.salam.gohajj.id.menu.edit_profile">
 
         <include layout="@layout/footer_sai" />
+        <include layout="@layout/header2"/>
 
         <RelativeLayout
             android:id="@+id/circle_menu"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@id/footer"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header2"
             android:gravity="center">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,7 +39,6 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorSilver"
                 android:orientation="vertical"
-                android:paddingTop="50dp"
                 tools:context=".sample.input">
 
                 <LinearLayout
