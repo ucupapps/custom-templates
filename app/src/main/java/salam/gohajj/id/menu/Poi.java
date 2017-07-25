@@ -299,7 +299,7 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

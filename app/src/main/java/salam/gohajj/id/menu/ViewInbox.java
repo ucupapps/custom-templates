@@ -224,7 +224,7 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListView adapter = new CustomListView(this, list,

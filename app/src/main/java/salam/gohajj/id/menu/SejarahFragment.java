@@ -93,7 +93,7 @@ public class SejarahFragment extends Fragment implements ListView.OnItemClickLis
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListSejarah adapter = new CustomListSejarah(getContext(), list,

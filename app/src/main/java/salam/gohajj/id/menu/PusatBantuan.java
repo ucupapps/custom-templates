@@ -168,7 +168,7 @@ public class PusatBantuan extends AppCompatActivity implements ListView.OnItemCl
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListBantuan adapter = new CustomListBantuan(this, list,

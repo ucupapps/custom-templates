@@ -428,7 +428,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
 //        ListAdapter adapter = new SimpleAdapter(
@@ -488,7 +488,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 } catch (JSONException e) {
                     // JSON error
-                    e.printStackTrace();
+//                    e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
@@ -522,7 +522,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Getting a maximum of 3 Address that matches the input text
                 addresses = geocoder.getFromLocationName(locationName[0], 3);
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             return addresses;
         }
@@ -699,7 +699,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mLocationAddress.setText(mAddressOutput);
             //mLocationText.setText(mAreaOutput);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 }

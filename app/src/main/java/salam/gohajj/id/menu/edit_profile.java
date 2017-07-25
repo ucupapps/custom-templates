@@ -446,7 +446,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             EditPembimbingPhone.setText(pembimbing_phone);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -463,7 +463,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     bitmapProfile = getResizedBitmap(bitmapProfileOri, 500);
                     imgProfile.setImageBitmap(bitmapProfile);
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }else if(selectedAgent != null) {
                 filePathAgent = data.getData();
@@ -472,7 +472,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     bitmapAgent = getResizedBitmap(bitmapAgentOri, 500);
                     imgAgent.setImageBitmap(bitmapAgent);
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }else if(selectedPemimpin != null) {
                 filePathPemimpin = data.getData();
@@ -481,7 +481,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     bitmapPemimpin = getResizedBitmap(bitmapPemimpinOri, 500);
                     imgPemimpin.setImageBitmap(bitmapPemimpin);
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }else if(selectedPembimbing != null) {
                 filePathPembimbing = data.getData();
@@ -490,7 +490,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
                     bitmapPembimbing = getResizedBitmap(bitmapPembimbingOri, 500);
                     imgPembimbing.setImageBitmap(bitmapPembimbing);
                 } catch (IOException e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }
         }

@@ -270,7 +270,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         doaLinear.addView(listView);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -296,9 +296,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
-                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
                     showData();
-                }
             }
 
             @Override

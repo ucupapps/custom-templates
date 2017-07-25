@@ -93,7 +93,7 @@ public class OlehOlehFragment extends Fragment implements ListView.OnItemClickLi
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListSejarah adapter = new CustomListSejarah(getContext(), list,

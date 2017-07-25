@@ -100,7 +100,7 @@ public class ThreeFragment extends Fragment implements ListView.OnItemClickListe
                 ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -119,9 +119,7 @@ public class ThreeFragment extends Fragment implements ListView.OnItemClickListe
                 super.onPostExecute(s);
 //                loading.dismiss();
                 JSON_STRING = s;
-                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
                     showData();
-                }
             }
 
             @Override

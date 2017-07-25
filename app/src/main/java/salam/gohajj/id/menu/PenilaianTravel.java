@@ -260,7 +260,7 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
             editTextuser.setText(uid);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

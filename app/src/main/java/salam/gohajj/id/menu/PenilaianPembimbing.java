@@ -253,7 +253,7 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
             Picasso.with(this).load(AppConfig.URL_HOME+"/uploads/profile/"+uid+"/pembimbing.jpg").into(imgProfile);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

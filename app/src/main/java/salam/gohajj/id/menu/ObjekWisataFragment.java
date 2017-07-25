@@ -93,7 +93,7 @@ public class ObjekWisataFragment extends Fragment implements ListView.OnItemClic
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListSejarah adapter = new CustomListSejarah(getContext(), list,

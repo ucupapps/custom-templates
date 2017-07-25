@@ -735,7 +735,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                     txtlat.setText("" + mCenterLatLong.longitude+ "");
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }
         });
@@ -769,7 +769,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                         mGoogleApiClient, this);
 
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         try {
             LocationRequest mLocationRequest = new LocationRequest();
@@ -780,7 +780,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                     mGoogleApiClient, mLocationRequest, this);
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }
@@ -800,7 +800,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                     mGoogleApiClient, this);
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -825,7 +825,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             mGoogleApiClient.connect();
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -835,7 +835,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         try {
 
         } catch (RuntimeException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -951,7 +951,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 mLocationAddress.setText(mAddressOutput);
             //mLocationText.setText(mAreaOutput);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

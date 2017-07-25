@@ -270,9 +270,9 @@ public class download extends Activity {
                                     }
                                 }
                             } catch (IOException e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                             } catch (JSONException e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                             }
 
                             // When the loop is finished, updates the notification
@@ -286,7 +286,7 @@ public class download extends Activity {
 
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

@@ -81,7 +81,7 @@ public class SyaratKetentuan extends AppCompatActivity {
             txtValue.loadData(value, "text/html; charset=utf-8", "utf-8");
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
