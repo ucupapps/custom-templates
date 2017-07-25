@@ -21,14 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import salam.gohajj.id.R;
-import salam.gohajj.id.activity.LoginActivity;
-import salam.gohajj.id.app.AppController;
-import salam.gohajj.id.chat.CustomList;
-import salam.gohajj.id.activity.RequestHandler;
-import salam.gohajj.id.app.AppConfig;
-import salam.gohajj.id.helper.SQLiteHandler;
-import salam.gohajj.id.helper.SessionManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -44,8 +36,14 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
-
-import static java.sql.Types.NULL;
+import salam.gohajj.id.R;
+import salam.gohajj.id.activity.LoginActivity;
+import salam.gohajj.id.activity.RequestHandler;
+import salam.gohajj.id.app.AppConfig;
+import salam.gohajj.id.app.AppController;
+import salam.gohajj.id.chat.CustomList;
+import salam.gohajj.id.helper.SQLiteHandler;
+import salam.gohajj.id.helper.SessionManager;
 
 public class inbox extends AppCompatActivity implements ListView.OnItemClickListener {
 
@@ -274,9 +272,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
-                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
-                    showData();
-                }
+                showData();
             }
 
             @Override

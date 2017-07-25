@@ -1,6 +1,5 @@
 package salam.gohajj.id.menu;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +23,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import salam.gohajj.id.R;
-import salam.gohajj.id.activity.LoginActivity;
-import salam.gohajj.id.activity.RequestHandler;
-import salam.gohajj.id.app.AppConfig;
-import salam.gohajj.id.helper.SQLiteHandler;
-import salam.gohajj.id.helper.SessionManager;
 import com.github.rtoshiro.view.video.FullscreenVideoLayout;
 import com.readystatesoftware.viewbadger.BadgeView;
 
@@ -50,6 +43,12 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import salam.gohajj.id.R;
+import salam.gohajj.id.activity.LoginActivity;
+import salam.gohajj.id.activity.RequestHandler;
+import salam.gohajj.id.app.AppConfig;
+import salam.gohajj.id.helper.SQLiteHandler;
+import salam.gohajj.id.helper.SessionManager;
 
 public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickListener {
 
@@ -329,19 +328,27 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         String url = AppConfig.URL_HOME+"/uploads/panduan/video/"+file;
         new ViewPanduanVideo.DownloadFileAsync().execute(url);
     }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_DOWNLOAD_PROGRESS:
-                mProgressDialog = new ProgressDialog(this);
-                mProgressDialog.setMessage("Downloading file..");
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                return mProgressDialog;
-            default:
-                return null;
-        }
+//    @Override
+//    protected Dialog onCreateDialog(int id) {
+//        switch (id) {
+//            case DIALOG_DOWNLOAD_PROGRESS:
+//                mProgressDialog = new ProgressDialog(this);
+//                mProgressDialog.setMessage("Downloading file..");
+//                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//                mProgressDialog.setCancelable(false);
+//                mProgressDialog.show();
+//                return mProgressDialog;
+//            default:
+//                return null;
+//        }
+//    }
+    public ProgressDialog showDialogDownload() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Downloading file..");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+        return mProgressDialog;
     }
 
     class DownloadFileAsync extends AsyncTask<String, String, String> {
@@ -349,7 +356,8 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+//            showDialog(DIALOG_DOWNLOAD_PROGRESS);
+            showDialogDownload();
         }
 
         @Override
@@ -396,9 +404,12 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
             mProgressDialog.setProgress(Integer.parseInt(progress[0]));
         }
 
-        @Override
+//        @Override
+//        protected void onPostExecute(String unused) {
+//            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
+//        }
         protected void onPostExecute(String unused) {
-            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
+            showDialogDownload().dismiss();
         }
     }
     @Override

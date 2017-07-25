@@ -15,11 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import salam.gohajj.id.R;
-import salam.gohajj.id.activity.CustomListPanduan2;
-import salam.gohajj.id.activity.RequestHandler;
-import salam.gohajj.id.app.AppConfig;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,9 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.id.R;
+import salam.gohajj.id.activity.CustomListPanduan2;
+import salam.gohajj.id.activity.RequestHandler;
+import salam.gohajj.id.app.AppConfig;
 
 import static salam.gohajj.id.app.AppConfig.URL_HOME;
-import static java.sql.Types.NULL;
 
 
 public class TwoFragment extends Fragment implements ListView.OnItemClickListener {
@@ -118,9 +116,7 @@ public class TwoFragment extends Fragment implements ListView.OnItemClickListene
                 super.onPostExecute(s);
 //                loading.dismiss();
                 JSON_STRING = s;
-                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
-                    showData();
-                }
+                showData();
             }
 
             @Override

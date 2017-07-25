@@ -84,6 +84,14 @@ public class splashscreen extends Activity {
         database=openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS loader(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, status INTEGER);");
         database.execSQL("CREATE TABLE IF NOT EXISTS badge(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, jumlah INTEGER);");
+        database.execSQL("CREATE TABLE IF NOT EXISTS play(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, status INTEGER);");
+        Cursor mCoun= database.rawQuery("select count(*) from play", null);
+        mCoun.moveToFirst();
+        int coun= mCoun.getInt(0);
+        if(coun == 0) {
+            String query = "INSERT INTO play (status) VALUES(1);";
+            database.execSQL(query);
+        }
 
     }
 
