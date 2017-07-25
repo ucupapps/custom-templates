@@ -282,7 +282,7 @@ public class add_hotel extends AppCompatActivity implements OnClickListener {
                     }
                 } catch (JSONException e) {
                     // JSON error
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 //                startActivity(new Intent(add_hotel.this, MapsActivity.class));

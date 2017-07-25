@@ -403,7 +403,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             eFamily3.setText(efamily3);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

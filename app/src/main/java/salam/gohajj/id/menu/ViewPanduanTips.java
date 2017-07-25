@@ -264,7 +264,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             txtName.setText(name);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

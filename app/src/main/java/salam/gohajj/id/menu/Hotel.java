@@ -272,7 +272,7 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
 //                NotFoundLinear.setVisibility(View.VISIBLE);
         } catch (JSONException e) {
             Log.e("error SHOW :", e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
 //        adapter = new CustomListDoa(TitipanDoa.this, R.layout.list_doa,list);

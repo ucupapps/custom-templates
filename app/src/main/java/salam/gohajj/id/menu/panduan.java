@@ -387,7 +387,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -532,7 +532,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListPanduan3 adapter = new CustomListPanduan3(this, list,

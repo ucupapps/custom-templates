@@ -286,7 +286,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             getJSON(id);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -343,19 +343,19 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
                 // TODO Auto-generated catch block
                 Log.d("IllegarArgument", e.getMessage());
                 prepared = false;
-                e.printStackTrace();
+//                e.printStackTrace();
             } catch (SecurityException e) {
                 // TODO Auto-generated catch block
                 prepared = false;
-                e.printStackTrace();
+//                e.printStackTrace();
             } catch (IllegalStateException e) {
                 // TODO Auto-generated catch block
                 prepared = false;
-                e.printStackTrace();
+//                e.printStackTrace();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 prepared = false;
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             return prepared;
         }
@@ -439,7 +439,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListPanduan1 adapter = new CustomListPanduan1(this, list,

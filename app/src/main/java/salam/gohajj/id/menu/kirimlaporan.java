@@ -187,7 +187,7 @@ public class kirimlaporan extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 image.setImageBitmap(bitmap);
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
     }

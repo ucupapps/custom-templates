@@ -185,7 +185,7 @@ public class View_PusatBantuan extends AppCompatActivity {
             jawaban.loadData(jawab, "text/html; charset=utf-8", "utf-8");
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
     protected void CountInbox(){

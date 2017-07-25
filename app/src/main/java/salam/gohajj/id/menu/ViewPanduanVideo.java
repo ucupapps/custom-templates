@@ -235,7 +235,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         try {
             videoLayout.setVideoURI(videoUri);
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +312,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
             txtName.setText(name);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

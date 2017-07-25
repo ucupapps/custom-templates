@@ -98,7 +98,7 @@ public class OneFragment extends Fragment implements ListView.OnItemClickListene
                 ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

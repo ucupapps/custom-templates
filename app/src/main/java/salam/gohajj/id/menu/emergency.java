@@ -562,7 +562,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             contact.setSelection(contact.getText().length());
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -607,7 +607,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     txtMessage.setText("Tolong temukan saya " +nama_user+"\n Location: https://maps.google.com/?q="+ mCenterLatLong.latitude+"," + mCenterLatLong.longitude+"");
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+//                    e.printStackTrace();
                 }
             }
         });
@@ -641,7 +641,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                         mGoogleApiClient, this);
 
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         try {
             LocationRequest mLocationRequest = new LocationRequest();
@@ -652,7 +652,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     mGoogleApiClient, mLocationRequest, this);
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }
@@ -672,7 +672,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     mGoogleApiClient, this);
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -697,7 +697,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             mGoogleApiClient.connect();
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -707,7 +707,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         try {
 
         } catch (RuntimeException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
@@ -810,7 +810,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 mLocationAddress.setText(mAddressOutput);
             //mLocationText.setText(mAreaOutput);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

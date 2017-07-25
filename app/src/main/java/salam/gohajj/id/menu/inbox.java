@@ -253,7 +253,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         listView.setAdapter(adapter);
         ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

@@ -329,7 +329,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             getJSON(jenis,ctg,id);
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -505,7 +505,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             } catch (IllegalStateException e) {
                 Toast.makeText(ViewPanduanDoa.this,
                         e.toString(), Toast.LENGTH_LONG).show();
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             catch (IOException e) {
 //                Toast.makeText(ViewPanduan.this,
@@ -628,7 +628,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListPanduan1 adapter = new CustomListPanduan1(this, list,

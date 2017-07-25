@@ -93,7 +93,7 @@ public class FasilitasUmumFragment extends Fragment implements ListView.OnItemCl
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         CustomListSejarah adapter = new CustomListSejarah(getContext(), list,
