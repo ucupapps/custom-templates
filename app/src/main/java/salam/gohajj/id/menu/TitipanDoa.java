@@ -1,7 +1,9 @@
 package salam.gohajj.id.menu;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,15 +14,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,14 +70,20 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     private ArrayList<items> list = new ArrayList<>();
 
     private ListView listView;
-    private String JSON_STRING,uid;
+    private String JSON_STRING,uid,nama;
     private SQLiteHandler db;
     private SessionManager session;
     private Tracker mTracker;
     View target ;
     BadgeView badge ;
-    TextView txtkoneksi;
+    TextView txtkoneksi,vname;
+    ImageView arrow_back,icon_private;
+    EditText to,pesan,status;
+    Button BtnKirim;
     private SQLiteDatabase database;
+    private FloatingActionButton BtnAdd;
+    Dialog rankDialog;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +115,8 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
         uid = user.get("uid");
+        nama = user.get("name");
+
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         CountInbox();
 
@@ -111,7 +126,6 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         listView = (ListView) findViewById(R.id.listView);
         listView.destroyDrawingCache();
         listView.setOnItemClickListener(this);
-
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -219,6 +233,99 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             }
         });
 
+        //popup
+        rankDialog = new Dialog(TitipanDoa.this);
+        rankDialog.setContentView(R.layout.create_titip_doa);
+        rankDialog.setCanceledOnTouchOutside(false);
+        Typeface font = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/helvetica.ttf");
+        vname = (TextView) rankDialog.findViewById(R.id.vname);
+        arrow_back = (ImageView) rankDialog.findViewById(R.id.arrow_back);
+        to = (EditText) rankDialog.findViewById(R.id.to);
+        pesan = (EditText) rankDialog.findViewById(R.id.message);
+        status = (EditText) rankDialog.findViewById(R.id.status);
+        BtnKirim = (Button) rankDialog.findViewById(R.id.btnKirim);
+        vname.setTypeface(font);
+        BtnKirim.setTypeface(font);
+        to.setTypeface(font);
+        pesan.setTypeface(font);
+
+        rankDialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+                // TODO Auto-generated method stub
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    rankDialog.dismiss();
+                }
+                return true;
+            }
+        });
+
+        BtnKirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String stat = status.getText().toString().trim();
+                String ps = pesan.getText().toString().trim();
+                String kepada = to.getText().toString().trim();
+
+                    if(stat.equals("private") ) {
+                        if(kepada.equals("") ) {
+                            Toast.makeText(getApplicationContext(), "Email tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                        }else if(!kepada.equals("") && !kepada.matches(emailPattern) ) {
+                            Toast.makeText(getApplicationContext(), "Format Email tujuan Salah", Toast.LENGTH_SHORT).show();
+                        }else if(ps.equals("") ) {
+                            Toast.makeText(getApplicationContext(), "Pesan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                        }else{
+                            rankDialog.dismiss();
+                            SendDoa();
+                        }
+                    }
+
+                if(stat.equals("public") ) {
+                    if(ps.equals("") ) {
+                        Toast.makeText(getApplicationContext(), "Pesan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                    }else{
+                        rankDialog.dismiss();
+                        SendDoa();
+                    }
+                }
+            }
+        });
+
+        arrow_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rankDialog.dismiss();
+            }
+        });
+
+        BtnAdd =(FloatingActionButton) findViewById(R.id.fab);
+        final PopupMenu addkontak = new PopupMenu(this, BtnAdd);
+        addkontak.getMenu().add(1, 1, 1, "Private");
+        addkontak.getMenu().add(1, 2, 2, "Broadcast");
+
+        BtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addkontak.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if(id == 1) {
+                            to.setVisibility(View.VISIBLE);
+                            status.setText("private");
+                            rankDialog.show();
+                        }if(id == 2) {
+                            to.setVisibility(View.GONE);
+                            status.setText("public");
+                            rankDialog.show();
+                        }
+                        return true;
+                    }
+                });
+                addkontak.show();
+            }
+        });
 
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
@@ -252,13 +359,14 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 String userId = jo.getString(AppConfig.KEY_USERID);
                 String from = jo.getString(AppConfig.KEY_FROM);
                 String jum = jo.getString(AppConfig.KEY_JUMLAH);
+                String sts = jo.getString(AppConfig.KEY_STATUS);
 //                HashMap<String,String> data = new HashMap<>();
 //                data.put(AppConfig.KEY_ID,id);
 //                data.put(AppConfig.KEY_MESSAGE,message);
 //                data.put(AppConfig.KEY_MESSAGE,message);
 //                data.put(AppConfig.KEY_FROM,from);
 //                data.put(AppConfig.KEY_JUMLAH,jum);
-                list.add(new items(id,message,time,userId,from,jum));
+                list.add(new items(id,message,time,userId,from,jum,sts));
             }
 
 
@@ -302,7 +410,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected String doInBackground(Void... params) {
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequest(AppConfig.URL_TITIPAN_DOA);
+                String s = rh.sendGetRequestParam(AppConfig.URL_TITIPAN_DOA,uid);
                 return s;
             }
         }
@@ -360,6 +468,48 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
     }
 
+    public void SendDoa(){
+
+        final String psn = pesan.getText().toString().trim();
+        final String sts = status.getText().toString().trim();
+        final String t = to.getText().toString().trim();
+
+        class send extends AsyncTask<Bitmap,Void,String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(TitipanDoa.this,"","Mengirim...",false,false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(TitipanDoa.this, "Pesan Telah Dikirim", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_STATUS, sts);
+                data.put(AppConfig.KEY_TO, t);
+                data.put(AppConfig.KEY_MESSAGE, psn);
+                data.put(AppConfig.KEY_NAME, nama);
+                data.put(AppConfig.KEY_USERID, uid);
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest(AppConfig.URL_SEND_DOA, data);
+                return res;
+            }
+        }
+
+        send ae = new send();
+        ae.execute();
+
+//        startActivity(new Intent(TitipanDoa.this, TitipanDoa.class));
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -397,6 +547,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             TextView jum = (TextView)itemView.findViewById(R.id.txtJumlah);
             TextView titip = (TextView)itemView.findViewById(R.id.txttitip);
             Button btndoakan = (Button)itemView.findViewById(R.id.btndoakan);
+            icon_private = (ImageView) itemView.findViewById(R.id.icon_private);
 
             Typeface font = Typeface.createFromAsset(TitipanDoa.this.getAssets(), "fonts/helvetica.ttf");
             message.setTypeface(font);
@@ -412,6 +563,12 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             String strIdUser = list.get(position).getUserid();
             String strFrom = list.get(position).getFrom();
             String strJum = list.get(position).getJum();
+            String stsStatus = list.get(position).getStatus();
+            if(stsStatus.equals("private")){
+                icon_private.setVisibility(View.VISIBLE);
+            }else{
+                icon_private.setVisibility(View.GONE);
+            }
             no.setText(strID);
             message.setText(strMessage);
             time.setText(strTime);

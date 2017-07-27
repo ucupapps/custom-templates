@@ -23,7 +23,7 @@
     <color name="btn_logut_bg">#ff6861</color>
     <color name="primaryColorLight">#F8BBD0</color>
     <color name="accentColor">#448AFF</color>
-    <color name="accentColorPressed">#ff2c73ff</color>
+    <color name="accentColorPressed">#2c73ff</color>
     <color name="primaryTextColor">#212121</color>
     <color name="white">#ffffffff</color>
     <color name="red">#ffdc4b4e</color>
