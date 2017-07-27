@@ -12,8 +12,9 @@ public class items {
     String userid;
     String from;
     String jum;
+    String sts;
 
-    public items(String id,String message,String time,String userid,String from,String jum)
+    public items(String id,String message,String time,String userid,String from,String jum,String sts)
     {
         this.id=id;
         this.message=message;
@@ -21,6 +22,7 @@ public class items {
         this.userid=userid;
         this.from=from;
         this.jum=jum;
+        this.sts=sts;
     }
     public String getId()
     {
@@ -45,6 +47,10 @@ public class items {
     public String getJum()
     {
         return jum;
+    }
+    public String getStatus()
+    {
+        return sts;
     }
 
 }
