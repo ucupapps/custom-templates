@@ -272,10 +272,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                     if(stat.equals("private") ) {
                         if(kepada.equals("") ) {
                             Toast.makeText(getApplicationContext(), "Email tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
-                        }else  if(ps.equals("") ) {
-                            Toast.makeText(getApplicationContext(), "Pesan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
                         }else if(!kepada.equals("") && !kepada.matches(emailPattern) ) {
                             Toast.makeText(getApplicationContext(), "Format Email tujuan Salah", Toast.LENGTH_SHORT).show();
+                        }else if(ps.equals("") ) {
+                            Toast.makeText(getApplicationContext(), "Pesan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
                         }else{
                             rankDialog.dismiss();
                             SendDoa();
