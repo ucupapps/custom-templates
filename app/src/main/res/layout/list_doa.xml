@@ -58,7 +58,7 @@
                     android:id="@+id/txttitip"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text=" Menitipkan doanya" />
+                    android:text="@string/menitipkan_doanya" />
 
             </LinearLayout>
             <LinearLayout
@@ -148,7 +148,7 @@
             <Button
                 android:id="@+id/btndoakan"
                 android:textColor="@color/white"
-                android:text="Doakan"
+                android:text="@string/doakan"
                 android:textAllCaps="false"
                 android:background="@drawable/button"
                 android:layout_width="100dp"

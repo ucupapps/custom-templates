@@ -1,15 +1,168 @@
 <resources>
     <string name="app_name">GoHajj</string>
 
+    <!--Header Menu-->
+    <string name="thawaf_small">Thawaf</string>
+    <string name="thawaf">THAWAF</string>
+    <string name="sai_small">Sai</string>
+    <string name="sai">SA\'I</string>
+    <string name="sos">S.O.S</string>
+
+    <!--footer menu-->
+    <string name="panduan">Panduan</string>
+    <string name="titip_doa">Titip Doa</string>
+    <string name="navigasi">Navigasi</string>
+    <string name="pesan">Pesan</string>
+    <string name="profile">Profile</string>
+
+    <!--menu panduan-->
+    <string name="sebelum_umrah">Sebelum Umrah</string>
+    <string name="saat_umrah">Saat Umrah</string>
+    <string name="sesudah_umrah">Sesudah Umrah</string>
+    <string name="doa">Doa</string>
+    <string name="video">Video</string>
+    <string name="video_tutorial">Video Tutorial</string>
+    <string name="tips">Tips</string>
+    <string name="kamus">Kamus</string>
+    <string name="mainkan_audio">Mainkan Audio</string>
+    <string name="simpan_audio">Simpan Audio</string>
+    <string name="simpan_video">Simpan Video</string>
+
+    <!--menu emergency-->
+    <string name="kirim_pesan">Kirim Pesan</string>
+    <string name="tolong_temukan_saya">Tolong temukan saya</string>
+    <string name="input_pesan_disini">input pesan disini</string>
+    <string name="pesan_tidak_boleh_kosong">Pesan tidak boleh kosong</string>
+    <string name="no_tidak_boleh_kosong">No tujuan tidak boleh kosong !</string>
+    <string name="pesan_telah_dikirim">Pesan telah dikirim</string>
+    <string name="mengirim_pesan">Mengirim Pesan</string>
+
+    <!--menu profile-->
+    <string name="nama">Nama :</string>
+    <string name="email">Email :</string>
+    <string name="no_paspor">Nomor Paspor :</string>
+    <string name="no_phone">Nomor Telepon :</string>
+    <string name="alamat">Alamat :</string>
+    <string name="kota">Kota :</string>
+    <string name="provinsi">Provinsi :</string>
+    <string name="agen_perjalanan">Agen Perjalanan :</string>
+    <string name="no_phone_agen_perjalanan">Nomor Telepon Agen Perjalanan :</string>
+    <string name="nama_pemimpin">Nama Pemimpin Tur :</string>
+    <string name="no_phone_pemimpin">Nomor Telepon Pemimpin Tur :</string>
+    <string name="nama_pembimbing">Nama Pembimbing :</string>
+    <string name="no_phone_pembimbing">Nomor Telepon Pembimbing :</string>
+    <string name="no_phone_keluarga1">Nomor Telepon Keluarga 1 :</string>
+    <string name="email_keluarga1">Email Keluarga 1 :</string>
+    <string name="no_phone_keluarga2">Nomor Telepon Keluarga 2 :</string>
+    <string name="email_keluarga2">Email Keluarga 2 :</string>
+    <string name="no_phone_keluarga3">Nomor Telepon Keluarga 3 :</string>
+    <string name="email_keluarga3">Email Keluarga 3 :</string>
+
+    <!--menu sai-->
+    <string name="alert_sai">Ibadah Sa\'i sudah selesai, silakan melanjutkan Tahallul</string>
+    <string name="sai1">Doa Mendaki Bukit Safa</string>
+    <string name="sai2">Doa Saat di Bukit Safa</string>
+    <string name="sai3">Doa di Antara 2 Pilar Hijau</string>
+    <string name="sai4">Doa Ketika Mendekati Bukit Safa atau Marwah</string>
+    <string name="sai5">Doa Selesai Sai</string>
+
+    <!--menu thawaf-->
+    <string name="ya">Ya</string>
+    <string name="tidak">Tidak</string>
+    <string name="alert_thawaf">Ibadah Thawaf sudah selesai, silakan melanjutkan Ibadah Sa\'i</string>
+    <string name="mempersiapkan_audio">Mempersiapkan Audio</string>
+    <string name="cek_koneksi">Mohon Cek Koneksi Anda</string>
+    <string name="mulai">Mulai</string>
+    <string name="mainkan">Mainkan</string>
+    <string name="pause">Pause</string>
+    <string name="sebelumnya">Sebelumnya</string>
+    <string name="selanjutnya">Selanjutnya</string>
+    <string name="thawaf1">Doa Istilam</string>
+    <string name="thawaf2">Doa di Antara Rukun Yamani dan Hajar Aswad</string>
+    <string name="thawaf3">Doa Saat di Multazam</string>
+    <string name="thawaf4">Doa Mencium Hajar Aswad</string>
+    <string name="thawaf5">Doa Setelah Shalat Sunnah Thawaf</string>
+    <string name="thawaf6">Doa Minum Air Zamzam</string>
+    <string name="thawaf7">Doa Thawaf Wada</string>
+    <string name="thawaf8">Doa Setelah Selesai Thawaf Wada</string>
+
+    <!--menu navigasi-->
+    <string name="hotel">Hotel</string>
+    <string name="bus">Bus</string>
+    <string name="masjid">Masjid (Pintu Masuk)</string>
+    <string name="tempat_bertemu">Tempat Bertemu</string>
+    <string name="lokasi_menarik">Lokasi Menarik</string>
+    <string name="set_lokasi">Set Lokasi</string>
+    <string name="arahkan">Arahkan</string>
+
+    <!--menu titipan doa-->
+    <string name="menitipkan_doanya">Menitipkan doanya</string>
+    <string name="doakan">Doakan</string>
+
+    <!--menu setting-->
+    <string name="pengaturan">Pengaturan</string>
+    <string name="download_doa">Download Doa</string>
+    <string name="donasi">Donasi</string>
+    <string name="penilaian">Penilaian</string>
+    <string name="cek_visa">Cek Visa Online</string>
+    <string name="syarat_dan_ketentuan">Syarat dan Ketentuan</string>
+    <string name="butuh_bantuan">Butuh Bantuan</string>
+    <string name="share">Share</string>
+    <string name="bahasa">Bahasa</string>
+    <string name="logout">Logout</string>
+
+    <!--Butuh Bantuan-->
+    <string name="pertanyaan_umum">Pertanyaan Umum</string>
+    <string name="hubungi_kami">Hubungi Kami</string>
+    <string name="laporkan_masalah">Laporkan Masalah</string>
+    <string name="pertanyaan_info">Pertanyaan yang mungkin Anda miliki</string>
+
+    <!--Laporkan Masalah-->
+    <string name="laporkan">Laporkan</string>
+    <string name="laporkan_info">Laporkan</string>
+    <string name="laporkan_fitur">Laporkan masalah di fitur</string>
+
+    <!--Download Doa-->
+    <string name="panduan_doa">Panduan Doa</string>
+    <string name="doa_thawaf">Doa Thawaf</string>
+    <string name="doa_sai">Doa Sai</string>
+
+    <!--Button-->
+    <string name="ubah">Ubah</string>
+    <string name="simpan">Simpan</string>
+    <string name="batal">Batal</string>
+    <string name="unduh">Unduh</string>
+    <string name="hapus_semua">Hapus Semua</string>
+    <string name="kirim">Kirim</string>
+    <string name="buka">Buka</string>
+    <string name="cari">Cari</string>
+
+    <!--Maps-->
+    <string name="maps_not_found">Maaf Lokasi Anda Belum di Temukan !</string>
+    <string name="lokasi_saya">Lokasi Saya</string>
+    <string name="arah_ke_lokasi">Arah Ke Lokasi</string>
+    <string name="arah_ke_maps">Arahkan ke Google Map</string>
+
+    <!--Login-->
+    <string name="hint_username">Email atau Nomor Ponsel</string>
+    <string name="hint_password">Kata Sandi</string>
+    <string name="btn_link_to_register">Daftar GoHajj</string>
+    <string name="btn_login">Masuk</string>
+
+    <!--Register-->
+    <string name="hint_name">Nama Lengkap</string>
+    <string name="hint_email">Email</string>
+    <string name="btn_register">Register</string>
+    <string name="registrasi">Registrasi</string>
+    <string name="btn_link_to_login">Sudah daftar? Login Sekarang !</string>
+
+
+    <string name="tidak_ada_koneksi">Tidak ada koneksi internet. Cek jaringan anda</string>
+    <string name="mohon_tunggu">Mohon Tunggu</string>
+
+    <string name="hint_no_pintu">No Pintu</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password</string>
-    <string name="hint_name">Username</string>
-    <string name="btn_login">Masuk</string>
-    <string name="btn_register">Register</string>
-    <string name="btn_link_to_register">Daftar GoHajj</string>
-    <string name="btn_link_to_login">Sudah daftar? Login Sekarang !</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>

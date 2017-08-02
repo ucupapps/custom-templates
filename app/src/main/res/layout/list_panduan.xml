@@ -74,6 +74,6 @@
             android:padding="5dp"
             android:textColor="@color/white"
             android:layout_height="wrap_content"
-            android:text="Buka" />
+            android:text="@string/buka" />
     </LinearLayout>
 </RelativeLayout>

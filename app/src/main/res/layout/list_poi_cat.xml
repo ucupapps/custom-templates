@@ -65,7 +65,7 @@
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:background="@drawable/button"
-            android:text="Set Lokasi"
+            android:text="@string/set_lokasi"
             android:textAllCaps="false"
             android:textColor="@color/white" />
     </LinearLayout>

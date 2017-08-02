@@ -368,10 +368,10 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         if(v == buttonAdd){
             if(txtMessage.getText().toString().equals(""))
             {
-                Toast.makeText(this, "Pesan tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.pesan_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
             }else if(contact.getText().toString().equals("") || contact.getText().toString().equals(","))
             {
-                Toast.makeText(this, "No tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getResources().getString(R.string.no_tidak_boleh_kosong) , Toast.LENGTH_SHORT).show();
             }else {
 //            String phoneNumber = "082113150425,085229296292,081328280585";
                 if (ContextCompat.checkSelfPermission(emergency.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -384,7 +384,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     String phoneNumber = contact.getText().toString();
                     String message = txtMessage.getText().toString();
                     sendSMS(phoneNumber, message);
-                    Toast.makeText(this, "Pesan telah dikirim", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.pesan_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(emergency.this, emergency.class);
                     finish();
                     startActivity(intent);
@@ -472,7 +472,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(emergency.this,"","Mengirim Pesan...",false,false);
+                loading = ProgressDialog.show(emergency.this,"",getResources().getString(R.string.mengirim_pesan)+"...",false,false);
             }
 
             @Override
@@ -480,7 +480,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                 super.onPostExecute(s);
                 Log.e(TAG, "onPostExecute: "+s );
                 loading.dismiss();
-                Toast.makeText(getApplicationContext(), "Pesan telah dikirim", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.pesan_telah_dikirim), Toast.LENGTH_SHORT).show();
 //                Toast.makeText(emergency.this, s, Toast.LENGTH_LONG).show();
             }
 
@@ -604,7 +604,7 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
                     mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
                     txtlng.setText("" + mCenterLatLong.latitude + "");
                     txtlat.setText("" + mCenterLatLong.longitude+ "");
-                    txtMessage.setText("Tolong temukan saya " +nama_user+"\n Location: https://maps.google.com/?q="+ mCenterLatLong.latitude+"," + mCenterLatLong.longitude+"");
+                    txtMessage.setText(getResources().getString(R.string.tolong_temukan_saya)+" " +nama_user+"\n Location: https://maps.google.com/?q="+ mCenterLatLong.latitude+"," + mCenterLatLong.longitude+"");
 
                 } catch (Exception e) {
 //                    e.printStackTrace();

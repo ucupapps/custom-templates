@@ -304,7 +304,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onMapClick(LatLng latLng) {
                 String almt=mLocationAddress.getText().toString();
                 if(almt.equals("")){
-                    Toast.makeText(getApplicationContext(), "Maaf Lokasi Anda Belum di Temukan !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.maps_not_found), Toast.LENGTH_SHORT).show();
                 }else {
                     if (marker == null) {
 //                    markerOptions = new MarkerOptions();
@@ -384,7 +384,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         marker = mMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .title("Set Lokasi")
+                .title(getResources().getString(R.string.set_lokasi))
                 .draggable(true)
         );
 

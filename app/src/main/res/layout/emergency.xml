@@ -209,7 +209,7 @@
             android:layout_gravity="top"
             android:gravity="top"
             android:padding="5dp"
-            android:hint="input pesan disini"
+            android:hint="@string/input_pesan_disini"
             android:textColorHint="#0b0b0b"
             android:background="#dadada"
             android:ems="100"
@@ -229,7 +229,7 @@
             android:textAllCaps="false"
             android:padding="5dp"
             android:layout_margin="10dp"
-            android:text="Kirim Pesan"
+            android:text="@string/kirim_pesan"
             android:textColor="#FFF"
             android:background="@drawable/button"
             android:id="@+id/buttonAdd" />

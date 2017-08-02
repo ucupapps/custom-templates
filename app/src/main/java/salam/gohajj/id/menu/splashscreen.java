@@ -7,12 +7,16 @@ package salam.gohajj.id.menu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+
+import java.util.Locale;
 
 import salam.gohajj.id.R;
 
@@ -30,6 +34,13 @@ public class splashscreen extends Activity {
 //            /* ETC.. */
 //    };
     private SQLiteDatabase database;
+    private static Locale myLocale;
+
+    //Shared Preferences Variables
+    private static final String Locale_Preference = "Locale Preference";
+    private static final String Locale_KeyValue = "Saved Locale";
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +49,8 @@ public class splashscreen extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.splashscreen);
-
+        sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 //        if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
 //            Toast.makeText(this, "Please grant all permissions", Toast.LENGTH_LONG).show();
 //            //permission
@@ -85,6 +97,7 @@ public class splashscreen extends Activity {
         database.execSQL("CREATE TABLE IF NOT EXISTS loader(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, status INTEGER);");
         database.execSQL("CREATE TABLE IF NOT EXISTS badge(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, jumlah INTEGER);");
         database.execSQL("CREATE TABLE IF NOT EXISTS play(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, status INTEGER);");
+        database.execSQL("CREATE TABLE IF NOT EXISTS language(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, kode TEXT,bahasa TEXT);");
         Cursor mCoun= database.rawQuery("select count(*) from play", null);
         mCoun.moveToFirst();
         int coun= mCoun.getInt(0);
@@ -93,8 +106,39 @@ public class splashscreen extends Activity {
             database.execSQL(query);
         }
 
+        //language
+        Cursor lg= database.rawQuery("select count(*) from language", null);
+        lg.moveToFirst();
+        int cn= lg.getInt(0);
+        if(cn == 0) {
+            String query = "INSERT INTO language (kode,bahasa) VALUES('id','Indonesia');";
+            database.execSQL(query);
+            changeLocale("id");
+        }else{
+            Cursor mCou= database.rawQuery("select kode from language where id=1", null);
+            mCou.moveToFirst();
+            String status= mCou.getString(0);
+            changeLocale(status);
+        }
+
     }
 
+    public void changeLocale(String lang) {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);//Set Selected Locale
+        saveLocale(lang);//Save the selected locale
+        Locale.setDefault(myLocale);//set new locale as default
+        Configuration config = new Configuration();//get Configuration
+        config.locale = myLocale;//set config locale as selected locale
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());//Update the config
+//        updateTexts();//Update texts according to locale
+    }
+
+    public void saveLocale(String lang) {
+        editor.putString(Locale_KeyValue, lang);
+        editor.commit();
+    }
 //    @RequiresApi(api = Build.VERSION_CODES.M)
 //    public boolean hasPermissions(@NonNull String... permissions) {
 //        for (String permission : permissions)

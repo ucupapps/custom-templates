@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Email:"/>
+            android:text="@string/email"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -118,7 +118,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Paspor:"/>
+            android:text="@string/no_paspor"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon:"/>
+            android:text="@string/no_phone"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -160,7 +160,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Alamat:"/>
+            android:text="@string/alamat"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -182,7 +182,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Kota:"/>
+            android:text="@string/kota"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -204,7 +204,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Provinsi:"/>
+            android:text="@string/provinsi"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -226,7 +226,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Agen Perjalanan:"/>
+            android:text="@string/agen_perjalanan"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -268,7 +268,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Agen Perjalanan:"/>
+            android:text="@string/no_phone_agen_perjalanan"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -290,7 +290,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nama Pemimpin Tur:"/>
+            android:text="@string/nama_pemimpin"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -348,7 +348,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Pemimpin Tur:"/>
+            android:text="@string/no_phone_pemimpin"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -370,7 +370,7 @@
             android:layout_width="wrap_content"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nama Pembimbing:"/>
+            android:text="@string/nama_pembimbing"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -426,7 +426,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Pembimbing:"/>
+            android:text="@string/no_phone_pembimbing"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -449,7 +449,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Keluarga 1:"/>
+            android:text="@string/no_phone_keluarga1"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -472,7 +472,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Email Keluarga 1:"/>
+            android:text="@string/email_keluarga1"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -495,7 +495,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Keluarga 2:"/>
+            android:text="@string/no_phone_keluarga2"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -518,7 +518,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Email Keluarga 2:"/>
+            android:text="@string/email_keluarga2"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -541,7 +541,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Nomor Telepon Keluarga 3:"/>
+            android:text="@string/no_phone_keluarga3"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -564,7 +564,7 @@
             android:layout_width="match_parent"
             android:padding="4dp"
             android:layout_height="wrap_content"
-            android:text="Email Keluarga 3:"/>
+            android:text="@string/email_keluarga3"/>
         <TextView
             android:layout_width="match_parent"
             android:padding="4dp"
@@ -630,7 +630,7 @@
             android:layout_height="30dp"
             android:layout_margin="20dp"
             android:textAllCaps="false"
-            android:text="Ubah"
+            android:text="@string/ubah"
             android:background="@drawable/button"
             android:textColor="#FFF"
             android:id="@+id/buttonAdd" />
@@ -640,7 +640,7 @@
             android:textAllCaps="false"
             android:layout_margin="20dp"
             android:layout_height="30dp"
-            android:text="Logout"
+            android:text="@string/logout"
             android:background="@drawable/button_red"
             android:textColor="#FFF"
             android:id="@+id/buttonLogout" />

@@ -147,7 +147,7 @@
                             android:src="@drawable/hotel" />
                         <TextView
                             android:layout_width="0dp"
-                            android:text="Hotel"
+                            android:text="@string/hotel"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:layout_weight="1.4"
@@ -162,7 +162,7 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Lokasi"
+                            android:text="@string/set_lokasi"
                             android:textColor="#fff" />
                         <ImageView
                             android:id="@+id/arrow_hotel"
@@ -192,7 +192,7 @@
                             android:src="@drawable/bus" />
                         <TextView
                             android:layout_width="0dp"
-                            android:text="Bus"
+                            android:text="@string/bus"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:layout_weight="1.4"
@@ -208,7 +208,7 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Lokasi"
+                            android:text="@string/set_lokasi"
                             android:textColor="#fff" />
                         <ImageView
                             android:id="@+id/arrow_bus"
@@ -238,7 +238,7 @@
                             android:src="@drawable/masjid" />
                         <TextView
                             android:layout_width="0dp"
-                            android:text="Masjid (Pintu Masuk)"
+                            android:text="@string/masjid"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:layout_weight="1.4"
@@ -254,7 +254,7 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Lokasi"
+                            android:text="@string/set_lokasi"
                             android:textColor="#fff" />
                         <ImageView
                             android:id="@+id/arrow_pintu"
@@ -284,7 +284,7 @@
                             android:src="@drawable/tempat_bertemu" />
                         <TextView
                             android:layout_width="0dp"
-                            android:text="Tempat Bertemu"
+                            android:text="@string/tempat_bertemu"
                             android:textStyle="bold"
                             android:layout_gravity="center"
                             android:layout_weight="1.4"
@@ -300,7 +300,7 @@
                             android:layout_gravity="center"
                             android:textAlignment="center"
                             android:background="@drawable/button_red"
-                            android:text="Set Lokasi"
+                            android:text="@string/set_lokasi"
                             android:textColor="#fff" />
                         <ImageView
                             android:id="@+id/arrow_bertemu"
@@ -331,7 +331,7 @@
                     android:src="@drawable/lokasi_menarik" />
                     <TextView
                         android:layout_width="0dp"
-                        android:text="Lokasi Menarik"
+                        android:text="@string/lokasi_menarik"
                         android:textStyle="bold"
                         android:layout_gravity="center"
                         android:layout_weight="1.4"
@@ -347,7 +347,7 @@
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:background="@drawable/button_red"
-                        android:text="Set Lokasi"
+                        android:text="@string/set_lokasi"
                         android:textColor="#fff" />
                     <ImageView
                         android:id="@+id/arrow_poi"

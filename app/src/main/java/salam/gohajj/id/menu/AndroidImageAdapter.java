@@ -55,7 +55,7 @@ public class AndroidImageAdapter extends PagerAdapter {
 //        Button newButton = new Button(mContext);
 //        newButton.setText("Go Home");
 //        ((ViewPager) container).addView(newButton, 0);
-        Log.e("ID", "instantiateItem: "+i );
+//        Log.e("ID", "instantiateItem: "+i );
         return view;
     }
 

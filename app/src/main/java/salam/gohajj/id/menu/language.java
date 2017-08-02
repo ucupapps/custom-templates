@@ -1,47 +1,67 @@
 package salam.gohajj.id.menu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import salam.gohajj.id.R;
-
-import salam.gohajj.id.app.AppConfig;
-import salam.gohajj.id.helper.SQLiteHandler;
-import salam.gohajj.id.helper.SessionManager;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import salam.gohajj.id.R;
+import salam.gohajj.id.helper.SQLiteHandler;
+import salam.gohajj.id.helper.SessionManager;
 
-public class laporkanmasalah extends AppCompatActivity {
+public class language extends AppCompatActivity {
 
-    private static final String TAG = "Laporkan";
+    private static final String TAG = "MyUser";
+    LinearLayout txtpusatbantuan,txtlayanan,txtlaporkan;
+
     View target ;
     BadgeView badge ;
-    private String JSON_STRING,uid;
+    private SQLiteDatabase database;
     private SessionManager session;
     private SQLiteHandler db;
-    private SQLiteDatabase database;
+
+    private String JSON_STRING,uid;
+    private static Locale myLocale;
+
+    //Shared Preferences Variables
+    private static final String Locale_Preference = "Locale Preference";
+    private static final String Locale_KeyValue = "Saved Locale";
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laporkan);
+        setContentView(R.layout.activity_language);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -61,16 +81,6 @@ public class laporkanmasalah extends AppCompatActivity {
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-
-        //useri
-        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
-        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
-        if (!file.exists()) {
-            imgp.setImageResource(R.drawable.profile);
-        }else{
-            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-            imgp.setImageBitmap(bmp);
-        }
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +123,16 @@ public class laporkanmasalah extends AppCompatActivity {
             }
         });
 
+        //useri
+        CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
+        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
+        if (!file.exists()) {
+            imgp.setImageResource(R.drawable.profile);
+        }else{
+            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imgp.setImageBitmap(bmp);
+        }
+
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
         img_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,78 +152,79 @@ public class laporkanmasalah extends AppCompatActivity {
             }
         });
 
-        LinearLayout panduan=(LinearLayout) findViewById(R.id.txtpanduan);
-        LinearLayout titipdoa=(LinearLayout) findViewById(R.id.txttitipdoa);
-        LinearLayout navigasi=(LinearLayout) findViewById(R.id.txtnavigasi);
-        LinearLayout pesan=(LinearLayout) findViewById(R.id.txtpesan);
-        LinearLayout profile=(LinearLayout) findViewById(R.id.txtprofile);
-        LinearLayout sai=(LinearLayout) findViewById(R.id.txtsai);
-        LinearLayout sos=(LinearLayout) findViewById(R.id.txtsos);
-        LinearLayout thawaf=(LinearLayout) findViewById(R.id.txtthawaf);
-        panduan.setOnClickListener(new View.OnClickListener() {
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("Indonesia");
+        list.add("English");
+        list.add("Maldives");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        Cursor mCou= database.rawQuery("select bahasa from language where id=1", null);
+        mCou.moveToFirst();
+        String myString= mCou.getString(0);
+        ArrayAdapter myAdap = (ArrayAdapter) spinner.getAdapter(); //cast to an ArrayAdapter
+        int spinnerPosition = myAdap.getPosition(myString);
+        spinner.setSelection(spinnerPosition);
+
+        sharedPreferences = getSharedPreferences(Locale_Preference, Activity.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+//        loadLocale();
+        final Button btnsave=(Button) findViewById(R.id.buttonSave);
+        btnsave.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.panduan));
-                startActivity(i);
+                String id= String.valueOf(spinner.getSelectedItem());
+                if(id.equals("Indonesia")){
+                    String query = "UPDATE language set kode='id',bahasa='Indonesia' where id=1;";
+                    database.execSQL(query);
+                    changeLocale("id");
+                }else if(id.equals("English")){
+                    String query = "UPDATE language set kode='en',bahasa='English' where id=1;";
+                    database.execSQL(query);
+                    changeLocale("en");
+                }else if(id.equals("Maldives")){
+                    String query = "UPDATE language set kode='mv',bahasa='Maldives' where id=1;";
+                    database.execSQL(query);
+                    changeLocale("mv");
+                }
+
+                Toast.makeText(language.this,String.valueOf(spinner.getSelectedItem()), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), language.class);
+                finish();
+                startActivity(intent);
             }
+
         });
-        titipdoa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.titip_doa));
-                startActivity(i);
-            }
-        });
-        navigasi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.navigasi));
-                startActivity(i);
-            }
-        });
-        pesan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.pesan));
-                startActivity(i);
-            }
-        });
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.profile));
-                startActivity(i);
-            }
-        });
-        sai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.sai_small));
-                startActivity(i);
-            }
-        });
-        sos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.sos));
-                startActivity(i);
-            }
-        });
-        thawaf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), kirimlaporan.class);
-                i.putExtra(AppConfig.EMP_ID,getResources().getString(R.string.thawaf_small));
-                startActivity(i);
-            }
-        });
+    }
+
+    //Get locale method in preferences
+//    public void loadLocale() {
+//        String language = sharedPreferences.getString(Locale_KeyValue, "");
+//        changeLocale(language);
+////        Log.e(TAG, "loadLocale: "+language );
+//    }
+
+    //Change Locale
+    public void changeLocale(String lang) {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);//Set Selected Locale
+        saveLocale(lang);//Save the selected locale
+        Locale.setDefault(myLocale);//set new locale as default
+        Configuration config = new Configuration();//get Configuration
+        config.locale = myLocale;//set config locale as selected locale
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());//Update the config
+//        updateTexts();//Update texts according to locale
+    }
+
+    //Save locale method in preferences
+    public void saveLocale(String lang) {
+        editor.putString(Locale_KeyValue, lang);
+        editor.commit();
     }
 
     protected void CountInbox(){
@@ -222,5 +243,4 @@ public class laporkanmasalah extends AppCompatActivity {
             badge.hide();
         }
     }
-
 }

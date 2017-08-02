@@ -53,7 +53,7 @@
                     android:textSize="26sp"
                     android:gravity="center"
                     android:layout_marginBottom="40dp"
-                    android:text="Butuh Bantuan"/>
+                    android:text="@string/butuh_bantuan"/>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/txtpusatbantuan"
@@ -77,7 +77,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.85"
                     android:layout_height="wrap_content"
-                    android:text="Pertanyaan Umum"/>
+                    android:text="@string/pertanyaan_umum"/>
                 <ImageView
                     android:id="@+id/arrow_poi"
                     android:layout_width="0dp"
@@ -110,7 +110,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.85"
                     android:layout_height="wrap_content"
-                    android:text="Hubungi Kami"/>
+                    android:text="@string/hubungi_kami"/>
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="0.15"
@@ -142,7 +142,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.85"
                     android:layout_height="wrap_content"
-                    android:text="Laporkan Masalah"/>
+                    android:text="@string/laporkan_masalah"/>
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="0.15"

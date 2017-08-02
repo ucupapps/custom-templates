@@ -7,14 +7,14 @@
     android:fitsSystemWindows="true"
     tools:context="salam.gohajj.id.menu.TitipanDoa">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
 
-        <include layout="@layout/header2"/>
-    </android.support.design.widget.AppBarLayout>
+        <!--<include layout="@layout/header2"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:circle="http://schemas.android.com/apk/res-auto"
@@ -24,69 +24,62 @@
         tools:context="com.gohajj.id.salam.gohajj.id.menu.TitipanDoa" >
 
         <include layout="@layout/footer"/>
+        <include layout="@layout/header2"/>
 
         <RelativeLayout
             android:id="@+id/circle_menu"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@+id/footer"
+            android:layout_below="@+id/header2"
             android:gravity="center" >
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="match_parent"
-                android:paddingTop="45dp"
                 android:background="@color/white"
                 tools:context=".sample.input">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:layout_margin="20dp"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="30sp"
+                    android:textSize="26sp"
                     android:gravity="center"
-                    android:layout_marginBottom="30dp"
-                    android:text="@string/laporkan"/>
-                <TextView
-                    android:id="@+id/name"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/bahasa"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/txtpusatbantuan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:weightSum="1"
+                android:background="@drawable/border">
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="top"
-                    android:gravity="top"
-                    android:padding="5dp"
-                    android:layout_margin="20dp"
-                    android:hint="@string/laporkan_masalah"
-                    android:textColorHint="#d4d4d4"
-                    android:background="#f7f6f6"
-                    android:ems="100"
-                    android:textSize="14sp"
-                    android:inputType="textMultiLine"
-                    android:id="@+id/masalah"/>
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_gravity="center"
-                    android:layout_width="86dp"
-                    android:src="@drawable/camera"
-                    android:layout_height="160dp" />
+            </LinearLayout>
+
                 <Button
+                    android:id="@+id/buttonSave"
                     android:layout_width="100dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
-                    android:layout_height="35dp"
-                    android:textAllCaps="false"
-                    android:padding="10dp"
-                    android:layout_margin="10dp"
-                    android:text="@string/kirim"
-                    android:textColor="#FFF"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/button"
-                    android:id="@+id/buttonAdd" />
+                    android:gravity="center"
+                    android:text="@string/simpan"
+                    android:textAllCaps="false"
+                    android:textColor="#FFF" />
 
             </LinearLayout>
         </RelativeLayout>

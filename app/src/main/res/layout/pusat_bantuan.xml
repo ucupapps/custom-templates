@@ -53,12 +53,12 @@
                         android:textSize="26sp"
                         android:gravity="center"
                         android:layout_marginBottom="20dp"
-                        android:text="Pertanyaan Umum"/>
+                        android:text="@string/pertanyaan_umum"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="Pertanyaan yang mungkin Anda miliki"/>
+                        android:text="@string/pertanyaan_info"/>
                 </LinearLayout>
                 <ListView
                     android:id="@+id/listView"

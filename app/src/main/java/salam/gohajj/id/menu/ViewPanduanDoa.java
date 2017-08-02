@@ -349,7 +349,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
 
         if(v == buttonStart){
-            if(buttonStart.getText().toString().trim().equals("Mainkan Audio")){
+            if(buttonStart.getText().toString().trim().equals(getResources().getString(R.string.mainkan_audio))){
                 if(srcPath == null){
                     Toast.makeText(ViewPanduanDoa.this,
                             "No file selected",
@@ -371,7 +371,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                 }
             }else{
                 cmdStop();
-                buttonStart.setText("Mainkan Audio");
+                buttonStart.setText(getResources().getString(R.string.mainkan_audio));
             }
         }
 
@@ -439,7 +439,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             }else{
                 timeLine.setVisibility(View.GONE);
                 timeFrame.setVisibility(View.INVISIBLE);
-                buttonStart.setText("Mainkan Audio");
+                buttonStart.setText(getResources().getString(R.string.mainkan_audio));
             }
         }
     }

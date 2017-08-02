@@ -82,7 +82,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         name = i.getStringExtra(AppConfig.KEY_NAME);
 
         TextView txtpesan = (TextView) findViewById(R.id.txtpesan);
-        txtpesan.setText("  Arah Ke Lokasi " + name);
+        txtpesan.setText("  "+getResources().getString(R.string.arah_ke_lokasi)+" "+ name);
         //enable GPS
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -300,7 +300,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(fromPosition, 17));
 
             mMap.addMarker(new MarkerOptions().position(fromPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                    .title("Lokasi Saya"));
+                    .title(getResources().getString(R.string.lokasi_saya)));
             mMap.addMarker(new MarkerOptions().position(toPosition).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title(name));
             getDirectionMap(fromPosition, toPosition);
         }else{

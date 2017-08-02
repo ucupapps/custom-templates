@@ -59,18 +59,18 @@ public class CustomListPanduan3 extends SimpleAdapter {
         name.setText(strName);
         txtImg.setText(strJenis);
 
-        if(strJenis.equals("Video")){
+        if(strJenis.equals(mContext.getResources().getString(R.string.video))){
             txtImg.setBackgroundResource(R.drawable.circle_blue);
-            txtJenis.setText("Video Tutorial");
-        }else if(strJenis.equals("Doa")){
+            txtJenis.setText(mContext.getResources().getString(R.string.video_tutorial));
+        }else if(strJenis.equals(mContext.getResources().getString(R.string.doa))){
             txtImg.setBackgroundResource(R.drawable.circle_purple);
-            txtJenis.setText("Panduan Doa");
-        }else if(strJenis.equals("Tips")){
+            txtJenis.setText(mContext.getResources().getString(R.string.panduan_doa));
+        }else if(strJenis.equals(mContext.getResources().getString(R.string.tips))){
             txtImg.setBackgroundResource(R.drawable.circle_orange_muda);
-            txtJenis.setText("Tips");
-        }else if(strJenis.equals("Kamus")){
+            txtJenis.setText(mContext.getResources().getString(R.string.tips));
+        }else if(strJenis.equals(mContext.getResources().getString(R.string.kamus))){
             txtImg.setBackgroundResource(R.drawable.circle_chocolate);
-            txtJenis.setText("Kamus");
+            txtJenis.setText(mContext.getResources().getString(R.string.kamus));
         }
 
 //        File file = new File("/sdcard/android/data/com.gohajj.id/panduan3/"+strID+".mp3");
@@ -80,7 +80,7 @@ public class CustomListPanduan3 extends SimpleAdapter {
 //            txtaudio.setBackgroundResource(R.drawable.button_blue);
 //            txtaudio.setPadding(10,10,10,10);
 //        }else{
-            txtaudio.setText("Buka");
+        txtaudio.setText(mContext.getResources().getString(R.string.buka));
 //        }
 
         return vi;

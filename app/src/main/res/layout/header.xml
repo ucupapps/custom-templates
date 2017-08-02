@@ -66,12 +66,12 @@
                 android:layout_weight="1"
                 android:textColor="#FFF"
                     android:textSize="20sp"
-                android:text="THAWAF"
+                android:text="@string/thawaf"
                 android:layout_height="match_parent" />
 
                 <TextView
                 android:id="@+id/txt_sai"
-                android:text="SA'I"
+                android:text="@string/sai"
                     android:textSize="20sp"
                 android:background="@drawable/header_kanan"
                 android:textAlignment="center"

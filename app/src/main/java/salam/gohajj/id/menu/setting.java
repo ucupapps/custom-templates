@@ -31,7 +31,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class setting extends AppCompatActivity {
-    LinearLayout txtshare,txtdownload,txtdonasi,txtpenilaian,txtcekvisa,txtsyarat,txtbantuan;
+    LinearLayout txtshare,txtdownload,txtdonasi,txtpenilaian,txtcekvisa,txtsyarat,txtbantuan,txtlanguage;
     private Button buttonLogout;
     //user
     String uid;
@@ -137,6 +137,7 @@ public class setting extends AppCompatActivity {
         txtsyarat = (LinearLayout) findViewById(R.id.txtsyarat);
         txtdonasi = (LinearLayout) findViewById(R.id.txtdonasi);
         txtdownload = (LinearLayout) findViewById(R.id.txtdownload);
+        txtlanguage = (LinearLayout) findViewById(R.id.txtlanguage);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
         if (!session.isLoggedIn()) {
             buttonLogout.setVisibility(View.GONE);
@@ -146,6 +147,14 @@ public class setting extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), download.class);
+                startActivity(i);
+            }
+        });
+
+        txtlanguage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), language.class);
                 startActivity(i);
             }
         });

@@ -88,7 +88,7 @@
                             android:id="@+id/btn_find_hotel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cari"
+                            android:text="@string/cari"
                             android:layout_alignParentRight="true" />
 
                         <EditText

@@ -173,7 +173,7 @@ public class kirimlaporan extends AppCompatActivity {
 
         Intent intent = getIntent();
         id = intent.getStringExtra(AppConfig.EMP_ID);
-        txtname.setText("Laporkan masalah di fitur "+id);
+        txtname.setText(getResources().getString(R.string.laporkan_fitur)+" "+id);
     }
 
     @Override

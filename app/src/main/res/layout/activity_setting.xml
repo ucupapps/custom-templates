@@ -59,7 +59,7 @@
                             android:textStyle="bold"
                             android:layout_marginBottom="20dp"
                             android:textSize="24sp"
-                            android:text="Pengaturan"/>
+                            android:text="@string/pengaturan"/>
 
                         <LinearLayout
                             android:id="@+id/txtdownload"
@@ -83,7 +83,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Download Doa"
+                                android:text="@string/download_doa"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -120,7 +120,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Donasi"
+                                android:text="@string/donasi"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -156,7 +156,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Penilaian"
+                                android:text="@string/penilaian"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -192,7 +192,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Cek Visa Online"
+                                android:text="@string/cek_visa"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -228,7 +228,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Syarat dan Ketentuan"
+                                android:text="@string/syarat_dan_ketentuan"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -264,7 +264,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Butuh Bantuan"
+                                android:text="@string/butuh_bantuan"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -300,7 +300,42 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Share"
+                                android:text="@string/share"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.15"
+                                android:paddingBottom="7dp"
+                                android:paddingTop="7dp"
+                                android:src="@drawable/arrow_right" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/txtlanguage"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border"
+                            android:padding="10dp"
+                            android:weightSum="1">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="5dp"
+                                android:src="@drawable/language"
+                                android:background="@drawable/circle"  />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.85"
+                                android:padding="10dp"
+                                android:text="@string/bahasa"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 
@@ -323,7 +358,7 @@
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/button_red"
                             android:gravity="center"
-                            android:text="Log Out"
+                            android:text="@string/logout"
                             android:textAllCaps="false"
                             android:textColor="#FFF" />
                     </LinearLayout>

@@ -53,7 +53,7 @@
                         android:textSize="26sp"
                         android:gravity="center"
                         android:layout_marginBottom="30dp"
-                        android:text="Laporkan Masalah"/>
+                        android:text="@string/laporkan_masalah"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/txtpanduan"
@@ -70,7 +70,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Panduan"/>
+                        android:text="@string/panduan"/>
                     <ImageView
                         android:id="@+id/arrow_poi"
                         android:layout_width="0dp"
@@ -96,7 +96,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Titip Doa"/>
+                        android:text="@string/titip_doa"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"
@@ -121,7 +121,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Navigasi"/>
+                        android:text="@string/navigasi"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"
@@ -146,7 +146,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Pesan"/>
+                        android:text="@string/pesan"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"
@@ -171,7 +171,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Profile"/>
+                        android:text="@string/profile"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"
@@ -196,7 +196,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Thawaf"/>
+                        android:text="@string/thawaf_small"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"
@@ -221,7 +221,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="Sai"/>
+                        android:text="@string/sai_small"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"
@@ -246,7 +246,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="0.85"
                         android:layout_height="wrap_content"
-                        android:text="S.O.S"/>
+                        android:text="@string/sos"/>
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_weight="0.15"

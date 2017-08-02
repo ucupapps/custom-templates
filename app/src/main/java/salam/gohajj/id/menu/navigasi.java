@@ -475,7 +475,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
     public void onClick(View v) {
         if (v == txtbus) {
-            if(txtbus.getText().toString().equals("Set Lokasi")) {
+            if(txtbus.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
                 if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
@@ -487,15 +487,15 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 //                cekData("BUS",txtbus);
 //                insertIntoDB();
 //                txtbus.setBackgroundResource(R.drawable.button);
-//                txtbus.setText("Arahkan");
-            }else if(txtbus.getText().toString().equals("Arahkan")) {
+//                txtbus.setText(getResources().getString(R.string.arahkan));
+            }else if(txtbus.getText().toString().equals(getResources().getString(R.string.arahkan))) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"BUS");
                 startActivity(intent);
             }
         }
         if (v == txthotel) {
-            if(txthotel.getText().toString().equals("Set Lokasi")){
+            if(txthotel.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
                 if(txtlat.getText().toString().equals(""))
                 {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
@@ -509,8 +509,8 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 txtMessage.setText("HOTEL");
 //                cekData("HOTEL",txthotel);
 //                txthotel.setBackgroundResource(R.drawable.button);
-//                txthotel.setText("Arahkan");
-            }else if(txthotel.getText().toString().equals("Arahkan")) {
+//                txthotel.setText(getResources().getString(R.string.arahkan));
+            }else if(txthotel.getText().toString().equals(getResources().getString(R.string.arahkan))) {
 //                insertIntoDB();
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"HOTEL");
@@ -518,7 +518,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }
         }
         if (v == txtmasjid) {
-            if(txtmasjid.getText().toString().equals("Set Lokasi")){
+            if(txtmasjid.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
             if(txtlat.getText().toString().equals(""))
             {
                 Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
@@ -537,7 +537,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }
         }
         if (v == txtbertemu) {
-            if(txtbertemu.getText().toString().equals("Set Lokasi")){
+            if(txtbertemu.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
                 if(txtlat.getText().toString().equals(""))
                 {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
@@ -551,8 +551,8 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 //                cekData("TEMPAT BERTEMU",txtbertemu);
 //                insertIntoDB();
 //                txtbertemu.setBackgroundResource(R.drawable.button);
-//                txtbertemu.setText("Arahkan");
-            }else if(txtbertemu.getText().toString().equals("Arahkan")) {
+//                txtbertemu.setText(getResources().getString(R.string.arahkan));
+            }else if(txtbertemu.getText().toString().equals(getResources().getString(R.string.arahkan))) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"TEMPAT BERTEMU");
                 startActivity(intent);
@@ -560,7 +560,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }
 
         if (v == txtpoi) {
-            if(txtpoi.getText().toString().equals("Set Lokasi")){
+            if(txtpoi.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
                 if(txtlat.getText().toString().equals(""))
                 {
                     Toast.makeText(this, "Current location cannot null !", Toast.LENGTH_SHORT).show();
@@ -573,9 +573,9 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
 
                 txtMessage.setText("POI");
 //                txthotel.setBackgroundResource(R.drawable.button);
-//                txthotel.setText("Arahkan");
+//                txthotel.setText(getResources().getString(R.string.arahkan));
 //                cekData("POI",txtpoi);
-            }else if(txtpoi.getText().toString().equals("Arahkan")) {
+            }else if(txtpoi.getText().toString().equals(getResources().getString(R.string.arahkan))) {
                 Intent intent = new Intent(getApplicationContext(), go.class);
                 intent.putExtra(AppConfig.KEY_NAME,"POI");
                 startActivity(intent);
@@ -601,7 +601,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             if (file.exists()) {
                 if (txtmasjid.getText().toString().equals("Lihat")) {
                     txtmasjid.setBackgroundResource(R.drawable.button_red);
-                    txtmasjid.setText("Set Lokasi");
+                    txtmasjid.setText(getResources().getString(R.string.set_lokasi));
                 }else{
                     txtmasjid.setBackgroundResource(R.drawable.button);
                     txtmasjid.setText("Lihat");
@@ -629,12 +629,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             if(name.equals("NO PINTU MASJID")){
                 tv.setText("Lihat");
             }else {
-                tv.setText("Arahkan");
+                tv.setText(getResources().getString(R.string.arahkan));
             }
         }else{
             tv.setBackgroundResource(R.drawable.button_red);
             tv.setPadding(5,5,5,5);
-            tv.setText("Set Lokasi");
+            tv.setText(getResources().getString(R.string.set_lokasi));
         }
     }
 
@@ -644,12 +644,12 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         mCount.moveToFirst();
         int count= mCount.getInt(0);
         if(count > 0) {
-            if(tv.getText().toString().equals("Arahkan") || tv.getText().toString().equals("Lihat")){
+            if(tv.getText().toString().equals(getResources().getString(R.string.arahkan)) || tv.getText().toString().equals("Lihat")){
                 tv.setBackgroundResource(R.drawable.button_red);
-                tv.setText("Set Lokasi");
+                tv.setText(getResources().getString(R.string.set_lokasi));
             }else{
                 tv.setBackgroundResource(R.drawable.button);
-                tv.setText("Arahkan");
+                tv.setText(getResources().getString(R.string.arahkan));
             }
         }else{
 
@@ -667,7 +667,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         }else{
             tm.setBackgroundResource(R.drawable.button_red);
             tm.setPadding(5,5,5,5);
-            tm.setText("Set Lokasi");
+            tm.setText(getResources().getString(R.string.set_lokasi));
         }
     }
     protected void createDatabase(){

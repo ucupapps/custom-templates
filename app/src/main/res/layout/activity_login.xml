@@ -53,7 +53,7 @@
                 android:background="@color/white"
                 android:padding="10dp"
                 android:textSize="12dp"
-                android:hint="Email atau Nomor Ponsel"
+                android:hint="@string/hint_username"
                 android:singleLine="true"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint"/>
@@ -67,7 +67,7 @@
                 android:padding="10dp"
                 android:textSize="12dp"
                 android:singleLine="true"
-                android:hint="Kata Sandi"
+                android:hint="@string/hint_password"
                 android:textColor="@color/input_login"
                 android:textColorHint="@color/input_login_hint"/>
 

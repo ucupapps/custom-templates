@@ -452,9 +452,9 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "Sebelum Umrah");
-        adapter.addFragment(new TwoFragment(), "Saat Umrah");
-        adapter.addFragment(new ThreeFragment(), "Setelah Umrah");
+        adapter.addFragment(new OneFragment(), getResources().getString(R.string.sebelum_umrah));
+        adapter.addFragment(new TwoFragment(), getResources().getString(R.string.saat_umrah));
+        adapter.addFragment(new ThreeFragment(), getResources().getString(R.string.sesudah_umrah));
         viewPager.setAdapter(adapter);
     }
 
@@ -489,9 +489,19 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     }
 
     private void updateTime(){
+        Cursor mCou= database.rawQuery("select kode from language where id=1", null);
+        mCou.moveToFirst();
+        final String time_id;
+        String kode= mCou.getString(0);
+        if(kode.equals("id")){
+            time_id= "id";
+        }else{
+            time_id= "en";
+        }
+
         Calendar cal_jak = Calendar.getInstance(TimeZone.getTimeZone("GMT+7"));
         Date currentLocalTimejak = cal_jak.getTime();
-        DateFormat date_jak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
+        DateFormat date_jak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale(time_id));
         date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
         DateFormat time_jak = new SimpleDateFormat("HH:mm");
         date_jak.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -503,7 +513,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
         Calendar cal_mek = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
         Date currentLocalTimemak = cal_mek.getTime();
-        DateFormat date_mak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale("id"));
+        DateFormat date_mak = new SimpleDateFormat("EEEE, d MMMM yyyy",new Locale(time_id));
         date_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));
         DateFormat time_mak = new SimpleDateFormat("HH:mm");
         time_mak.setTimeZone(TimeZone.getTimeZone("GMT+3"));

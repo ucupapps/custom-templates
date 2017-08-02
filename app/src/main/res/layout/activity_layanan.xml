@@ -53,7 +53,7 @@
                         android:textSize="30sp"
                         android:gravity="center"
                         android:layout_marginBottom="40dp"
-                        android:text="Hubungi Kami"/>
+                        android:text="@string/hubungi_kami"/>
                 </LinearLayout>
                 <LinearLayout
                     android:orientation="vertical"
