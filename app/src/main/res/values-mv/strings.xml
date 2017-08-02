@@ -65,6 +65,7 @@
     <string name="sai3">Du\'a Between 2 Green Pillars</string>
     <string name="sai4">Du\'a when approaching Safa or Marwah</string>
     <string name="sai5">Du\'a Finishing Sai</string>
+    <string name="selesai">Done</string>
 
     <!--menu thawaf-->
     <string name="ya">Yes</string>
@@ -98,6 +99,11 @@
     <!--menu titipan doa-->
     <string name="menitipkan_doanya">Sent their prayer</string>
     <string name="doakan">Pray</string>
+    <string name="publik">Public</string>
+    <string name="mengirim">Sending</string>
+    <string name="terimakasih_telah_mendoakan">Thank you for praying</string>
+    <string name="email_tidak_boleh_kosong">Destination email can\'t null</string>
+    <string name="format_email_salah">Wrong Email Format</string>
 
     <!--menu setting-->
     <string name="pengaturan">Setting</string>
@@ -156,6 +162,20 @@
     <string name="registrasi">Registration</string>
     <string name="btn_link_to_login">Already signed up? Login Now !</string>
 
+    <!---->
+    <string name="hint_email_tujuan">Insert destination email</string>
+    <string name="hint_tulis_doa">Insert pray here</string>
+    <string name="aplikasi_gohajj">Application GoHajj</string>
+    <string name="penilaian_agen_perjalanan">Rate Travel agent</string>
+    <string name="penilaian_aplikasi">Rate Application GoHajj</string>
+    <string name="penilaian_pembimbing">Rate Tour Guide</string>
+    <string name="pertanyaan_agen_perjalanan">How the quality of services a travel agent?</string>
+    <string name="pertanyaan_aplikasi">How the quality of application GoHajj?</string>
+    <string name="pertanyaan_pembimbing">How the quality of services Tour Guide?</string>
+    <string name="tambahkan_komentar">Add comments</string>
+    <string name="pembimbing">Tour Guide</string>
+    <string name="travel">Travel agent</string>
+    <string name="terima_kasih">Thank you</string>
 
     <string name="tidak_ada_koneksi">No Internet connection. Check your network coverage</string>
     <string name="mohon_tunggu">Please Wait</string>

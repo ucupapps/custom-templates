@@ -171,8 +171,8 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
         txtpembimbing = (TextView) findViewById(R.id.txtpembimbing);
         ratingBar = (RatingBar) findViewById(R.id.dialog_ratingbar);
 
-        txtJudul.setText("Penilaian Pembimbing");
-        txtTanya.setText("Bagaimana kualitas pelayanan pembimbing?");
+        txtJudul.setText(getResources().getString(R.string.penilaian_pembimbing));
+        txtTanya.setText(getResources().getString(R.string.pertanyaan_pembimbing));
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -265,14 +265,14 @@ public class PenilaianPembimbing extends AppCompatActivity implements OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PenilaianPembimbing.this,"","Mengirim...",false,false);
+                loading = ProgressDialog.show(PenilaianPembimbing.this,"",getResources().getString(R.string.mengirim)+"...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(PenilaianPembimbing.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(PenilaianPembimbing.this, getResources().getString(R.string.terima_kasih), Toast.LENGTH_SHORT).show();
             }
 
             @Override

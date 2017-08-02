@@ -169,8 +169,8 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
         ratingBar = (RatingBar) findViewById(R.id.dialog_ratingbar);
         img = (ImageView) findViewById(R.id.img);
         img.setVisibility(View.VISIBLE);
-        txtJudul.setText("Penilaian Aplikasi GoHajj");
-        txtTanya.setText("Bagaimana kualitas aplikasi GoHajj?");
+        txtJudul.setText(getResources().getString(R.string.penilaian_aplikasi));
+        txtTanya.setText(getResources().getString(R.string.pertanyaan_aplikasi));
 
         if (!session.isLoggedIn()) {
             logoutUser();
@@ -224,14 +224,14 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PenilaianPemimpinTur.this,"","Mengirim...",false,false);
+                loading = ProgressDialog.show(PenilaianPemimpinTur.this,"",getResources().getString(R.string.mengirim)+"...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(PenilaianPemimpinTur.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(PenilaianPemimpinTur.this, getResources().getString(R.string.terima_kasih), Toast.LENGTH_SHORT).show();
             }
 
             @Override

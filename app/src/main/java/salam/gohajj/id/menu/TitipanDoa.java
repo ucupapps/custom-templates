@@ -318,11 +318,11 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
                     if(stat.equals("private") ) {
                         if(kepada.equals("") ) {
-                            Toast.makeText(getApplicationContext(), "Email tujuan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.email_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                         }else if(!kepada.equals("") && !kepada.matches(emailPattern) ) {
-                            Toast.makeText(getApplicationContext(), "Format Email tujuan Salah", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.format_email_salah), Toast.LENGTH_SHORT).show();
                         }else if(ps.equals("") ) {
-                            Toast.makeText(getApplicationContext(), "Pesan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.pesan_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                         }else{
                             rankDialog.dismiss();
                             SendDoa();
@@ -331,7 +331,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
                 if(stat.equals("public") ) {
                     if(ps.equals("") ) {
-                        Toast.makeText(getApplicationContext(), "Pesan tidak boleh kosong !", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.pesan_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                     }else{
                         rankDialog.dismiss();
                         SendDoa();
@@ -350,7 +350,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         BtnAdd =(FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu addkontak = new PopupMenu(this, BtnAdd);
         addkontak.getMenu().add(1, 1, 1, "Personal");
-        addkontak.getMenu().add(1, 2, 2, "Publik");
+        addkontak.getMenu().add(1, 2, 2, getResources().getString(R.string.publik));
 
         BtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -401,7 +401,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             JSONObject result = jsonObject.getJSONObject("result");
             max_data = jsonObject.getString("all_data");
             loadMoreTextViewLength = result.length();
-            Log.e("jummlah json : ", String.valueOf(loadMoreTextViewLength) + " "+ max_data);
+//            Log.e("jummlah json : ", String.valueOf(loadMoreTextViewLength) + " "+ max_data);
             if(result != null)
             {
                 if(result.equals(""))
@@ -528,7 +528,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 HashMap<String,String> data = new HashMap<>();
                 data.put(AppConfig.KEY_LIMIT, String.valueOf(limit));
                 data.put(AppConfig.KEY_ID, uid);
-                Log.e("data kirim :" , String.valueOf(data));
+//                Log.e("data kirim :" , String.valueOf(data));
                 RequestHandler rh = new RequestHandler();
                 String s = rh.sendPostRequest(AppConfig.URL_TITIPAN_DOA,data);
                 return s;
@@ -558,7 +558,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(TitipanDoa.this,"","Mengirim...",false,false);
+                loading = ProgressDialog.show(TitipanDoa.this,"",getResources().getString(R.string.mengirim)+"...",false,false);
             }
 
             @Override
@@ -568,7 +568,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
                 JSON_STRING = s;
                 showData();
 
-                Toast.makeText(TitipanDoa.this, "Terimakasih telah mendoakan", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TitipanDoa.this, getResources().getString(R.string.terimakasih_telah_mendoakan), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -600,14 +600,14 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(TitipanDoa.this,"","Mengirim...",false,false);
+                loading = ProgressDialog.show(TitipanDoa.this,"",getResources().getString(R.string.mengirim)+"...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(TitipanDoa.this, "Pesan Telah Dikirim", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TitipanDoa.this, getResources().getString(R.string.pesan_telah_dikirim), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -692,7 +692,7 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             no.setText(strID);
             message.setText(strMessage);
             time.setText(strTime);
-            from.setText(strFrom);
+            from.setText(strFrom+" ");
             jum.setText(strJum);
 
             Picasso.with(getContext()).load(AppConfig.URL_HOME+"/uploads/profile/"+strIdUser+"/agent.jpg").memoryPolicy(MemoryPolicy.NO_CACHE).networkPolicy(NetworkPolicy.NO_CACHE).error(R.drawable.profile).into(imgDoa);

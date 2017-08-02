@@ -34,7 +34,7 @@
         android:layout_height="30dp" />
     <TextView
         android:id="@+id/vname"
-        android:text="Titipan Doa"
+        android:text="@string/titip_doa"
         android:textSize="20dp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:textSize="14sp"
-        android:hint="Isi email tujuan"
+        android:hint="@string/hint_email_tujuan"
         android:inputType="textEmailAddress"
         android:layout_margin="10dp"
         android:textColorHint="#0b0b0b"
@@ -67,7 +67,7 @@
         android:layout_gravity="top"
         android:gravity="top"
         android:padding="5dp"
-        android:hint="Tulis doa disini"
+        android:hint="@string/hint_tulis_doa"
         android:textColorHint="#0b0b0b"
         android:background="#FFECEBEB"
         android:ems="100"
@@ -89,13 +89,13 @@
         android:text="" />
 
     <Button
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:textAllCaps="false"
         android:padding="5dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Kirim Pesan"
+        android:text="@string/kirim_pesan"
         android:textColor="#FFF"
         android:background="@drawable/button"
         android:id="@+id/btnKirim" />

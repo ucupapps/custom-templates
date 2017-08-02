@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Penilaian"
+                        android:text="@string/penilaian"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:gravity="center"
@@ -115,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="35dp"
                             android:gravity="center"
-                            android:text="Agen Perjalanan"
+                            android:text="@string/travel"
                             android:textColor="@color/black"
                             android:textSize="10sp"
                             android:textStyle="bold" />
@@ -125,7 +125,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:gravity="center"
-                            android:text="Aplikasi GoHajj"
+                            android:text="@string/aplikasi_gohajj"
                             android:textColor="@color/black"
                             android:textSize="10sp"
                             android:textStyle="bold" />
@@ -136,7 +136,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="40dp"
                             android:gravity="center"
-                            android:text="Pembimbing"
+                            android:text="@string/pembimbing"
                             android:textColor="@color/black"
                             android:textSize="10sp"
                             android:textStyle="bold" />
@@ -265,7 +265,7 @@
                             android:background="#f7f6f6"
                             android:ems="100"
                             android:gravity="top"
-                            android:hint="Tambahkan Komentar"
+                            android:hint="@string/tambahkan_komentar"
                             android:inputType="textMultiLine"
                             android:padding="5dp"
                             android:textColorHint="#d4d4d4" />
@@ -285,7 +285,7 @@
                             android:layout_height="30dp"
                             android:layout_margin="20dp"
                             android:background="@drawable/button"
-                            android:text="Kirim"
+                            android:text="@string/kirim"
                             android:textAllCaps="false"
                             android:textColor="#FFF" />
 

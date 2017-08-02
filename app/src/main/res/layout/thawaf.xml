@@ -77,7 +77,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.9"
                         android:paddingLeft="10dp"
-                        android:text="Do'a Thawaf"
+                        android:text="@string/doa_thawaf"
                         android:textColor="@color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />

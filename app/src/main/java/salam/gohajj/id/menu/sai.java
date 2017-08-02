@@ -166,7 +166,7 @@ public class sai extends AppCompatActivity implements
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/sai/"+ids+".mp3";
                 }
 
-                if(play.equals("Mulai")) {
+                if(play.equals(getResources().getString(R.string.mulai))) {
                     judul.setVisibility(View.VISIBLE);
                     isi.setVisibility(View.VISIBLE);
                     img_next.setVisibility(View.VISIBLE);
@@ -174,21 +174,21 @@ public class sai extends AppCompatActivity implements
                     txt_back.setVisibility(View.VISIBLE);
                     txt_next.setVisibility(View.VISIBLE);
                     txt_next.setVisibility(View.VISIBLE);
-                    txt_play.setText("Mainkan");
+                    txt_play.setText(getResources().getString(R.string.mainkan));
                     circle.setText("1");
                     SetProgess(1);
                     circle.setBackground(getImageDrawable(R.drawable.circle_sai_blue));
-                }else if(play.equals("Pause")) {
+                }else if(play.equals(getResources().getString(R.string.pause))) {
                     if(mp.isPlaying()){
                         mp.pause();
                     }
                     img_play.setImageDrawable(getImageDrawable(R.drawable.play));
-                    txt_play.setText("Mainkan");
-                }else if(play.equals("Mainkan")) {
+                    txt_play.setText(getResources().getString(R.string.mainkan));
+                }else if(play.equals(getResources().getString(R.string.mainkan))) {
                     if (!cek_status(getApplicationContext()))
                     {
                         Toast.makeText(sai.this,
-                                "Mohon Cek Koneksi Anda",
+                                getResources().getString(R.string.cek_koneksi),
                                 Toast.LENGTH_SHORT).show();
                     }else {
                         stopPlaying();
@@ -196,7 +196,7 @@ public class sai extends AppCompatActivity implements
                             String query = "UPDATE play set status=1 where id=1;";
                             database.execSQL(query);
                             pd = new ProgressDialog(sai.this);
-                            pd.setMessage("Mempersiapkan Audio.....");
+                            pd.setMessage(getResources().getString(R.string.mempersiapkan_audio)+"...");
                             pd.show();
                             mp = new MediaPlayer();
                             mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -205,7 +205,7 @@ public class sai extends AppCompatActivity implements
                             mp.setDataSource(srcPath);
                             mp.prepareAsync();
                             mp.setOnCompletionListener(sai.this);
-//                            txt_play.setText("Pause");
+//                            txt_play.setText(getResources().getString(R.string.pause));
 //                            img_play.setImageDrawable(getImageDrawable(R.drawable.stop));
                         } catch (Exception e) {
                             Log.e("StreamAudioDemo", e.getMessage());
@@ -219,8 +219,8 @@ public class sai extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 String tply=txt_play.getText().toString();
-                if (!tply.equals("Mulai")) {
-                    stopPlaying(); txt_play.setText("Mainkan");
+                if (!tply.equals(getResources().getString(R.string.mulai))) {
+                    stopPlaying(); txt_play.setText(getResources().getString(R.string.mainkan));
                 img_play.setImageDrawable(getImageDrawable(R.drawable.play));
                 final String ids = circle.getText().toString();
                 if(Integer.parseInt(ids) > 1){
@@ -232,7 +232,7 @@ public class sai extends AppCompatActivity implements
                     txt_back.setVisibility(View.GONE);
                     txt_next.setVisibility(View.GONE);
                     txt_next.setVisibility(View.GONE);
-                    txt_play.setText("Mulai");
+                    txt_play.setText(getResources().getString(R.string.mulai));
                     SetProgess(0);
                     circle.setBackground(getImageDrawable(R.drawable.circle));
                     circle.setText("");
@@ -245,8 +245,8 @@ public class sai extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 String tply=txt_play.getText().toString();
-                if (!tply.equals("Mulai")) {
-                    stopPlaying(); txt_play.setText("Mainkan");
+                if (!tply.equals(getResources().getString(R.string.mulai))) {
+                    stopPlaying(); txt_play.setText(getResources().getString(R.string.mainkan));
                 img_play.setImageDrawable(getImageDrawable(R.drawable.play));
                 final String ids = circle.getText().toString();
                 if(Integer.parseInt(ids) < 7){
@@ -259,14 +259,14 @@ public class sai extends AppCompatActivity implements
                     txt_back.setVisibility(View.GONE);
                     txt_next.setVisibility(View.GONE);
                     txt_next.setVisibility(View.GONE);
-                    txt_play.setText("Mulai");
+                    txt_play.setText(getResources().getString(R.string.mulai));
                     SetProgess(0);
                     circle.setBackground(getImageDrawable(R.drawable.circle));
                     circle.setText("");
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(sai.this);
-                    alertDialogBuilder.setMessage("Ibadah Sa'i sudah selesai, silakan melanjutkan Tahallul");
-                            alertDialogBuilder.setPositiveButton("Ya",
+                    alertDialogBuilder.setMessage(getResources().getString(R.string.alert_sai));
+                            alertDialogBuilder.setPositiveButton(getResources().getString(R.string.ya),
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface arg0, int arg1) {
@@ -305,7 +305,7 @@ public class sai extends AppCompatActivity implements
         varab.setTypeface(font);
         varti.setTypeface(font);
         v_play.setTypeface(font);
-        v_play.setText("Mainkan");
+        v_play.setText(getResources().getString(R.string.mainkan));
 
         rankDialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
@@ -332,17 +332,17 @@ public class sai extends AppCompatActivity implements
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/sai/"+ids;
                 }
 
-                if(play.equals("Pause")) {
+                if(play.equals(getResources().getString(R.string.pause))) {
                     if(mp.isPlaying()){
                         mp.pause();
                     }
                     img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                    v_play.setText("Mainkan");
-                }else if(play.equals("Mainkan")) {
+                    v_play.setText(getResources().getString(R.string.mainkan));
+                }else if(play.equals(getResources().getString(R.string.mainkan))) {
                     if (!cek_status(getApplicationContext()))
                     {
                         Toast.makeText(sai.this,
-                                "Mohon Cek Koneksi Anda",
+                                getResources().getString(R.string.cek_koneksi),
                                 Toast.LENGTH_SHORT).show();
                     }else {
                         stopPlaying();
@@ -350,7 +350,7 @@ public class sai extends AppCompatActivity implements
                             String query = "UPDATE play set status=2 where id=1;";
                             database.execSQL(query);
                             pd = new ProgressDialog(sai.this);
-                            pd.setMessage("Mempersiapkan Audio...");
+                            pd.setMessage(getResources().getString(R.string.mempersiapkan_audio)+"...");
                             pd.show();
                             mp = new MediaPlayer();
                             mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -359,7 +359,7 @@ public class sai extends AppCompatActivity implements
                             mp.setDataSource(srcPath);
                             mp.prepareAsync();
                             mp.setOnCompletionListener(sai.this);
-//                            v_play.setText("Pause");
+//                            v_play.setText(getResources().getString(R.string.pause));
 //                            img_vplay.setImageDrawable(getImageDrawable(R.drawable.stop));
                         } catch (Exception e) {
                             Log.e("StreamAudioDemo", e.getMessage());
@@ -381,9 +381,9 @@ public class sai extends AppCompatActivity implements
         txt_doa1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Mendaki Bukit Safa");
+                vname.setText(getResources().getString(R.string.sai1));
                 varab.setText("بِسْمِ اللّٰهُ الرَّحْمَنِ الرَّحِيْمِ أَبْدَأُ/ بِمَا بَدَأَ اللّٰهُ بِهِ وَرَسُوْلُهُ/ إِنَّ الصَّفَا وَالْمَرْوَةَ/ مِنْ شَعَائؤِرِ اللّٰهِ/فَمَنْ حَجَّ الْبَيْتَ/ أَوِعْتَمَرَ/ فَلَا جُنَاحَ عَلَيْهِ/ أَنْ يَّطَّوَّفَ بِهِمَا/ وَمَنْ تَطَوَّعَ خَيْرًا/ فَإِنَّ اللهَ شَاكِرٌعَلِيْمٌ");
                 varti.setText("Bismillaahir rahmaani rahiim, abda’u bimaa bada-allaahu bihii wa rasuuluhuu, innash shafaa wal marwata min sya-‘aa-irillaah, faman hajjal baita awi’tamara falaa junaaha ‘alaihi ayyatthawwafa bihimma wa man tathawwa’a khairan fainnallaaha syaakirun ‘aliimun");
                 vaudio.setText("8 doa mendaki bukit safa.mp3");
@@ -394,9 +394,9 @@ public class sai extends AppCompatActivity implements
         txt_doa2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Saat di Bukit Safa");
+                vname.setText(getResources().getString(R.string.sai2));
                 varab.setText("اَللّٰهُ اَكْبَرُ،/ اَللّٰهُ اَكْبَرُ،/ اَللّٰهُ اَكْبَرُ،/ وَلِلّٰهِ الْحَمْدُ،/ اَللّٰهُ اَكْبَرُ/ عَلَى مَا هَدَانَا/ وَالْحَمْدُ لِلّٰهِ/ عَلَى مَا أَوْلَانَا،/ لَااِلَهَ اِلَّاللّٰهُ وَحْدَهُ/ لَاشَرِيْكَ لَهُ،/ لَهُ الْمُلْكُ/ وَلَهُ الْحَمْدُ/ يُحْيِيْ وَيُمِيْتُ/ بِيَهْدِهِ الْخَيْرُ/ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ،/ لَااِلَهَ اِلَّاللّٰهُ وَحْدَهُ/ لَاشَرِيْكَ لَهُ/ أَنْجَزَ وَعْدَهُ/ وَنَصَرَعَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ،/ لَااِلَهَ اِلَّااللّٰهُ/ وَلَا نَعْبُدُ اِلَّا إِيَّاهُ/ مُخْلِصِيْنَ لَهُ ادِّيْنَ/ وَلَوْ كَرِهَ الْكَافِرُوْنَ ");
                 varti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, Allaahu Akbar ‘alaa maa hadaana walhamdulillaahi ‘ala maa aulaanaa, laa ilaaha illallaahu wahdahuu la syariikalahuu, lahul mulku wa lahul hamdu yuhyii wa yumiitu biyadihil khairu wa huwa ‘alaa kulli syai-in qadiir, laa ilaaha illallaahu wahdahuu la syariikalahuu anjaza wa’dahuu wa nashara ‘abdahuu wa hazamal ahzaaba wahdahuu laa ilaaha illallaahu walaa na’budu illa iyyahu mukhlishiina lahuddiina walau karihal kaafiruun");
                 vaudio.setText("11 doa saat dibukit safa.mp3");
@@ -406,9 +406,9 @@ public class sai extends AppCompatActivity implements
         txt_doa3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa di Antara 2 Pilar Hijau");
+                vname.setText(getResources().getString(R.string.sai3));
                 varab.setText("رَبِّ اغْفِرْوَارْحَمْ/ وَاعْفُ وَتَكَرَّمْ/ وَتَجَاوَزْعَمَّا تَعْلَمُ/ إِنَّكَ تَعْلَمُ مَا لَانَعْلَمُ/ إِنَّكَ أَنْتَ اللّٰهُ الْأَعَزُّالْأَكْرَمُ");
                 varti.setText("Rabbighfir warham wa’fu wa takarram ‘amma ta’lam, innaka ta’lamu maa laa na’lamu, innakallahul a-‘azzul akramu");
                 vaudio.setText("10 doa diantara 2 pilar hijau.mp3");
@@ -418,9 +418,9 @@ public class sai extends AppCompatActivity implements
         txt_doa4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Ketika Mendekati Bukit Safa atau Marwah");
+                vname.setText(getResources().getString(R.string.sai4));
                 varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ/ مِنْ شَعَائِرِ اللّٰهِ/ فَمَنْ حَجَّ الْبَيْتَ/ أَوِاعْتَمَرَ/ فَلَا جُنَاحَ عَلَيْهِ/ أَنْ يَّطَّوَّفَ بِهِمَا/ وَمَنْ تَطَوَّعَ خَيْرًا/ فَإِنَّ اللهَ شَاكِرٌعَلِيْمٌ");
                 varti.setText("Innash shafaa wal marwata min sya-‘aa-irillaah, faman hajjal baita awi’tamara falaa junaaha ‘alaihi ayyathowwafa bihimma wa man tathawwa’a khairan fainnallaaha syaakirun ‘aliimun");
                 vaudio.setText("9 doa ketika mendekati bukit safa marwah.mp3");
@@ -430,9 +430,9 @@ public class sai extends AppCompatActivity implements
         txt_doa5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Selesai Sai");
+                vname.setText(getResources().getString(R.string.sai5));
                 varab.setText("اللَّهُمَّ رَبَّنَا/ تَقَبَّلْ مِنَا/ وَعَافِنَا وَاعْفُ عَنَّا/ وَعَلَى طَاعَتِكَ وَشُكْرِكَ أَعِنَّا/ وَعَلَى غَيْرِكَ/ لَاتَكِلْنَا/ وَعَلَى الإِيْمَانِ وَالإِسْلَامِ الكَامِلِ جَمِيْعًا/ تَوَفَّنَا وَأَنْتَ رَاضٍ عَنَّا/ اللَّهُمَّ ارْحَمْنِيْ/ بِتَرْكِ المَعَاصِيْ/ أَبَدًامَاأَبْقَيْتَنِيْ/ وَارْحَمْنِيْ/ اَنْ اَتَكَلَّفَ مَا لَايَعْنِيْنِيْ/ وَارْزُقْنِيْ حُسْنَ النَّظَرِ/ فِيْمَا يُرْضِيْكَ عَنِّيْ/ يَااَرْحَمَ الرَّاحِمِيْنَ");
                 varti.setText("Allaahumma rabbanaa taqabbal minnaa wa’aafinaa wa’fu ‘annaa wa ‘alaa thaa-‘atika wa syukrika a’innaa wa ‘alaa ghairika laa takilnaa wa ‘alal iimaani wal islaami kaamili jamii’an tawaffanaa wa anta raadhin ‘annaa, Allaahummarhamnii bitarki ma’aashii abadam maa abqaitanii warhamnii warzuqnii husnan nazhari fii maa yurdhiika ‘annii ya arhamar raahimiin");
                 vaudio.setText("12 doa selesai sa'i.mp3");
@@ -505,10 +505,10 @@ public class sai extends AppCompatActivity implements
             mCoun.moveToFirst();
             int coun= mCoun.getInt(0);
             if(coun == 1) {
-                txt_play.setText("Pause");
+                txt_play.setText(getResources().getString(R.string.pause));
                 img_play.setImageResource(R.drawable.stop);
             }else{
-                v_play.setText("Pause");
+                v_play.setText(getResources().getString(R.string.pause));
                 img_vplay.setImageResource(R.drawable.stop);
             }
         }
@@ -525,15 +525,15 @@ public class sai extends AppCompatActivity implements
 //        pd.dismiss();
         final String play = txt_play.getText().toString().trim();
         final String play2 = v_play.getText().toString().trim();
-        if(play.equals("Pause")){
-            txt_play.setText("Mainkan");
+        if(play.equals(getResources().getString(R.string.pause))){
+            txt_play.setText(getResources().getString(R.string.mainkan));
             img_play.setImageDrawable(getImageDrawable(R.drawable.play));
         }
-        if(play2.equals("Pause")) {
+        if(play2.equals(getResources().getString(R.string.pause))) {
             img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-            v_play.setText("Mainkan");
+            v_play.setText(getResources().getString(R.string.mainkan));
         }
-        Toast.makeText(getApplicationContext(), "Selesai", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.selesai), Toast.LENGTH_LONG).show();
     }
 
     private void stopPlaying() {

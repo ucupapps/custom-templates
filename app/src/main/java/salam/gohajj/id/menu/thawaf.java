@@ -172,7 +172,7 @@ public class thawaf extends AppCompatActivity implements
 //                cmdReset();
 //                cmdSetDataSource(srcPath);
 
-                if(play.equals("Mulai")) {
+                if(play.equals(getResources().getString(R.string.mulai))) {
                     judul.setVisibility(View.VISIBLE);
                     isi.setVisibility(View.VISIBLE);
                     img_next.setVisibility(View.VISIBLE);
@@ -180,23 +180,23 @@ public class thawaf extends AppCompatActivity implements
                     txt_back.setVisibility(View.VISIBLE);
                     txt_next.setVisibility(View.VISIBLE);
                     txt_next.setVisibility(View.VISIBLE);
-                    txt_play.setText("Mainkan");
+                    txt_play.setText(getResources().getString(R.string.mainkan));
                     circle.setText("1");
                     SetProgess(1);
                     circle.setBackground(getImageDrawable(R.drawable.circle_sai_blue));
-                }else if(play.equals("Pause")) {
+                }else if(play.equals(getResources().getString(R.string.pause))) {
 //                    cmdStop();
 //                    cmdPause();
                     if(mp.isPlaying()){
                         mp.pause();
                     }
                     img_play.setImageDrawable(getImageDrawable(R.drawable.play));
-                    txt_play.setText("Mainkan");
-                }else if(play.equals("Mainkan")) {
+                    txt_play.setText(getResources().getString(R.string.mainkan));
+                }else if(play.equals(getResources().getString(R.string.mainkan))) {
                     if (!cek_status(getApplicationContext()))
                     {
                         Toast.makeText(thawaf.this,
-                                "Mohon Cek Koneksi Anda",
+                                getResources().getString(R.string.cek_koneksi),
                                 Toast.LENGTH_SHORT).show();
                     }else {
                         stopPlaying();
@@ -204,7 +204,7 @@ public class thawaf extends AppCompatActivity implements
                             String query = "UPDATE play set status=1 where id=1;";
                             database.execSQL(query);
                             pd = new ProgressDialog(thawaf.this);
-                            pd.setMessage("Mempersiapkan Audio.....");
+                            pd.setMessage(getResources().getString(R.string.mempersiapkan_audio)+".....");
                             pd.show();
                             mp = new MediaPlayer();
                             mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -213,7 +213,7 @@ public class thawaf extends AppCompatActivity implements
                             mp.setDataSource(srcPath);
                             mp.prepareAsync();
                             mp.setOnCompletionListener(thawaf.this);
-//                            txt_play.setText("Pause");
+//                            txt_play.setText(getResources().getString(R.string.pause));
 //                            img_play.setImageDrawable(getImageDrawable(R.drawable.stop));
                         } catch (Exception e) {
                             Log.e("StreamAudioDemo", e.getMessage());
@@ -227,9 +227,9 @@ public class thawaf extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 String tply=txt_play.getText().toString();
-                if (!tply.equals("Mulai")) {
+                if (!tply.equals(getResources().getString(R.string.mulai))) {
                     stopPlaying();
-                    txt_play.setText("Mainkan");
+                    txt_play.setText(getResources().getString(R.string.mainkan));
                     img_play.setImageDrawable(getImageDrawable(R.drawable.play));
                     final String ids = circle.getText().toString();
                     if (Integer.parseInt(ids) > 1) {
@@ -243,7 +243,7 @@ public class thawaf extends AppCompatActivity implements
                         txt_back.setVisibility(View.GONE);
                         txt_next.setVisibility(View.GONE);
                         txt_next.setVisibility(View.GONE);
-                        txt_play.setText("Mulai");
+                        txt_play.setText(getResources().getString(R.string.mulai));
                         SetProgess(0);
                         circle.setBackground(getImageDrawable(R.drawable.circle));
                         circle.setText("");
@@ -256,9 +256,9 @@ public class thawaf extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 String tply=txt_play.getText().toString();
-                if (!tply.equals("Mulai")) {
+                if (!tply.equals(getResources().getString(R.string.mulai))) {
                     stopPlaying();
-                    txt_play.setText("Mainkan");
+                    txt_play.setText(getResources().getString(R.string.mainkan));
                     img_play.setImageDrawable(getImageDrawable(R.drawable.play));
                     final String ids = circle.getText().toString();
                     if (Integer.parseInt(ids) < 7) {
@@ -272,14 +272,14 @@ public class thawaf extends AppCompatActivity implements
                         txt_back.setVisibility(View.GONE);
                         txt_next.setVisibility(View.GONE);
                         txt_next.setVisibility(View.GONE);
-                        txt_play.setText("Mulai");
+                        txt_play.setText(getResources().getString(R.string.mulai));
                         SetProgess(0);
                         circle.setBackground(getImageDrawable(R.drawable.circle));
                         circle.setText("");
 
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(thawaf.this);
-                        alertDialogBuilder.setMessage("Ibadah Thawaf sudah selesai, silakan melanjutkan Ibadah Sa'i");
-                        alertDialogBuilder.setPositiveButton("Ya",
+                        alertDialogBuilder.setMessage(getResources().getString(R.string.alert_thawaf));
+                        alertDialogBuilder.setPositiveButton(getResources().getString(R.string.ya),
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface arg0, int arg1) {
@@ -289,7 +289,7 @@ public class thawaf extends AppCompatActivity implements
                                     }
                                 });
 
-                        alertDialogBuilder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                        alertDialogBuilder.setNegativeButton(getResources().getString(R.string.tidak), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 //                            finish();
@@ -320,7 +320,7 @@ public class thawaf extends AppCompatActivity implements
         varab.setTypeface(font);
         varti.setTypeface(font);
         v_play.setTypeface(font);
-        v_play.setText("Mainkan");
+        v_play.setText(getResources().getString(R.string.mainkan));
 
         rankDialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
@@ -347,19 +347,19 @@ public class thawaf extends AppCompatActivity implements
                     srcPath=AppConfig.URL_HOME+"/uploads/panduan/thawaf/"+ids;
                 }
 
-                if(play.equals("Pause")) {
+                if(play.equals(getResources().getString(R.string.pause))) {
 //                    cmdStop();
                     if(mp.isPlaying()){
                         mp.pause();
                     }
                     img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                    v_play.setText("Mainkan");
-                }else if(play.equals("Mainkan")) {
+                    v_play.setText(getResources().getString(R.string.mainkan));
+                }else if(play.equals(getResources().getString(R.string.mainkan))) {
 //                    mProgressDialog = ProgressDialog.show(thawaf.this,"","Harap Tunggu...",false,false);
                     if (!cek_status(getApplicationContext()))
                     {
                         Toast.makeText(thawaf.this,
-                                "Mohon Cek Koneksi Anda",
+                                getResources().getString(R.string.cek_koneksi),
                                 Toast.LENGTH_SHORT).show();
                     }else {
                         stopPlaying();
@@ -367,7 +367,7 @@ public class thawaf extends AppCompatActivity implements
                             String query = "UPDATE play set status=2 where id=1;";
                             database.execSQL(query);
                             pd = new ProgressDialog(thawaf.this);
-                            pd.setMessage("Mempersiapkan Audio...");
+                            pd.setMessage(getResources().getString(R.string.mempersiapkan_audio)+"...");
                             pd.show();
                             mp = new MediaPlayer();
                             mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -376,7 +376,7 @@ public class thawaf extends AppCompatActivity implements
                             mp.setDataSource(srcPath);
                             mp.prepareAsync();
                             mp.setOnCompletionListener(thawaf.this);
-//                            v_play.setText("Pause");
+//                            v_play.setText(getResources().getString(R.string.pause));
 //                            img_vplay.setImageDrawable(getImageDrawable(R.drawable.stop));
                         } catch (Exception e) {
                             Log.e("StreamAudioDemo", e.getMessage());
@@ -399,9 +399,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Istilam");
+                vname.setText(getResources().getString(R.string.thawaf1));
                 varab.setText("بِسْمِ اللّٰهِ، اَللّٰهُ اَكْبَرُُ");
                 varti.setText("Bismillaahi Allaahu Akbar");
                 vaudio.setText("8 doa istilam.mp3");
@@ -412,9 +412,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa di Antara Rukun Yamani dan Hajar Aswad");
+                vname.setText(getResources().getString(R.string.thawaf2));
                 varab.setText("رَبَّنَا آتِنَا/ فِيْ الدُّ نْيَا حَسَنَةً/ وَفِيْ الْآخِرَةِ حَسَنَةً/ وَقِنَا عَذَابَ النَّارِ/ وَأَدْخِلْنَا الْجَنَّةَ/ مَعَ الْأَبْرَارِ/ يَا عَزِيْزُ يَا غَفَارُ/ يَا رَبَّ الْعَا لَمِيْنَ");
                 varti.setText("Rabbanaa aatinaa fid dun-yaa hasanataw wa fil aakhirati hasanataw wa qinaa ‘adzaaban naar, wa adkhilnal jannata ma’al abraar, yaa aziizu, yaa ghafaaru yaa rabbal ‘aalamiin");
                 vaudio.setText("9 doa diantara rukun yamani dan hajar aswad.mp3");
@@ -424,9 +424,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Saat di Multazam");
+                vname.setText(getResources().getString(R.string.thawaf3));
                 varab.setText("اللَّهُمَّ يَارَبَّ الْبَيْتِ الْعَتِيْقِ/ أَعْتِقْ رِقَابَنَا/ وَرِقَابَ آبَائِنَا/ وَأُمَّهَاتِنَا/ وَإِخْوَانِنَا/ وَأَوْلاَدِنَا/ مِنَ النَّارِ/ يَاذَاالْجُوْدِ وَالْكَرَمِ/ وَالْفَضْلِ وَالْمَنِّ/ وَالْعَطَاءِ وَالْأِحْسَانِ/ اللَّهُمَّ أَحْسِنْ عَقِبَتَنَا/ فِيْ الْأُمُوْرِ كُلِّهَا/ وَأَجِرْنَا مِنْ خِزْيِ الدُّنْيَا/ وَعَذَا بِ الْآخِرَةِ/ اللَّهُمَّ إِنِّيْ عَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَاقِفٌ تَحْتَ بَابِكَ/ مُلْتَزِمٌ بِأَعْتَابِكَ/ مُتَذَلِّلٌ بَيْنَ يَدَيْكَ/ أَرْجُوْ رَحْمَتَكَ/ وَأَخْشَ عَذَابَكَ/ يَا قَدِيْمَ الْإِحْسَانِ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ أَنْ تَرْفَعَ ذِكْرِيْ/ وَتَضَعَ وِزْرِيْ/ وَتُصْلِحَ أَمْرِيْ/ وَتُطَهِّرَ قَلْبِيْ/ وَتُنَوِّرَ لِيْ فِيْ قَبْرِيْ/ وَتَغْفِرَلِيْ ذَنْبِيْ/ وَأَسْأَلُكَ الدَّرَ جَاتِ الْعُلَى/ مِنَ الْجَنَّةِ");
                 varti.setText("Allahumma yaa rabbal baitil ‘atiiq, a’tiq riqaabanaa wariqaaba aabaa-inaa wa ummahaatinaa wa ikhwaaninaa wa aulaadinaa minan naari yaa dzaal juudi wal karami wal fadhli wal manni wal ‘athaa-l wal ihsaani, Allaahumma ahsin ‘aaqibatanaa fil umuri kullihaa wa ajirnaa min khizyid dun-yaa wa ‘adzaabil aakhirah. Allaahumma innii ‘abduka wabnu ‘abdika waqifun tahta baabika multazimun  bi-a’taabika mutadzallilun baina yadaika arju rahmataka wa akhsyaa ‘adzaabaka ya qadiimal ihsaan. Allaahumma innii asaluka an tarfa’aa dzikrii wa tadha’a wizrii wa tushliha amri wa tuthahhira qalbi wa tunawwirali fi qabrii wa taghfiralii dzanbii wa as-alukad darajaatil ‘ulaa minal jinnati.");
                 vaudio.setText("10 doa saat di Multazam.mp3");
@@ -436,9 +436,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Mencium Hajar Aswad");
+                vname.setText(getResources().getString(R.string.thawaf4));
                 varab.setText("بِسْمِ اللّٰهِ/ وَاللّٰهُ أَكْبَرُ،/ اللَّهُمَّ إِيْمَانًا بِكَ/ وَتَصْدِ يْقًا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ/ نَبِيِّكَ مُحَمَّدٍ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ");
                 varti.setText("Bismillahi wallahu akbar. Allaahumma iimaanan bika wa tasdiiqon bikitaabika wa wafaa an bi’ahdika wattibaa an lisunnati nabiyika Muhammadin shalallahu ‘alaihi wasallam");
                 vaudio.setText("11 doa mencium hajar aswad.mp3");
@@ -448,9 +448,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Setelah Shalat Sunnah Thawaf");
+                vname.setText(getResources().getString(R.string.thawaf5));
                 varab.setText("اللَّهُمَّ إِنَّكَ/ تَعْلَمُ سِرِّيْ/ وَعَلَا نِيَتِيِ فَاقْبَلْ مَعْذِرَتِيِ/ وَتَعْلَمُ حَاجَتِيْ/ فَأَعْطِنِيْ سُؤْلِيْ/ وَتَعْلَمُ مَا فِيْ نَفْسِيْ/ فَاغْفِرْلِيْ ذُنُوْبِيْ،/ اللَّهُمَّ/ إِنِّيْ أَسْأَلُكَ/ إِيْمَانًا دَائِمًا/ يُبَاشِّرُ قَلْبِيْ/ وَيَقِيْنًا صَادِقًا/ حَتَّى أَعۡلَمَ/ اَنَّهُ لَايُسِيْبُنِيْ/ إِلاَّمَا كَتَبْتَهُ عَلَيَّ/ وَرَضِّنِيْ/ بِمَا قَسَّمْتَهُ لِيْ/ يَا أَرْحَمَ الرَّاحِمِيْنَ،/ أَنْتَ وَلِيِّيْ/ فِيْ الدُّنْيَا وَالْآخِرَةِ/ تَوَفَّنِيْ مُسْلِمًا/ وَأَلْحِقْنِيْ بِالصَّالِحِيْنَ،/ اللَّهُمَّ/ لاَتَدَعْ لَنَا/ فِيْ مَقَامِنَا هَذَا ذَنْبًا اِلاَّغَفَرْتَهُ/ وَلاَ هَمَّا اِلاَّ فَرَّجْتَهُ/ وَلاَحَاجَةً اِلاَّقَضَيْتَهَا/ وَيَسَّرْتَهَا فَيَسِّرْ أُمُوْرَنَا/ وَاشْرَحْ صُدُوْرَنَا/ وَنَوِّرْقُلُوْبَنَا/ وَاخۡتِمۡ بِالصَّالِحَاۃِ اَعۡمَالَنَا/ اللَّهُمَّ تَوَفَّنَا مُسْلِمِيْنَ/ وَأَحْيِنَا مُسْلِمِيْنَ/ وَأَلْحِقْنَا بِالصَّالِحِيْنَ/ غَيْرَ خَزَايَا/ وَلاَمَفْتُوْنِيْنََ");
                 varti.setText("Allaahumma innaka ta’lamu sirrii wa ‘alaniyatii faqbal ma’dziratii wa ta’lamuu haajati fa a’thinii su’lii wa ta’lamu maa fii nafsii faghfirlii dzunuubii. Allaahumma innii as’aluka iimaanan daa-iman yubaasyiru qalbii wa yaqiinan shaadiqan hattaa a’lama annahuu laa yushiibunii illaa maa katabtahuu ‘alayya wa radhdhinii bimaa qassamtahuu lii yaa arhamar raahimiin, anta waliyyi fid dun-yaa wal aakhiratii tawaffanii musliman wa alhiqnii bishshaalihiin, Allaahumma laa tada’ lanaa fii maqaamina hadzaa dzanban illa ghofartahu wa laa hamma ilaa farrajtahu wa laa haajatan illaa qadhaitahaa wa yassartahaa fayassir umuuranaa wasyrah shuduuranaa wanawwir quluubanaa wakhtim bishshaalihaati a’maalanaa, Allaahumma tawaffanaa muslimiina wa ahyinaa muslimiin, wa alhiqnaa bishshaalihiin ghaira khazaayaa wa laa maftuuniin");
                 vaudio.setText("12 doa setelah shalat sunnah tawaf.mp3");
@@ -460,9 +460,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Minum Air Zamzam");
+                vname.setText(getResources().getString(R.string.thawaf6));
                 varab.setText("اللَّهُمَّ/ إِنِّيْ أَسْأَلُكَ/ عِلْمًا نَافِعًا/ وَرِزْقَا وَاسِعًا/ وَشِفَاءً مِنْ كُلِّ دَاءٍ/ وَسَقَمٍ/ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِيْنََ");
                 varti.setText("Allaahumma inni as-aluka ‘ilman naafi’an wa rizqan waasi’an wa syifaa-an min kulli daa-in wa saqamin birahmatika yaa arhamar raahimiin");
                 vaudio.setText("13 doa minum air zam zam.mp3");
@@ -472,9 +472,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Thawaf Wada");
+                vname.setText(getResources().getString(R.string.thawaf7));
                 varab.setText("بِسْمِ اللّٰهِ اَللّٰهُ اَكْبَرُ/ سُبْحَانَ اللّٰهِ/ وَالْحَمْدُلِلّٰهِ/ وَلاَاِلَهَ اِلاَّاللّٰهُ/ وَاللّٰهُ أَكْبَرُ،/ وَلاَحَوْلَ/ وَلاَقُوَّةَ/ اِلاَّبِاللّٰهِ الْعَلِيِّ الْعَظِيْمِ،/ وَالصَّلَاةُ وَالسَّلَامُ/ عَلَى رَسُوْلِ اللّٰهِ/ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ،/ أَللَّهُمَّ إِيْمَانًابِكَ/ وَتَصْدِيْقًا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ،/ إِنَّ الَّذِيْ/ فَرَضَ عَلَيْكَ الْقُرْآنَ/ لَرَآدُّوْكَ اِلَى مَعَادٍ،/ يَامُعِيْدُ/ اَعِدْنِيْ، يَاسَمِيْعُ/اَسۡمِعْنِيْ،/ يَاجَبَّارُ/ أُجْبُرْنِيْ،/ يَاسَتَّارُ/ اُسْتُرْنِيْ،/ يَارَحْمَنُ/ اِرْحَمْنِيْ،/ يَا رَدَّادُ/ اُرْدُدْنِيْ اِلَى بَيْتِكَ هَذَا/ وَرْزُقْنِيْ الْعَوْدَ/ ثُمَّ الْعَوْدَ/ كَرّاتٍ بَعْدَ مَرَّاتٍ/ تَاءِبُوْنَ/ عَابِدُوْنَ/ سَائِحُوْنَ/ لِرَبِّناَ حَامِدُوْنَ/ صَدَقَ اللّٰهُ وَعْدَهُ/ وَنَصَرَعَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ./ اللَّهُمَّ احْفَظْنِيْ/ عَنْ يَمِيْنِيْ/ وَعَنْ يَسَارِيْ/ وَمِنْ قُدَّامِيْ/ وَمِنْ وَرَاءِظَهْرِيْ/ وَمِنْ فَوْقِيْ/ وَمِنْ تَحْتِيْ،/ حَتَّى تُوَصِّلَنِيْ/ اِلَى اَهْلِيْ/ وَبَلَدِيْ./ اللَّهُمَّ هَوِّنْ عَلَيْنَا السَّفَرَ/ وَاطْوِلَنَا الْأَرْضَ،/ اللَّهُمَّ أَصْحِبْنَا/ فِيْ سَفَرِنَا/ وَخْلُفْنَا فِيْ أَهْلِهَا/ يَا أَرْحَمَ الرَّاحِمِيْنَ./ رَبَّنَا آتِنَا فِيْ الدُّنْيَا حَسَنَةً/ وَفِي الآ خِرَۃِ حَسَنَۃً/ وَقِنَا عَذَا بَ النَّارِ/ وَأَدْخِلْنَا الْجَنَّةَ مَعَ الْأَبْرَارِ/ يَاعَزِيْزُيَا غَفَارَيَارَبَّ الْعَالَمِيْنَ");
                 varti.setText("Bismillaahi Allaahu akbar subhaanallaahi walhamdulillaahi wa laa ilaaha illallaahu wallaahu akbar. Wa laa haula wa laa quwwata illaa billaahil ‘aliyyil ‘adziim, wash shalaatu was salaam alaa rasulillaahi shallallaahu ‘alaihi wa aalihi, Allaahumma iimaanan bika wa tasdiiqan bi kitaabika wa wafaa-an bi ‘ahdika wattibaa-‘a lisunnati nabiyyika Muhammadin shalallahu ‘alaihi wa aalihi, innal ladzii faradha ‘alaika qur-aana laraadduuka ilaa ma’aadin ya mu’iidu a-‘idnii ya samii-u asmi’nii, yaa jabbar ujburnii ya sattar usturnii yaa rahmaanu irhamnii yaa raddaad urdudnii ilaa baitika hdzaa warzuqnil ‘auda tsummal ‘auda karaatin ba’da maraatin taa-ibuuna ‘aabiduuna saaihuuna lirabbinaa haamiduuna shadaqallaahu wa’dahuu wanashara ‘abdahuu wahazamal ahzaaba wahdahuu, Allaahumma fadznii an yamiinii wa ‘an yasaarii wa min quddaamii wa raidzohrii wamin fauqii wa min tahtii hattaa tuwashshilanii ilaa ahli wa baladi Allaahumma hawin ‘alainaa as safara watwi lanaa al-ardha, Allaahumma ashibnaa fii safarinaa wakhlufna fii ahlihaa yaa arhamar raahimiin, rabbanaa aatinaa fiddunyaa hasanatan wa fil aakhirati hasanatan wa qinaa ‘adzaaban naar wa adkhilnal jannata ma’al abraar, yaa ‘aziizu yaa ghaffaaru yaa rabbal ‘aalamiin");
                 vaudio.setText("14 doa tawaf wada.mp3");
@@ -484,9 +484,9 @@ public class thawaf extends AppCompatActivity implements
         txt_doa8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopPlaying();v_play.setText("Mainkan");
+                stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-                vname.setText("Doa Setelah Selesai Thawaf Wada");
+                vname.setText(getResources().getString(R.string.thawaf8));
                 varab.setText("اللَّهُمَّ/ إِنَّ الْبَيْتَ/ بَيْتُكَ/ وَالْعَبْدَ/ عَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَابْنُ أَمَتِكَ/ حَمَلْتَنِيْ/ عَلَى مَا سَخَّرْ تَنِيْ لِيْ/ مِنْ خَلْقِكَ/ حَتَّى سَيَّرْتَنِيْ فِيْ بِلَادِكَ/ وَبَلَغْتَنِيْ بِنِعْمَتِكَ/ حَتَّى اَعَنْتَنِيْ/ عَلَى قَضَاءِ مَنَاسِكَ،/ فَإِنْ كُنْتَ رَضِيْتَ عَنِّيْ/ فَازْدَدْ عَنِّيْ رِضًا/ وَاِلاَّ فَمُنَّ الآنَ/ قَبْلَ تَبَاعُدِيْ عَنْ بَيْتِكَ./ هَذَا أَوَانُ انْصِرَافِيْ/ إِنْ أَذِنْتَ لِيْ/ غَيْرَمُسْتَبْدِلِ بِكَ/ وَلابِبَيۡتِكَ/ وَلاَرَاغِبَ عَنْكَ/ وَلاَ عَنْ بَيْتِكَ./ اللَّهُمَّ اَصْحِبْنِي الۡعَافِيَةَ/ فِيْ بَدَنِيْ/ وَالْعِصْمَةَ فِيْ دِيْنِيْ/ وَحُسْنَ مُنْقَلَبِيْ/ وَارْزُقْنِيْ/ طَاعَتَكَ أَبَدًا مَا اَبْقَيْتَنِيْ/ وَاجْمَعْ لِيْ/ خَيْرَيِ الدُّنْيَاوَالْآخِرَةِ/ إِنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ./ اللَّهُمَّ لاَتَجْعَلْ/ هَذَا آخِرَالۡعَهْدِ بِبَيْتِكَ الْحَرَامِ/ وَإِنْ جَعَلْتَهُ آخِرَ الْعَهْدِ/ فَعَوِّضْنِيْ عَنْهُ الْجَنَّةَ/ بِرَحْمَتِكَ يَااَرْحَمَ الرَّحِمِيْنَ/ آمِيْنَ يَا رَبَّ الْعَالَمِيْنََ");
                 varti.setText("Allahumma innal baita baituka wal ‘abda ‘abduka wabnu amatika hamaltanii ‘alaa ma sakhkhartanii lii min khalqika hattaa sayyartanii fii bilaadika wa balaghtanii bini’matika hatta a-’antanii ‘alaa qadhaa-l manaasikika fain kunta radhiita ‘annii fazdad ‘anni ridhan wa illaa famunnal ‘aanaqabla tabaa’udii ‘an baitika hadzaa awanunsirafii in adzinta lii ghaira mustabdilin bika walaa bi baitika walaa raaghibiin ‘anka walaa ‘an baitika, Allaahumma ashibnil ‘aafiyata fii badanii wal ‘ishmati fii diinii wa husnamunqalabii war zuqnii thaa’ataka Abadan maa abqaitanii wajma’lii khairayid dun-yaa wal aakhirah, innaka ‘aala kulli syai-in qaadir, Allaahumma la taj’al haadzal aakhiral ‘ahdibibaitikal haraam wa in ja’altahu aakhiral ‘ahdi fa’awwaidnii ‘anhul jannata birahmatika yaa arhamar raahimiin, amiin yaa rabbal ‘aalamiin");
                 vaudio.setText("15 doa setelah selesai tawaf wada.mp3");
@@ -559,10 +559,10 @@ public class thawaf extends AppCompatActivity implements
             mCoun.moveToFirst();
             int coun= mCoun.getInt(0);
             if(coun == 1) {
-                txt_play.setText("Pause");
+                txt_play.setText(getResources().getString(R.string.pause));
                 img_play.setImageResource(R.drawable.stop);
             }else{
-                v_play.setText("Pause");
+                v_play.setText(getResources().getString(R.string.pause));
                 img_vplay.setImageResource(R.drawable.stop);
             }
         }
@@ -579,15 +579,15 @@ public class thawaf extends AppCompatActivity implements
 //        pd.dismiss();
         final String play = txt_play.getText().toString().trim();
         final String play2 = v_play.getText().toString().trim();
-        if(play.equals("Pause")){
-        txt_play.setText("Mainkan");
+        if(play.equals(getResources().getString(R.string.pause))){
+        txt_play.setText(getResources().getString(R.string.mainkan));
         img_play.setImageDrawable(getImageDrawable(R.drawable.play));
         }
-        if(play2.equals("Pause")) {
+        if(play2.equals(getResources().getString(R.string.pause))) {
             img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
-            v_play.setText("Mainkan");
+            v_play.setText(getResources().getString(R.string.mainkan));
         }
-        Toast.makeText(getApplicationContext(), "Selesai", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.selesai), Toast.LENGTH_LONG).show();
     }
 
     private void stopPlaying() {

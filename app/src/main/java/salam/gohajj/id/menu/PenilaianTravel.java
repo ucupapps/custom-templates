@@ -174,8 +174,8 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
         txtpembimbing = (TextView) findViewById(R.id.txtpembimbing);
         ratingBar = (RatingBar) findViewById(R.id.dialog_ratingbar);
         txttravel.setVisibility(View.GONE);
-        txtJudul.setText("Penilaian Agen Perjalanan");
-        txtTanya.setText("Bagaimana kualitas pelayanan agen perjalanan?");
+        txtJudul.setText(getResources().getString(R.string.penilaian_agen_perjalanan));
+        txtTanya.setText(getResources().getString(R.string.pertanyaan_agen_perjalanan));
         if (!session.isLoggedIn()) {
             logoutUser();
         }
@@ -272,14 +272,14 @@ public class PenilaianTravel extends AppCompatActivity implements OnClickListene
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PenilaianTravel.this,"","Mengirim ...",false,false);
+                loading = ProgressDialog.show(PenilaianTravel.this,"",getResources().getString(R.string.mengirim)+"...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(PenilaianTravel.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(PenilaianTravel.this, getResources().getString(R.string.terima_kasih), Toast.LENGTH_SHORT).show();
             }
 
             @Override

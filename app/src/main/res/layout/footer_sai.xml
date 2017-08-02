@@ -48,7 +48,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:text="Doa Mendaki Bukit Safa"
+                        android:text="@string/sai1"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -61,7 +61,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:text="Doa Saat di Bukit Safa"
+                        android:text="@string/sai2"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -73,7 +73,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:text="Doa di Antara Dua Pilar Hijau"
+                        android:text="@string/sai3"
                         android:textColor="@color/white" />
                 </TableRow>
                 <TableRow
@@ -90,7 +90,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:text="Doa Ketika Mendekati Bukit Safa atau Marwah"
+                        android:text="@string/sai4"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -102,7 +102,7 @@
                         android:clickable="true"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:text="Doa Selesai sai"
+                        android:text="@string/sai5"
                         android:textColor="@color/white" />
 
                 </TableRow>
@@ -147,7 +147,7 @@
                     android:layout_weight="1"
                     android:layout_below="@id/img_doa"
                     android:layout_centerInParent="true"
-                    android:text="Sebelumnya"
+                    android:text="@string/sebelumnya"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="10sp"
@@ -184,7 +184,7 @@
                     android:layout_weight="1"
                     android:layout_below="@id/img_doa"
                     android:layout_centerInParent="true"
-                    android:text="Mulai"
+                    android:text="@string/mulai"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="10sp"
@@ -223,7 +223,7 @@
                     android:layout_weight="1"
                     android:layout_below="@id/img_doa"
                     android:layout_centerInParent="true"
-                    android:text="Selanjutnya"
+                    android:text="@string/selanjutnya"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="10sp"

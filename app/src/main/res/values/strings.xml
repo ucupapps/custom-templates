@@ -65,6 +65,7 @@
     <string name="sai3">Doa di Antara 2 Pilar Hijau</string>
     <string name="sai4">Doa Ketika Mendekati Bukit Safa atau Marwah</string>
     <string name="sai5">Doa Selesai Sai</string>
+    <string name="selesai">Selesai</string>
 
     <!--menu thawaf-->
     <string name="ya">Ya</string>
@@ -98,6 +99,11 @@
     <!--menu titipan doa-->
     <string name="menitipkan_doanya">Menitipkan doanya</string>
     <string name="doakan">Doakan</string>
+    <string name="publik">Publik</string>
+    <string name="mengirim">Mengirim</string>
+    <string name="terimakasih_telah_mendoakan">Terimakasih telah mendoakan</string>
+    <string name="email_tidak_boleh_kosong">Email tujuan tidak boleh kosong</string>
+    <string name="format_email_salah">Format email tujuan salah</string>
 
     <!--menu setting-->
     <string name="pengaturan">Pengaturan</string>
@@ -156,6 +162,20 @@
     <string name="registrasi">Registrasi</string>
     <string name="btn_link_to_login">Sudah daftar? Login Sekarang !</string>
 
+    <!---->
+    <string name="hint_email_tujuan">Isi email tujuan</string>
+    <string name="hint_tulis_doa">Tulis doa disini</string>
+    <string name="aplikasi_gohajj">Aplikasi GoHajj</string>
+    <string name="penilaian_agen_perjalanan">Penilaian Agen Perjalanan</string>
+    <string name="penilaian_aplikasi">Penilaian Aplikasi GoHajj</string>
+    <string name="penilaian_pembimbing">Penilaian Pembimbing</string>
+    <string name="pertanyaan_agen_perjalanan">Bagaimana kualitas pelayanan agen perjalanan?</string>
+    <string name="pertanyaan_aplikasi">Bagaimana kualitas aplikasi GoHajj?</string>
+    <string name="pertanyaan_pembimbing">Bagaimana kualitas pelayanan pembimbing?</string>
+    <string name="tambahkan_komentar">Tambahkan Komentar</string>
+    <string name="pembimbing">Pembimbing</string>
+    <string name="travel">Agen Perjalanan</string>
+    <string name="terima_kasih">Terima Kasih</string>
 
     <string name="tidak_ada_koneksi">Tidak ada koneksi internet. Cek jaringan anda</string>
     <string name="mohon_tunggu">Mohon Tunggu</string>
