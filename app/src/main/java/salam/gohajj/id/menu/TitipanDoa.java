@@ -16,10 +16,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,13 +34,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import salam.gohajj.id.R;
-import salam.gohajj.id.activity.LoginActivity;
-import salam.gohajj.id.activity.RequestHandler;
-import salam.gohajj.id.app.AppConfig;
-import salam.gohajj.id.app.AppController;
-import salam.gohajj.id.helper.SQLiteHandler;
-import salam.gohajj.id.helper.SessionManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -45,8 +41,6 @@ import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -56,8 +50,13 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
-
-import static java.sql.Types.NULL;
+import salam.gohajj.id.R;
+import salam.gohajj.id.activity.LoginActivity;
+import salam.gohajj.id.activity.RequestHandler;
+import salam.gohajj.id.app.AppConfig;
+import salam.gohajj.id.app.AppController;
+import salam.gohajj.id.helper.SQLiteHandler;
+import salam.gohajj.id.helper.SessionManager;
 
 public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClickListener {
 
@@ -66,6 +65,16 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
     private LinearLayout doaLinear;
 
     private ListDoa adapter;
+
+    private boolean isLoadMore = false;
+
+    private View footerView;
+
+    private int loadMoreTextViewLength;
+
+    private int limit;
+
+    private String max_data;
 
     private ArrayList<items> list = new ArrayList<>();
 
@@ -90,6 +99,10 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         setContentView(R.layout.doa);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
+        footerView = ((LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.listview_footer, null, false);
+
+        limit = 7;
 
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -126,6 +139,40 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
         listView = (ListView) findViewById(R.id.listView);
         listView.destroyDrawingCache();
         listView.setOnItemClickListener(this);
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // Do nothing
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                if((lastInScreen == totalItemCount)){
+                    if(isLoadMore == false)
+                    {
+                        if(loadMoreTextViewLength != 0)
+                        {
+                            if(limit < Integer.parseInt(max_data)) {
+                                isLoadMore = true;
+                                limit += 7;
+                                // Add footer to ListView
+                                listView.addFooterView(footerView);
+                                getJSON();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Creating a button - Load More
+//        Button btnLoadMore = new Button(this);
+//        btnLoadMore.setText("Load More");
+
+        // Adding button to listview at footer
+//        listView.addFooterView(btnLoadMore);
 
         //HEADER
         TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
@@ -302,8 +349,8 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
         BtnAdd =(FloatingActionButton) findViewById(R.id.fab);
         final PopupMenu addkontak = new PopupMenu(this, BtnAdd);
-        addkontak.getMenu().add(1, 1, 1, "Private");
-        addkontak.getMenu().add(1, 2, 2, "Broadcast");
+        addkontak.getMenu().add(1, 1, 1, "Personal");
+        addkontak.getMenu().add(1, 2, 2, "Publik");
 
         BtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,42 +391,111 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
 
     private void showData(){
         JSONObject jsonObject = null;
+        int position = listView.getLastVisiblePosition();
 //        ArrayList<items> list = new ArrayList<>();
+        Log.e("hasil", JSON_STRING);
 
         try {
             jsonObject = new JSONObject(JSON_STRING);
-            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+//            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+            JSONObject result = jsonObject.getJSONObject("result");
+            max_data = jsonObject.getString("all_data");
+            loadMoreTextViewLength = result.length();
+            Log.e("jummlah json : ", String.valueOf(loadMoreTextViewLength) + " "+ max_data);
+            if(result != null)
+            {
+                if(result.equals(""))
+                {
+//                    MyUtility.saveFlagFromMessageThread(homeActivity, false);
+//                    fromPushNotification = false;
+                    if(isLoadMore)
+                    {
+                        listView.removeFooterView(footerView);
+                        isLoadMore = false;
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    if(!result.equals("null"))
+                    {
+                        if(isLoadMore)
+                        {
+                            listView.removeFooterView(footerView);
+                            isLoadMore = false;
+                        }
 
-            for(int i = 0; i<result.length(); i++){
-//                ArrayList<items> list = new ArrayList<>();
-                JSONObject jo = result.getJSONObject(i);
-                String id = jo.getString(AppConfig.KEY_ID);
-                String message = jo.getString(AppConfig.KEY_MESSAGE);
-                String time = jo.getString(AppConfig.KEY_TIME);
-                String userId = jo.getString(AppConfig.KEY_USERID);
-                String from = jo.getString(AppConfig.KEY_FROM);
-                String jum = jo.getString(AppConfig.KEY_JUMLAH);
-                String sts = jo.getString(AppConfig.KEY_STATUS);
-//                HashMap<String,String> data = new HashMap<>();
-//                data.put(AppConfig.KEY_ID,id);
-//                data.put(AppConfig.KEY_MESSAGE,message);
-//                data.put(AppConfig.KEY_MESSAGE,message);
-//                data.put(AppConfig.KEY_FROM,from);
-//                data.put(AppConfig.KEY_JUMLAH,jum);
-                list.add(new items(id,message,time,userId,from,jum,sts));
+                        if(result.length() > 0)
+                        {
+                            list.clear();
+                            for(int i = 0; i<result.length(); i++){
+//                                JSONObject jo = result.getJSONObject(i);
+                                JSONObject jo = result.getJSONObject(String.valueOf(i+1));
+                                String id = jo.getString(AppConfig.KEY_ID);
+                                String message = jo.getString(AppConfig.KEY_MESSAGE);
+                                String time = jo.getString(AppConfig.KEY_TIME);
+                                String userId = jo.getString(AppConfig.KEY_USERID);
+                                String from = jo.getString(AppConfig.KEY_FROM);
+                                String jum = jo.getString(AppConfig.KEY_JUMLAH);
+                                String sts = jo.getString(AppConfig.KEY_STATUS);
+
+                                list.add(new items(id,message,time,userId,from,jum,sts));
+                            }
+                            // add items into Arralist
+                            doaLinear.removeAllViews();
+                            adapter = new ListDoa(list);
+                            listView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            doaLinear.addView(listView);
+                            listView.setSelectionFromTop(position, 0);
+                        }
+                    }
+                }
             }
-
-
-//        adapter = new CustomListDoa(TitipanDoa.this, R.layout.list_doa,list);
-        doaLinear.removeAllViews();
-        adapter = new ListDoa(list);
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        doaLinear.addView(listView);
-
-        } catch (JSONException e) {
-//            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if(isLoadMore)
+            {
+                listView.removeFooterView(footerView);
+                isLoadMore = false;
+            }
         }
+
+//        try {
+//            jsonObject = new JSONObject(JSON_STRING);
+//            JSONArray result = jsonObject.getJSONArray(AppConfig.TAG_JSON_ARRAY);
+//
+//            for(int i = 0; i<result.length(); i++){
+////                ArrayList<items> list = new ArrayList<>();
+//                JSONObject jo = result.getJSONObject(i);
+//                String id = jo.getString(AppConfig.KEY_ID);
+//                String message = jo.getString(AppConfig.KEY_MESSAGE);
+//                String time = jo.getString(AppConfig.KEY_TIME);
+//                String userId = jo.getString(AppConfig.KEY_USERID);
+//                String from = jo.getString(AppConfig.KEY_FROM);
+//                String jum = jo.getString(AppConfig.KEY_JUMLAH);
+//                String sts = jo.getString(AppConfig.KEY_STATUS);
+////                HashMap<String,String> data = new HashMap<>();
+////                data.put(AppConfig.KEY_ID,id);
+////                data.put(AppConfig.KEY_MESSAGE,message);
+////                data.put(AppConfig.KEY_MESSAGE,message);
+////                data.put(AppConfig.KEY_FROM,from);
+////                data.put(AppConfig.KEY_JUMLAH,jum);
+//                list.add(new items(id,message,time,userId,from,jum,sts));
+//            }
+//
+//
+////        adapter = new CustomListDoa(TitipanDoa.this, R.layout.list_doa,list);
+//        doaLinear.removeAllViews();
+//        adapter = new ListDoa(list);
+//        listView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//        doaLinear.addView(listView);
+//            listView.setSelectionFromTop(position, 0);
+//
+//        } catch (JSONException e) {
+////            e.printStackTrace();
+//        }
     }
 
     private void sendScreenImageName(String name) {
@@ -396,21 +512,25 @@ public class TitipanDoa extends AppCompatActivity implements ListView.OnItemClic
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(TitipanDoa.this,"","Mohon Tunggu...",false,false);
+//                loading = ProgressDialog.show(TitipanDoa.this,"","Mohon Tunggu...",false,false);
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss();
+//                loading.dismiss();
                 JSON_STRING = s;
                     showData();
             }
 
             @Override
             protected String doInBackground(Void... params) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put(AppConfig.KEY_LIMIT, String.valueOf(limit));
+                data.put(AppConfig.KEY_ID, uid);
+                Log.e("data kirim :" , String.valueOf(data));
                 RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(AppConfig.URL_TITIPAN_DOA,uid);
+                String s = rh.sendPostRequest(AppConfig.URL_TITIPAN_DOA,data);
                 return s;
             }
         }
