@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">GoHajj</string>
+
+    <!--footer menu-->
+    <string name="panduan">गाइड</string>
+    <string name="titip_doa">दुआ</string>
+    <string name="navigasi">नेविगेशन</string>
+    <string name="pesan">संदेश</string>
+    <string name="profile">प्रोफ़ाइल</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Username</string>
+    <string name="btn_login">Masuk</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_link_to_register">Daftar GoHajj</string>
+    <string name="btn_link_to_login">Sudah daftar? Login Sekarang !</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Fullname</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="str_btn_find">Find</string>
+    <string name="hnt_et_location">Enter location</string>
+    <string name="hnt_et_hotel">Cari Nama Hotel</string>
+    <string name="txt_from">From</string>
+
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="last_update_time_label">Last location update time</string>
+    <string name="start_updates">Start updates</string>
+    <string name="stop_updates">Stop updates</string>
+    <string name="location_updated_message">Location updated</string>
+
+    <string name="red">Red</string>
+    <string name="orange">Orange</string>
+    <string name="yellow">Yellow</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="indigo">Indigo</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="undefined">Undefined</string>
+    <string name="click_the_button">Click the \'Red\' button</string>
+
+    <string name="no_geocoder_available">No geocoder available</string>
+
+    <string name="fetch_address">Fetch address</string>
+
+    <string name="address_found">Address found</string>
+    <string name="no_address_found">Sorry, no address found</string>
+    <string name="no_location_data_provided">No location data provided</string>
+    <string name="service_not_available">Sorry, the service is not available</string>
+    <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
+    <!--<string name="server_client_id">230690886961-sg1t0m667vkcuoen3ic78j4enoa58o3a.apps.googleusercontent.com</string>-->
+    <string name="server_client_id">810027904434-tokvloq8bqmfvcm7etor57g6qceko9pq.apps.googleusercontent.com</string>
+
+</resources>
