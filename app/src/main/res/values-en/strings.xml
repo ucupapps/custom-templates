@@ -32,8 +32,8 @@
     <string name="kirim_pesan">Send Message</string>
     <string name="tolong_temukan_saya">Please Find Me</string>
     <string name="input_pesan_disini">Write Message here</string>
-    <string name="pesan_tidak_boleh_kosong">Message can not be empty</string>
-    <string name="no_tidak_boleh_kosong">Destination Number can not be empty !</string>
+    <string name="pesan_tidak_boleh_kosong">Message cannot null</string>
+    <string name="no_tidak_boleh_kosong">Destination Number cannot null</string>
     <string name="pesan_telah_dikirim">Message sent</string>
     <string name="mengirim_pesan">Sending Message</string>
 
@@ -176,6 +176,20 @@
     <string name="pembimbing">Tour Guide</string>
     <string name="travel">Travel agent</string>
     <string name="terima_kasih">Thank you</string>
+
+    <string name="mengambil_data">Getting Data</string>
+    <string name="hotel_tidak_boleh_kosong">Hotel Name cannot null</string>
+    <string name="alamat_tidak_boleh_kosong">Hotel Address cannot null</string>
+    <string name="hotel_belum_terdaftar">Sorry , hotel you are looking for had not been registered</string>
+    <string name="daftarkan">Register</string>
+    <string name="menyimpan">Saving</string>
+    <string name="nama_hotel">Hotel Name :</string>
+    <string name="rating">Rate :</string>
+    <string name="sejarah_islam">Islamic history</string>
+    <string name="oleh_oleh">Souvenir</string>
+    <string name="fasilitas_umum">Public Facilities</string>
+    <string name="objek_wisata">Tourist Objects</string>
+
 
     <string name="tidak_ada_koneksi">No Internet connection. Check your network coverage</string>
     <string name="mohon_tunggu">Please Wait</string>

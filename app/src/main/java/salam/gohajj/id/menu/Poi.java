@@ -318,9 +318,7 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
                 super.onPostExecute(s);
 //                loading.dismiss();
                 JSON_STRING = s;
-                if(!JSON_STRING.equals(NULL) || !JSON_STRING.equals("")) {
                     showData();
-                }
             }
 
             @Override
@@ -377,10 +375,10 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
 
     private void setupViewPager(ViewPager viewPager) {
         Poi.ViewPagerAdapter adapter = new Poi.ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SejarahFragment(), "Sejarah Islam");
-        adapter.addFragment(new OlehOlehFragment(), "Oleh-oleh");
-        adapter.addFragment(new FasilitasUmumFragment(), "Fasilitas Umum");
-        adapter.addFragment(new ObjekWisataFragment(), "Objek Wisata");
+        adapter.addFragment(new SejarahFragment(), getResources().getString(R.string.sejarah_islam));
+        adapter.addFragment(new OlehOlehFragment(), getResources().getString(R.string.oleh_oleh));
+        adapter.addFragment(new FasilitasUmumFragment(), getResources().getString(R.string.fasilitas_umum));
+        adapter.addFragment(new ObjekWisataFragment(), getResources().getString(R.string.objek_wisata));
         viewPager.setAdapter(adapter);
     }
 

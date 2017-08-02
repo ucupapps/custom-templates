@@ -290,7 +290,7 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Hotel.this,"Mengambil Data","",false,false);
+                loading = ProgressDialog.show(Hotel.this,getResources().getString(R.string.mengambil_data)+"...","",false,false);
             }
 
             @Override
@@ -298,7 +298,7 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
                 super.onPostExecute(s);
                 loading.dismiss();
                 JSON_STRING = s;
-                Log.e("testError : ....", s);
+//                Log.e("testError : ....", s);
                 listView.setVisibility(View.VISIBLE);
                 NotFoundLinear.setVisibility(View.GONE);
                 showData();
@@ -335,18 +335,18 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(Hotel.this,"Mengambil Data","",false,false);
+                loading = ProgressDialog.show(Hotel.this,getResources().getString(R.string.mengambil_data)+"...","",false,false);
             }
 
             @Override
             protected void onPostExecute(String m) {
                 super.onPostExecute(m);
                 loading.dismiss();
-                Log.e("nilaiM : ", m);
-                System.out.println("Variable var is: " + m);
+//                Log.e("nilaiM : ", m);
+//                System.out.println("Variable var is: " + m);
 
                 if(m.trim().equals("Gagal")){
-                    Log.e("dataCari : ", m);
+//                    Log.e("dataCari : ", m);
                     listView.setVisibility(View.GONE);
                     NotFoundLinear.setVisibility(View.VISIBLE);
                 }else {
@@ -363,7 +363,7 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
             protected String doInBackground(Bitmap... params) {
 //                HashMap<String,String> data = new HashMap<>();
 //                data.put(AppConfig.KEY_NAME, cariHotel);
-                Log.e("stingCari",cariHotel );
+//                Log.e("stingCari",cariHotel );
                 RequestHandler rh = new RequestHandler();
                 String res = rh.sendGetRequestParam(AppConfig.URL_FIND_HOTEL, cariHotel);
                 return res;

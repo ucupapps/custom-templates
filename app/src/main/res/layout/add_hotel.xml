@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_black"
                     android:padding="4dp"
-                    android:text=" Hotel"
+                    android:text="@string/hotel"
                     android:textColor="@color/white"
                     android:textSize="15dp" />
 
@@ -65,7 +65,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nama Hotel" />
+                        android:text="@string/nama_hotel" />
 
                     <EditText
                         android:id="@+id/nama_hotel"
@@ -77,7 +77,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Alamat" />
+                        android:text="@string/alamat" />
 
                     <EditText
                         android:id="@+id/alamat_hotel"
@@ -89,7 +89,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bintang" />
+                        android:text="@string/rating" />
 
                     <RatingBar
                         android:id="@+id/hotel_ratingbar"
@@ -120,7 +120,7 @@
                             android:layout_margin="20dp"
                             android:layout_weight="0.50"
                             android:background="@drawable/button"
-                            android:text="Set Lokasi"
+                            android:text="@string/set_lokasi"
                             android:textAllCaps="false"
                             android:textColor="#FFF" />
 
@@ -131,7 +131,7 @@
                             android:layout_margin="20dp"
                             android:layout_weight="0.50"
                             android:background="@drawable/button_red"
-                            android:text="Batal"
+                            android:text="@string/batal"
                             android:textAllCaps="false"
                             android:textColor="#FFF" />
 

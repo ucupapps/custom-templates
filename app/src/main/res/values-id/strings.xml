@@ -177,6 +177,19 @@
     <string name="travel">Agen Perjalanan</string>
     <string name="terima_kasih">Terima Kasih</string>
 
+    <string name="mengambil_data">Mengambil Data</string>
+    <string name="hotel_tidak_boleh_kosong">Nama Hotel Tidak Boleh Kosong</string>
+    <string name="alamat_tidak_boleh_kosong">Alamat Hotel Tidak Boleh Kosong</string>
+    <string name="hotel_belum_terdaftar">Maaf, hotel yang Anda cari belum terdaftar</string>
+    <string name="daftarkan">Daftarkan</string>
+    <string name="menyimpan">Menyimpan</string>
+    <string name="nama_hotel">Nama Hotel :</string>
+    <string name="rating">Penilaian :</string>
+    <string name="sejarah_islam">Sejarah Islam</string>
+    <string name="oleh_oleh">Oleh-oleh</string>
+    <string name="fasilitas_umum">Fasilitas Umum</string>
+    <string name="objek_wisata">Objek Wisata</string>
+
     <string name="tidak_ada_koneksi">Tidak ada koneksi internet. Cek jaringan anda</string>
     <string name="mohon_tunggu">Mohon Tunggu</string>
 

@@ -221,10 +221,10 @@ public class add_hotel extends AppCompatActivity implements OnClickListener {
         if(v == buttonAddHotel){
             if(txtNameHotel.getText().toString().equals(""))
             {
-                Toast.makeText(this, "Nama Hotel Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.hotel_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
             }else if(txtAddressHotel.getText().toString().equals(""))
             {
-                Toast.makeText(this, "Alamat Hotel Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.alamat_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
             } else {
                 addHotel();
             }
@@ -249,7 +249,7 @@ public class add_hotel extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(add_hotel.this,"Menyimpan...","",false,false);
+                loading = ProgressDialog.show(add_hotel.this,getResources().getString(R.string.menyimpan)+"...","",false,false);
             }
 
             @Override

@@ -211,7 +211,7 @@ public class kirimlaporan extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(kirimlaporan.this,"","Laporkan masalah...",false,false);
+                loading = ProgressDialog.show(kirimlaporan.this,"",getResources().getString(R.string.laporkan_masalah)+"...",false,false);
             }
 
             @Override
