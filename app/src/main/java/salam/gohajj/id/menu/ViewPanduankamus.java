@@ -242,7 +242,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduankamus.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(ViewPanduankamus.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override
@@ -305,7 +305,7 @@ public class ViewPanduankamus extends AppCompatActivity implements View.OnClickL
                 buttonStart.setText("Stop");
                 playPause = true;
             }else{
-                buttonStart.setText("Mainkan Audio");
+                buttonStart.setText(getResources().getString(R.string.mainkan_audio));
                 mediaPlayer.stop();
                 mediaPlayer.reset();
                 playPause = false;

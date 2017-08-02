@@ -153,7 +153,7 @@ public class View_PusatBantuan extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(View_PusatBantuan.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(View_PusatBantuan.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

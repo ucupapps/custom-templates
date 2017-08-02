@@ -285,21 +285,21 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             String email3 = txtEmail3.getText().toString().trim();
             if(v == buttonAdd){
                 if(!email1.equals("") && !email1.matches(emailPattern) ) {
-                        Toast.makeText(getApplicationContext(), "Format Email Keluarga 1 Salah", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.format_email_keluarga1_salah), Toast.LENGTH_SHORT).show();
                 }else if(!email2.equals("") && !email2.matches(emailPattern)) {
-                        Toast.makeText(getApplicationContext(), "Format Email Keluarga 2 Salah", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.format_email_keluarga2_salah), Toast.LENGTH_SHORT).show();
                 }else if(!email3.equals("") && !email3.matches(emailPattern)) {
-                        Toast.makeText(getApplicationContext(), "Format Email Keluarga 3 Salah", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.format_email_keluarga3_salah), Toast.LENGTH_SHORT).show();
                 }else if(name.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Nama Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.nama_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                 }else if (Passport.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Nomor Paspor Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.paspor_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                 }else if (family1.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Nomor Telepon Keluarga 1 Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.phone_keluarga1_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                 }else if (email1.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Email Keluarga 1 Tidak Boleh Kosong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.email_keluarga1_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                 }else if (!Passport.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !name.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !address.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !province.matches("[a-zA-Z0-9.?,/()&@-_' ]*") || !town.matches("[a-zA-Z0-9.?,/()&@-_' ]*")) {
-                        Toast.makeText(getApplicationContext(), "Tidak Boleh Menggunakan Spesial Karakter", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.tidak_boleh_menggunakan_spesial_karakter), Toast.LENGTH_SHORT).show();
                 }else{
 //            if(imgProfile.getDrawable() == null)
 //            {
@@ -364,7 +364,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(edit_profile.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(edit_profile.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override
@@ -553,7 +553,7 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(edit_profile.this,"Menyimpan...","",false,false);
+                loading = ProgressDialog.show(edit_profile.this,getResources().getString(R.string.menyimpan)+"...","",false,false);
             }
 
             @Override

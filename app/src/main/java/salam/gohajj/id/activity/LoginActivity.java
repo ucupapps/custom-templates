@@ -160,12 +160,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 } else if(email.isEmpty()) {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Email Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            getResources().getString(R.string.email_tidak_boleh_kosong), Toast.LENGTH_SHORT)
                             .show();
                 }else if(password.isEmpty()) {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Password Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            getResources().getString(R.string.password_tidak_boleh_kosong), Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(LoginActivity.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(LoginActivity.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

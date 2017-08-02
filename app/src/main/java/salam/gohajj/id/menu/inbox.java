@@ -264,7 +264,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(inbox.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(inbox.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

@@ -36,6 +36,7 @@
     <string name="no_tidak_boleh_kosong">No tujuan tidak boleh kosong !</string>
     <string name="pesan_telah_dikirim">Pesan telah dikirim</string>
     <string name="mengirim_pesan">Mengirim Pesan</string>
+    <string name="temukan_saya">TEMUKAN SAYA !</string>
 
     <!--menu profile-->
     <string name="nama">Nama :</string>
@@ -57,6 +58,19 @@
     <string name="email_keluarga2">Email Keluarga 2 :</string>
     <string name="no_phone_keluarga3">Nomor Telepon Keluarga 3 :</string>
     <string name="email_keluarga3">Email Keluarga 3 :</string>
+
+    <string name="format_email_keluarga1_salah">Format Email Keluarga 1 salah</string>
+    <string name="format_email_keluarga2_salah">Format Email Keluarga 2 salah</string>
+    <string name="format_email_keluarga3_salah">Format Email Keluarga 3 salah</string>
+    <string name="nama_tidak_boleh_kosong">Nama Tidak Boleh Kosong</string>
+    <string name="paspor_tidak_boleh_kosong">Nomor Paspor Tidak Boleh Kosong</string>
+    <string name="phone_keluarga1_tidak_boleh_kosong">Nomor Telepon Keluarga 1 Tidak Boleh Kosong</string>
+    <string name="email_keluarga1_tidak_boleh_kosong">Email Keluarga 1 Tidak Boleh Kosong</string>
+    <string name="tidak_boleh_menggunakan_spesial_karakter">Tidak Boleh Menggunakan Spesial Karakter</string>
+
+    <string name="email_tidak_boleh_kosong">Email Tidak Boleh Kosong</string>
+    <string name="password_tidak_boleh_kosong">Password Tidak Boleh Kosong</string>
+    <string name="terimakasih_atas_laporan_anda">Terimakasih atas laporan Anda</string>
 
     <!--menu sai-->
     <string name="alert_sai">Ibadah Sa\'i sudah selesai, silakan melanjutkan Tahallul</string>
@@ -102,7 +116,7 @@
     <string name="publik">Publik</string>
     <string name="mengirim">Mengirim</string>
     <string name="terimakasih_telah_mendoakan">Terimakasih telah mendoakan</string>
-    <string name="email_tidak_boleh_kosong">Email tujuan tidak boleh kosong</string>
+    <string name="email_tujuan_tidak_boleh_kosong">Email tujuan tidak boleh kosong</string>
     <string name="format_email_salah">Format email tujuan salah</string>
 
     <!--menu setting-->
@@ -189,6 +203,9 @@
     <string name="oleh_oleh">Oleh-oleh</string>
     <string name="fasilitas_umum">Fasilitas Umum</string>
     <string name="objek_wisata">Objek Wisata</string>
+
+    <string name="simpan_berhasil">Simpan Berhasil</string>
+    <string name="pintu_tidak_boleh_kosong">No Pintu Tidak Boleh Kosong</string>
 
     <string name="tidak_ada_koneksi">Tidak ada koneksi internet. Cek jaringan anda</string>
     <string name="mohon_tunggu">Mohon Tunggu</string>

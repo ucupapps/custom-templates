@@ -80,17 +80,17 @@ public class RegisterActivity extends Activity {
                 }else if(name.isEmpty()) {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Nama Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            getResources().getString(R.string.nama_tidak_boleh_kosong), Toast.LENGTH_SHORT)
                             .show();
                 }else if(email.isEmpty()) {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Email Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            getResources().getString(R.string.email_tidak_boleh_kosong), Toast.LENGTH_SHORT)
                             .show();
                 }else if(password.isEmpty()) {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Password Tidak Boleh Kosong", Toast.LENGTH_SHORT)
+                            getResources().getString(R.string.password_tidak_boleh_kosong), Toast.LENGTH_SHORT)
                             .show();
                 }
             }
@@ -120,7 +120,7 @@ public class RegisterActivity extends Activity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(RegisterActivity.this,"Register...","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(RegisterActivity.this,"Register...",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

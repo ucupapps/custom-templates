@@ -218,7 +218,7 @@ public class kirimlaporan extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(kirimlaporan.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(kirimlaporan.this, getResources().getString(R.string.terimakasih_atas_laporan_anda), Toast.LENGTH_LONG).show();
             }
 
             @Override

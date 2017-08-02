@@ -36,6 +36,7 @@
     <string name="no_tidak_boleh_kosong">Destination Number cannot null</string>
     <string name="pesan_telah_dikirim">Message sent</string>
     <string name="mengirim_pesan">Sending Message</string>
+    <string name="temukan_saya">FIND ME !</string>
 
     <!--menu profile-->
     <string name="nama">Name :</string>
@@ -57,6 +58,18 @@
     <string name="email_keluarga2">Family Email Address 2 :</string>
     <string name="no_phone_keluarga3">Family Phone Number 3 :</string>
     <string name="email_keluarga3">Family Email Address 3 :</string>
+    <string name="format_email_keluarga1_salah">Format email family 1 wrong</string>
+    <string name="format_email_keluarga2_salah">Format email family 2 wrong</string>
+    <string name="format_email_keluarga3_salah">Format email family 3 wrong</string>
+    <string name="nama_tidak_boleh_kosong">Name cannot null</string>
+    <string name="paspor_tidak_boleh_kosong">Paspor Number cannot null</string>
+    <string name="phone_keluarga1_tidak_boleh_kosong">Family Phone Number 1 cannot null</string>
+    <string name="email_keluarga1_tidak_boleh_kosong">Family Email Address 1 cannot null</string>
+    <string name="tidak_boleh_menggunakan_spesial_karakter">Cannot use special character</string>
+
+    <string name="email_tidak_boleh_kosong">Email cannot null</string>
+    <string name="password_tidak_boleh_kosong">Password cannot null</string>
+    <string name="terimakasih_atas_laporan_anda">Thank you for your report</string>
 
     <!--menu sai-->
     <string name="alert_sai">Sa\'i Done, Continue to Tahallul</string>
@@ -102,7 +115,7 @@
     <string name="publik">Public</string>
     <string name="mengirim">Sending</string>
     <string name="terimakasih_telah_mendoakan">Thank you for praying</string>
-    <string name="email_tidak_boleh_kosong">Destination email can\'t null</string>
+    <string name="email_tujuan_tidak_boleh_kosong">Destination email cannot null</string>
     <string name="format_email_salah">Wrong Email Format</string>
 
     <!--menu setting-->
@@ -190,6 +203,8 @@
     <string name="fasilitas_umum">Public Facilities</string>
     <string name="objek_wisata">Tourist Objects</string>
 
+    <string name="simpan_berhasil">Save successfully</string>
+    <string name="pintu_tidak_boleh_kosong">No the door cannot null</string>
 
     <string name="tidak_ada_koneksi">No Internet connection. Check your network coverage</string>
     <string name="mohon_tunggu">Please Wait</string>
