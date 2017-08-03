@@ -26,13 +26,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import salam.gohajj.id.R;
-import salam.gohajj.id.activity.LoginActivity;
-import salam.gohajj.id.activity.RequestHandler;
-import salam.gohajj.id.app.AppConfig;
-import salam.gohajj.id.helper.SQLiteHandler;
-import salam.gohajj.id.helper.SessionManager;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +36,12 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.id.R;
+import salam.gohajj.id.activity.LoginActivity;
+import salam.gohajj.id.activity.RequestHandler;
+import salam.gohajj.id.app.AppConfig;
+import salam.gohajj.id.helper.SQLiteHandler;
+import salam.gohajj.id.helper.SessionManager;
 
 public class Hotel extends AppCompatActivity implements ListView.OnItemClickListener {
 
@@ -458,6 +457,7 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
                         intent.putExtra(AppConfig.KEY_ID, strID);
                         intent.putExtra(AppConfig.KEY_LAT, strLat);
                         intent.putExtra(AppConfig.KEY_LNG, strLng);
+                        intent.putExtra(AppConfig.KEY_NAVIGASI, "HOTEL");
                         getContext().startActivity(intent);
                         finish();
                     }

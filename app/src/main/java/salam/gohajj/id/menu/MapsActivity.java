@@ -29,14 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import salam.gohajj.id.R;
-import salam.gohajj.id.activity.AppUtils;
-import salam.gohajj.id.activity.FetchAddressIntentService;
-import salam.gohajj.id.activity.LoginActivity;
-import salam.gohajj.id.activity.RequestHandler;
-import salam.gohajj.id.app.AppConfig;
-import salam.gohajj.id.helper.SQLiteHandler;
-import salam.gohajj.id.helper.SessionManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,6 +49,14 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.id.R;
+import salam.gohajj.id.activity.AppUtils;
+import salam.gohajj.id.activity.FetchAddressIntentService;
+import salam.gohajj.id.activity.LoginActivity;
+import salam.gohajj.id.activity.RequestHandler;
+import salam.gohajj.id.app.AppConfig;
+import salam.gohajj.id.helper.SQLiteHandler;
+import salam.gohajj.id.helper.SessionManager;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnInfoWindowClickListener {
 
@@ -578,7 +578,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(Marker markers) {
         Bundle args = new Bundle();
         args.putParcelable("longLat_dataPrivider", marker.getPosition());
         args.putString("address", marker.getTitle());

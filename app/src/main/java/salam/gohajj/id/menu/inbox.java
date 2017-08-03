@@ -50,6 +50,9 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
     private static final String TAG = "INBOX";
 
     private ListView listView;
+
+    private ProgressDialog loading;
+
     String uid;
     private String JSON_STRING;
     private SessionManager session;
@@ -260,7 +263,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
     private void getJSON(){
         class GetJSON extends AsyncTask<Void,Void,String>{
 
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -325,7 +328,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
     protected void StatusInbox(final String statID){
         class GetJSON extends AsyncTask<Void,Void,String>{
 
-            ProgressDialog loading;
+//            ProgressDialog loading;
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -353,4 +356,11 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         startActivity(intent);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (loading != null && loading.isShowing()) {
+            loading.dismiss();
+        }
+        super.onDestroy();
+    }
 }
