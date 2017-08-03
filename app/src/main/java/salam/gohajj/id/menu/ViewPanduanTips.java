@@ -230,7 +230,7 @@ public class ViewPanduanTips extends AppCompatActivity implements View.OnClickLi
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduanTips.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(ViewPanduanTips.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

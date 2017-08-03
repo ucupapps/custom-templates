@@ -302,7 +302,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(profile.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(profile.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

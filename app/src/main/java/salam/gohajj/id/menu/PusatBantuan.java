@@ -185,7 +185,7 @@ public class PusatBantuan extends AppCompatActivity implements ListView.OnItemCl
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PusatBantuan.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(PusatBantuan.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override

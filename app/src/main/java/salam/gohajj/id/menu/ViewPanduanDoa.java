@@ -289,7 +289,7 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduanDoa.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(ViewPanduanDoa.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override
@@ -358,11 +358,11 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
                     if (!cek_status(getApplicationContext()))
                     {
                         Toast.makeText(ViewPanduanDoa.this,
-                                "Mohon Cek Koneksi Anda",
+                                getResources().getString(R.string.cek_koneksi),
                                 Toast.LENGTH_SHORT).show();
                     }else {
                         pd = new ProgressDialog(ViewPanduanDoa.this);
-                        pd.setMessage("Mempersiapkan Audio...");
+                        pd.setMessage(getResources().getString(R.string.mempersiapkan_audio)+"...");
                         pd.show();
                         cmdPrepare();
                         cmdStart();

@@ -198,11 +198,11 @@ public class PintuMasjid extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(txtCaptionPintu.getText().toString().equals("")) {
-                    Toast.makeText(PintuMasjid.this, "No Pintu Tidak Boleh Kosong !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PintuMasjid.this, getResources().getString(R.string.pintu_tidak_boleh_kosong), Toast.LENGTH_SHORT).show();
                 }else{
                     simpanPintu();
                     insertIntoMasjid(uid,txtCaptionPintu.getText().toString());
-                    Toast.makeText(PintuMasjid.this, "Simpan Berhasil...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PintuMasjid.this, getResources().getString(R.string.simpan_berhasil), Toast.LENGTH_LONG).show();
                     Intent j = new Intent(getApplicationContext(), navigasi.class);
                     startActivity(j);
                 }
@@ -314,7 +314,7 @@ public class PintuMasjid extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(PintuMasjid.this,"","Laporkan masalah...",false,false);
+                loading = ProgressDialog.show(PintuMasjid.this,"",getResources().getString(R.string.laporkan_masalah)+"...",false,false);
             }
 
             @Override

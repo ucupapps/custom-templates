@@ -60,16 +60,16 @@ public class CustomListPanduan2 extends SimpleAdapter {
 //        name.setTypeface(null, Typeface.BOLD);
         txtImg.setText(strJenis);
 
-        if(strJenis.equals(mContext.getResources().getString(R.string.video))){
+        if(strJenis.equals("Video")){
             txtImg.setBackgroundResource(R.drawable.circle_blue);
             txtJenis.setText(mContext.getResources().getString(R.string.video_tutorial));
-        }else if(strJenis.equals(mContext.getResources().getString(R.string.doa))){
+        }else if(strJenis.equals("Doa")){
             txtImg.setBackgroundResource(R.drawable.circle_purple);
             txtJenis.setText(mContext.getResources().getString(R.string.panduan_doa));
-        }else if(strJenis.equals(mContext.getResources().getString(R.string.tips))){
+        }else if(strJenis.equals("Tips")){
             txtImg.setBackgroundResource(R.drawable.circle_orange_muda);
             txtJenis.setText(mContext.getResources().getString(R.string.tips));
-        }else if(strJenis.equals(mContext.getResources().getString(R.string.kamus))){
+        }else if(strJenis.equals("Kamus")){
             txtImg.setBackgroundResource(R.drawable.circle_chocolate);
             txtJenis.setText(mContext.getResources().getString(R.string.kamus));
         }

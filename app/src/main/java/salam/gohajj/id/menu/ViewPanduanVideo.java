@@ -278,7 +278,7 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ViewPanduanVideo.this,"","Mohon Tunggu...",false,false);
+                loading = ProgressDialog.show(ViewPanduanVideo.this,"",getResources().getString(R.string.mohon_tunggu)+"...",false,false);
             }
 
             @Override
