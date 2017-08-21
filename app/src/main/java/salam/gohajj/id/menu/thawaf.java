@@ -402,8 +402,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf1));
-                varab.setText("بِسْمِ اللّٰهِ، اَللّٰهُ اَكْبَرُُ");
-                varti.setText("Bismillaahi Allaahu Akbar");
+                varab.setText(getResources().getString(R.string.arab_doa_istilam));
+                varti.setText(getResources().getString(R.string.text_doa_istilam)+"\n\n\n"+getResources().getString(R.string.terjemahan_istilam));
                 vaudio.setText("8 doa istilam.mp3");
                 rankDialog.show();
             }
@@ -415,8 +415,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf2));
-                varab.setText("رَبَّنَا آتِنَا/ فِيْ الدُّ نْيَا حَسَنَةً/ وَفِيْ الْآخِرَةِ حَسَنَةً/ وَقِنَا عَذَابَ النَّارِ/ وَأَدْخِلْنَا الْجَنَّةَ/ مَعَ الْأَبْرَارِ/ يَا عَزِيْزُ يَا غَفَارُ/ يَا رَبَّ الْعَا لَمِيْنَ");
-                varti.setText("Rabbanaa aatinaa fid dun-yaa hasanataw wa fil aakhirati hasanataw wa qinaa ‘adzaaban naar, wa adkhilnal jannata ma’al abraar, yaa aziizu, yaa ghafaaru yaa rabbal ‘aalamiin");
+                varab.setText(getResources().getString(R.string.arab_doa_diantara_rukun_yamani));
+                varti.setText(getResources().getString(R.string.text_doa_diantara_rukun_yamani)+"\n\n\n"+getResources().getString(R.string.terjemahan_diantara_rukun_yamani));
                 vaudio.setText("9 doa diantara rukun yamani dan hajar aswad.mp3");
                 rankDialog.show();
             }
@@ -427,8 +427,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf3));
-                varab.setText("اللَّهُمَّ يَارَبَّ الْبَيْتِ الْعَتِيْقِ/ أَعْتِقْ رِقَابَنَا/ وَرِقَابَ آبَائِنَا/ وَأُمَّهَاتِنَا/ وَإِخْوَانِنَا/ وَأَوْلاَدِنَا/ مِنَ النَّارِ/ يَاذَاالْجُوْدِ وَالْكَرَمِ/ وَالْفَضْلِ وَالْمَنِّ/ وَالْعَطَاءِ وَالْأِحْسَانِ/ اللَّهُمَّ أَحْسِنْ عَقِبَتَنَا/ فِيْ الْأُمُوْرِ كُلِّهَا/ وَأَجِرْنَا مِنْ خِزْيِ الدُّنْيَا/ وَعَذَا بِ الْآخِرَةِ/ اللَّهُمَّ إِنِّيْ عَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَاقِفٌ تَحْتَ بَابِكَ/ مُلْتَزِمٌ بِأَعْتَابِكَ/ مُتَذَلِّلٌ بَيْنَ يَدَيْكَ/ أَرْجُوْ رَحْمَتَكَ/ وَأَخْشَ عَذَابَكَ/ يَا قَدِيْمَ الْإِحْسَانِ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ أَنْ تَرْفَعَ ذِكْرِيْ/ وَتَضَعَ وِزْرِيْ/ وَتُصْلِحَ أَمْرِيْ/ وَتُطَهِّرَ قَلْبِيْ/ وَتُنَوِّرَ لِيْ فِيْ قَبْرِيْ/ وَتَغْفِرَلِيْ ذَنْبِيْ/ وَأَسْأَلُكَ الدَّرَ جَاتِ الْعُلَى/ مِنَ الْجَنَّةِ");
-                varti.setText("Allahumma yaa rabbal baitil ‘atiiq, a’tiq riqaabanaa wariqaaba aabaa-inaa wa ummahaatinaa wa ikhwaaninaa wa aulaadinaa minan naari yaa dzaal juudi wal karami wal fadhli wal manni wal ‘athaa-l wal ihsaani, Allaahumma ahsin ‘aaqibatanaa fil umuri kullihaa wa ajirnaa min khizyid dun-yaa wa ‘adzaabil aakhirah. Allaahumma innii ‘abduka wabnu ‘abdika waqifun tahta baabika multazimun  bi-a’taabika mutadzallilun baina yadaika arju rahmataka wa akhsyaa ‘adzaabaka ya qadiimal ihsaan. Allaahumma innii asaluka an tarfa’aa dzikrii wa tadha’a wizrii wa tushliha amri wa tuthahhira qalbi wa tunawwirali fi qabrii wa taghfiralii dzanbii wa as-alukad darajaatil ‘ulaa minal jinnati.");
+                varab.setText(getResources().getString(R.string.arab_doa_saat_di_multazam));
+                varti.setText(getResources().getString(R.string.text_doa_saat_di_multazam)+"\n\n\n"+getResources().getString(R.string.terjemahan_saat_di_multazam));
                 vaudio.setText("10 doa saat di Multazam.mp3");
                 rankDialog.show();
             }
@@ -439,8 +439,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf4));
-                varab.setText("بِسْمِ اللّٰهِ/ وَاللّٰهُ أَكْبَرُ،/ اللَّهُمَّ إِيْمَانًا بِكَ/ وَتَصْدِ يْقًا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ/ نَبِيِّكَ مُحَمَّدٍ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ");
-                varti.setText("Bismillahi wallahu akbar. Allaahumma iimaanan bika wa tasdiiqon bikitaabika wa wafaa an bi’ahdika wattibaa an lisunnati nabiyika Muhammadin shalallahu ‘alaihi wasallam");
+                varab.setText(getResources().getString(R.string.arab_doa_mencium_hajar_aswad));
+                varti.setText(getResources().getString(R.string.text_doa_mencium_hajar_aswad)+"\n\n\n"+getResources().getString(R.string.terjemahan_mencium_hajar_aswad));
                 vaudio.setText("11 doa mencium hajar aswad.mp3");
                 rankDialog.show();
             }
@@ -451,8 +451,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf5));
-                varab.setText("اللَّهُمَّ إِنَّكَ/ تَعْلَمُ سِرِّيْ/ وَعَلَا نِيَتِيِ فَاقْبَلْ مَعْذِرَتِيِ/ وَتَعْلَمُ حَاجَتِيْ/ فَأَعْطِنِيْ سُؤْلِيْ/ وَتَعْلَمُ مَا فِيْ نَفْسِيْ/ فَاغْفِرْلِيْ ذُنُوْبِيْ،/ اللَّهُمَّ/ إِنِّيْ أَسْأَلُكَ/ إِيْمَانًا دَائِمًا/ يُبَاشِّرُ قَلْبِيْ/ وَيَقِيْنًا صَادِقًا/ حَتَّى أَعۡلَمَ/ اَنَّهُ لَايُسِيْبُنِيْ/ إِلاَّمَا كَتَبْتَهُ عَلَيَّ/ وَرَضِّنِيْ/ بِمَا قَسَّمْتَهُ لِيْ/ يَا أَرْحَمَ الرَّاحِمِيْنَ،/ أَنْتَ وَلِيِّيْ/ فِيْ الدُّنْيَا وَالْآخِرَةِ/ تَوَفَّنِيْ مُسْلِمًا/ وَأَلْحِقْنِيْ بِالصَّالِحِيْنَ،/ اللَّهُمَّ/ لاَتَدَعْ لَنَا/ فِيْ مَقَامِنَا هَذَا ذَنْبًا اِلاَّغَفَرْتَهُ/ وَلاَ هَمَّا اِلاَّ فَرَّجْتَهُ/ وَلاَحَاجَةً اِلاَّقَضَيْتَهَا/ وَيَسَّرْتَهَا فَيَسِّرْ أُمُوْرَنَا/ وَاشْرَحْ صُدُوْرَنَا/ وَنَوِّرْقُلُوْبَنَا/ وَاخۡتِمۡ بِالصَّالِحَاۃِ اَعۡمَالَنَا/ اللَّهُمَّ تَوَفَّنَا مُسْلِمِيْنَ/ وَأَحْيِنَا مُسْلِمِيْنَ/ وَأَلْحِقْنَا بِالصَّالِحِيْنَ/ غَيْرَ خَزَايَا/ وَلاَمَفْتُوْنِيْنََ");
-                varti.setText("Allaahumma innaka ta’lamu sirrii wa ‘alaniyatii faqbal ma’dziratii wa ta’lamuu haajati fa a’thinii su’lii wa ta’lamu maa fii nafsii faghfirlii dzunuubii. Allaahumma innii as’aluka iimaanan daa-iman yubaasyiru qalbii wa yaqiinan shaadiqan hattaa a’lama annahuu laa yushiibunii illaa maa katabtahuu ‘alayya wa radhdhinii bimaa qassamtahuu lii yaa arhamar raahimiin, anta waliyyi fid dun-yaa wal aakhiratii tawaffanii musliman wa alhiqnii bishshaalihiin, Allaahumma laa tada’ lanaa fii maqaamina hadzaa dzanban illa ghofartahu wa laa hamma ilaa farrajtahu wa laa haajatan illaa qadhaitahaa wa yassartahaa fayassir umuuranaa wasyrah shuduuranaa wanawwir quluubanaa wakhtim bishshaalihaati a’maalanaa, Allaahumma tawaffanaa muslimiina wa ahyinaa muslimiin, wa alhiqnaa bishshaalihiin ghaira khazaayaa wa laa maftuuniin");
+                varab.setText(getResources().getString(R.string.arab_doa_setelah_shalat_sunnah_tawaf));
+                varti.setText(getResources().getString(R.string.text_doa_setelah_shalat_sunnah_tawaf)+"\n\n\n"+getResources().getString(R.string.terjemahan_setelah_shalat_sunnah_tawaf));
                 vaudio.setText("12 doa setelah shalat sunnah tawaf.mp3");
                 rankDialog.show();
             }
@@ -463,8 +463,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf6));
-                varab.setText("اللَّهُمَّ/ إِنِّيْ أَسْأَلُكَ/ عِلْمًا نَافِعًا/ وَرِزْقَا وَاسِعًا/ وَشِفَاءً مِنْ كُلِّ دَاءٍ/ وَسَقَمٍ/ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِيْنََ");
-                varti.setText("Allaahumma inni as-aluka ‘ilman naafi’an wa rizqan waasi’an wa syifaa-an min kulli daa-in wa saqamin birahmatika yaa arhamar raahimiin");
+                varab.setText(getResources().getString(R.string.arab_doa_minum_air_zam_zam));
+                varti.setText(getResources().getString(R.string.text_doa_minum_air_zam_zam)+"\n\n\n"+getResources().getString(R.string.terjemahan_minum_air_zam_zam));
                 vaudio.setText("13 doa minum air zam zam.mp3");
                 rankDialog.show();
             }
@@ -475,8 +475,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf7));
-                varab.setText("بِسْمِ اللّٰهِ اَللّٰهُ اَكْبَرُ/ سُبْحَانَ اللّٰهِ/ وَالْحَمْدُلِلّٰهِ/ وَلاَاِلَهَ اِلاَّاللّٰهُ/ وَاللّٰهُ أَكْبَرُ،/ وَلاَحَوْلَ/ وَلاَقُوَّةَ/ اِلاَّبِاللّٰهِ الْعَلِيِّ الْعَظِيْمِ،/ وَالصَّلَاةُ وَالسَّلَامُ/ عَلَى رَسُوْلِ اللّٰهِ/ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ،/ أَللَّهُمَّ إِيْمَانًابِكَ/ وَتَصْدِيْقًا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ/ صَلَى اللهُ عَلَيْهِ وَسَلَّمَ،/ إِنَّ الَّذِيْ/ فَرَضَ عَلَيْكَ الْقُرْآنَ/ لَرَآدُّوْكَ اِلَى مَعَادٍ،/ يَامُعِيْدُ/ اَعِدْنِيْ، يَاسَمِيْعُ/اَسۡمِعْنِيْ،/ يَاجَبَّارُ/ أُجْبُرْنِيْ،/ يَاسَتَّارُ/ اُسْتُرْنِيْ،/ يَارَحْمَنُ/ اِرْحَمْنِيْ،/ يَا رَدَّادُ/ اُرْدُدْنِيْ اِلَى بَيْتِكَ هَذَا/ وَرْزُقْنِيْ الْعَوْدَ/ ثُمَّ الْعَوْدَ/ كَرّاتٍ بَعْدَ مَرَّاتٍ/ تَاءِبُوْنَ/ عَابِدُوْنَ/ سَائِحُوْنَ/ لِرَبِّناَ حَامِدُوْنَ/ صَدَقَ اللّٰهُ وَعْدَهُ/ وَنَصَرَعَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ./ اللَّهُمَّ احْفَظْنِيْ/ عَنْ يَمِيْنِيْ/ وَعَنْ يَسَارِيْ/ وَمِنْ قُدَّامِيْ/ وَمِنْ وَرَاءِظَهْرِيْ/ وَمِنْ فَوْقِيْ/ وَمِنْ تَحْتِيْ،/ حَتَّى تُوَصِّلَنِيْ/ اِلَى اَهْلِيْ/ وَبَلَدِيْ./ اللَّهُمَّ هَوِّنْ عَلَيْنَا السَّفَرَ/ وَاطْوِلَنَا الْأَرْضَ،/ اللَّهُمَّ أَصْحِبْنَا/ فِيْ سَفَرِنَا/ وَخْلُفْنَا فِيْ أَهْلِهَا/ يَا أَرْحَمَ الرَّاحِمِيْنَ./ رَبَّنَا آتِنَا فِيْ الدُّنْيَا حَسَنَةً/ وَفِي الآ خِرَۃِ حَسَنَۃً/ وَقِنَا عَذَا بَ النَّارِ/ وَأَدْخِلْنَا الْجَنَّةَ مَعَ الْأَبْرَارِ/ يَاعَزِيْزُيَا غَفَارَيَارَبَّ الْعَالَمِيْنَ");
-                varti.setText("Bismillaahi Allaahu akbar subhaanallaahi walhamdulillaahi wa laa ilaaha illallaahu wallaahu akbar. Wa laa haula wa laa quwwata illaa billaahil ‘aliyyil ‘adziim, wash shalaatu was salaam alaa rasulillaahi shallallaahu ‘alaihi wa aalihi, Allaahumma iimaanan bika wa tasdiiqan bi kitaabika wa wafaa-an bi ‘ahdika wattibaa-‘a lisunnati nabiyyika Muhammadin shalallahu ‘alaihi wa aalihi, innal ladzii faradha ‘alaika qur-aana laraadduuka ilaa ma’aadin ya mu’iidu a-‘idnii ya samii-u asmi’nii, yaa jabbar ujburnii ya sattar usturnii yaa rahmaanu irhamnii yaa raddaad urdudnii ilaa baitika hdzaa warzuqnil ‘auda tsummal ‘auda karaatin ba’da maraatin taa-ibuuna ‘aabiduuna saaihuuna lirabbinaa haamiduuna shadaqallaahu wa’dahuu wanashara ‘abdahuu wahazamal ahzaaba wahdahuu, Allaahumma fadznii an yamiinii wa ‘an yasaarii wa min quddaamii wa raidzohrii wamin fauqii wa min tahtii hattaa tuwashshilanii ilaa ahli wa baladi Allaahumma hawin ‘alainaa as safara watwi lanaa al-ardha, Allaahumma ashibnaa fii safarinaa wakhlufna fii ahlihaa yaa arhamar raahimiin, rabbanaa aatinaa fiddunyaa hasanatan wa fil aakhirati hasanatan wa qinaa ‘adzaaban naar wa adkhilnal jannata ma’al abraar, yaa ‘aziizu yaa ghaffaaru yaa rabbal ‘aalamiin");
+                varab.setText(getResources().getString(R.string.arab_doa_tawaf_wada));
+                varti.setText(getResources().getString(R.string.text_doa_tawaf_wada)+"\n\n\n"+getResources().getString(R.string.terjemahan_tawaf_wada));
                 vaudio.setText("14 doa tawaf wada.mp3");
                 rankDialog.show();
             }
@@ -487,8 +487,8 @@ public class thawaf extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf8));
-                varab.setText("اللَّهُمَّ/ إِنَّ الْبَيْتَ/ بَيْتُكَ/ وَالْعَبْدَ/ عَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَابْنُ أَمَتِكَ/ حَمَلْتَنِيْ/ عَلَى مَا سَخَّرْ تَنِيْ لِيْ/ مِنْ خَلْقِكَ/ حَتَّى سَيَّرْتَنِيْ فِيْ بِلَادِكَ/ وَبَلَغْتَنِيْ بِنِعْمَتِكَ/ حَتَّى اَعَنْتَنِيْ/ عَلَى قَضَاءِ مَنَاسِكَ،/ فَإِنْ كُنْتَ رَضِيْتَ عَنِّيْ/ فَازْدَدْ عَنِّيْ رِضًا/ وَاِلاَّ فَمُنَّ الآنَ/ قَبْلَ تَبَاعُدِيْ عَنْ بَيْتِكَ./ هَذَا أَوَانُ انْصِرَافِيْ/ إِنْ أَذِنْتَ لِيْ/ غَيْرَمُسْتَبْدِلِ بِكَ/ وَلابِبَيۡتِكَ/ وَلاَرَاغِبَ عَنْكَ/ وَلاَ عَنْ بَيْتِكَ./ اللَّهُمَّ اَصْحِبْنِي الۡعَافِيَةَ/ فِيْ بَدَنِيْ/ وَالْعِصْمَةَ فِيْ دِيْنِيْ/ وَحُسْنَ مُنْقَلَبِيْ/ وَارْزُقْنِيْ/ طَاعَتَكَ أَبَدًا مَا اَبْقَيْتَنِيْ/ وَاجْمَعْ لِيْ/ خَيْرَيِ الدُّنْيَاوَالْآخِرَةِ/ إِنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ./ اللَّهُمَّ لاَتَجْعَلْ/ هَذَا آخِرَالۡعَهْدِ بِبَيْتِكَ الْحَرَامِ/ وَإِنْ جَعَلْتَهُ آخِرَ الْعَهْدِ/ فَعَوِّضْنِيْ عَنْهُ الْجَنَّةَ/ بِرَحْمَتِكَ يَااَرْحَمَ الرَّحِمِيْنَ/ آمِيْنَ يَا رَبَّ الْعَالَمِيْنََ");
-                varti.setText("Allahumma innal baita baituka wal ‘abda ‘abduka wabnu amatika hamaltanii ‘alaa ma sakhkhartanii lii min khalqika hattaa sayyartanii fii bilaadika wa balaghtanii bini’matika hatta a-’antanii ‘alaa qadhaa-l manaasikika fain kunta radhiita ‘annii fazdad ‘anni ridhan wa illaa famunnal ‘aanaqabla tabaa’udii ‘an baitika hadzaa awanunsirafii in adzinta lii ghaira mustabdilin bika walaa bi baitika walaa raaghibiin ‘anka walaa ‘an baitika, Allaahumma ashibnil ‘aafiyata fii badanii wal ‘ishmati fii diinii wa husnamunqalabii war zuqnii thaa’ataka Abadan maa abqaitanii wajma’lii khairayid dun-yaa wal aakhirah, innaka ‘aala kulli syai-in qaadir, Allaahumma la taj’al haadzal aakhiral ‘ahdibibaitikal haraam wa in ja’altahu aakhiral ‘ahdi fa’awwaidnii ‘anhul jannata birahmatika yaa arhamar raahimiin, amiin yaa rabbal ‘aalamiin");
+                varab.setText(getResources().getString(R.string.arab_doa_setelah_selesai_tawaf_wada));
+                varti.setText(getResources().getString(R.string.text_doa_setelah_selesai_tawaf_wada)+"\n\n\n"+getResources().getString(R.string.terjemahan_setelah_selesai_tawaf_wada));
                 vaudio.setText("15 doa setelah selesai tawaf wada.mp3");
                 rankDialog.show();
             }
@@ -507,32 +507,32 @@ public class thawaf extends AppCompatActivity implements
     private void SetProgess(int no){
         if(no == 1){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_1));
-            txtArab.setText("سُبْحَانَ اللّٰهِ/ وَالْحَمْدُلِلّٰهِ/ وَلاَاِلَهَ اِلاَّاللّٰهُ/ وَاللّٰهُ أَكْبَرُ،/ وَلاَحَوْلَ/ وَلاَقُوَّةَ/ اِلَّابِاللّٰهِ الْعَلِيِّ الْعَظِيْمِ،/ وَالصَّلَاةُ وَالسَّلَامُ/ عَلَى رَسُوْلِ اللّٰهِ/ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ،/ أَللَّهُمَّ إِيْمَانًابِكَ/ وَتَصْدِيْقًا بِكِتَابِكَ/ وَوَفَاءً بِعَهْدِكَ/ وَاتِّبَاعًا لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ/ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ،/ اَللَّهُمَّ إِنِّيْ/ أَسْأَلُكَالعَفْوَ/ وَالۡعَافِيَةَ/ وَالْمُعَافَاةَ الدَّائِمَةَ/ فِيْ الدِّيْنِ وَالدُّنْيَا وَالْآخِرَةِ/ وَالْفَوْزَبِالْجَنَّةِ/ وَالنَّجَاةَ مِنَالنَّارِ");
-            txtArti.setText("Subhaanallaah walhamdu lillaah walaa ilaaha illallaahu wallaahu akbar, walaa haula walaa quwwata illaa billaahi ‘aliyyil ‘azhiim, wash shalaatu was salaamu ‘alaa rasuulillaahi shalallaahu ‘alaihi wa aalihi, Allaahumma iimaanan bika wa tatsdiiqan bikitaabika wa wafaa an bi’ahdika wat tibaa-an lisunnati nabiyyika Muhammadin shalallaahu ‘aalaihi wa salam, Allaahumma innii as-‘aluka afwa wal ‘aafiyata wal mu’aafatad daa’imata fid diini wad dunaa wal aakhirati wal fauza bil jannati wan najaata minan naar");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_1));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_1)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_1));
         }else if(no == 2){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_2));
-            txtArab.setText("اللَّهُمَّ إِنِّ هَذَا الْبَيْتَ بَيْتُكَ/ وَالْحَرَمَ حَرَمُكَ/ وَالْأَمْنُكَ/ وَالْعَبْدَ عَبْدُكَ/ وَأَنَاعَبْدُكَ/ وَابْنُ عَبْدِكَ/ وَهَذَامَقَامُ العَائِذِبِكَ مِنَ النَّارِ/ فَحَرَّمْ لُحُوْمَنَا/ وَبَشَرَتَنَاعَلَى النَّارِ،/ اللَّهُمَّ حَبِّبْ إِلَيْنَا الْإِيْمَانَ/ وَزَيِّنْهُ فِيْ قُلُوْبِنَا/ وَكَرِّهْ إِلَيْنَاالۡكُفْرَ/ وَالْفُسُوْقَ/ وَالْعِصْيَانَ/ وَاجْعَلْنَا مِنَ الرَّاشِدِيْنَ،/ اللَّهُمَّ قِنِيْ عَذَابَكَ/ يَوْمَ تَبْعَثُ عِبَادَكَ،/ اللَّهُمَّ ارْزُقْنِيۡ الۡجَنَّةَ بِغَيْرِ حِسَاب");
-            txtArti.setText("Allaahumma inna hadzal baita baituka wal harama haramuka wal amna amnuka wal ‘abda ‘abduka wa anaa ‘abduka wabnu ‘abdika wa haadzaa maqaamul ‘aa-idzi bika minan naar, faharrim luhuumanaa wa basyaratanaa ‘alan naar, Allaahumma habib ilainal iimaana wa zayyinhu fi quluubina wa karrih ilainal kufra wal fusuuqa wal ishyaana waj’alnaa minar raasyidiin, Allaahumma qinii ‘adzaabaka, yauma tab ‘atsu ‘ibaadaka, Allaahummarzuqni al jannata bighairi hisaab");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_2));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_2)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_2));
         }else if(no == 3){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_3));
-            txtArab.setText("اللَّهُمَّ إِنِّيْ أَعُوْذُبِكَ/ مِنَ الشَّكِّ/ وَالشِّرْكِ/ وَاشَّقَاقِ/ وَالنِّفَاقِ/ وَسُوْءِالْأَخْلَاقِ/ وَسُوْءِالْمَنْظَرِ/ وَالْمُنْقَلَبُ فِيْ الْمَالِ وَالْأَهْلِ وَالْوَلَدِ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ رِضَاكَ وَالْجَنَّةَ/ وَأَعُوْذُبِكَ/ مِنْ سَخَطِكَ وَالنَّارِ،/ أَللَّهُمَّ إِنَّيْ أَعُوْذُبِكَ/ مِنْ فِتْنَةِ الْقَبْرِ/ وَأَعُوْذُبِكَ مِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ");
-            txtArti.setText("Allaahumma innii a-‘uudzu bika minasy syakki wasy syirki wasy syiqaaqi wan nifaaqi wa suu’il akhlaaqi was su’li manzhari wal munqalabi fil maali wal ahli wal waladi. Allahumma innii as’aluka ridhaaka wal jannata wa a-‘uudzu bika min sakhatika wan naar, Allaahumma innii a-’uudzu bika min fitnatil mahyaa wal mamaati");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_3));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_3)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_3));
         }else if(no == 4){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_4));
-            txtArab.setText("اللَّهُمَّ اجْعَلْهُ حَجَّا مَبْرُوْرًا/ وَسَعْيًا مَشْكُوْرًا/ وَذَنْبًا مَغْفُوْرًا/ وَعَمَلًاصَالِحًا مَقْبُوْلاً/ وَتِجَارَةً لَنْ تَبُوْرًا،/ يَاعَالِمَ مَافِيْ الصُّدُوْرِ/ أَخْرِجْنِيْ يَا أَللّٰهُ/ مِنَ الظُّلُمَاتِ إِلَى النُّوْرِ،/ أَللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ مُوْجِبَاتِ رَحْمَتِكَ/ وَعَزَائِمَ مَغْفِرَتِكَ/ وَالسَّلَامَةَ مِنْ كُلِّ إِثْمٍ/ وَالْغَنِيْمَةَ مِنْ كُلِّ بِرِّ/ وَالْفَوْزَبِالۡجَنَّةِ/ وَالنَّجَاةَ مِنَ النَّارِ،/ رَبِّ قَنِّعْنِيْ بِمَا رَزَقْتَنِيْ/ وَبَارِكْ لِىْ فِيْمَا أَعْطَيْتَنِيْ/ وَاخْلُفْ عَلَيَّ/ كُلَّ غَائِبَةٍ لِيْ مِنْكَ بِخَيْرٍٍ");
-            txtArti.setText("Allaahummaj’alhu hajjam mabruuraw was sa’yam masykuuraw wa zdanbam maghfuuraw wa ‘amaalan shaaliham maghbuulaw watijaawatal lantabuura, ya ‘aliimu maa fish-shuduuri akhrijnii ya Allahu munazh-zhulumaati ilan nuuri, Allahumma inii as-aluka muujibaat rahmatika wa ‘azaa-ima maghfiratika wa salaamata min kulli itsmin wal ghaniimata min kulli birrin wal fauza biljannati wan najaati minan naar, rabbi qanni’nii bimaa razaqtanii wa baariklii fiima a’thaitanii wakhluf ‘alayya kulla gha’ibatil lii minka bikhairin");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_4));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_4)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_4));
         }else if(no == 5){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_5));
-            txtArab.setText("اللَّهُمَّ أَظِلَنِيْ/ تَحْتَ ظِلِّ عَرْشِكَ/ يَوْمَ لاَظِلَّ اِلاَّظِلُّكَ/ وَلاَبَاقِيَ إِلاَّوَجْهُكَ/ وَأَسْقِنِيْ مِنْ حَوْضِ نَبِيِّكَ/ مُحَمَّدٍ صَلَى اللّٰهُ عَلَيْهِ وَسَلَمَ،/ شُرْبَةً هَنِيْئَةً مَرِيْئَةً/ لاَأَظْمَأُبَعْدَهَا اَبَدًا،/ اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ مِنْ خَيْرِ/ مَا أَسْأَلُكَ مِنْهُ نَبِيُّكَ مُحَمَّدٌ/ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ/ وَأَعُوْذُبِكَ/ مِنْ شَرِّ/ مَا اسْتَعَاذَكَ مِنْهُ نَبِيِّكَ مُحَمَّدٌ/ صَلَى اللّٰهُ عَلَيْهِ وَسَلَّمَ/ اللَّهُمَّ أِنِّيْ/ أَسْأَلُكَ الْجَنَّةَ/ وَنَعِيْمَهَا/ وَمَا يُقَرِّبُنِيْ اِلَيْهَا/ مِنْ قَوْلٍ أَوْفِعْلٍ أَوْعَمَلٍ/ وَأَعُوْذُبِكَ مِنَ النَّارِ/ وَمَا يُقَرِّبُنِيْ اِلَيْهَا/ مِنْ قَوْلٍ اَوْ فِعْلٍ اَوۡعَمَالٍ");
-            txtArti.setText("Allaahumma azhillanii tahta zhilli ‘arsyika yauma laa zhilli ila zhilluka walaa baaqiya illaa wajhuka wa asqinii min haudhi nabiyyika Muhammadin shalallaahu ‘alaihi wa sallam syurbatan hanii-atan marii-atan laa azma-u ba’dahaa abadaa, Allaahumma innii as-aluka min khairi maa as-alaka minhu nabiyyuka Muhammadun shalallaahu ‘alaihi wa aalihi, wa a-‘uudzu bika min syarri mas ta’aadzaka minhu nabiyyuka Muhammadun Shalallaahu ‘alaihi wa salama, Allaahumma inni as-alukal jannata wana’iimaha wamma yuqarribunii ilaihaa min qaulin au fi’lin au ‘amalin wa a’uudzu bika minan naari wamaa yuqarribunii ilaihaa min qaulin au fi’lin au ‘amalin");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_5));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_5)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_5));
         }else if(no == 6){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_6));
-            txtArab.setText("اللَّهُمَّ إِنَّ لَكَ عَلَيَّ/ حُقُوْقًا كَثِيْرَةً/ فِيْمَا بَيْنِيْ وَبَيْنَكَ/ وَحُقُوْقًا كَثِيْرَةً/ فِيْمَا بَيْنِيْ وَبَيْنَ خَلْقِكَ/ اللَّهُمَّ مَا كَانَ لَكَ مِنْهَا/ فَاغْفِرْهُ لِيْ/ وَمَا كَانَ لِخَلْقِكَ/ فَتَحَمَّلْهُ عَنِّيْ/ وَأَغْنِنِيْ بِحَلَا لِكَ/ عَنْ حَرَامِكَ/ وَبِطَاعَتِكَ/ عَنْ مَعْصِيَتِكَ/ وَبِفَضْلِكَ/ عَمَّنْ سِوَاكَ/ يَا وَاسِعَ الْمَغْفِرَةِ/ اللَّهُمَّ/ إِنَّ بَيْتَكَ عَظِيْمٌ،/ وَوَجْهَكَ كَرِيْمٌ،/ وَأَنْتَ يَاَاللّٰهُ حَلِيْمٌ كَرِيْمٌ عَظِيْمٌ/ تُحِبُّ الۡعَفْوَ فَاعْفُ عَنِّيْ");
-            txtArti.setText("Allaahumma inna laka ‘alayya huquuqan katsiiratan fiiman baini wa bainaka, wa huquqan katsiratan, fiima bainii wa baina khalqika, Allaahumma maa kaana laka minhaa faghfirhu lii wa maa kaana likhalqika fatahammalhu ‘anni wa aghninii bihalaalika ‘an haraamika wa bithaa’atika ‘an ma’siyatika wa bifadhlika ‘amman siwaaka yaa waasi’al maghfirah. Allaahumma inna baitaka azhiim, wa wajhaka kariim, wa anta yaa Allaahu haliimun kariimun ‘azhiimun tuhibbul ‘afwa fa’fu ‘annii");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_6));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_6)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_6));
         }else if(no == 7){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_7));
-            txtArab.setText("اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ إِيْمَانًا كَامِلًا/ وَيَقِيْنًا صَادِقًا/ وَرِزْقًا وَاسِعًا/ وَقَلْبًا خَا شِعًا/ وَلِسَانًا ذَاكِرًا/ وَحَلَالاً طَيِّبًا/ وَتَوْبَةً نَصُوْحًا/ وَتَوْبَةً قَبْلَ الْمَوْتِ/ وَرَاحْةً عِنْدَ الْمَوْتِ/ وَمَغْفِرَةً وَرَحْمَةً بَعْدَ الْمَوْتِ/ وَالْعَفْوَ عِنْدَ الْحِسَابِ/ وَالْفَوْزَبِالْجَنَّةِ/ وَالنَّجَاةَ مِنَ النَّارِ،/ بِرَحْمَتِكَ يَا عَزِيْزُ/ يَا غَفَارُ،/ رَبِّ زِدْنِيْ عِلْمًا/ وَأَلْحِقْنِيْ بِاالصَّا لِحِيْنَ");
-            txtArti.setText("Allaahumma innii as-aluka iimaanan kaamilan wa yaqiinan shaadiqan wa rizqan waa-si’an wa qalban khaasyi’an wa lisaanan dzaakiran wa halaalan thayyiban wa taubatan nashuuhahan, wa taubatan qablal mauti, wa rahmatan ‘indal mauti, wa maghfiratan wa rahmatan ba’dal mauti, wal ‘afwa ‘indal hisaab, wal fauza bil jannati wan najaati minan naar, birahmatika yaa ‘aziizu, yaa ghafaar, rabbi zidnii ‘ilaman wa alhiqnii bish-shaalihiin");
+            txtArab.setText(getResources().getString(R.string.doa_tawaf_7));
+            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_7)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_7));
         }else{
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_0));
             txtArab.setText("");
