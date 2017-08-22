@@ -384,8 +384,8 @@ public class sai extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.sai1));
-                varab.setText("بِسْمِ اللّٰهُ الرَّحْمَنِ الرَّحِيْمِ أَبْدَأُ/ بِمَا بَدَأَ اللّٰهُ بِهِ وَرَسُوْلُهُ/ إِنَّ الصَّفَا وَالْمَرْوَةَ/ مِنْ شَعَائؤِرِ اللّٰهِ/فَمَنْ حَجَّ الْبَيْتَ/ أَوِعْتَمَرَ/ فَلَا جُنَاحَ عَلَيْهِ/ أَنْ يَّطَّوَّفَ بِهِمَا/ وَمَنْ تَطَوَّعَ خَيْرًا/ فَإِنَّ اللهَ شَاكِرٌعَلِيْمٌ");
-                varti.setText("Bismillaahir rahmaani rahiim, abda’u bimaa bada-allaahu bihii wa rasuuluhuu, innash shafaa wal marwata min sya-‘aa-irillaah, faman hajjal baita awi’tamara falaa junaaha ‘alaihi ayyatthawwafa bihimma wa man tathawwa’a khairan fainnallaaha syaakirun ‘aliimun");
+                varab.setText(getResources().getString(R.string.arab_mendaki_bukit_safa));
+                varti.setText(getResources().getString(R.string.text_mendaki_bukit_safa)+"\n\n\n"+getResources().getString(R.string.terjemahan_mendaki_bukit_safa));
                 vaudio.setText("8 doa mendaki bukit safa.mp3");
                 rankDialog.show();
             }
@@ -397,8 +397,8 @@ public class sai extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.sai2));
-                varab.setText("اَللّٰهُ اَكْبَرُ،/ اَللّٰهُ اَكْبَرُ،/ اَللّٰهُ اَكْبَرُ،/ وَلِلّٰهِ الْحَمْدُ،/ اَللّٰهُ اَكْبَرُ/ عَلَى مَا هَدَانَا/ وَالْحَمْدُ لِلّٰهِ/ عَلَى مَا أَوْلَانَا،/ لَااِلَهَ اِلَّاللّٰهُ وَحْدَهُ/ لَاشَرِيْكَ لَهُ،/ لَهُ الْمُلْكُ/ وَلَهُ الْحَمْدُ/ يُحْيِيْ وَيُمِيْتُ/ بِيَهْدِهِ الْخَيْرُ/ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرٌ،/ لَااِلَهَ اِلَّاللّٰهُ وَحْدَهُ/ لَاشَرِيْكَ لَهُ/ أَنْجَزَ وَعْدَهُ/ وَنَصَرَعَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ،/ لَااِلَهَ اِلَّااللّٰهُ/ وَلَا نَعْبُدُ اِلَّا إِيَّاهُ/ مُخْلِصِيْنَ لَهُ ادِّيْنَ/ وَلَوْ كَرِهَ الْكَافِرُوْنَ ");
-                varti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, Allaahu Akbar ‘alaa maa hadaana walhamdulillaahi ‘ala maa aulaanaa, laa ilaaha illallaahu wahdahuu la syariikalahuu, lahul mulku wa lahul hamdu yuhyii wa yumiitu biyadihil khairu wa huwa ‘alaa kulli syai-in qadiir, laa ilaaha illallaahu wahdahuu la syariikalahuu anjaza wa’dahuu wa nashara ‘abdahuu wa hazamal ahzaaba wahdahuu laa ilaaha illallaahu walaa na’budu illa iyyahu mukhlishiina lahuddiina walau karihal kaafiruun");
+                varab.setText(getResources().getString(R.string.arab_doa_saat_dibukit_safa));
+                varti.setText(getResources().getString(R.string.text_doa_saat_dibukit_safa)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_saat_dibukit_safa));
                 vaudio.setText("11 doa saat dibukit safa.mp3");
                 rankDialog.show();
             }
@@ -409,8 +409,8 @@ public class sai extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.sai3));
-                varab.setText("رَبِّ اغْفِرْوَارْحَمْ/ وَاعْفُ وَتَكَرَّمْ/ وَتَجَاوَزْعَمَّا تَعْلَمُ/ إِنَّكَ تَعْلَمُ مَا لَانَعْلَمُ/ إِنَّكَ أَنْتَ اللّٰهُ الْأَعَزُّالْأَكْرَمُ");
-                varti.setText("Rabbighfir warham wa’fu wa takarram ‘amma ta’lam, innaka ta’lamu maa laa na’lamu, innakallahul a-‘azzul akramu");
+                varab.setText(getResources().getString(R.string.arab_doa_diantara_2pilar_hijau));
+                varti.setText(getResources().getString(R.string.text_doa_diantara_2pilar_hijau)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_diantara_2pilar_hijau));
                 vaudio.setText("10 doa diantara 2 pilar hijau.mp3");
                 rankDialog.show();
             }
@@ -421,8 +421,8 @@ public class sai extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.sai4));
-                varab.setText("إِنَّ الصَّفَا وَالْمَرْوَةَ/ مِنْ شَعَائِرِ اللّٰهِ/ فَمَنْ حَجَّ الْبَيْتَ/ أَوِاعْتَمَرَ/ فَلَا جُنَاحَ عَلَيْهِ/ أَنْ يَّطَّوَّفَ بِهِمَا/ وَمَنْ تَطَوَّعَ خَيْرًا/ فَإِنَّ اللهَ شَاكِرٌعَلِيْمٌ");
-                varti.setText("Innash shafaa wal marwata min sya-‘aa-irillaah, faman hajjal baita awi’tamara falaa junaaha ‘alaihi ayyathowwafa bihimma wa man tathawwa’a khairan fainnallaaha syaakirun ‘aliimun");
+                varab.setText(getResources().getString(R.string.arab_doa_mendekati_bukit_safa));
+                varti.setText(getResources().getString(R.string.text_mendekati_bukit_safa)+"\n\n\n"+getResources().getString(R.string.terjemahan_mendekati_bukit_safa));
                 vaudio.setText("9 doa ketika mendekati bukit safa marwah.mp3");
                 rankDialog.show();
             }
@@ -433,8 +433,8 @@ public class sai extends AppCompatActivity implements
                 stopPlaying();v_play.setText(getResources().getString(R.string.mainkan));
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.sai5));
-                varab.setText("اللَّهُمَّ رَبَّنَا/ تَقَبَّلْ مِنَا/ وَعَافِنَا وَاعْفُ عَنَّا/ وَعَلَى طَاعَتِكَ وَشُكْرِكَ أَعِنَّا/ وَعَلَى غَيْرِكَ/ لَاتَكِلْنَا/ وَعَلَى الإِيْمَانِ وَالإِسْلَامِ الكَامِلِ جَمِيْعًا/ تَوَفَّنَا وَأَنْتَ رَاضٍ عَنَّا/ اللَّهُمَّ ارْحَمْنِيْ/ بِتَرْكِ المَعَاصِيْ/ أَبَدًامَاأَبْقَيْتَنِيْ/ وَارْحَمْنِيْ/ اَنْ اَتَكَلَّفَ مَا لَايَعْنِيْنِيْ/ وَارْزُقْنِيْ حُسْنَ النَّظَرِ/ فِيْمَا يُرْضِيْكَ عَنِّيْ/ يَااَرْحَمَ الرَّاحِمِيْنَ");
-                varti.setText("Allaahumma rabbanaa taqabbal minnaa wa’aafinaa wa’fu ‘annaa wa ‘alaa thaa-‘atika wa syukrika a’innaa wa ‘alaa ghairika laa takilnaa wa ‘alal iimaani wal islaami kaamili jamii’an tawaffanaa wa anta raadhin ‘annaa, Allaahummarhamnii bitarki ma’aashii abadam maa abqaitanii warhamnii warzuqnii husnan nazhari fii maa yurdhiika ‘annii ya arhamar raahimiin");
+                varab.setText(getResources().getString(R.string.arab_doa_selesai_sai));
+                varti.setText(getResources().getString(R.string.text_doa_selesai_sai)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_selesai_sai));
                 vaudio.setText("12 doa selesai sa'i.mp3");
                 rankDialog.show();
             }
@@ -453,32 +453,32 @@ public class sai extends AppCompatActivity implements
     private void SetProgess(int no){
         if(no == 1){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_1));
-            txtArab.setText("اللّٰهُ اَكْبَرُ/ اللّٰهُ اَكْبَرُاللّٰهُ/ اَكْبَرُ اللّٰهُ اَكْبَرُ كَبِيْرًا وَالْحَمْدُلِلّٰهِ كَثِيْرًا/ وَسُبْحَانَ اللّٰهِ الْعَظِيْمِ/ وَبِحَمْدِهِ الْكَرِيْمِ/ بُكْرَةً وَأَصِيْلًا/ وَمِنَ اللَّيْلِ فَاسْجُدْ لَهُ/ وَسَبِّحْهُ لَيْلًا طَوِيْلًا/ لَااِلَهَ اِلاَاللّٰهُ وَحْدَهُ/ أَنْجَزَ وَعْدَهُ/ وَنَصَرَ عَبْدَهُ/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ/ لاَشَيْءَ قَبْلَهُ وَلاَ بَعْدَهُ/ يُحْيِيْ وَيُمِيْتُ/ وَهُوَ حَيٌّ دَائِمً/ لاَيَمُوْتُ وَلاَيَفُوْتُ أَبَدًا/ بِيَهْدِهِ الْخَيْرُ/ وَاِلَيْهِ الْمَصِيْرُ/ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيْرُ");
-            txtArti.setText("Allaahu akbar Allaahu akbar Allaahu akbar Allaahu akbar kabiraw walhamdulillaahi katsiiraw wa subhaanallaahil ‘adziimi wa bihamdihil kariim bukrataw wa ashiilan wa minal laili fasjud lahuu wa sabbihhu lailan thawiilan laa ilaaha illaahu wahdahuu anjaza wa’dahuu wa nashara ‘abdahuu wa hazamal ahzaaba wahdahuu laa syai-a qablahuu wa laa ba’dahuu yuhyii wa yumiitu wahuwa hayyun daa-imun laa yamuutu wa laa yafuutu Abadan biyadihil khairu wa ilaihil mashiir wa huwa alaa kulli syai-in qadiir");
+            txtArab.setText(getResources().getString(R.string.doa_sai_1));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_1)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_1));
         }else if(no == 2){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_2));
-            txtArab.setText("اللّٰهُ اَكْبَرُ/ اللّٰهُ اَكْبَرُ/ اللّٰهُ اَكْبَرُ،/ وَلِلّٰهِ الْحَمْدُ،/ لاَاِلَهَ اِلاَّاللّٰهُ/ الوَاحِدُ الْفَرْدُ الصَّمَدُ،/ الَّذِيْ لَمْ يَتَّخِذْ صَاحِبَةً/ وَلاَوَلَدًا/ وَلَمْ يَكُنْ لَهُ/ شَرِيْكٌ فِيْ الْمُلْكِ/ وَلَمْ يَكُنْ لَهُ/ وَلِيٌّ مِنَ الذُّلِّ/ وَكَبِّرْهُ تَكْبِيْرًا،/ اللَّهُمَّ/ إِنَّكَ قُلْتَ فِيْ كِتَابِكَ المُنْزَلِ/ أُدْعُوْنِيْ اَسْتَجِبْ لَكُمْ/ دَعَوْنَكَ/ رَبَّنَا فَاغْفِرْلَنَا/ كَمَا أَمَرْتَنَا/ إِنَّكَ لاَتُخْلِفُ الْمِيْعَادَ،/ رَبَّنَا/ إِنَّنَا سَمِعْنَا مُنَادِيًا/ يُنَادِيْ لِلْإِيْمَانِ/ أَنْ آمِنُوْابِرَبِّكُمْ فَآمَنَّا/ رَبَّنَافَاغْفِرْلَنَا ذُنُوْبَنَا/ وَكَفِّرْ عَنَّا سَيِّئَاتِنَا/ وَتَوَفَّنَا مَعَ الْأَبْرَارِ/ رَبَّنَاوَآتِنَا/ مَاوَعَدْتَنَاعَلَى رَسُلِكَ/ وَلاَتُخْزِنَا يَوْمَ الْقِيَامَةِ،/ إِنَّكَ لاَتُخْلِفُ الْمِيْعَادَ،/ رَبَّنَا عَلَيْكَ تَوَكَّلْنَا/ وَاِلَيْكَ أَنَبْنَا/ وَاِلَيْكَ الْمَصِيْرُ/ رَبَّنَا اغْفِرْلَنَا/ وَلِإِخْوَانِنَا الَّذِيْنَ سَبَقُوْنَابِالْإِيْمَاِن/ وَلاَتَجْعَلْ فِيْ قُلُوْبِنَا/ غِلَّا لِلَّذِيْنَ أَمَنُوْا/ رَبَّنَا إِنَّكَ رَأُوْفُ الرَّحِيْمِ");
-            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu akbar, wa lillaahil hamdu, laa ilaaha illallaahul waahidul fardhus shamad, alladzii lam yattakhidz shaahibataw wa laa waladaw wa lam yakul lahuu syariikun fil mulki wa lam yakul lahuu waliyyunm minadz dzulli wa kabbirhu takbiiran, Allaahumma innaka qulta fii kitaabikal minzali ud-‘uunii astajib lakum, da-aunaaka rabbanaa faghfirlanaa kamaa amartanaa innaka laa tukhliful mii’aad, rabbanaa innanaa sami’naa munaadiyay yunaadii lil iimaani an aaminuu birabbikum fa aamannaa, rabbanaa faghfirlanaa dzunuubanaa wa kaffir ‘annaa sayyiaatinaa wa tawaffanaa ma’al abraar, rabbanaa wa aatinaa maa wa’attinaa ‘alaa rusulika wa laa tukhzinaa yaumal qiyaamati innaka laa tukhliful mii’aad,rabbanaa ‘alaika tawakkalnaa wa ilaika anabnaa wa ilaikal mashiir, rabbanaghfirlanaa wa li ikhwaaninal ladziina sabaquunaa bil iimaan wa laa taj’al fii quluubinaa ghillal lillaadziina aamanuu rabbanaa innaka ra’uufur rahiim");
+            txtArab.setText(getResources().getString(R.string.doa_sai_2));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_2)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_2));
         }else if(no == 3){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_3));
-            txtArab.setText("اللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ/ وَلِلّٰهِ الْحَمْدُ،/ رَبَّنَا اَتْمِمْ لَنَا نُوْرَنَا/ وَغْفِرْلَنَا/ إِنَّكَ عَلَى كُلِّ شَيْئٍ قَدِيْرٌ،/ اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ الْخَيْرَ كُلَّهُ/ عَاجَلَهُ وَ آجْلَهُ/ وَأَسْتَغْفِرُكَ لِذَنْبِيْ/ وَأَسْأَلُكَ رَحْمَتَكَ/ يَا أَرْحَمَ الرَّاحِمِيْنَ");
-            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, wa lillaahilhamd. Rabbanaa atmim lanaa nuuranaa waghfirlanaa innaka ‘alaa kuli syai’ingqadiir. Allaahumma inni as’alukalkhaira kullahu ‘aajilahu wa’aajilahu wastaghfiruka lidzambii wa as’aluka rahmataka yaa arhamarraahimiin");
+            txtArab.setText(getResources().getString(R.string.doa_sai_3));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_3)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_3));
         }else if(no == 4){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_4));
-            txtArab.setText("اللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ،/ وَلِلّٰهِ الْحَمْدُ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ مِنْ خَيْرٍ مَا تَعْلَمُ/ وَأَعُوْذُبِكَ/ مِنْ شَرِّ مَا تَعْلَمُ/ وَأَسْتَغْفِرُكَ/ مِنْ كُلِّ مَا تَعْلَمُ/ إِنَّكَ أَنْتَ عَلَّامُ الْغُيُوْبِ،/ لاَاِلَهَ اِلَّااللهُ/ اَلْمَلِكَ الْحَقُّ الْمُئْمِيْنُ،/ مُحَمَّدٌ رَسُوْلُ اللّٰهِ/ صَادَقَ الْوَعْدِ الْأَمِيْنِ،/ اللَّهُمَّ إِنِّيْ أَسْأَلُكَ/ كَمَا هَدَيْتَنِيْ لِلْإِسْلَامِ/ اَنْ لاَ تَنْزِعَهُ مِنِّيْ/ حَتَّى تَوَفِّنِيْ/ وَأَنَا مُسْلِمٌ،/ اللَّهُمَّ اجْعَلْ فِيْ قَلْبِيْ نُوْرًا،/ وَفِيْ سَمْعِيْ نُوْرًا،/ وَفِيْ بَصْرِيْ نُوْرًا،/ اللَّهُمَّ اشْرَحْ لِيْ صَدْرِيْ/ وَيَسِّرْلِيْ أَمْرِيْ/ وَأَعُوْذُبِكَ/ مِنْ وَسَا وَسِ الْصَدْرِ/ وَشَتَاتِ الْأَمْرِ/ وَفِتْنَةِ الْقَبْرِ،/ اللَّهُمَّ إِنِّيْ أَعُوْذُبِكَ/ مِنْ شَرِّمَا يَلِجُ فِيْ اللَّيْلِ/ وَشَرِّمَا يَلِجُ فِيْ النَّهَارِ/وَمِنْ شَرِّمَا تَهُبُّ بِهِ الرِّيَاحُ/ يَا اَرْحَمَ الرَّاحِمِيْنَ،/ سُبْحَنَكَ/ مَا عِبَادَتِاكَ/ حَقَّ عِبَادَتِكَ يَااَللّٰهُ،/ سُبْحَانَكَ/ مَاذَكَرْنَاكَ/ حَقَّ ذِكْرِكَ يَا اَللّٰهُُ");
-            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, wa lillaahil hamdu, Allaahumma innii as-aluka min khairim maa ta’lamu wa a-‘uudzu bika min syarri maa ta’lamu wa astghfiruka min kulli maa ta’lamu innaka anta ‘allaamul ghuyub, laa ilaaha illallaahul malikul haqqul mubiin Muhammadur rasuulullaah, shaadiqul wa’dilamiin, Allaahumma innii as-aluka kamma hadaitanii lil islaami an laa tunzi ‘anhu minnii hattaa tawaffanii wa anaa muslim. Allaahummaj-‘al fi qalbi nuuran, wa fii sam’ii nuuran wa fii basharii nuuran, Allaahummasyraah lii shadrii wa yassir lii amrii wa a-‘uudzubika min wasaawisis shadri wasyasyattaatil amri wafitnatil qabrii, Allaahumma innii a-‘uudzubika min syarri maa yaliju fillaili wa syarri maa yaliju fin nahaari wa min syarri maa tahubbu bihir riyaahu yaa arhamar raahimiin, subhaanaka maa ‘abadnaaka haqqa ‘ibaadatika yaa Allaahu subhaanaka maa dzakarnaaka haqqa dzikrika yaa Allaah");
+            txtArab.setText(getResources().getString(R.string.doa_sai_4));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_4)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_4));
         }else if(no == 5){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_5));
-            txtArab.setText("اللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ/ اَللّٰهُ اضكْبَرُ،/ وَلِلّٰهِ الْحَمْدُ،/ سُبْحَانَكَ مَا شَكَرْنَاكَ/ حَقَّ شُكْرِكَ يَا اَللّٰهُ/ سُبْحَانَكَ/ مَا أَعْلَى شَأْنَكَ يَا اَللّٰهُ،/ اللَّهُمَّ/ حَبِّبْ اِلَيْنَا الْإِيْمَانَ/ وَزَيِّنْهُ فِيْ قُلُوْبِنَا/ وَكَرِّهْ إِلَيْنَا الْكُفْرَ/ وَالْفُسُوْقَ/ وَالْعِصْيَانَ،/ وَاجْعَلْنَا مِنَ الرَّاشِدِيْنَ");
-            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, subhaanaka maa syakarnaaka haqqa syukrika ya Allaah, Subhaanaka maa a’laa sya’naka yaa Allaah, Allaahumma habbib ilainal iimaana wa zayyinhu fii quluubinaa wa karrih ilainal kufra wal fusuuqa wal ‘ishyaana, waj-‘alnaa minar raasyidiin");
+            txtArab.setText(getResources().getString(R.string.doa_sai_5));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_5)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_5));
         }else if(no == 6){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_6));
-            txtArab.setText("اللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ،/ وَلِلّٰهِ الْحَمْدُ،/ لَااِلَهَ اِلَّا اللّٰهُ وَحْدَهُ،/ صَدَقَ وَعْدَهُ،/ وَنَصَرَ عَبْدَهُ،/ وَهَزَمَ الْأَحْزَابَ وَحْدَهُ،/ لَااِلَهَ اِلَّااللّٰهُ/ وَلَا نَعْبُدُ اِلَّاإِيَّاهُ/ مُخْلِصِيْنَ لَهُ الدِّيْنُ/ وَلَوْكَرِهَ الْكَاِفُرُوْنَ،/ اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ الْهُدَى/ وَالتُّقَى/ وَالْعَفَافَ/ وَالْغِنِى،/ اللَّهُمَّ لَكَ الْحَمْدُ/ كَالَّذِيْ نَقُوْلُ/ وَخَيْرًا مِمَّا نَقُوْلُ،/ اللَّهُمَّ إِنِّيْ/ أَسْأَلُكَ رِضَاكَ وَالْجَنَّةَ/ وَأَعُوْذُبِكَ مِنْ سَخَطِكَ وَالنَّارِ/ وَمَا يُقَرِّبُنِيْ اِلَيْهَا/ بِنُوْرِكَ اهْتَدَيْنَا/ وَبِفَضْلِكَ اسْتَغْنَيْنَا/ وَفِيْ كَنَفِكَ/ وَإِنْعَا مِكَ/ وَعَطَائِكَ/ وَإِحْسَانِكَ/ اَصْبَحْنَا وَأَمْسَيْنَا،/ أَنْتَ الْأُوْلَ/ فَلَا قَبْلَكَ شَيْءٌ،/ وَالْآخِرُ/ فَلَا بَعْدَكَ شَيْءٌ،/ وَالظَّاهِرُ/ فَلَا شَيْءَ دُوْنَكَ،/ نَعُوْذُ بِكَ مِنَ الْفَلَسِ وَالْكَسَلِ/ وَعَذَابِ الْقَبْرِ/ وَفِتْنَةِ الغِنَي/ وَنَسْأَلُكَ الْفَوْزَ بِالْجَنَّةِ");
-            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, walillaahil hamdu, laa ilaa illallaahu wahdahu, shadaqa wa’dahu, wa nashara ‘abdahuu, wa hazamal ahzaaba wahdahu, laa ilaaha illallaahu wa laa na’budu illaa iyyaahu, mukhlishiina lahud diin wa lawkarihal kaafiruun, Allaahumma innii asalukal  hudaa wat tuqaa wal ‘afaafa wal ghinaa, Allaahumma lakal hamdu kalladzii naquulu wa khairan mimma naquulu, Allaahumma inni as-aluka ridhaaka wal jannata wa a-‘uudzu bika min sakhatika wan-naar wa maa yuqaarribunii ilaihaa min qaulin wa fi’lin aw ‘amalin, Allaahumma bi nuurikahtadainaa wa bi fadhlikas taghnainaa wa fii kafanika wa in’aamika wa ‘athaa-ika wa ihsaanika ashbahnaa wa amsainaa, antal awwalu falaa qablaka syai-un, wal aakhiru falaa ba’daka syai-un, wadz-dzaahiru falaa syai-a duunaka, na-‘uudzubika minal falasi wal kasali wa ‘adzaabil qabri wa fitnatil ghinaa wan as-alukal fauza bil jannati");
+            txtArab.setText(getResources().getString(R.string.doa_sai_6));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_6)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_6));
         }else if(no == 7){
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_7));
-            txtArab.setText("اَللّٰهُ اَكْبَرُ/ اَللّٰهُ اَكْبَرُ،/ اَللّٰهُ اَكْبَرُكَبِيْرًا/ وَالْحَمْدُ لِلّٰهِ كَثِيْرًا،/ اللَّهُمَّ حَبِّبْ اِلَيَّ الإِيْمَانَ،/ وَزَيِّنْهُ فِيْ قَلْبِيْ/ وَكَرِّهْ اِلَيَّ الْكُفْرَ/ وَالْفُسُوْقَ/ وَالْعِصْيَانَ/ وَاجْعَلْنِيْ مِنَ الرَّاشِدِيْنَ");
-            txtArti.setText("Allaahu Akbar, Allaahu Akbar, Allaahu Akbar, kabiiran, walhamdu lillaahi katsiiran, subhaanaka maa syakarnaaka haqqa syukrika yaa Allaah, subhaanaka maa a’laa sya’naka yaa Allah, Allaahumma habbib ilainal iimaana wa zayyinhu fii quluubinaa wa karrih ilainal kufra wal fusuuqa wal ‘isyaana, waj-‘alnaa minar raasyidiin");
+            txtArab.setText(getResources().getString(R.string.doa_sai_7));
+            txtArti.setText(getResources().getString(R.string.text_doa_sai_7)+"\n\n\n"+getResources().getString(R.string.terjemahan_sai_7));
         }else{
             progress.setImageDrawable(getImageDrawable(R.drawable.sai_0));
             txtArab.setText("");
