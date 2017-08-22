@@ -24,6 +24,8 @@
     <string name="video_tutorial">Video Tutorial</string>
     <string name="tips">Tips</string>
     <string name="kamus">Dictionary</string>
+    <string name="teks">Text</string>
+    <string name="terjemahan">Translation</string>
     <string name="mainkan_audio">Play Audio</string>
     <string name="simpan_audio">Save Audio</string>
     <string name="simpan_video">Save Video</string>

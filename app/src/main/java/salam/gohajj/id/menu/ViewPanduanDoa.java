@@ -66,8 +66,8 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
 
 
     private TextView txtname,txtid,info, state,txtarab;
-    WebView txtdesc;
-    private Button buttonStart,buttonSave;
+    WebView txtdesc,txtTerjemahan;
+    private Button buttonStart,buttonSave,btnTerjemahan;
     private ListView listView;
     private String id,file,uid;
     private SeekBar timeLine;
@@ -220,6 +220,8 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
         file = intent.getStringExtra(AppConfig.KEY_FILE);
 
         txtdesc = (WebView) findViewById(R.id.txtDesc);
+        txtTerjemahan = (WebView) findViewById(R.id.txtTerjemahan);
+        btnTerjemahan = (Button) findViewById(R.id.btnTerjemahan);
         txtid= (TextView) findViewById(R.id.txtid);
         txtname= (TextView) findViewById(R.id.txtName);
         txtarab= (TextView) findViewById(R.id.txtArab);
@@ -240,6 +242,23 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             buttonSave.setVisibility(View.GONE);
             srcPath="/sdcard/android/data/salam.gohajj.id/doa/"+file;
         }
+
+        btnTerjemahan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String val=btnTerjemahan.getText().toString();
+                if(val.equals(getResources().getString(R.string.terjemahan))){
+                        txtTerjemahan.setVisibility(View.VISIBLE);
+                        txtdesc.setVisibility(View.GONE);
+                        btnTerjemahan.setText(getResources().getString(R.string.teks));
+                }else{
+                    txtTerjemahan.setVisibility(View.GONE);
+                    txtdesc.setVisibility(View.VISIBLE);
+                    btnTerjemahan.setText(getResources().getString(R.string.terjemahan));
+
+                }
+            }
+        });
 
         ScheduledExecutorService myScheduledExecutorService = Executors.newScheduledThreadPool(1);
 
@@ -321,10 +340,12 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
             String ctg = c.getString(AppConfig.KEY_CATEGORY);
             String desc = c.getString(AppConfig.KEY_DESCRIPTION);
             String arab = c.getString(AppConfig.KEY_ARAB);
+            String terjemahan = c.getString(AppConfig.KEY_TERJEMAHAN);
             txtid.setText(id);
             txtname.setText(name);
             txtarab.setText(ArabicUtilities.reshape(arab));
             txtdesc.loadData(desc, "text/html; charset=utf-8", "utf-8");
+            txtTerjemahan.loadData(terjemahan, "text/html; charset=utf-8", "utf-8");
 
             getJSON(jenis,ctg,id);
 
