@@ -68,6 +68,10 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
         session = new SessionManager(getApplicationContext());
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+        
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
@@ -198,9 +202,7 @@ public class inbox extends AppCompatActivity implements ListView.OnItemClickList
                 finish();
             }
         });
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
+
 
         getJSON();
         //useri mage

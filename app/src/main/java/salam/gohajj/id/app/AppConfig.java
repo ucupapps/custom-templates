@@ -91,6 +91,7 @@ public class AppConfig {
     public static final String KEY_JENIS = "jenis";
     public static final String KEY_FILE = "file";
     public static final String KEY_ARAB = "arab";
+    public static final String KEY_TERJEMAHAN = "terjemahan";
     public static final String KEY_TRAVEL_PHONE= "travel_agent_phone";
     public static final String KEY_PEMIMPIN_PHONE= "pemimpin_phone";
     public static final String KEY_PEMBIMBING_PHONE= "pembimbing_phone";
