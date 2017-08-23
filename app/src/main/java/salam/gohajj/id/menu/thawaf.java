@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -62,9 +63,10 @@ public class thawaf extends AppCompatActivity implements
         Stopped, PlaybackCompleted, End, Error, Preparing}
 
     thawaf.MP_State mediaPlayerState;
-    private String id,uid;
+    private String id,uid, text_arti, text_terjemahan;
     private SeekBar timeLine;
     LinearLayout timeFrame;
+    private Button BtnTerjemahan, btnTerjemah;
     TextView timePos, timeDur;
     final static int RQS_OPEN_AUDIO_MP3 = 1;
     MediaPlayer mediaPlayer;
@@ -118,6 +120,7 @@ public class thawaf extends AppCompatActivity implements
         txt_next = (TextView) findViewById(R.id.txt_next);
         txtArab = (TextView) findViewById(R.id.txtArab);
         txtArti = (TextView) findViewById(R.id.txtArti);
+        btnTerjemah = (Button) findViewById(R.id.btnTerjemah);
         txt_doa1 = (TextView) findViewById(R.id.txt_doa1);
         txt_doa2 = (TextView) findViewById(R.id.txt_doa2);
         txt_doa3 = (TextView) findViewById(R.id.txt_doa3);
@@ -316,6 +319,7 @@ public class thawaf extends AppCompatActivity implements
         arrow_back = (ImageView) rankDialog.findViewById(R.id.arrow_back);
         img_vplay = (ImageView) rankDialog.findViewById(R.id.img_play);
         vplay = (LinearLayout) rankDialog.findViewById(R.id.menu_play);
+        BtnTerjemahan = (Button) rankDialog.findViewById(R.id.btnTerjemahan);
         vname.setTypeface(font);
         varab.setTypeface(font);
         varti.setTypeface(font);
@@ -403,8 +407,18 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf1));
                 varab.setText(getResources().getString(R.string.arab_doa_istilam));
-                varti.setText(getResources().getString(R.string.text_doa_istilam)+"\n\n\n"+getResources().getString(R.string.terjemahan_istilam));
+//                varti.setText(getResources().getString(R.string.text_doa_istilam));
                 vaudio.setText("8 doa istilam.mp3");
+                text_arti=getResources().getString(R.string.text_doa_istilam);
+                text_terjemahan=getResources().getString(R.string.terjemahan_istilam);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
@@ -416,8 +430,19 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf2));
                 varab.setText(getResources().getString(R.string.arab_doa_diantara_rukun_yamani));
-                varti.setText(getResources().getString(R.string.text_doa_diantara_rukun_yamani)+"\n\n\n"+getResources().getString(R.string.terjemahan_diantara_rukun_yamani));
+                varti.setText(getResources().getString(R.string.text_doa_diantara_rukun_yamani));
                 vaudio.setText("9 doa diantara rukun yamani dan hajar aswad.mp3");
+                text_arti=getResources().getString(R.string.text_doa_diantara_rukun_yamani);
+                text_terjemahan=getResources().getString(R.string.terjemahan_diantara_rukun_yamani);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
+
                 rankDialog.show();
             }
         });
@@ -428,8 +453,18 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf3));
                 varab.setText(getResources().getString(R.string.arab_doa_saat_di_multazam));
-                varti.setText(getResources().getString(R.string.text_doa_saat_di_multazam)+"\n\n\n"+getResources().getString(R.string.terjemahan_saat_di_multazam));
+                varti.setText(getResources().getString(R.string.text_doa_saat_di_multazam));
                 vaudio.setText("10 doa saat di Multazam.mp3");
+                text_arti=getResources().getString(R.string.text_doa_saat_di_multazam);
+                text_terjemahan=getResources().getString(R.string.terjemahan_saat_di_multazam);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
@@ -440,8 +475,18 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf4));
                 varab.setText(getResources().getString(R.string.arab_doa_mencium_hajar_aswad));
-                varti.setText(getResources().getString(R.string.text_doa_mencium_hajar_aswad)+"\n\n\n"+getResources().getString(R.string.terjemahan_mencium_hajar_aswad));
+                varti.setText(getResources().getString(R.string.text_doa_mencium_hajar_aswad));
                 vaudio.setText("11 doa mencium hajar aswad.mp3");
+                text_arti=getResources().getString(R.string.text_doa_mencium_hajar_aswad);
+                text_terjemahan=getResources().getString(R.string.terjemahan_mencium_hajar_aswad);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
@@ -452,8 +497,18 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf5));
                 varab.setText(getResources().getString(R.string.arab_doa_setelah_shalat_sunnah_tawaf));
-                varti.setText(getResources().getString(R.string.text_doa_setelah_shalat_sunnah_tawaf)+"\n\n\n"+getResources().getString(R.string.terjemahan_setelah_shalat_sunnah_tawaf));
+                varti.setText(getResources().getString(R.string.text_doa_setelah_shalat_sunnah_tawaf));
                 vaudio.setText("12 doa setelah shalat sunnah tawaf.mp3");
+                text_arti=getResources().getString(R.string.text_doa_setelah_shalat_sunnah_tawaf);
+                text_terjemahan=getResources().getString(R.string.terjemahan_setelah_shalat_sunnah_tawaf);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
@@ -464,8 +519,18 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf6));
                 varab.setText(getResources().getString(R.string.arab_doa_minum_air_zam_zam));
-                varti.setText(getResources().getString(R.string.text_doa_minum_air_zam_zam)+"\n\n\n"+getResources().getString(R.string.terjemahan_minum_air_zam_zam));
+                varti.setText(getResources().getString(R.string.text_doa_minum_air_zam_zam));
                 vaudio.setText("13 doa minum air zam zam.mp3");
+                text_arti=getResources().getString(R.string.text_doa_minum_air_zam_zam);
+                text_terjemahan=getResources().getString(R.string.terjemahan_minum_air_zam_zam);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
@@ -476,8 +541,18 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf7));
                 varab.setText(getResources().getString(R.string.arab_doa_tawaf_wada));
-                varti.setText(getResources().getString(R.string.text_doa_tawaf_wada)+"\n\n\n"+getResources().getString(R.string.terjemahan_tawaf_wada));
+                varti.setText(getResources().getString(R.string.text_doa_tawaf_wada));
                 vaudio.setText("14 doa tawaf wada.mp3");
+                text_arti=getResources().getString(R.string.text_doa_tawaf_wada);
+                text_terjemahan=getResources().getString(R.string.terjemahan_tawaf_wada);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
@@ -488,12 +563,35 @@ public class thawaf extends AppCompatActivity implements
                 img_vplay.setImageDrawable(getImageDrawable(R.drawable.play));
                 vname.setText(getResources().getString(R.string.thawaf8));
                 varab.setText(getResources().getString(R.string.arab_doa_setelah_selesai_tawaf_wada));
-                varti.setText(getResources().getString(R.string.text_doa_setelah_selesai_tawaf_wada)+"\n\n\n"+getResources().getString(R.string.terjemahan_setelah_selesai_tawaf_wada));
+                varti.setText(getResources().getString(R.string.text_doa_setelah_selesai_tawaf_wada));
                 vaudio.setText("15 doa setelah selesai tawaf wada.mp3");
+                text_arti=getResources().getString(R.string.text_doa_setelah_selesai_tawaf_wada);
+                text_terjemahan=getResources().getString(R.string.terjemahan_setelah_selesai_tawaf_wada);
+                BtnTerjemahan.setText(getResources().getString(R.string.teks));
+                setBtnTerjemahan();
+                BtnTerjemahan.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setBtnTerjemahan();
+                    }
+                });
                 rankDialog.show();
             }
         });
 
+    }
+
+    public void setBtnTerjemahan(){
+
+        String val=BtnTerjemahan.getText().toString();
+        if(val.equals(getResources().getString(R.string.terjemahan))){
+            varti.setText(text_terjemahan);
+            BtnTerjemahan.setText(getResources().getString(R.string.teks));
+        }else{
+            varti.setText(text_arti);
+            BtnTerjemahan.setText(getResources().getString(R.string.terjemahan));
+
+        }
     }
 
     public Drawable getImageDrawable(int id){
@@ -505,40 +603,67 @@ public class thawaf extends AppCompatActivity implements
     }
 
     private void SetProgess(int no){
+        String txtLisan = "";
+        String txtTerjemah = "";
         if(no == 1){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_1));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_1));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_1)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_1));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_1);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_1);
         }else if(no == 2){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_2));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_2));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_2)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_2));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_2);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_2);
         }else if(no == 3){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_3));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_3));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_3)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_3));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_3);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_3);
         }else if(no == 4){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_4));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_4));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_4)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_4));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_4);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_4);
         }else if(no == 5){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_5));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_5));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_5)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_5));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_5);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_5);
         }else if(no == 6){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_6));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_6));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_6)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_6));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_6);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_6);
         }else if(no == 7){
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_7));
             txtArab.setText(getResources().getString(R.string.doa_tawaf_7));
-            txtArti.setText(getResources().getString(R.string.text_doa_tawaf_7)+"\n\n\n"+getResources().getString(R.string.terjemahan_doa_tawaf_7));
+            txtLisan = getResources().getString(R.string.text_doa_tawaf_7);
+            txtTerjemah = getResources().getString(R.string.terjemahan_doa_tawaf_7);
         }else{
             progress.setImageDrawable(getImageDrawable(R.drawable.thawaf_0));
             txtArab.setText("");
             txtArti.setText("");
         }
 
+        final String finalTxtTerjemah = txtTerjemah;
+        final String finalTxtLisan = txtLisan;
+        txtArti.setText(finalTxtLisan);
+        btnTerjemah.setText(getResources().getString(R.string.terjemahan));
+        btnTerjemah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String val=btnTerjemah.getText().toString();
+                if(val.equals(getResources().getString(R.string.terjemahan))){
+                    txtArti.setText(finalTxtTerjemah);
+                    btnTerjemah.setText(getResources().getString(R.string.teks));
+                }else{
+                    txtArti.setText(finalTxtLisan);
+                    btnTerjemah.setText(getResources().getString(R.string.terjemahan));
+
+                }
+            }
+        });
     }
 
 

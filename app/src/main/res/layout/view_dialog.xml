@@ -63,12 +63,25 @@
         android:id="@+id/varti"
         android:lineSpacingExtra="2dp"
         android:padding="10dp"
-        android:text="Sesungguhnya Shafa dan Marwah sebagian dari syiar-syiar (tanda kebesaran) Allah. Maka barang siapa yang beribadah haji ke Baitullah ataupun berumrah, maka tidak ada dosa baginya mengerjakan sa'i antara keduanya. Dan barang siapa yang mengerjakan suatu kebajikan dengan rela hati, maka sesungguhnya Allah Maha Penerima Kebaikan lagi Maha Mengetahui."
+        android:text="Loading.."
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btnTerjemahan"
+        android:textColor="@color/white"
+        android:text="@string/terjemahan"
+        android:layout_gravity="end"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:textAllCaps="false"
+        android:background="@drawable/button"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        />
 
     <TextView
         android:visibility="gone"

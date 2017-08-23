@@ -113,7 +113,6 @@
                                     android:layout_marginBottom="10dp"
                                     android:lineSpacingExtra="5dp"
                                     android:padding="8dp"
-                                    android:text="سُبْحَانَ اللَّهِ، والحَمْدُ لِلَّهِ، وَلا إِلَهَ إِلاَّ اللَّهُ، وَاللَّهُ أَكْبَرُ، وَلاَ حَوْلَ وَلاَ قُوَّةَ إِلاَّ باللَّهِ العَلِيِّ العَظِيمِ وَالصَّلاَةُ وَِِالسَلاَمُ عَلَى رَسُوْلِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إيمَاناً بِكَ وَتَصدِيقاً بِكِتابِكَ، وَوَفاءً بِعَهْدِكَ وَاتِّباعاً لِسُنَّةِ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللّهُ عَلَيْهِ وَسَلَّمَ اللَّهُمَّ إنِّي أَسألُكَ العَفْوَ وَالعَافِيَةَ، وَالمُعَافَاةَ الدَّائِمَةَ فِى الدِّيْنِ وَالدُّنْيَا وَالْآخِرَةِ، وَالْفَوْزَ بِالْجَنَّةِ، وَالنَّجَاةَ مِنَ النَّارِ"
                                     android:textAlignment="gravity"
                                     android:textColor="@color/black"
                                     android:textSize="24dp" />
@@ -124,9 +123,21 @@
                                     android:layout_height="wrap_content"
                                     android:lineSpacingExtra="2dp"
                                     android:paddingBottom="10dp"
-                                    android:text="Maha suci Allah, segala puji bagi Allah, sagala puji bagi Allah, tidak ada Tuhan selain Allah, Allah Maha Besar Tiada daya (untuk memperoleh manfaat) dan tiada kemampuan (untuk menolak bahaya) kecuali dengan pertolongan Allah Yang Maha Mulia dan Maha Agung. Shalawat dan salam bagi Rasulullah Saw. Ya Allah, aku thawaf ini karena beriman kepada-Mu membenarkan kitab-Mu dan memenuhi janji-Mu dan mengikuti sunnah Nabi-Mu, Muhammad Saw. Ya Allah sesungguhnya aku mohon kepada-Mu ampunan, kesehatan, dan perlindungan yang kekal dalam menjalankan agama, di dunia dan akhirat dan beruntung memperoleh surga dan terhindar dari siksa neraka."
                                     android:textAlignment="gravity"
                                     android:textColor="@color/black" />
+
+                                <Button
+                                    android:id="@+id/btnTerjemah"
+                                    android:textColor="@color/white"
+                                    android:text="@string/terjemahan"
+                                    android:layout_gravity="end"
+                                    android:layout_marginRight="5dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:textAllCaps="false"
+                                    android:background="@drawable/button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    />
                             </LinearLayout>
                         </ScrollView>
                     </LinearLayout>
