@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="salam.gohajj.id.menu.edit_profile">
+    tools:context="salam.gohajj.custom.menu.setting">
 
     <!--<android.support.design.widget.AppBarLayout-->
         <!--android:layout_width="match_parent"-->
@@ -19,9 +19,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.gohajj.id.salam.gohajj.id.menu.edit_profile">
+        tools:context="salam.gohajj.custom.menu.setting">
 
-        <include layout="@layout/footer" />
         <include layout="@layout/header2"/>
 
         <RelativeLayout
@@ -243,6 +242,42 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/txttpilihtema"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border"
+                            android:padding="10dp"
+                            android:weightSum="1">
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:padding="5dp"
+                                android:src="@drawable/syarat"
+                                android:background="@drawable/circle"  />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="0.85"
+                                android:padding="10dp"
+                                android:text="Pilih Tema"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="0.15"
+                                android:paddingBottom="7dp"
+                                android:paddingTop="7dp"
+                                android:src="@drawable/arrow_right" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/txtbantuan"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -365,5 +400,9 @@
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>
+
+
+        <include layout="@layout/footer"/>
+        <include layout="@layout/floating_menu"/>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

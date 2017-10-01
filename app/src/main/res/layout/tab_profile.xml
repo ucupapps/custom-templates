@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="salam.gohajj.custom.menu.profile">
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+            <!--<include layout="@layout/header"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.gohajj.id.salam.gohajj.custom.menu.profile" >
+
+        <include layout="@layout/footer"
+            android:visibility="gone"/>
+        <include layout="@layout/header"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
+            android:gravity="center" >
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".sample.input">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtkoneksi"
+        android:visibility="gone"
+        android:text="@string/tidak_ada_koneksi"
+        android:padding="4dp"
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_black"/>
+<LinearLayout
+    android:id="@+id/konten"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:background="@color/colorSilver"
+    android:orientation="vertical">
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageProfile"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:paddingTop="5dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle_green"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:padding="5dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:id="@+id/name"
+        android:textSize="20dp"
+        android:layout_marginBottom="5dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:textSize="18dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/emailProfile"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_paspor"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:textSize="18dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/passport"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/phone"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/alamat"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/address"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/kota"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/town"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/provinsi"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/province"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/agen_perjalanan"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imageAgentProfile"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#e1e1e1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" "
+                android:textSize="18dp"
+                android:id="@+id/travel_agent"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone_agen_perjalanan"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/travel_agent_phone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nama_pemimpin"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imagePemimpinProfile"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#e1e1e1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" "
+                android:textSize="18dp"
+                android:id="@+id/pemimpin"/>
+
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center"-->
+            <!--android:visibility="gone"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textSize="12dp"-->
+            <!--android:padding="2dp"-->
+            <!--android:text="Berikan Penilaian"-->
+            <!--android:background="@drawable/button_green"-->
+            <!--android:textColor="#FFF"-->
+            <!--android:id="@+id/btnpemimpin" />-->
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone_pemimpin"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pemimpin_phone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nama_pembimbing"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imagePembimbingProfile"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#e1e1e1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" "
+                android:textSize="18dp"
+                android:id="@+id/pembimbing"/>
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:gravity="center"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:visibility="gone"-->
+                <!--android:textAllCaps="false"-->
+                <!--android:padding="2dp"-->
+                <!--android:textSize="12dp"-->
+                <!--android:text="Berikan Penilaian"-->
+                <!--android:background="@drawable/button_green"-->
+                <!--android:textColor="#FFF"-->
+                <!--android:id="@+id/btnpembimbing" />-->
+        </LinearLayout>
+
+   </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone_pembimbing"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pembimbing_phone"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone_keluarga1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pFamily1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email_keluarga1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/eFamily1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone_keluarga2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pFamily2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email_keluarga2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/eFamily2"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/no_phone_keluarga3"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/pFamily3"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/border"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email_keluarga3"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:textSize="18dp"
+            android:id="@+id/eFamily3"/>
+    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/border"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hotel di Mekkah:"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=" "-->
+            <!--android:textSize="18dp"-->
+            <!--android:id="@+id/hotel_mekkah"/>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/border"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Hotel di Madinah:"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:padding="4dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=" "-->
+            <!--android:textSize="18dp"-->
+            <!--android:id="@+id/hotel_madinah"/>-->
+    <!--</LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:weightSum="1"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="30dp"
+            android:layout_margin="20dp"
+            android:textAllCaps="false"
+            android:text="@string/ubah"
+            android:background="@drawable/button"
+            android:textColor="#FFF"
+            android:id="@+id/buttonAdd" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:textAllCaps="false"
+            android:layout_margin="20dp"
+            android:layout_height="30dp"
+            android:text="@string/logout"
+            android:background="@drawable/button_red"
+            android:textColor="#FFF"
+            android:id="@+id/buttonLogout" />
+
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>
+        </RelativeLayout>
+        </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

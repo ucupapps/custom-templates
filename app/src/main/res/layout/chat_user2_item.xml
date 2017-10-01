@@ -6,7 +6,7 @@
     android:paddingBottom="5dp"
     android:paddingTop="5dp">
 
-    <salam.gohajj.id.chat.ChatLayout
+    <salam.gohajj.custom.chat.ChatLayout
         android:layout_marginLeft="20dp"
         android:layout_width="wrap_content" android:id="@+id/bubble" android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
         android:layout_height="wrap_content" android:background="@drawable/balloon_outgoing_normal">
@@ -54,5 +54,5 @@
 
 
 
-    </salam.gohajj.id.chat.ChatLayout>
+    </salam.gohajj.custom.chat.ChatLayout>
 </RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="salam.gohajj.id.activity.MainActivity">
+    tools:context="salam.gohajj.custom.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,48 +13,49 @@
         android:id="@+id/toolbar"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-         <include layout="@layout/header"/>
-   </android.support.design.widget.AppBarLayout>
+        <include layout="@layout/header"/>
+    </android.support.design.widget.AppBarLayout>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:circle="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.gohajj.id.salam.gohajj.id.activity.MainActivity" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.gohajj.id.salam.gohajj.custom.activity.MainActivity" >
 
 
-    <RelativeLayout
-        android:layout_alignBottom="@+id/footer"
-        android:id="@+id/circle_menu"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/footer"
-        android:gravity="center" >
-        <com.szugyi.circlemenu.view.CircleLayout
-            android:id="@+id/circle_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            circle:isRotating="false"
-            circle:radius="100dp">
+        <RelativeLayout
+            android:layout_alignBottom="@+id/footer"
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/footer"
+            android:gravity="center" >
+            <com.szugyi.circlemenu.view.CircleLayout
+                android:id="@+id/circle_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                circle:isRotating="false"
+                circle:radius="100dp">
 
-            <include layout="@layout/menu_items" />
-        </com.szugyi.circlemenu.view.CircleLayout>
+                <include layout="@layout/menu_items" />
+            </com.szugyi.circlemenu.view.CircleLayout>
 
-        <ImageView
-            android:id="@+id/img_center_thawaf"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_centerInParent="true"
-            android:scaleType="centerInside"
-            android:background="@drawable/logo_apps"
-            android:clickable="true"
-            android:padding="17dp"
-            tools:clickable="true"
-            tools:ignore="ContentDescription" />
+            <ImageView
+                android:id="@+id/img_center_thawaf"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerInside"
+                android:background="@drawable/logo_apps"
+                android:clickable="true"
+                android:padding="17dp"
+                tools:clickable="true"
+                tools:ignore="ContentDescription"
+                android:visibility="gone"/>
 
-        <!--<Button-->
+            <!--<Button-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="CLICK FOR SIMPLE VIEW"-->
@@ -67,8 +68,8 @@
             <!--android:layout_marginRight="40dp"-->
             <!--android:layout_alignParentBottom="true"-->
             <!--android:layout_centerHorizontal="true" />-->
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <include layout="@layout/footer"/>
-</RelativeLayout>
+        <include layout="@layout/footer"/>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

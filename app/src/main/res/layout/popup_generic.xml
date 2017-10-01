@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_login"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="salam.gohajj.custom.GenericPopup">
+
+    <RelativeLayout
+        android:id="@+id/rel_popup1"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        >
+
+        <TextView
+            android:id="@+id/popup_generic_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="generic title"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/popup_generic_image"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_below="@id/popup_generic_title"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/circle_green"/>
+
+        <TextView
+            android:id="@+id/popup_generic_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="description"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_below="@id/popup_generic_image"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ok_button"
+            android:visibility="visible"
+            android:layout_below="@id/popup_generic_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:visibility="visible"
+                android:id="@+id/popup_generic_btn_ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OK"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/btn_login"
+                android:textColor="#FFF"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/confirm_button"
+            android:layout_below="@id/popup_generic_desc"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/popup_confirm_btn_yes"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Ya"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_green"
+                android:textColor="#FFF"
+                />
+
+            <Button
+                android:id="@+id/popup_confirm_btn_no"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Tidak"
+                android:layout_below="@id/popup_confirm_btn_yes"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/button_green"
+                android:textColor="#FFF"
+                />
+
+
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_below="@id/confirm_button"
+            android:layout_marginTop="20dp"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="salam.gohajj.id.menu.panduan">
+    tools:context="salam.gohajj.custom.menu.panduan">
 
     <!--<android.support.design.widget.AppBarLayout-->
         <!--android:layout_width="match_parent"-->
@@ -26,10 +26,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.gohajj.id.salam.gohajj.id.menu.panduan" >
+        tools:context="salam.gohajj.custom.menu.panduan" >
 
         <include layout="@layout/header"/>
-        <include layout="@layout/footer"/>
 
         <RelativeLayout
             android:id="@+id/circle_menu"
@@ -59,6 +58,7 @@
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/button_black"/>
                 <LinearLayout
+                    android:id="@+id/lin_place1"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="1"
@@ -131,6 +131,7 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/lin_place2"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="1"
@@ -202,8 +203,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
-
                 <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
@@ -229,5 +228,7 @@
             </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
+        <include layout="@layout/footer"/>
+        <include layout="@layout/floating_menu"/>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

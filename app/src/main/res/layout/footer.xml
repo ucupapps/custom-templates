@@ -7,6 +7,7 @@
     android:layout_alignParentBottom="true"
     android:gravity="center" >
     <LinearLayout
+        android:id="@+id/menufooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="salam.gohajj.id.menu.TitipanDoa">
+    tools:context="salam.gohajj.custom.menu.TitipanDoa">
 
     <!--<android.support.design.widget.AppBarLayout-->
         <!--android:layout_width="match_parent"-->
@@ -20,7 +20,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.gohajj.id.salam.gohajj.id.menu.TitipanDoa" >
+        tools:context="salam.gohajj.custom.menu.TitipanDoa" >
 
         <include layout="@layout/footer"/>
         <include layout="@layout/header"/>
@@ -170,7 +170,7 @@
                     android:layout_height="30dp"
                     />
                 </LinearLayout>
-                    <salam.gohajj.id.menu.NonScrollListView
+                    <salam.gohajj.custom.menu.NonScrollListView
                         android:id="@+id/listView"
                         android:background="@color/white"
                         android:layout_width="fill_parent"

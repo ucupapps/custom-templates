@@ -20,6 +20,9 @@
         android:id="@+id/syarat"
         android:title="Syarat dan Ketentuan"/>
     <item
+        android:id="@+id/templates"
+        android:title="Templates"/>
+    <item
         android:id="@+id/logout"
         android:title="Logout"/>
 </menu>
