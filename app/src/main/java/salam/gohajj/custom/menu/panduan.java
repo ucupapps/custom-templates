@@ -783,6 +783,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             headerButton();
             floatingMenu();
             updateTime();
+            footerMenu();
             getWeather();
             floatingMenu.setVisibility(View.GONE);
         }else if(getpref.equals(Interfaces.TEMPLATE_3)){
@@ -828,8 +829,13 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         });
     }
     public void footerMenu(){
+        if(getpref.equals(Interfaces.TEMPLATE_1)) {
+            footerMenu.setVisibility(View.VISIBLE);
+
+        }else {
         floatingMenu.setVisibility(View.GONE);
         footerMenu.setVisibility(View.VISIBLE);
+        }
         // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
@@ -847,6 +853,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
                 startActivity(i);
+
             }
         });
         menu_panduan.setOnClickListener(new View.OnClickListener() {
