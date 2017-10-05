@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="salam.gohajj.custom.menu.TitipanDoa">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/header_v3"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.gohajj.id.salam.gohajj.custom.menu.TitipanDoa"
+        android:layout_below="@+id/toolbar">
+
+        <include layout="@layout/footer"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/footer"
+            android:layout_below="@id/header"
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtkoneksi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_black"
+                    android:padding="4dp"
+                    android:text="@string/masjid"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/linearPintu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:weightSum="1"
+                    tools:context=".sample.input">
+
+                    <ImageView
+                        android:id="@+id/cameraPintu"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:layout_weight="0.5"
+                        android:src="@drawable/camera" />
+
+                    <EditText
+                        android:id="@+id/captionPintu"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="top"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0.25"
+                        android:background="#f7f6f6"
+                        android:ems="100"
+                        android:gravity="top"
+                        android:hint="@string/hint_no_pintu"
+                        android:inputType="textMultiLine"
+                        android:padding="5dp"
+                        android:textColorHint="#d4d4d4"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="0.25"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/buttonSimpanPintu"
+                            android:layout_width="100dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/button_purple"
+                            android:padding="10dp"
+                            android:text="@string/simpan"
+                            android:textAllCaps="false"
+                            android:textColor="#FFF" />
+
+                        <Button
+                            android:id="@+id/buttonCancelPintu"
+                            android:layout_width="100dp"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/button_red"
+                            android:padding="10dp"
+                            android:text="@string/batal"
+                            android:textAllCaps="false"
+                            android:textColor="#FFF" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

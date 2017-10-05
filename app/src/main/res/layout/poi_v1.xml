@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="salam.gohajj.custom.menu.TitipanDoa">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+            android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp"-->
+            <!--app:popupTheme="@style/AppTheme.PopupOverlay" >-->
+            <include layout="@layout/header_v1"/>
+        <!--</android.support.v7.widget.Toolbar>-->
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.gohajj.id.salam.gohajj.custom.menu.TitipanDoa"
+        android:layout_below="@+id/toolbar">
+
+        <include layout="@layout/footer"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/footer"
+            android:layout_centerInParent="true"
+            android:background="@color/colorSilver"
+            android:gravity="center">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1"
+                tools:context=".sample.input">
+
+                <TextView
+                    android:id="@+id/txtkoneksi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button_black"
+                    android:padding="4dp"
+                    android:text=" Tidak ada koneksi internet. Cek jaringan anda"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txtJudul"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:background="@drawable/button_black"
+                    android:text="@string/lokasi_menarik"
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        app:tabBackground="@drawable/tab_selector"
+                        app:tabGravity="fill"
+                        app:tabMode="fixed"
+                        app:tabSelectedTextColor="@color/white"
+                        app:tabTextAppearance="@style/MineCustomTabText"
+                        circle:tabIndicatorHeight="0dp" />
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

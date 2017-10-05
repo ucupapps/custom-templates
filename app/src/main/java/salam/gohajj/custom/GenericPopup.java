@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import salam.gohajj.custom.activity.Utilities;
 import salam.gohajj.custom.menu.panduan;
 
 /**
@@ -33,7 +32,7 @@ public class GenericPopup {
     public static int EDIT_BUTTON = -2;
     public static int CONFIRM_BUTTON =-3;
     private static String id_pref;
-    public static void Init (final Activity activity, final String tittle, String description, int imageResourceID)
+    public static void Init (final Activity activity, final String tittle, final String description, int imageResourceID)
     {
         _activity   = activity;
         _context    = ((Context) activity).getApplicationContext();
@@ -51,9 +50,8 @@ public class GenericPopup {
         rel_popup1       = (RelativeLayout)_dialog.findViewById(R.id.rel_popup1);
         ivImage          = (ImageView) _dialog.findViewById(R.id.popup_generic_image);
 
-        String getpref = Utilities.getPref("id_pref", _activity);
-        btnYes.setBackground(_activity.getResources().getDrawable(GetTemplates.GetHeaderTemplates(getpref)));
-        btnNo.setBackground(_activity.getResources().getDrawable(GetTemplates.GetHeaderTemplates(getpref)));
+        btnYes.setBackground(_activity.getResources().getDrawable(GetTemplates.GetButtonTemplates(_activity)));
+        btnNo.setBackground(_activity.getResources().getDrawable(GetTemplates.GetButtonTemplates(_activity)));
         tvTitle.setText(tittle);
         tvDesc.setText(description);
         if (tittle.equals("")){ tvTitle.setVisibility(View.GONE);}
@@ -77,7 +75,7 @@ public class GenericPopup {
         }
 
         btOk        = (Button) _dialog.findViewById(R.id.popup_generic_btn_ok);
-        btOk.setBackground(_activity.getResources().getDrawable(GetTemplates.GetHeaderTemplates(getpref)));
+        btOk.setBackground(_activity.getResources().getDrawable(GetTemplates.GetHeaderTemplates(_activity)));
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,34 +83,37 @@ public class GenericPopup {
             }
         });
 
+//        btnYes.setText(_activity.getResources().getString(R.string.ya));
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tittle.contains("Konfirmasi !") && getId_pref().equals(Interfaces.TEMPLATE_DEFAULT)){
+                if (tittle.contains(_activity.getResources().getString(R.string.konfirmasi))&&description.contains(_activity.getResources().getString(R.string.konfirmasi_tema)) && getId_pref().equals(Interfaces.TEMPLATE_DEFAULT)){
 
                     Intent i = new Intent(_activity, panduan.class);
                     Utilities.putPref("id_pref", Interfaces.TEMPLATE_DEFAULT, _activity);
                     _activity.startActivity(i);
-                }else if (tittle.contains("Konfirmasi !") && getId_pref().equals(Interfaces.TEMPLATE_1)){
+                }else if (tittle.contains(_activity.getResources().getString(R.string.konfirmasi))&&description.contains(_activity.getResources().getString(R.string.konfirmasi_tema)) && getId_pref().equals(Interfaces.TEMPLATE_1)){
 
                     Intent i = new Intent(_activity, panduan.class);
                     Utilities.putPref("id_pref", Interfaces.TEMPLATE_1, _activity);
                     _activity.startActivity(i);
-                }else if (tittle.contains("Konfirmasi !") && getId_pref().equals(Interfaces.TEMPLATE_2)){
+                }else if (tittle.contains(_activity.getResources().getString(R.string.konfirmasi))&&description.contains(_activity.getResources().getString(R.string.konfirmasi_tema)) && getId_pref().equals(Interfaces.TEMPLATE_2)){
 
                     Intent i = new Intent(_activity, panduan.class);
                     Utilities.putPref("id_pref", Interfaces.TEMPLATE_2, _activity);
                     _activity.startActivity(i);
-                }else if (tittle.contains("Konfirmasi !") && getId_pref().equals(Interfaces.TEMPLATE_3)){
+                }else if (tittle.contains(_activity.getResources().getString(R.string.konfirmasi))&&description.contains(_activity.getResources().getString(R.string.konfirmasi_tema)) && getId_pref().equals(Interfaces.TEMPLATE_3)){
 
                     Intent i = new Intent(_activity, panduan.class);
                     Utilities.putPref("id_pref", Interfaces.TEMPLATE_3, _activity);
                     _activity.startActivity(i);
-                }else if (tittle.contains("Konfirmasi !") && getId_pref().equals(Interfaces.TEMPLATE_4)){
+                }else if (tittle.contains(_activity.getResources().getString(R.string.konfirmasi))&&description.contains(_activity.getResources().getString(R.string.konfirmasi_tema)) && getId_pref().equals(Interfaces.TEMPLATE_4)){
 
                     Intent i = new Intent(_activity, panduan.class);
                     Utilities.putPref("id_pref", Interfaces.TEMPLATE_4, _activity);
                     _activity.startActivity(i);
+                }else if (tittle.contains(_activity.getResources().getString(R.string.keluar))&&description.contains(_activity.getResources().getString(R.string.konfirmasi_keluar))){
+                    _activity.finishAffinity();
                 }
                 else if (tittle.contains("Anda yakin mau membatalkan?"))
                 {
@@ -123,14 +124,11 @@ public class GenericPopup {
             }
         });
 
+//        btnNo.setText(_activity.getResources().getString(R.string.tidak));
         btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (tittle.contains("Apakah Anda ingin keluar?")) {
-                    _activity.finish();
-                 }
                 Hide();
-
             }
         });
 

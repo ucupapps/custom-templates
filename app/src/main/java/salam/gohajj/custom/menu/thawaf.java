@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.R;
 import salam.gohajj.custom.app.AppConfig;
 import salam.gohajj.custom.app.AppController;
@@ -74,10 +77,15 @@ public class thawaf extends AppCompatActivity implements
     ProgressDialog pd;
     LinearLayout menu_play,menu_next,menu_back,judul,isi,vplay;
     private Tracker mTracker;
+    private Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.thawaf);
+        activity = this;
+        GetTemplates.GetStatusBar(activity);
+        final RelativeLayout rel_header = (RelativeLayout) findViewById(R.id.header2);
+        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(activity)));
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 

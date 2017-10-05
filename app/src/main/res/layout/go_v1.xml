@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="salam.gohajj.custom.menu.edit_profile">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    <include layout="@layout/header_v1"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.gohajj.id.salam.gohajj.custom.menu.edit_profile" >
+
+        <include layout="@layout/footer"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/footer"
+            android:gravity="center" >
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:paddingTop="110dp"
+    android:background="@color/colorSilver"
+     tools:context=".sample.input"
+    android:weightSum="1">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:padding="3dp"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:text=" "
+        android:background="@drawable/button_black"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/txtpesan" />
+
+
+            <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+                <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
+                <!--xmlns:tools="http://schemas.android.com/tools"-->
+                <!--android:id="@+id/map"-->
+                <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:padding="4dp"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="0.95"-->
+                <!--tools:context=".menu.emergency" />-->
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/container_toolbar">
+        <fragment
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="com.sample.sishin.maplocation.MapsActivity" />
+        <LinearLayout
+            android:id="@+id/locationMarker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="vertical" >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textAllCaps="false"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:text="@string/arah_ke_maps"
+                android:textColor="#FFF"
+                android:background="@drawable/button"
+                android:id="@+id/btnArahkan" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:visibility="gone"
+        android:id="@+id/userid" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:visibility="gone"
+        android:id="@+id/lat" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:visibility="gone"
+        android:id="@+id/lng" />
+</LinearLayout>
+        </RelativeLayout>
+        </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

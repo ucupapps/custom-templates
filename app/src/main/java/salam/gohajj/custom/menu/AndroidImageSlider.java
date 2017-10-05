@@ -30,7 +30,7 @@ public class AndroidImageSlider extends AppCompatActivity {
             tombol.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    GenericPopup.Init(mActivity, "Konfirmasi !", "Yakin ingin mengganti tema?", GenericPopup.CONFIRM_BUTTON);
+                    GenericPopup.Init(mActivity, getResources().getString(R.string.konfirmasi), getResources().getString(R.string.konfirmasi_tema), GenericPopup.CONFIRM_BUTTON);
                     GenericPopup.Show();
                 }
             });

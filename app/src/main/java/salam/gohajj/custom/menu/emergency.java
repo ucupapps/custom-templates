@@ -1,6 +1,7 @@
 package salam.gohajj.custom.menu;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -38,10 +39,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.AppUtils;
 import salam.gohajj.custom.activity.FetchAddressIntentService;
 import salam.gohajj.custom.activity.LoginActivity;
@@ -130,12 +135,19 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
     static final Integer READ_EXST = 0x4;
 
     private SQLiteDatabase database;
+    private Activity activity;
+    private String getpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency);
+        activity = this;
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getpref = Utilities.getPref("id_pref",activity)!=null? Utilities.getPref("id_pref",activity):"";
+        GetTemplates.GetStatusBar(activity);
+        final RelativeLayout rel_header = (RelativeLayout) findViewById(R.id.header2);
+        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(activity)));
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
@@ -203,6 +215,10 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         txtsetLocation = (TextView) findViewById(R.id.setLocation);
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);

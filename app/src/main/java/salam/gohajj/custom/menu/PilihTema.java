@@ -34,8 +34,7 @@ public class PilihTema extends AppCompatActivity implements View.OnClickListener
         activity = this;
         setContentView(R.layout.content_main);
         final RelativeLayout rel_header = (RelativeLayout) findViewById(R.id.header2);
-        String getpref = Utilities.getPref("id_pref",activity)!=null? Utilities.getPref("id_pref",activity):"";
-        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(getpref)));
+        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(activity)));
         GetTemplates.GetStatusBar(activity);
         ChooseMenu();
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
@@ -62,9 +61,9 @@ public class PilihTema extends AppCompatActivity implements View.OnClickListener
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), setting.class);
-                startActivity(i);
-                finish();
+                //Intent i = new Intent(getApplicationContext(), setting.class);
+                //startActivity(i);
+                //finish();
             }
         });
     }
@@ -102,7 +101,10 @@ public class PilihTema extends AppCompatActivity implements View.OnClickListener
         String getpref = Utilities.getPref("id_pref",activity)!=null? Utilities.getPref("id_pref",activity):"";
         footerMenu = (LinearLayout)findViewById(R.id.menufooter);
         floatingMenu=(FloatingActionMenu)findViewById(R.id.fabmenu);
-        if (getpref.equals(Interfaces.TEMPLATE_1)||getpref.equals(Interfaces.TEMPLATE_3)){
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+            floatingMenu.setVisibility(View.GONE);
+        }else if (getpref.equals(Interfaces.TEMPLATE_3)){
             floatingMenu();
         }else footerMenu();
 

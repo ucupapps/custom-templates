@@ -136,7 +136,6 @@ public class ProfilFragment extends Fragment implements View.OnClickListener {
         pFamily3 = (TextView) vi.findViewById(R.id.pFamily3);
         eFamily3 = (TextView) vi.findViewById(R.id.eFamily3);
 
-
         if (session.isLoggedIn()) {
             getData();
         }

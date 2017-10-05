@@ -37,6 +37,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 import salam.gohajj.custom.TabFragment.NavigasiFragment;
@@ -49,7 +50,7 @@ import salam.gohajj.custom.helper.SessionManager;
 
 public class Hotel extends AppCompatActivity implements ListView.OnItemClickListener {
 
-    private static final String TAG = "MyUser";
+    private static final String TAG = "HOTEL";
 
     private LinearLayout doaLinear;
 
@@ -74,9 +75,11 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hotel);
+        //setContentView(R.layout.hotel);
         mActivity = this;
-        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        setContentView(GetTemplates.GetHotel(mActivity));
+        GetTemplates.GetStatusBar(mActivity);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
 
@@ -508,5 +511,13 @@ public class Hotel extends AppCompatActivity implements ListView.OnItemClickList
         String lats=c.getString(2);
         String lngs=c.getString(3);
         Log.d("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
+    }
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), panduan.class);
+        panduan.setTabIndex(2);
+        startActivity(i);
+        finish();
     }
 }

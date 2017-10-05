@@ -1,5 +1,6 @@
 package salam.gohajj.custom.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +12,12 @@ import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 import salam.gohajj.custom.menu.Poi;
 import salam.gohajj.custom.app.AppConfig;
 import salam.gohajj.custom.menu.navigasi;
+import salam.gohajj.custom.menu.panduan;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,10 +33,13 @@ public class CustomListSejarah extends SimpleAdapter {
     private Button startBtn;
     private ProgressDialog mProgressDialog;
     public LayoutInflater inflater=null;
+    private String getpref;
     public CustomListSejarah(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         mContext = context;
         inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mContext)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mContext):"";
+
     }
 
     @Override
@@ -98,8 +104,14 @@ public class CustomListSejarah extends SimpleAdapter {
 //                    addDoakan(strID);
                 if(!strLatPoi.equals("null") && !strLngPoi.equals("null")){
                     Poi.insertIntoDB("POI",strLatPoi,strLngPoi);
-                    Intent intent = new Intent(mContext, navigasi.class);
-                    mContext.startActivity(intent);
+                    if (getpref.equals(Interfaces.TEMPLATE_1)){
+                        Intent intent = new Intent(mContext, panduan.class);
+                        panduan.setTabIndex(Interfaces.MENU_NAVIGASI);
+                        mContext.startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(mContext, navigasi.class);
+                        mContext.startActivity(intent);
+                    }
                 }
 //                else {
 //                    Intent intent = new Intent(getContext(), MapsActivity.class);

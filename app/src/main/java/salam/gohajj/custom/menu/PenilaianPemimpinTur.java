@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
@@ -51,10 +53,14 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
     private SQLiteHandler db;
     private SessionManager session;
     private SQLiteDatabase database;
+    private String getpref;
+    private Activity mActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.penilaian_pembimbing);
+        mActivity = this;
+        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         session = new SessionManager(getApplicationContext());
         File folder = new File("/sdcard/android/data/salam.gohajj.custom/images");
@@ -78,6 +84,10 @@ public class PenilaianPemimpinTur extends AppCompatActivity implements OnClickLi
         bullet.setTextColor(Color.WHITE);
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);

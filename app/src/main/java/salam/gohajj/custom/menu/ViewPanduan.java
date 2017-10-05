@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,7 +23,10 @@ import android.widget.Toast;
 import android.os.Handler;
 import android.os.Message;
 
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
@@ -66,15 +70,19 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
     MP_State mediaPlayerState;
 
     int numMessages = 0;
-
-
     MediaPlayer mMediaPlayer ;
     private MediaPlayer mp;
+    private Activity mActivity;
+    private String getpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_panduan);
+        //setContentView(R.layout.view_panduan);
+        mActivity = this;
+        GetTemplates.GetStatusBar(mActivity);
+        setContentView(GetTemplates.GetViewPanduan(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         //HEADER
@@ -104,6 +112,10 @@ public class ViewPanduan extends AppCompatActivity implements View.OnClickListen
         });
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);

@@ -1,11 +1,13 @@
 package salam.gohajj.custom;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by ucup on 25/08/17.
@@ -26,6 +28,10 @@ public class Utilities {
 
     public static void ShowLog(String message, String value){
         Log.e("GoHajj_Debug", message+" : "+value);
+    }
+    public static void ShowToast(Activity activity,String message){
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+
     }
 
     public static boolean cek_status(Context cek) {

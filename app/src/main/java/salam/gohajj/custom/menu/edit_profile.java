@@ -27,8 +27,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
@@ -87,12 +89,8 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_edit);
-        mActivity = this;
-        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-
+        //setContentView(R.layout.profile_edit);
+        SetContentView();
 
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
@@ -268,6 +266,15 @@ public class edit_profile extends AppCompatActivity implements OnClickListener {
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+    }
+
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetEditProfil(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
     }
 
     private void logoutUser() {

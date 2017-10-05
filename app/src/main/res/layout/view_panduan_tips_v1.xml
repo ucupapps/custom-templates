@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="salam.gohajj.custom.menu.TitipanDoa">
+
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
+
+            <!--<include layout="@layout/header"/>-->
+    <!--</android.support.design.widget.AppBarLayout>-->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:circle="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.gohajj.id.salam.gohajj.custom.menu.TitipanDoa" >
+
+        <include layout="@layout/footer"/>
+        <include layout="@layout/header_v1"/>
+
+        <RelativeLayout
+            android:id="@+id/circle_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/footer"
+            android:layout_below="@+id/header"
+            android:gravity="center" >
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                tools:context=".sample.input"
+                android:background="@color/colorSilver"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtNAME"
+                    android:padding="3dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_orange"/>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:layout_height="match_parent">
+
+                  <LinearLayout
+                      android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent">
+                      <ImageView
+                          android:id="@+id/imgview"
+                          android:layout_width="fill_parent"
+                          android:layout_gravity="center"
+                          android:layout_margin="5dp"
+                          android:scaleType="fitXY"
+                          android:layout_height="160dp"/>
+
+                    <WebView
+                        android:layout_margin="8dp"
+                        android:id="@+id/data"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+                  </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txtid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+

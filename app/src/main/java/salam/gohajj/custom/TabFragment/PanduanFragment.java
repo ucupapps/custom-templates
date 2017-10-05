@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.CustomListPanduan1;
@@ -51,11 +53,14 @@ import salam.gohajj.custom.menu.ViewPanduanTips;
 import salam.gohajj.custom.menu.ViewPanduanVideo;
 import salam.gohajj.custom.menu.ViewPanduankamus;
 import salam.gohajj.custom.menu.panduan;
+import salam.gohajj.custom.menu.panduan_umrah;
+import salam.gohajj.custom.menu.profile;
 
 
 public class PanduanFragment extends Fragment implements ListView.OnItemClickListener, AbsListView.OnScrollListener {
 
     private ListView lv_sebelumUmrah,lv_saatUmrah,lv_setelahUmrah;
+    private LinearLayout lin_sebelumUmrah,lin_saatUmrah,lin_sesudahUmrah;
     private boolean isLoading;
     private String JSON_STRING;
     private TextView jak_degree,jak_cuaca,jak_date,jak_time,mek_degree,mek_cuaca,mek_date,mek_time;
@@ -106,10 +111,48 @@ public class PanduanFragment extends Fragment implements ListView.OnItemClickLis
         txtid=(TextView) vi.findViewById(R.id.txtid);
         isLoading=false;
         lv_sebelumUmrah.setOnScrollListener(this);
-        getJSON("Sebelum umrah");
-        scrl=1;
+//        getJSON("Sebelum umrah");
+//        scrl=1;
         //getJSON("Saat umrah");
         //getJSON("Setelah umrah");
+
+
+
+
+        lv_sebelumUmrah.setVisibility(View.GONE);
+        lin_sebelumUmrah = (LinearLayout)vi.findViewById(R.id.lin_sebelum_umrah);
+        lin_saatUmrah = (LinearLayout)vi.findViewById(R.id.lin_saat_umrah);
+        lin_sesudahUmrah = (LinearLayout)vi.findViewById(R.id.lin_sesudah_umrah);
+
+        Utilities.putPref(Interfaces.PANDUAN_UMRAH,Interfaces.STRING_DEFAULT,getContext());
+
+        lin_sebelumUmrah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), panduan_umrah.class);
+                Utilities.putPref(Interfaces.PANDUAN_UMRAH,Interfaces.SEBELUM_UMRAH,getContext());
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
+        lin_saatUmrah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), panduan_umrah.class);
+                Utilities.putPref(Interfaces.PANDUAN_UMRAH,Interfaces.SAAT_UMRAH,getContext());
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
+        lin_sesudahUmrah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), panduan_umrah.class);
+                Utilities.putPref(Interfaces.PANDUAN_UMRAH,Interfaces.SESUDAH_UMRAH,getContext());
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
         return vi;
     }
 

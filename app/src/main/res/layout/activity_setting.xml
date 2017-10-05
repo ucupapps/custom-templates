@@ -253,7 +253,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:padding="5dp"
-                                android:src="@drawable/syarat"
+                                android:src="@drawable/theme"
                                 android:background="@drawable/circle"  />
 
                             <TextView
@@ -263,7 +263,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="0.85"
                                 android:padding="10dp"
-                                android:text="Pilih Tema"
+                                android:text="@string/pilih_tema"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
 

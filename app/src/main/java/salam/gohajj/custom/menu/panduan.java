@@ -5,20 +5,18 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -26,9 +24,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -70,6 +68,7 @@ import java.util.TimeZone;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import salam.gohajj.custom.GenericPopup;
 import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
@@ -110,12 +109,13 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //            Manifest.permission.RECORD_AUDIO,
     };
     private Tracker mTracker;
+    boolean doubleBackToExitPressedOnce = false;
     View target ;
     BadgeView badge ;
     private SQLiteDatabase database;
     static final Integer READ_EXST = 0x4;
     private String getpref;
-    private LinearLayout footerMenu, place1, place2;
+    private LinearLayout gohajjMenu, place1, place2;
     private FloatingActionMenu floatingMenu;
 
     public static int getTabIndex() {
@@ -129,14 +129,12 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.panduan);
-        mActivity = this;
-        getpref = Utilities.getPref("id_pref",mActivity)!=null?Utilities.getPref("id_pref",mActivity):"";
+        //setContentView
+        SetContentView();
+
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         String query = "INSERT INTO loader (status) VALUES(1);";
         database.execSQL(query);
-        setContentView(GetTemplates.ChooseTemplates(getpref));
-        GetTemplates.GetStatusBar(mActivity);
         ChooseTemplate();
 
         if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
@@ -160,10 +158,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         uid = user.get("uid");
         session = new SessionManager(getApplicationContext());
 
-        //end
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-
         //useri mage
         CircleImageView imgp = (CircleImageView) findViewById(R.id.img_profile);
         File file = new File("/sdcard/android/data/salam.gohajj.custom/images/"+uid+".png");
@@ -174,52 +168,10 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             imgp.setImageBitmap(bmp);
         }
 
-//        //HEADER
-//        TextView txt_emergency=(TextView) findViewById(R.id.txt_emergency);
-//        TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
-//        TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
-//
-//        txt_thowaf.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), thawaf.class);
-//                startActivity(i);
-//            }
-//        });
-//        txt_sai.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), sai.class);
-//                startActivity(i);
-//            }
-//        });
-//        txt_emergency.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), emergency.class);
-//                startActivity(i);
-//            }
-//        });
-//
-//        // FOOTER
-//        LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
-//        TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
-//        LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
-//        TextView txt_doa=(TextView) findViewById(R.id.txt_doa);
-//        LinearLayout menu_navigasi=(LinearLayout) findViewById(R.id.menu_navigasi);
-//        TextView txt_navigasi=(TextView) findViewById(R.id.txt_emergency);
-//        LinearLayout menu_profile=(LinearLayout) findViewById(R.id.menu_profile);
-//        TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
-//        LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
-//        TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
-
-
         ImageView img = (ImageView) findViewById(R.id.img_panduan);
         img.setBackgroundResource(R.drawable.circle_green_active);
         img.setPadding(22,22,22,22);
         img.setImageDrawable(getResources().getDrawable(R.drawable.panduan_active));
-
-
 
         ImageView rankBtn = (ImageView) findViewById(R.id.img_center);
 //        rankBtn.setOnClickListener(new View.OnClickListener() {
@@ -268,14 +220,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         if (getpref.equals(Interfaces.TEMPLATE_1)){
-//            for (int i = 0; i < tabLayout.getTabCount();i++){
-//                tabLayout.getTabAt(0);
-//                tabLayout.getTabAt(1);
-//                tabLayout.getTabAt(2);
-//                tabLayout.getTabAt(3);
-//                tabLayout.getTabAt(4);
-//            }
-
             tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
@@ -403,6 +347,14 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 //        asyncTask2.execute("21.4267", "39.8261");
 
     }
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetPanduanTemplates(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
+    }
 
     private void sendScreenImageName(String name) {
         // [START screen_view_hit]
@@ -506,10 +458,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             adapter.addFragment(new NavigasiFragment(), "");
             adapter.addFragment(new InboxFragment(), "");
             adapter.addFragment(new ProfilFragment(), "");
-//            adapter.addFragment(new NavigationFragment(), getResources().getString(R.string.sesudah_umrah));
-//            adapter.addFragment(new InboxFragment(), getResources().getString(R.string.sesudah_umrah));
-//            adapter.addFragment(new ProfileFragment(), getResources().getString(R.string.sesudah_umrah));
-//            adapter.addFragment(new SosFragment(), getResources().getString(R.string.sesudah_umrah));
         }else {
             adapter.addFragment(new OneFragment(), getResources().getString(R.string.sebelum_umrah));
             adapter.addFragment(new TwoFragment(), getResources().getString(R.string.saat_umrah));
@@ -729,7 +677,6 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         final String strID = map.get(AppConfig.TAG_ID).toString();
         final TextView txtaudio = (TextView)view.findViewById(R.id.txtAudio);
         final String audio = txtaudio.getText().toString().trim();
-//        Toast.makeText(getApplicationContext(),audio, Toast.LENGTH_LONG).show();
         if(audio.equals("FALSE")){
             txtid.setText(strID);
             startDownload(strID);
@@ -776,14 +723,14 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     public void ChooseTemplate(){
         place1 = (LinearLayout)findViewById(R.id.lin_place1);
         place2 = (LinearLayout)findViewById(R.id.lin_place2);
-        footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        gohajjMenu = (LinearLayout)findViewById(R.id.menufooter);
         floatingMenu=(FloatingActionMenu)findViewById(R.id.fabmenu);
         Utilities.ShowLog("pref",getpref);
         if (getpref.equals(Interfaces.TEMPLATE_1)){
             headerButton();
             floatingMenu();
             updateTime();
-            footerMenu();
+            gohajjMenu();
             getWeather();
             floatingMenu.setVisibility(View.GONE);
         }else if(getpref.equals(Interfaces.TEMPLATE_3)){
@@ -792,7 +739,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             getWeather();
             headerButton();
         }else {
-            footerMenu();
+            gohajjMenu();
             updateTime();
             getWeather();
             headerButton();
@@ -828,14 +775,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
         });
     }
-    public void footerMenu(){
-        if(getpref.equals(Interfaces.TEMPLATE_1)) {
-            footerMenu.setVisibility(View.VISIBLE);
-
-        }else {
-        floatingMenu.setVisibility(View.GONE);
-        footerMenu.setVisibility(View.VISIBLE);
-        }
+    public void gohajjMenu(){
         // FOOTER
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
@@ -847,6 +787,42 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         TextView txt_profile=(TextView) findViewById(R.id.txt_profile);
         LinearLayout menu_inbox=(LinearLayout) findViewById(R.id.menu_inbox);
         TextView txt_inbox=(TextView) findViewById(R.id.txt_inbox);
+        if(getpref.equals(Interfaces.TEMPLATE_1)) {
+            gohajjMenu.setVisibility(View.VISIBLE);
+            menu_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tabLayout.getTabAt(4).select();
+                }
+            });
+            menu_panduan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tabLayout.getTabAt(0).select();
+                }
+            });
+            menu_doa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tabLayout.getTabAt(1).select();
+                }
+            });
+            menu_navigasi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tabLayout.getTabAt(2).select();
+                }
+            });
+            menu_inbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tabLayout.getTabAt(3).select();
+                }
+            });
+
+        }else {
+        floatingMenu.setVisibility(View.GONE);
+        gohajjMenu.setVisibility(View.VISIBLE);
 
         menu_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -884,10 +860,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
                 startActivity(i);
             }
         });
+        }
     }
 
     public void floatingMenu() {
-        footerMenu.setVisibility(View.GONE);
+        gohajjMenu.setVisibility(View.GONE);
         floatingMenu.setVisibility(View.VISIBLE);
         // New FAB
 
@@ -1023,6 +1000,34 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     @Override
     public void onResume(){
         super.onResume();
+    }
+    @Override
+    public void onBackPressed() {
+
+        if (getSupportFragmentManager()!=null) {
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                if (doubleBackToExitPressedOnce) {
+                    super.onBackPressed();
+                    finishAffinity();
+                    //GenericPopup.Init(mActivity,getResources().getString(R.string.keluar),getResources().getString(R.string.konfirmasi_keluar),GenericPopup.CONFIRM_BUTTON);
+                    //GenericPopup.Show();
+                    return;
+                }
+
+                this.doubleBackToExitPressedOnce = true;
+                Utilities.ShowToast(mActivity,getResources().getString(R.string.double_click_exit));
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce=false;
+                    }
+                }, 2000);
+            }
+        }
+
     }
 
 }

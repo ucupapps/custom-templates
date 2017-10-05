@@ -7,19 +7,30 @@
 
     <include layout="@layout/header2"/>
 
-    <TextView
-        android:id="@+id/tv_templates"
+    <LinearLayout
         android:layout_below="@id/header2"
+        android:id="@+id/lin_title_tema"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Pilih Template"
+        android:layout_gravity="center"
         android:padding="5dp"
-        android:textAlignment="center"
-        android:textColor="@color/black"/>
+        android:layout_marginTop="0.2dp"
+        android:background="@drawable/header_kanan_orange"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_templates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pilih_tema"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
     <RelativeLayout
         android:layout_above="@id/footer"
-        android:layout_below="@id/tv_templates"
+        android:layout_below="@id/lin_title_tema"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout

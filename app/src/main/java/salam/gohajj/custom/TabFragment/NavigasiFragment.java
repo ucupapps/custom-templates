@@ -61,16 +61,17 @@ import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.AppUtils;
 import salam.gohajj.custom.activity.FetchAddressIntentService;
 import salam.gohajj.custom.activity.LoginActivity;
-import salam.gohajj.custom.activity.MapsActivity;
 import salam.gohajj.custom.app.AppConfig;
 import salam.gohajj.custom.app.AppController;
 import salam.gohajj.custom.helper.SQLiteHandler;
 import salam.gohajj.custom.helper.SessionManager;
 import salam.gohajj.custom.menu.Hotel;
 import salam.gohajj.custom.menu.LihatPintuMasjid;
+import salam.gohajj.custom.menu.MapsActivity;
 import salam.gohajj.custom.menu.PintuMasjid;
 import salam.gohajj.custom.menu.Poi;
 import salam.gohajj.custom.menu.go;
+import salam.gohajj.custom.menu.panduan;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -204,15 +205,6 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         cekData("TEMPAT BERTEMU",txtbertemu);
         cekData("POI",txtpoi);
         cekMapFragment();
-        //useri mage
-//        CircleImageView imgp = (CircleImageView) vi.findViewById(R.id.img_profile);
-//        File file = new File("/sdcard/android/data/salam.gohajj.id/images/"+uid+".png");
-//        if (!file.exists()) {
-//            imgp.setImageResource(R.drawable.profile);
-//        }else{
-//            Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
-//            imgp.setImageBitmap(bmp);
-//        }
         return vi;
     }
 
@@ -235,9 +227,6 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
             //permission
             askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,READ_EXST);
         }
-//        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            checkLocationPermission();
-//        }
 
         //tracker
         AppController application = (AppController) getActivity().getApplication();
@@ -250,7 +239,6 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         phone = user.get("family_phone");
 
         database = getActivity().openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
-//        CountInbox();
 
         Intent latLong = getActivity().getIntent();
         txtlatHotel = latLong.getStringExtra("lat");
@@ -267,6 +255,7 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
             }
         }else{
             Utilities.ShowLog(TAG,"tidak aktif");
+            cekMapFragment();
         }
         buildGoogleApiClient();
         mResultReceiver = new AddressResultReceiver(new Handler());
@@ -628,20 +617,23 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         String nama=c.getString(1);
         String lats=c.getString(2);
         String lngs=c.getString(3);
-        Log.d("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
+        Log.e("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "OnMapReady");
+        Log.e(TAG, "OnMapReady");
         mMap = googleMap;
 
         mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
-                Log.d("Camera postion change" + "", cameraPosition + "");
+                Log.e("Camera postion change" + "", cameraPosition + "");
                 mCenterLatLong = cameraPosition.target;
-                mMap.clear();
+                Utilities.ShowLog("Maps",""+mMap);
+                if (mMap!=null) {
+                    mMap.clear();
+                }
 
                 try {
                     Location mLocation = new Location("");
@@ -951,7 +943,7 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         if(ActivityCompat.checkSelfPermission(getContext(), permissions[0]) == PackageManager.PERMISSION_GRANTED){
             Toast.makeText(getContext(), "Permission granted", Toast.LENGTH_SHORT).show();
             // Launching the login activity
-            Intent intent = new Intent(NavigasiFragment.this.getContext(), NavigasiFragment.class);
+            Intent intent = new Intent(getContext(), panduan.class);
             getActivity().finish();
             startActivity(intent);
         }else{
@@ -966,7 +958,6 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
                 return false;
         return true;
     }
-
 
     @Override
     public void onResume() {

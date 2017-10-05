@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 
 import salam.gohajj.custom.activity.RequestHandler;
@@ -60,11 +61,15 @@ public class download extends Activity {
     BadgeView badge ;
     private SQLiteDatabase database;
     private SQLiteHandler db;
+    private String getpref;
+    private Activity mActivity;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.download);
+        mActivity = this;
+        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
 
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -74,6 +79,10 @@ public class download extends Activity {
         CountInbox();
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);

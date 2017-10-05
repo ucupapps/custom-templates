@@ -1,6 +1,7 @@
 package salam.gohajj.custom.menu;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.CustomListPoi;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
@@ -63,6 +67,8 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private static SQLiteDatabase database;
+    private String getpref;
+    private Activity mActivity;
 
     private static final String[] requiredPermissions = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -77,9 +83,8 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.poi);
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+        //setContentView(R.layout.poi);
+        SetContentView();
         final TextView txtkoneksi= (TextView) findViewById(R.id.txtkoneksi);
         Thread th = new Thread() {
 
@@ -148,6 +153,10 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         });
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
@@ -262,6 +271,15 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
         }
     }
 
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetPoi(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
+    }
+
     private void showData(){
         JSONObject jsonObject = null;
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
@@ -360,7 +378,7 @@ public class Poi extends AppCompatActivity implements ListView.OnItemClickListen
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, GoPoi.class);
+        Intent intent = new Intent(this, panduan.class);
         HashMap<String,String> map =(HashMap)parent.getItemAtPosition(position);
         String name = map.get(AppConfig.KEY_NAME).toString();
         String lat = map.get(AppConfig.KEY_LAT).toString();

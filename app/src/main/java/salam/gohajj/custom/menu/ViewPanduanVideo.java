@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -43,7 +45,10 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
@@ -85,11 +90,17 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
     View target ;
     BadgeView badge ;
     private SQLiteDatabase database;
+    private Activity mActivity;
+    private String getpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_panduan_video);
+        //setContentView(R.layout.view_panduan_video);
+        mActivity = this;
+        GetTemplates.GetStatusBar(mActivity);
+        setContentView(GetTemplates.GetViewPanduanVideo(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         // SqLite database handler
@@ -131,6 +142,10 @@ public class ViewPanduanVideo extends AppCompatActivity implements View.OnClickL
         });
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);

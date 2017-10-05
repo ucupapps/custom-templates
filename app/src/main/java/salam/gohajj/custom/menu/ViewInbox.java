@@ -19,8 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
@@ -58,11 +60,8 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_inbox);
-        mActivity = this;
-        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+        //setContentView(R.layout.view_inbox);
+        SetContentView();
         //update
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         String query = "UPDATE badge SET jumlah=0 where id=1;";
@@ -211,6 +210,15 @@ public class ViewInbox extends AppCompatActivity implements ListView.OnItemClick
         Intent intent = getIntent();
         id = intent.getStringExtra(AppConfig.TAG_ID);
         getJSON();
+    }
+
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetInbox(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
     }
 
     private void showData(){

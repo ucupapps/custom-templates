@@ -22,8 +22,8 @@ import android.widget.TextView;
 import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
-import salam.gohajj.custom.activity.Utilities;
 import salam.gohajj.custom.helper.SQLiteHandler;
 import salam.gohajj.custom.helper.SessionManager;
 
@@ -61,9 +61,8 @@ public class setting extends AppCompatActivity {
         activity = this;
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final RelativeLayout rel_header = (RelativeLayout) findViewById(R.id.header2);
-        String getpref = Utilities.getPref("id_pref", getApplication());
         GetTemplates.GetStatusBar(activity);
-        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(getpref)));
+        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(activity)));
         //Calligrapher calligrapher=new Calligrapher(this);
         //calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         ChooseMenu();
@@ -90,9 +89,9 @@ public class setting extends AppCompatActivity {
         img_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), setting.class);
-                startActivity(i);
-                finish();
+                //Intent i = new Intent(getApplicationContext(), setting.class);
+                //startActivity(i);
+                //finish();
             }
         });
 
@@ -209,7 +208,12 @@ public class setting extends AppCompatActivity {
         String getpref = Utilities.getPref("id_pref",activity)!=null? Utilities.getPref("id_pref",activity):"";
         footerMenu = (LinearLayout)findViewById(R.id.menufooter);
         floatingMenu=(FloatingActionMenu)findViewById(R.id.fabmenu);
-        if (getpref.equals(Interfaces.TEMPLATE_1)||getpref.equals(Interfaces.TEMPLATE_3)){
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            //Floating Menu
+            footerMenu.setVisibility(View.GONE);
+            floatingMenu.setVisibility(View.GONE);
+
+        }else if (getpref.equals(Interfaces.TEMPLATE_3)){
             //Floating Menu
             footerMenu.setVisibility(View.GONE);
             floatingMenu.setVisibility(View.VISIBLE);
@@ -220,7 +224,8 @@ public class setting extends AppCompatActivity {
             FloatingActionButton fab4=(FloatingActionButton)findViewById(R.id.fabinbox);
             FloatingActionButton fab5=(FloatingActionButton)findViewById(R.id.fabprofile);
 
-        }else {
+        }
+        else {
             //Footer Menu
             floatingMenu.setVisibility(View.GONE);
             footerMenu.setVisibility(View.VISIBLE);

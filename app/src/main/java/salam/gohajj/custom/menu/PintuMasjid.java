@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
 import salam.gohajj.custom.helper.SQLiteHandler;
@@ -55,15 +59,17 @@ public class PintuMasjid extends AppCompatActivity {
     BadgeView badge ;
     private SessionManager session;
 
+    private String getpref;
+    private Activity mActivity;
     private SQLiteDatabase database,database2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pintu_masjid);
+        //setContentView(R.layout.pintu_masjid);
+        SetContentView();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+
 
         // SqLite database handler
         createDatabase();
@@ -103,7 +109,11 @@ public class PintuMasjid extends AppCompatActivity {
             }
         });
 
-// FOOTER
+        // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
@@ -203,17 +213,29 @@ public class PintuMasjid extends AppCompatActivity {
                     simpanPintu();
                     insertIntoMasjid(uid,txtCaptionPintu.getText().toString());
                     Toast.makeText(PintuMasjid.this, getResources().getString(R.string.simpan_berhasil), Toast.LENGTH_LONG).show();
-                    Intent j = new Intent(getApplicationContext(), navigasi.class);
-                    startActivity(j);
+                    if (getpref.equals(Interfaces.TEMPLATE_1)){
+                        Intent j = new Intent(getApplicationContext(), panduan.class);
+                        panduan.setTabIndex(Interfaces.MENU_NAVIGASI);
+                        startActivity(j);
+                    }else {
+                        Intent j = new Intent(getApplicationContext(), navigasi.class);
+                        startActivity(j);
+                    }
                 }
             }
         });
         buttonBatal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), navigasi.class);
-                startActivity(i);
-                finish();
+                if (getpref.equals(Interfaces.TEMPLATE_1)){
+                    Intent j = new Intent(getApplicationContext(), panduan.class);
+                    panduan.setTabIndex(Interfaces.MENU_NAVIGASI);
+                    startActivity(j);
+                }else {
+                    Intent i = new Intent(getApplicationContext(), navigasi.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
         image.setOnClickListener(new View.OnClickListener() {
@@ -232,6 +254,15 @@ public class PintuMasjid extends AppCompatActivity {
 //            image.setImageBitmap(bmp);
 //        }
 
+    }
+
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetPintuMasjid(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
     }
 
     @Override

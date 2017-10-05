@@ -8,16 +8,18 @@
       android:startColor="#f8994d"
       android:endColor="#fec978" />
 
-  <!-- view border color and width -->
+  <stroke
+      android:width="0dp"
+      android:color="#f8994d" />
 
   <!-- If you want to add some padding -->
-  <!--<padding-->
-      <!--android:bottom="2dp"-->
-      <!--android:left="4dp"-->
-      <!--android:right="4dp"-->
-      <!--android:top="2dp" />-->
+  <padding
+      android:bottom="2dp"
+      android:left="4dp"
+      android:right="4dp"
+      android:top="2dp" />
 
   <!-- Here is the corner radius -->
-  <!--<corners android:radius="4dp" />-->
+  <corners android:radius="4dp" />
 
 </shape>

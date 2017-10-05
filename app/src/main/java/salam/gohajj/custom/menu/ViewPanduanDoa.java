@@ -27,16 +27,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.CustomListPanduan1;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
-import salam.gohajj.custom.activity.Utilities;
 import salam.gohajj.custom.app.AppConfig;
 import salam.gohajj.custom.helper.ArabicUtilities;
 import salam.gohajj.custom.helper.SQLiteHandler;
@@ -95,9 +97,11 @@ public class ViewPanduanDoa extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_panduan_doa);
+//        setContentView(R.layout.view_panduan_doa);
         mActivity = this;
-        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        setContentView(GetTemplates.GetViewPanduanDoa(mActivity));
+        GetTemplates.GetStatusBar(mActivity);
         Calligrapher calligrapher=new Calligrapher(this);
         calligrapher.setFont(this,"fonts/helvetica.ttf",true);
         listView = (ListView) findViewById(R.id.listView);

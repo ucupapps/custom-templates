@@ -51,7 +51,160 @@
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/button_black"/>
 
+            <LinearLayout
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1"
+                android:background="@color/white"
+                android:layout_height="match_parent">
                 <LinearLayout
+                    android:id="@+id/lin_sebelum_umrah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:padding="10dp"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp"
+                        android:src="@drawable/doa"
+                        android:background="@drawable/circle" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.85"
+                        android:padding="10dp">
+                        <TextView
+                            android:id="@+id/tv_sebelum_umrah"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/sebelum_umrah"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_below="@id/tv_sebelum_umrah"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/doa_dan_tips_sesudah_umrah"
+                            android:textColor="@color/green" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.15"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
+                        android:src="@drawable/arrow_right" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lin_saat_umrah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:padding="10dp"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp"
+                        android:src="@drawable/doa"
+                        android:background="@drawable/circle" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.85"
+                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/tv_saat_umrah"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/saat_umrah"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_below="@id/tv_saat_umrah"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/doa_dan_tips_saat_umrah"
+                        android:textColor="@color/green" />
+                </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.15"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
+                        android:src="@drawable/arrow_right" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/lin_sesudah_umrah"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:padding="10dp"
+                    android:weightSum="1">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="5dp"
+                        android:src="@drawable/doa"
+                        android:background="@drawable/circle" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="0.85"
+                        android:padding="10dp">
+                        <TextView
+                            android:id="@+id/tv_sesudah_umrah"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/sesudah_umrah"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:layout_below="@id/tv_sesudah_umrah"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/doa_dan_tips_sesudah_umrah"
+                            android:textColor="@color/green" />
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.15"
+                        android:paddingBottom="7dp"
+                        android:paddingTop="7dp"
+                        android:src="@drawable/arrow_right" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:weightSum="1"

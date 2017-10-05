@@ -29,6 +29,9 @@
     <string name="mainkan_audio">Play Audio</string>
     <string name="simpan_audio">Save Audio</string>
     <string name="simpan_video">Save Video</string>
+    <string name="doa_dan_tips_sebelum_umrah">Du\'a and tips before umrah</string>
+    <string name="doa_dan_tips_saat_umrah">Du\'a and tips during umrah</string>
+    <string name="doa_dan_tips_sesudah_umrah">Du\'a and tips after umrah</string>
 
     <!--menu emergency-->
     <string name="kirim_pesan">Send Message</string>
@@ -125,6 +128,7 @@
     <string name="download_doa">Download Du’a</string>
     <string name="donasi">Donate</string>
     <string name="penilaian">Rate</string>
+    <string name="pilih_tema">Themes</string>
     <string name="cek_visa">Check only Visa </string>
     <string name="syarat_dan_ketentuan">Terms &amp; Policy</string>
     <string name="butuh_bantuan">Need Help</string>
@@ -178,6 +182,11 @@
     <string name="btn_link_to_login">Already signed up? Login Now !</string>
 
     <!---->
+    <string name="double_click_exit">To exit, tab Back again</string>
+    <string name="keluar">Exit</string>
+    <string name="konfirmasi">Confirmation!</string>
+    <string name="konfirmasi_tema">Are you sure want to change themes?</string>
+    <string name="konfirmasi_keluar">Are you sure you want to exit?</string>
     <string name="hint_email_tujuan">Insert destination email</string>
     <string name="hint_tulis_doa">Insert pray here</string>
     <string name="aplikasi_gohajj">Application GoHajj</string>

@@ -27,8 +27,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import salam.gohajj.custom.GetTemplates;
 import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.GMapV2Direction;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.app.AppConfig;
@@ -77,12 +79,8 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.go);
-        mActivity = this;
-        getpref = salam.gohajj.custom.Utilities.getPref("id_pref",mActivity)!=null? salam.gohajj.custom.Utilities.getPref("id_pref",mActivity):"";
-        Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
-
+        //setContentView
+        SetContentView();
         Intent i = getIntent();
         name = i.getStringExtra(AppConfig.KEY_NAME);
 
@@ -103,7 +101,7 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
 
         }
 
-//HEADER
+        //HEADER
         TextView txt_emergency = (TextView) findViewById(R.id.txt_emergency);
         TextView txt_thowaf = (TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai = (TextView) findViewById(R.id.txt_sai);
@@ -268,6 +266,15 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
             imgp.setImageBitmap(bmp);
         }
     }
+    
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetGoActivity(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
+    }
 
     private void getDirectionMap(LatLng from, LatLng to) {
         LatLng fromto[] = { from, to };
@@ -371,6 +378,15 @@ public class go extends AppCompatActivity implements OnMapReadyCallback {
         // Launching the login activity
         Intent intent = new Intent(go.this, LoginActivity.class);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), panduan.class);
+        panduan.setTabIndex(2);
+        startActivity(i);
         finish();
     }
 }

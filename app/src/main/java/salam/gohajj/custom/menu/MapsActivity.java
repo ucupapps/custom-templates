@@ -1,6 +1,7 @@
 package salam.gohajj.custom.menu;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -46,10 +47,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.AppUtils;
 import salam.gohajj.custom.activity.FetchAddressIntentService;
 import salam.gohajj.custom.activity.LoginActivity;
@@ -83,16 +88,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected String mAreaOutput;
     protected String mCityOutput;
     protected String mStateOutput;
-
+    private String getpref;
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps2);
-
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-
+        //setContentView(R.layout.activity_maps2);
+        SetContentView();
         Intent j = getIntent();
         hotel_id = j.getStringExtra(AppConfig.KEY_ID);
         navigasi = j.getStringExtra(AppConfig.KEY_NAVIGASI);
@@ -133,6 +136,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
@@ -273,6 +280,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        btn_find.setOnClickListener(findClickListener);
     }
 
+    private void SetContentView(){
+        mActivity = this;
+        setContentView(GetTemplates.GetMapsActivity(mActivity));
+        getpref = Utilities.getPref("id_pref",mActivity)!=null? Utilities.getPref("id_pref",mActivity):"";
+        GetTemplates.GetStatusBar(mActivity);
+        Calligrapher calligrapher = new Calligrapher(this);
+        calligrapher.setFont(this, "fonts/helvetica.ttf", true);
+    }
 
     /**
      * Manipulates the map once available.
@@ -471,13 +486,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         String lng = hotel.getString("long");
 
                         insertIntoDB("HOTEL",lat,lng);
-
-                        Intent intent = new Intent(MapsActivity.this,
-                                navigasi.class);
-//                        intent.putExtra(AppConfig.KEY_LAT,lat);
-//                        intent.putExtra(AppConfig.KEY_LNG,lng);
-                        startActivity(intent);
-                        finish();
+                        if (getpref.equals(Interfaces.TEMPLATE_1)){
+                            Intent intent = new Intent(MapsActivity.this,panduan.class);
+                            panduan.setTabIndex(Interfaces.MENU_NAVIGASI);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(MapsActivity.this,navigasi.class);
+                            //intent.putExtra(AppConfig.KEY_LAT,lat);
+                            //intent.putExtra(AppConfig.KEY_LNG,lng);
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
                         // Error in login. Get the error message
 //                        String errorMsg = jObj.getString("error_msg");
@@ -591,11 +611,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        startActivity(i);
         if(navigasi.equals("HOTEL")) {
             setLocation();
-        }else{
-            insertIntoDB(navigasi,lat_nav,lng_nav);
-            Intent intent = new Intent(MapsActivity.this,
-                    navigasi.class);
-            startActivity(intent);
+        }else {
+            insertIntoDB(navigasi, lat_nav, lng_nav);
+            if (getpref.equals(Interfaces.TEMPLATE_1)) {
+                Intent intent = new Intent(MapsActivity.this, panduan.class);
+                panduan.setTabIndex(Interfaces.MENU_NAVIGASI);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(MapsActivity.this, navigasi.class);
+                startActivity(intent);
+            }
         }
 //        Toast.makeText(this, "Info window clicked",
 //                Toast.LENGTH_SHORT).show();
@@ -682,12 +708,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if (resultCode == AppUtils.LocationConstants.SUCCESS_RESULT) {
                 //  showToast(getString(R.string.address_found));
 
-
             }
-
-
         }
-
     }
 
     protected void displayAddressOutput() {
@@ -701,5 +723,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (Exception e) {
 //            e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), panduan.class);
+        panduan.setTabIndex(2);
+        startActivity(i);
+        finish();
     }
 }
