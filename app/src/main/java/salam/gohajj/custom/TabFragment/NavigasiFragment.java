@@ -80,8 +80,8 @@ import static android.content.Context.LOCATION_SERVICE;
 
 public class NavigasiFragment extends Fragment implements View.OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
-    private TextView txtbus, txthotel, txtbertemu, txtmasjid,txtpoi;
-    private ImageView imgbus,imghotel,imgpintu,imgbertemu,imgPoi;
+    private TextView txtbus, txthotel, txtbertemu, txtmasjid, txtpoi;
+    private ImageView imgbus, imghotel, imgpintu, imgbertemu, imgPoi;
     private RadioGroup rg;
     private static final int PICK_Camera_IMAGE = 2;
     Uri imageUri;
@@ -93,13 +93,14 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
     private SessionManager session;
     private GoogleMap mMap;
     Location location;
-
+    protected LocationManager locationManager;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static String TAG = "MAP LOCATION";
     Context mContext;
-    TextView mLocationMarkerText,txtsetLocation;
+    TextView mLocationMarkerText, txtsetLocation;
     private LatLng mCenterLatLong;
-    private GoogleApiClient mGoogleApiClient;
+    private LatLng latLng;
+    GoogleApiClient mGoogleApiClient;
 
     /**
      * Receiver registered with this activity to get the response from FetchAddressIntentService.
@@ -112,7 +113,7 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
     protected String mAreaOutput;
     protected String mCityOutput;
     protected String mStateOutput;
-    TextView mLocationText,mLocationAddress;
+    TextView mLocationText, mLocationAddress;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
     private SQLiteDatabase database;
@@ -122,10 +123,10 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
     static final Integer READ_EXST = 0x4;
-    private LocationRequest mLocationRequest;
+    LocationRequest mLocationRequest;
     private Tracker mTracker;
-    View target ;
-    BadgeView badge ;
+    View target;
+    BadgeView badge;
     private String getpref;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -139,13 +140,12 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         View vi = inflater.inflate(R.layout.tab_navigasi, null);
         mContext = container.getContext();
 
-        Calligrapher calligrapher=new Calligrapher(getActivity());
-        calligrapher.setFont(getActivity(),"fonts/helvetica.ttf",true);
-        final TextView txtkoneksi= (TextView) vi.findViewById(R.id.txtkoneksi);
-        if (!Utilities.cek_status(getContext()))
-        {
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), "fonts/helvetica.ttf", true);
+        final TextView txtkoneksi = (TextView) vi.findViewById(R.id.txtkoneksi);
+        if (!Utilities.cek_status(getContext())) {
             txtkoneksi.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             txtkoneksi.setVisibility(View.GONE);
         }
         mLocationAddress = (TextView) vi.findViewById(R.id.Address);
@@ -155,8 +155,8 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         txtsetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String lokasi=mLocationMarkerText.getText().toString().trim();
-                Toast.makeText(getContext(),lokasi, Toast.LENGTH_LONG).show();
+                String lokasi = mLocationMarkerText.getText().toString().trim();
+                Toast.makeText(getContext(), lokasi, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -174,11 +174,11 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         editTextuser.setText(uid);
 //        txtphone.setText(phone);
 
-        imgbus=(ImageView) vi.findViewById(R.id.arrow_bus);
-        imghotel=(ImageView) vi.findViewById(R.id.arrow_hotel);
-        imgpintu=(ImageView) vi.findViewById(R.id.arrow_pintu);
-        imgbertemu=(ImageView) vi.findViewById(R.id.arrow_bertemu);
-        imgPoi=(ImageView) vi.findViewById(R.id.arrow_poi);
+        imgbus = (ImageView) vi.findViewById(R.id.arrow_bus);
+        imghotel = (ImageView) vi.findViewById(R.id.arrow_hotel);
+        imgpintu = (ImageView) vi.findViewById(R.id.arrow_pintu);
+        imgbertemu = (ImageView) vi.findViewById(R.id.arrow_bertemu);
+        imgPoi = (ImageView) vi.findViewById(R.id.arrow_poi);
 
         imgbertemu.setOnClickListener(this);
         imgpintu.setOnClickListener(this);
@@ -199,20 +199,20 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         txtpoi.setOnClickListener(this);
 
         //cek
-        cekData("BUS",txtbus);
-        cekData("HOTEL",txthotel);
-        cekDataMasjid(uid,txtmasjid);
-        cekData("TEMPAT BERTEMU",txtbertemu);
-        cekData("POI",txtpoi);
+        cekData("BUS", txtbus);
+        cekData("HOTEL", txthotel);
+        cekDataMasjid(uid, txtmasjid);
+        cekData("TEMPAT BERTEMU", txtbertemu);
+        cekData("POI", txtpoi);
         cekMapFragment();
         return vi;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         database = getActivity().openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
-        getpref = Utilities.getPref("id_pref",getActivity())!=null?Utilities.getPref("id_pref",getActivity()):"";
+        getpref = Utilities.getPref("id_pref", getActivity()) != null ? Utilities.getPref("id_pref", getActivity()) : "";
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
         if (mapFragment != null) {
@@ -225,7 +225,7 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 
         if (Build.VERSION.SDK_INT > 22 && !hasPermissions(requiredPermissions)) {
             //permission
-            askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,READ_EXST);
+            askForPermission(Manifest.permission.ACCESS_FINE_LOCATION, READ_EXST);
         }
 
         //tracker
@@ -253,15 +253,16 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
             }
-        }else{
-            Utilities.ShowLog(TAG,"tidak aktif");
+        } else {
+            Utilities.ShowLog(TAG, "tidak aktif");
             cekMapFragment();
         }
         buildGoogleApiClient();
         mResultReceiver = new AddressResultReceiver(new Handler());
 
     }
-    private void cekMapFragment(){
+
+    private void cekMapFragment() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
@@ -383,12 +384,12 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 
     public void onClick(View v) {
         if (v == txtbus) {
-            if(txtbus.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
+            if (txtbus.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
                 if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
                 Intent intentBus = new Intent(getContext(), MapsActivity.class);
-                intentBus.putExtra(AppConfig.KEY_NAVIGASI,"BUS");
+                intentBus.putExtra(AppConfig.KEY_NAVIGASI, "BUS");
                 startActivity(intentBus);
 
                 txtMessage.setText("BUS");
@@ -396,39 +397,37 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 //                insertIntoDB();
 //                txtbus.setBackgroundResource(R.drawable.button);
 //                txtbus.setText(getResources().getString(R.string.arahkan));
-            }else if(txtbus.getText().toString().equals(getResources().getString(R.string.arahkan))) {
+            } else if (txtbus.getText().toString().equals(getResources().getString(R.string.arahkan))) {
                 Intent intent = new Intent(getContext(), go.class);
-                intent.putExtra(AppConfig.KEY_NAME,"BUS");
+                intent.putExtra(AppConfig.KEY_NAME, "BUS");
                 startActivity(intent);
             }
         }
         if (v == txthotel) {
-            if(txthotel.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
-                if(txtlat.getText().toString().equals(""))
-                {
+            if (txthotel.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
+                if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
 
                 Intent intent = new Intent(getContext(), Hotel.class);
                 startActivity(intent);
 
-                Log.e("latLong : ", txtlatHotel+","+txtlngHotel);
+                Log.e("latLong : ", txtlatHotel + "," + txtlngHotel);
 
                 txtMessage.setText("HOTEL");
 //                cekData("HOTEL",txthotel);
 //                txthotel.setBackgroundResource(R.drawable.button);
 //                txthotel.setText(getResources().getString(R.string.arahkan));
-            }else if(txthotel.getText().toString().equals(getResources().getString(R.string.arahkan))) {
+            } else if (txthotel.getText().toString().equals(getResources().getString(R.string.arahkan))) {
 //                insertIntoDB();
                 Intent intent = new Intent(getContext(), go.class);
-                intent.putExtra(AppConfig.KEY_NAME,"HOTEL");
+                intent.putExtra(AppConfig.KEY_NAME, "HOTEL");
                 startActivity(intent);
             }
         }
         if (v == txtmasjid) {
-            if(txtmasjid.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
-                if(txtlat.getText().toString().equals(""))
-                {
+            if (txtmasjid.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
+                if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
                 Intent intentPintu = new Intent(getContext(), PintuMasjid.class);
@@ -438,21 +437,20 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 //                txtmasjid.setBackgroundResource(R.drawable.button);
 //                txtmasjid.setText("Lihat");
 //                cekDataMasjid(uid,txtmasjid);
-            }else if(txtmasjid.getText().toString().equals("Lihat")) {
+            } else if (txtmasjid.getText().toString().equals("Lihat")) {
                 Intent intent = new Intent(getContext(), LihatPintuMasjid.class);
-                intent.putExtra(AppConfig.KEY_NAME,"NO PINTU MASJID");
+                intent.putExtra(AppConfig.KEY_NAME, "NO PINTU MASJID");
                 startActivity(intent);
             }
         }
         if (v == txtbertemu) {
-            if(txtbertemu.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
-                if(txtlat.getText().toString().equals(""))
-                {
+            if (txtbertemu.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
+                if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
 
                 Intent intentBertemu = new Intent(getContext(), MapsActivity.class);
-                intentBertemu.putExtra(AppConfig.KEY_NAVIGASI,"TEMPAT BERTEMU");
+                intentBertemu.putExtra(AppConfig.KEY_NAVIGASI, "TEMPAT BERTEMU");
                 startActivity(intentBertemu);
                 getActivity().finish();
                 txtMessage.setText("TEMPAT BERTEMU");
@@ -460,17 +458,16 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 //                insertIntoDB();
 //                txtbertemu.setBackgroundResource(R.drawable.button);
 //                txtbertemu.setText(getResources().getString(R.string.arahkan));
-            }else if(txtbertemu.getText().toString().equals(getResources().getString(R.string.arahkan))) {
+            } else if (txtbertemu.getText().toString().equals(getResources().getString(R.string.arahkan))) {
                 Intent intent = new Intent(getContext(), go.class);
-                intent.putExtra(AppConfig.KEY_NAME,"TEMPAT BERTEMU");
+                intent.putExtra(AppConfig.KEY_NAME, "TEMPAT BERTEMU");
                 startActivity(intent);
             }
         }
 
         if (v == txtpoi) {
-            if(txtpoi.getText().toString().equals(getResources().getString(R.string.set_lokasi))){
-                if(txtlat.getText().toString().equals(""))
-                {
+            if (txtpoi.getText().toString().equals(getResources().getString(R.string.set_lokasi))) {
+                if (txtlat.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "Current location cannot null !", Toast.LENGTH_SHORT).show();
                 }
 
@@ -483,9 +480,9 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 //                txthotel.setBackgroundResource(R.drawable.button);
 //                txthotel.setText(getResources().getString(R.string.arahkan));
 //                cekData("POI",txtpoi);
-            }else if(txtpoi.getText().toString().equals(getResources().getString(R.string.arahkan))) {
+            } else if (txtpoi.getText().toString().equals(getResources().getString(R.string.arahkan))) {
                 Intent intent = new Intent(getContext(), go.class);
-                intent.putExtra(AppConfig.KEY_NAME,"POI");
+                intent.putExtra(AppConfig.KEY_NAME, "POI");
                 startActivity(intent);
             }
         }
@@ -497,11 +494,11 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 
         //arrow
         if (v == imghotel) {
-            arrowcekData("HOTEL",txthotel);
+            arrowcekData("HOTEL", txthotel);
         }
 
         if (v == imgbus) {
-            arrowcekData("BUS",txtbus);
+            arrowcekData("BUS", txtbus);
         }
 
         if (v == imgpintu) {
@@ -510,7 +507,7 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
                 if (txtmasjid.getText().toString().equals("Lihat")) {
                     txtmasjid.setBackgroundResource(R.drawable.button_red);
                     txtmasjid.setText(getResources().getString(R.string.set_lokasi));
-                }else{
+                } else {
                     txtmasjid.setBackgroundResource(R.drawable.button);
                     txtmasjid.setText("Lihat");
                 }
@@ -519,105 +516,106 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 
         if (v == imgbertemu) {
 
-            arrowcekData("TEMPAT BERTEMU",txtbertemu);
+            arrowcekData("TEMPAT BERTEMU", txtbertemu);
         }
 
         if (v == imgPoi) {
-            arrowcekData("POI",txtpoi);
+            arrowcekData("POI", txtpoi);
         }
     }
 
-    protected void cekData(String name, TextView tv){
-        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+    protected void cekData(String name, TextView tv) {
+        Cursor mCount = database.rawQuery("select count(*) from locations where name='" + name + "'", null);
         mCount.moveToFirst();
-        int count= mCount.getInt(0);
-        if(count > 0) {
+        int count = mCount.getInt(0);
+        if (count > 0) {
             tv.setBackgroundResource(R.drawable.button);
-            tv.setPadding(5,5,5,5);
-            if(name.equals("NO PINTU MASJID")){
+            tv.setPadding(5, 5, 5, 5);
+            if (name.equals("NO PINTU MASJID")) {
                 tv.setText("Lihat");
-            }else {
+            } else {
                 tv.setText(getResources().getString(R.string.arahkan));
             }
-        }else{
+        } else {
             tv.setBackgroundResource(R.drawable.button_red);
-            tv.setPadding(5,5,5,5);
+            tv.setPadding(5, 5, 5, 5);
             tv.setText(getResources().getString(R.string.set_lokasi));
         }
     }
 
-    protected void arrowcekData(String name, TextView tv){
+    protected void arrowcekData(String name, TextView tv) {
 
-        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+        Cursor mCount = database.rawQuery("select count(*) from locations where name='" + name + "'", null);
         mCount.moveToFirst();
-        int count= mCount.getInt(0);
-        if(count > 0) {
-            if(tv.getText().toString().equals(getResources().getString(R.string.arahkan)) || tv.getText().toString().equals("Lihat")){
+        int count = mCount.getInt(0);
+        if (count > 0) {
+            if (tv.getText().toString().equals(getResources().getString(R.string.arahkan)) || tv.getText().toString().equals("Lihat")) {
                 tv.setBackgroundResource(R.drawable.button_red);
                 tv.setText(getResources().getString(R.string.set_lokasi));
-            }else{
+            } else {
                 tv.setBackgroundResource(R.drawable.button);
                 tv.setText(getResources().getString(R.string.arahkan));
             }
-        }else{
+        } else {
 
         }
     }
 
-    protected void cekDataMasjid(String user_id, TextView tm){
-        Cursor mCount= database.rawQuery("select count(*) from pintu_masjid where user_id='" + user_id + "'", null);
+    protected void cekDataMasjid(String user_id, TextView tm) {
+        Cursor mCount = database.rawQuery("select count(*) from pintu_masjid where user_id='" + user_id + "'", null);
         mCount.moveToFirst();
-        int count= mCount.getInt(0);
-        if(count > 0) {
+        int count = mCount.getInt(0);
+        if (count > 0) {
             tm.setBackgroundResource(R.drawable.button);
-            tm.setPadding(5,5,5,5);
+            tm.setPadding(5, 5, 5, 5);
             tm.setText("Lihat");
-        }else{
+        } else {
             tm.setBackgroundResource(R.drawable.button_red);
-            tm.setPadding(5,5,5,5);
+            tm.setPadding(5, 5, 5, 5);
             tm.setText(getResources().getString(R.string.set_lokasi));
         }
     }
-    protected void createDatabase(){
-        database=getActivity().openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+
+    protected void createDatabase() {
+        database = getActivity().openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS locations(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name VARCHAR,lat VARCHAR,lng VARCHAR);");
     }
 
-    protected void createDatabaseMasjid(){
-        database=getActivity().openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
+    protected void createDatabaseMasjid() {
+        database = getActivity().openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         database.execSQL("CREATE TABLE IF NOT EXISTS pintu_masjid(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id VARCHAR,no_pintu VARCHAR);");
     }
 
-    protected void insertIntoDB(){
-        String lat,lng;
+    protected void insertIntoDB() {
+        String lat, lng;
         final String idUser = editTextuser.getText().toString().trim();
         final String name = txtMessage.getText().toString().trim();
-        if(name.equals("HOTEL")) {
+        if (name.equals("HOTEL")) {
             lat = txtlatHotel;
             lng = txtlngHotel;
-        }else{
+        } else {
             lat = txtlat.getText().toString().trim();
             lng = txtlng.getText().toString().trim();
         }
 
-        Cursor mCount= database.rawQuery("select count(*) from locations where name='" + name + "'", null);
+        Cursor mCount = database.rawQuery("select count(*) from locations where name='" + name + "'", null);
         mCount.moveToFirst();
-        int count= mCount.getInt(0);
-        if(count > 0) {
+        int count = mCount.getInt(0);
+        if (count > 0) {
             String query = "UPDATE locations SET lat='" + lat + "',lng='" + lng + "' WHERE name='" + name + "';";
             database.execSQL(query);
-        }else {
+        } else {
             String query = "INSERT INTO locations (name,lat,lng) VALUES('" + name + "', '" + lat + "', '" + lng + "');";
             database.execSQL(query);
         }
-        Toast.makeText(getContext(),"Location "+name+ " Berhasil di simpan", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Location " + name + " Berhasil di simpan", Toast.LENGTH_LONG).show();
         Cursor c = database.rawQuery("SELECT * FROM locations WHERE name='" + name + "'", null);
 
         c.moveToFirst();
-        String nama=c.getString(1);
-        String lats=c.getString(2);
-        String lngs=c.getString(3);
-        Log.e("MyDataShow", "Name: " + nama+"Lat: " + lats+"Lng: " + lngs);
+        String nama = c.getString(1);
+        String lats = c.getString(2);
+        String lngs = c.getString(3);
+        Log.e("MyDataShow", "Name: " + nama + "Lat: " + lats + "Lng: " + lngs);
     }
 
     @Override
@@ -629,10 +627,27 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
                 Log.e("Camera postion change" + "", cameraPosition + "");
+
+//                latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                Log.e("INI ERROR", ""+latLng);
                 mCenterLatLong = cameraPosition.target;
-                Utilities.ShowLog("Maps",""+mMap);
-                if (mMap!=null) {
-                    mMap.clear();
+                Utilities.ShowLog("Maps", "" + mMap);
+                if (mMap != null) {
+//                    mMap.clear();
+                    if (ActivityCompat.checkSelfPermission(getActivity(),
+                            android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                        return;
+                    mMap.setMyLocationEnabled(true);
+//                    mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    locationManager = (LocationManager) mContext
+                            .getSystemService(LOCATION_SERVICE);
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    latLng = new LatLng(location.getLatitude(),location.getLongitude());
+
+                    CameraPosition cameraPosition1 = new CameraPosition.Builder()
+                            .target(latLng).zoom(19f).tilt(70).build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition1));
                 }
 
                 try {
@@ -671,26 +686,36 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onLocationChanged(Location location) {
-        try {
-            if (location != null)
-                changeMap(location);
-            LocationServices.FusedLocationApi.removeLocationUpdates(
-                    mGoogleApiClient, this);
 
-        } catch (Exception e) {
-        }
+//        latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        Utilities.ShowLog("conteeext",""+mContext);
-        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-            }
+        //move map camera
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+//        try {
+//            if (location != null)
+//                changeMap(location);
+//            LocationServices.FusedLocationApi.removeLocationUpdates(
+//                    mGoogleApiClient, this);
+//
+//        } catch (Exception e) {
+//        }
+//
+//        mLocationRequest = new LocationRequest();
+//        mLocationRequest.setInterval(1000);
+//        mLocationRequest.setFastestInterval(1000);
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+//        Utilities.ShowLog("conteeext",""+mContext);
+//        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+//                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+//            }
+//        }
     }
 
     @Override
@@ -753,6 +778,7 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         if (mMap != null) {
             mMap.getUiSettings().setZoomControlsEnabled(false);
             LatLng latLong;
+            Utilities.ShowLog("lokasi",""+location.getLatitude());
 
 
             latLong = new LatLng(location.getLatitude(), location.getLongitude());

@@ -33,14 +33,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import salam.gohajj.custom.R;
-import salam.gohajj.custom.activity.AppUtils;
-import salam.gohajj.custom.activity.FetchAddressIntentService;
-import salam.gohajj.custom.activity.LoginActivity;
-import salam.gohajj.custom.app.AppConfig;
-import salam.gohajj.custom.app.AppController;
-import salam.gohajj.custom.helper.SQLiteHandler;
-import salam.gohajj.custom.helper.SessionManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
@@ -68,6 +60,14 @@ import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import salam.gohajj.custom.R;
+import salam.gohajj.custom.activity.AppUtils;
+import salam.gohajj.custom.activity.FetchAddressIntentService;
+import salam.gohajj.custom.activity.LoginActivity;
+import salam.gohajj.custom.app.AppConfig;
+import salam.gohajj.custom.app.AppController;
+import salam.gohajj.custom.helper.SQLiteHandler;
+import salam.gohajj.custom.helper.SessionManager;
 
 public class navigasi extends AppCompatActivity implements OnClickListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
     private EditText editTextuser, txtMessage, txtphone, txtlng, txtlat;
@@ -178,7 +178,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         buildGoogleApiClient();
         mResultReceiver = new AddressResultReceiver(new Handler());
 
-        txtsetLocation.setOnClickListener(new View.OnClickListener() {
+        txtsetLocation.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 String lokasi=mLocationMarkerText.getText().toString().trim();
@@ -194,7 +194,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         TextView txt_thowaf=(TextView) findViewById(R.id.txt_thowaf);
         TextView txt_sai=(TextView) findViewById(R.id.txt_sai);
 
-        txt_thowaf.setOnClickListener(new View.OnClickListener() {
+        txt_thowaf.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), thawaf.class);
@@ -202,7 +202,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 finish();
             }
         });
-        txt_sai.setOnClickListener(new View.OnClickListener() {
+        txt_sai.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), sai.class);
@@ -210,7 +210,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 finish();
             }
         });
-        txt_emergency.setOnClickListener(new View.OnClickListener() {
+        txt_emergency.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), emergency.class);
@@ -236,7 +236,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         img.setPadding(22,22,22,22);
         img.setImageDrawable(getResources().getDrawable(R.drawable.navigasi_active));
 
-        menu_profile.setOnClickListener(new View.OnClickListener() {
+        menu_profile.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profile.class);
@@ -244,7 +244,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 finish();
             }
         });
-        menu_panduan.setOnClickListener(new View.OnClickListener() {
+        menu_panduan.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
@@ -252,7 +252,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 finish();
             }
         });
-        menu_doa.setOnClickListener(new View.OnClickListener() {
+        menu_doa.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TitipanDoa.class);
@@ -260,7 +260,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 finish();
             }
         });
-        menu_navigasi.setOnClickListener(new View.OnClickListener() {
+        menu_navigasi.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), navigasi.class);
@@ -268,7 +268,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
                 finish();
             }
         });
-        menu_inbox.setOnClickListener(new View.OnClickListener() {
+        menu_inbox.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), inbox.class);
@@ -278,7 +278,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
         });
 
         final ImageView img_home=(ImageView) findViewById(R.id.img_home);
-        img_home.setOnClickListener(new View.OnClickListener() {
+        img_home.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), panduan.class);
@@ -287,7 +287,7 @@ public class navigasi extends AppCompatActivity implements OnClickListener, OnMa
             }
         });
         final  ImageView img_setting=(ImageView) findViewById(R.id.img_setting);
-        img_setting.setOnClickListener(new View.OnClickListener() {
+        img_setting.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), setting.class);

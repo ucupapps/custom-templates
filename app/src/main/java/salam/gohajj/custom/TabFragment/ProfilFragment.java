@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
@@ -177,7 +178,7 @@ public class ProfilFragment extends Fragment implements View.OnClickListener {
     private void logoutUser() {
         if (session.isLoggedIn()) {
             session.setLogin(false);
-
+            Utilities.putPref("id_pref", Interfaces.TEMPLATE_DEFAULT,getContext());
             db.deleteUsers();
         }
 

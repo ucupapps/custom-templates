@@ -76,7 +76,7 @@
                             android:name="com.google.android.gms.maps.SupportMapFragment"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            tools:context="com.sample.sishin.maplocation.MapsActivity" />
+                            tools:context="salam.gohajj.custom.menu.MapsActivity" />
                         <LinearLayout
                             android:id="@+id/locationMarker"
                             android:layout_width="wrap_content"

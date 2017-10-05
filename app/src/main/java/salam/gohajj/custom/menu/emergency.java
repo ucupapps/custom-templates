@@ -906,4 +906,12 @@ public class emergency extends AppCompatActivity implements OnClickListener, OnM
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(), panduan.class);
+        panduan.setTabIndex(2);
+        startActivity(i);
+        finish();
+    }
 }

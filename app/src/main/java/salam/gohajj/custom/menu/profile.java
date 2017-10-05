@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +21,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.LoginActivity;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
@@ -57,9 +60,11 @@ public class profile extends AppCompatActivity implements OnClickListener {
     View target ;
     BadgeView badge ;
     private SQLiteDatabase database;
+    private Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activity = this;
         setContentView(R.layout.profile);
         session = new SessionManager(getApplicationContext());
         if (!session.isLoggedIn()) {
@@ -287,7 +292,7 @@ public class profile extends AppCompatActivity implements OnClickListener {
     private void logoutUser() {
         if (session.isLoggedIn()) {
             session.setLogin(false);
-
+            Utilities.putPref("id_pref", Interfaces.TEMPLATE_DEFAULT,activity);
             db.deleteUsers();
         }
 
