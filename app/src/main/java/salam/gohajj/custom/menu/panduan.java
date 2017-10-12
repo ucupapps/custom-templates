@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -42,6 +43,13 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
+import com.nightonke.boommenu.Util;
 import com.readystatesoftware.viewbadger.BadgeView;
 
 import org.json.JSONArray;
@@ -117,6 +125,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
     private String getpref;
     private LinearLayout gohajjMenu, place1, place2;
     private FloatingActionMenu floatingMenu;
+    private BoomMenuButton bmb;
 
     public static int getTabIndex() {
         return tabIndex;
@@ -447,12 +456,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        if (getpref.equals(Interfaces.TEMPLATE_DEFAULT)) {
-            adapter.addFragment(new OneFragment(), getResources().getString(R.string.sebelum_umrah));
-            adapter.addFragment(new TwoFragment(), getResources().getString(R.string.saat_umrah));
-            adapter.addFragment(new ThreeFragment(), getResources().getString(R.string.sesudah_umrah));
-
-        }else if (getpref.equals(Interfaces.TEMPLATE_1)) {
+        if (getpref.equals(Interfaces.TEMPLATE_1)) {
             adapter.addFragment(new PanduanFragment(), "");
             adapter.addFragment(new TitipanDoaFragment(), "");
             adapter.addFragment(new NavigasiFragment(), "");
@@ -725,6 +729,7 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
         place2 = (LinearLayout)findViewById(R.id.lin_place2);
         gohajjMenu = (LinearLayout)findViewById(R.id.menufooter);
         floatingMenu=(FloatingActionMenu)findViewById(R.id.fabmenu);
+        bmb = (BoomMenuButton) findViewById(R.id.bmb);
         Utilities.ShowLog("pref",getpref);
         if (getpref.equals(Interfaces.TEMPLATE_1)){
             headerButton();
@@ -733,6 +738,11 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             gohajjMenu();
             getWeather();
             floatingMenu.setVisibility(View.GONE);
+        }else if(getpref.equals(Interfaces.TEMPLATE_2)){
+            HamFloatingMenu();
+            updateTime();
+            getWeather();
+            headerButton();
         }else if(getpref.equals(Interfaces.TEMPLATE_3)){
             floatingMenu();
             updateTime();
@@ -861,6 +871,33 @@ public class panduan extends AppCompatActivity implements ListView.OnItemClickLi
             }
         });
         }
+    }
+
+    public void HamFloatingMenu(){
+        gohajjMenu.setVisibility(View.GONE);
+        floatingMenu.setVisibility(View.GONE);
+        bmb.setVisibility(View.VISIBLE);
+        assert bmb != null;
+        bmb.setButtonEnum(ButtonEnum.Ham);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.HAM_1);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.HAM_1);
+
+        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+            HamButton.Builder builder = new HamButton.Builder()
+                    .normalImageRes(R.drawable.panduan).imageRect(new Rect(0, 0, Util.dp2px(60), Util.dp2px(60))).highlightedTextRes(R.string.panduan);
+            bmb.addBuilder(builder);
+        }
+//        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++) {
+//            HamButton.Builder builder = new HamButton.Builder()
+//                    .listener(new OnBMClickListener() {
+//                        @Override
+//                        public void onBoomButtonClick(int index) {
+//                            // When the boom-button corresponding this builder is clicked.
+//                            Toast.makeText(panduan.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//            bmb.addBuilder(builder);
+//        }
     }
 
     public void floatingMenu() {

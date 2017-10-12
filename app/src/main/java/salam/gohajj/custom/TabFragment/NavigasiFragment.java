@@ -271,81 +271,6 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         mResultReceiver = new AddressResultReceiver(new Handler());
     }
 
-
-//    @Override
-//    public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-//        // get the last know location from your location manager.
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            return;
-//        }
-//        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//        Log.d("Mylat", "lat: " + location);
-//        Double lat;
-//        Double lng;
-////        Double lat= -6.2268682;
-////        Double lng= 106.8289868;
-//        if (location != null) {
-//            lat=location.getLatitude(); lng=location.getLongitude();
-//            LatLng jakarta = new LatLng(lat,lng);
-//
-////            CameraPosition INIT =
-////                    new CameraPosition.Builder()
-////                            .target(jakarta)
-////                            .zoom(17.5F)
-////                            .bearing(300F) // orientation
-////                            .tilt( 50F) // viewing angle
-////                            .build();
-////
-////            // use map to move camera into position
-////            mMap.moveCamera( CameraUpdateFactory.newCameraPosition(INIT) );
-//
-//            mMap.moveCamera(CameraUpdateFactory.newLatLng(jakarta));
-//            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(jakarta, 17));
-//
-//            //create initial marker
-//            mMap.addMarker( new MarkerOptions()
-//                    .position(jakarta)
-//                    .title("Location")
-//                    .snippet("First Marker").draggable(true)).showInfoWindow();
-//
-//        }else{
-//            Toast.makeText(getContext(),"Location : "+location, Toast.LENGTH_LONG).show();
-//        }
-//        mMap.setMyLocationEnabled(true);
-////        if (mMap != null) {
-////            mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
-////
-////                @Override
-////                public void onMyLocationChange(Location arg0) {
-////                    // TODO Auto-generated method stub
-////
-////                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
-////                }
-////            });
-//
-////            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-////                @Override
-////                public boolean onMarkerClick(Marker navigasi) {
-////                    LatLng position = navigasi.getPosition();
-////                    Double latitude = position.latitude;
-////                    Double longitude = position.longitude;
-////                    txtlat.setText("" + latitude);
-////                    txtlng.setText("" + longitude);
-////                    Toast.makeText(
-////                            go.this,
-////                            "Lat " + position.latitude + " "
-////                                    + "Long " + position.longitude,
-////                            Toast.LENGTH_LONG).show();
-////                    return true;
-////                }
-////            });
-////        }
-//
-//    }
-
     private void sendScreenImageName(String name) {
         // [START screen_view_hit]
         mTracker.setScreenName(name);
@@ -926,23 +851,6 @@ public class NavigasiFragment extends Fragment implements View.OnClickListener, 
         } else if (resultCode == RESULT_CANCELED) {
         }
     }
-
-//    protected void CountInbox(){
-//        Cursor c= database.rawQuery("select * from badge where id=1 ", null);
-//        c.moveToFirst();
-//        int jumlah=c.getInt(1);
-//        //target = vi.findViewById(R.id.img_inbox);
-//        badge = new BadgeView(getContext(), target);
-//        //badge
-//        if(jumlah > 0) {
-//            badge.setText("" + jumlah);
-//            badge.show();
-//            ShortcutBadger.applyCount(getContext(), jumlah);
-//        }else{
-//            ShortcutBadger.removeCount(getContext());
-//            badge.hide();
-//        }
-//    }
 
     private void askForPermission(String permission, Integer requestCode) {
         if (ContextCompat.checkSelfPermission(getContext(), permission) != PackageManager.PERMISSION_GRANTED) {

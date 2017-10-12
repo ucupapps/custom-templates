@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,11 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
 
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.helper.SQLiteHandler;
 import salam.gohajj.custom.helper.SessionManager;
 import com.readystatesoftware.viewbadger.BadgeView;
@@ -38,13 +43,13 @@ public class Bantuan extends AppCompatActivity {
     private SQLiteHandler db;
 
     private String JSON_STRING,uid;
+    private Activity activity;
+    private String getpref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bantuan);
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
-
+        SetContentView();
         // SqLite database handler
         db = new SQLiteHandler(getApplicationContext());
         HashMap<String, String> user = db.getUserDetails();
@@ -53,7 +58,11 @@ public class Bantuan extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         CountInbox();
-// FOOTER
+        // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
@@ -159,6 +168,16 @@ public class Bantuan extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    public void SetContentView(){
+        activity = this;
+        getpref = Utilities.getPref("id_pref",activity)!=null? Utilities.getPref("id_pref",activity):"";
+        GetTemplates.GetStatusBar(activity);
+        final RelativeLayout rel_header = (RelativeLayout) findViewById(R.id.header2);
+        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(activity)));
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
     }
 
     protected void CountInbox(){

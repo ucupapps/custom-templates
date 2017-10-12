@@ -19,7 +19,7 @@ public class GetTemplates{
         }else if (getpref.equals(Interfaces.TEMPLATE_1)){
             Layout = R.layout.panduan_custom1;
         }else if (getpref.equals(Interfaces.TEMPLATE_2)){
-            Layout = R.layout.panduan_v2;
+            Layout = R.layout.panduan_custom2;
         }else if (getpref.equals(Interfaces.TEMPLATE_3)){
             Layout = R.layout.panduan_v3;
         }else {

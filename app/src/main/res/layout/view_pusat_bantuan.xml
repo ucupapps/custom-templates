@@ -43,6 +43,7 @@
                     android:background="@color/white"
                     android:weightSum="1">
                     <LinearLayout
+                        android:id="@+id/lin_title_bantuan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/background">

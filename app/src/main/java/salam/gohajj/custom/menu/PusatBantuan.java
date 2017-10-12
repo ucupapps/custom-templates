@@ -1,5 +1,6 @@
 package salam.gohajj.custom.menu;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,10 +17,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import salam.gohajj.custom.GetTemplates;
+import salam.gohajj.custom.Interfaces;
 import salam.gohajj.custom.R;
+import salam.gohajj.custom.Utilities;
 import salam.gohajj.custom.activity.CustomListBantuan;
 import salam.gohajj.custom.activity.RequestHandler;
 import salam.gohajj.custom.app.AppConfig;
@@ -50,12 +55,13 @@ public class PusatBantuan extends AppCompatActivity implements ListView.OnItemCl
     BadgeView badge ;
     private SessionManager session;
     private SQLiteDatabase database;
+    private Activity activity;
+    private String getpref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pusat_bantuan);
-        Calligrapher calligrapher=new Calligrapher(this);
-        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+        SetContentView();
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
@@ -68,7 +74,11 @@ public class PusatBantuan extends AppCompatActivity implements ListView.OnItemCl
         database = openOrCreateDatabase("LocationDB", Context.MODE_PRIVATE, null);
         CountInbox();
 
-// FOOTER
+        // FOOTER
+        LinearLayout footerMenu = (LinearLayout)findViewById(R.id.menufooter);
+        if (getpref.equals(Interfaces.TEMPLATE_1)){
+            footerMenu.setVisibility(View.GONE);
+        }
         LinearLayout menu_panduan=(LinearLayout) findViewById(R.id.menu_panduan);
         TextView txt_panduan=(TextView) findViewById(R.id.txt_panduan);
         LinearLayout menu_doa=(LinearLayout) findViewById(R.id.menu_doa);
@@ -150,6 +160,17 @@ public class PusatBantuan extends AppCompatActivity implements ListView.OnItemCl
         });
         getJSON();
     }
+
+    public void SetContentView(){
+        activity = this;
+        getpref = Utilities.getPref("id_pref",activity)!=null? Utilities.getPref("id_pref",activity):"";
+        GetTemplates.GetStatusBar(activity);
+        final RelativeLayout rel_header = (RelativeLayout) findViewById(R.id.header2);
+        rel_header.setBackground(getResources().getDrawable(GetTemplates.GetHeaderTemplates(activity)));
+        Calligrapher calligrapher=new Calligrapher(this);
+        calligrapher.setFont(this,"fonts/helvetica.ttf",true);
+    }
+
     private void showData(){
         JSONObject jsonObject = null;
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();

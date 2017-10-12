@@ -5,7 +5,8 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,336 +14,315 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+    <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <permission
         android:name="permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.garudatekno.apps.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
-
     <application
-        android:name="salam.gohajj.custom.app.AppController"
+        android:name=".app.AppController"
         android:allowBackup="true"
         android:icon="@drawable/logo_apps"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="salam.gohajj.custom.menu.AndroidLaunchSlider"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
+            android:name=".menu.AndroidLaunchSlider"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.splashscreen"
+            android:name=".menu.splashscreen"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="salam.gohajj.custom.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
 
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
         <activity
-            android:name="salam.gohajj.custom.activity.RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ActionBar">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
         <activity
-            android:name="salam.gohajj.custom.activity.MapsActivity"
+            android:name=".activity.MapsActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.ActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.ActionBar"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.AndroidImageSlider"
+            android:name=".menu.AndroidImageSlider"
             android:label="Home"
-            android:screenOrientation="portrait"
-            android:noHistory="true">
-        </activity>
+            android:noHistory="true"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="Home"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.edit_profile"
+            android:name=".menu.edit_profile"
             android:label="Profile"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.activity.SimpleMenu"
+            android:name=".activity.SimpleMenu"
             android:label="Simple Menu"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.profile"
+            android:name=".menu.profile"
             android:label="Profile"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.TitipanDoa"
+            android:name=".menu.TitipanDoa"
             android:label="Titipan Doa"
-            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:noHistory="true"
-            android:launchMode="singleTop">
-            <intent-filter android:label="Titipan Doa" android:autoVerify="true">
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Titipan Doa">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "https://gohajj.id/titipandoa" -->
-                <data android:scheme="https"
+                <data
                     android:host="gohajj.id"
-                    android:pathPrefix="/titipandoa" />
+                    android:pathPrefix="/titipandoa"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
-            android:name="salam.gohajj.custom.menu.panduan"
+            android:name=".menu.panduan"
             android:label="Panduan"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-            <intent-filter android:label="Panduan" android:autoVerify="true">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Panduan">
                 <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
-                <data android:scheme="https"
-                    android:host="gohajj.id" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.emergency"
-            android:label="Emergency"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.inbox"
-            android:label="Inbox"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.go"
-            android:label="GO"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.navigasi"
-            android:label="Navigasi"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.Hotel"
-            android:label="Hotel"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.add_hotel"
-            android:label="Tambah Hotel"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.MapsActivity"
-            android:label="Maps"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.PintuMasjid"
-            android:label="Masjid (Pintu Masuk)"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.LihatPintuMasjid"
-            android:label="Masjid (Pintu Masuk)"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.sai"
-            android:label="Sai"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-            <intent-filter android:label="SAI" android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
-                <data android:scheme="https"
-                    android:host="gohajj.id"
-                    android:pathPrefix="/doa" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.download"
-            android:label="Download"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.panduan_umrah"
-            android:label="View Panduan"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.ViewPanduanTips"
-            android:label="View Panduan"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.ViewPanduanVideo"
-            android:label="View Panduan"
-            android:configChanges="orientation|screenSize">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.ViewPanduanDoa"
-            android:label="View Panduan"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.ViewPanduankamus"
-            android:label="View Panduan"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.thawaf"
-            android:label="Thawaf"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-            <intent-filter android:label="Thawaf" android:autoVerify="true">
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
-            <data android:scheme="https"
-                android:host="gohajj.id"
-                android:pathPrefix="/doa" />
-        </intent-filter>
-        </activity>
-        <activity
-            android:name="salam.gohajj.custom.menu.ViewInbox"
-            android:label="View Inbox"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
+                <data
+                    android:host="gohajj.id"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name="salam.gohajj.custom.menu.Poi"
+            android:name=".menu.emergency"
+            android:label="Emergency"
+            android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".menu.inbox"
+            android:label="Inbox"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.go"
+            android:label="GO"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.navigasi"
+            android:label="Navigasi"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.Hotel"
+            android:label="Hotel"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.add_hotel"
+            android:label="Tambah Hotel"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.MapsActivity"
+            android:label="Maps"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.PintuMasjid"
+            android:label="Masjid (Pintu Masuk)"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.LihatPintuMasjid"
+            android:label="Masjid (Pintu Masuk)"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.sai"
+            android:label="Sai"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="SAI">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
+                <data
+                    android:host="gohajj.id"
+                    android:pathPrefix="/doa"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".menu.download"
+            android:label="Download"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.panduan_umrah"
+            android:label="View Panduan"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.ViewPanduanTips"
+            android:label="View Panduan"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.ViewPanduanVideo"
+            android:configChanges="orientation|screenSize"
+            android:label="View Panduan"></activity>
+        <activity
+            android:name=".menu.ViewPanduanDoa"
+            android:label="View Panduan"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.ViewPanduankamus"
+            android:label="View Panduan"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.thawaf"
+            android:label="Thawaf"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter
+                android:autoVerify="true"
+                android:label="Thawaf">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "https://gohajj.id/doa" -->
+                <data
+                    android:host="gohajj.id"
+                    android:pathPrefix="/doa"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".menu.ViewInbox"
+            android:label="View Inbox"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".menu.Poi"
             android:label="POI"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.GoPoi"
+            android:name=".menu.GoPoi"
             android:label="Go POI"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.PenilaianPembimbing"
+            android:name=".menu.PenilaianPembimbing"
             android:label="Penilaian Pembimbing"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
-        </activity>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.PenilaianPemimpinTur"
+            android:name=".menu.PenilaianPemimpinTur"
             android:label="Penilaian"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.PenilaianTravel"
+            android:name=".menu.PenilaianTravel"
             android:label="Penilaian"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.SyaratKetentuan"
+            android:name=".menu.SyaratKetentuan"
             android:label="Syarat Ketentuan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.Bantuan"
+            android:name=".menu.Bantuan"
             android:label="Bantuan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.setting"
+            android:name=".menu.setting"
             android:label="Setting"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.PusatBantuan"
+            android:name=".menu.PusatBantuan"
             android:label="Pusat Bantuan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.laporkanmasalah"
+            android:name=".menu.laporkanmasalah"
             android:label="Laporkan Masalah"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.kirimlaporan"
+            android:name=".menu.kirimlaporan"
             android:label="Kirim Laporan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.layanan"
+            android:name=".menu.layanan"
             android:label="Layanan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.View_PusatBantuan"
+            android:name=".menu.View_PusatBantuan"
             android:label="Pusat Bantuan"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".menu.language"
             android:label="Language"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name="salam.gohajj.custom.menu.PilihTema"
+            android:name=".menu.PilihTema"
             android:label="Tema"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -355,33 +335,30 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <!--<meta-data-->
-        <!--android:name="com.google.android.maps.v2.API_KEY"-->
-        <!--android:value="AIzaSyCuVnGc4s77L0Yk8qIV91ll&#45;&#45;EI_FHQH74" />-->
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.maps.v2.API_KEY" -->
+        <!-- android:value="AIzaSyCuVnGc4s77L0Yk8qIV91ll&#45;&#45;EI_FHQH74" /> -->
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <service
-            android:name="salam.gohajj.custom.gcm.MyFirebaseMessagingService">
+        <service android:name=".gcm.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service
-            android:name="salam.gohajj.custom.gcm.MyFirebaseInstanceIDService">
+        <service android:name=".gcm.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
         <service
-            android:name="salam.gohajj.custom.activity.FetchAddressIntentService"
+            android:name=".activity.FetchAddressIntentService"
             android:exported="false" />
-
 
     </application>
 
